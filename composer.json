@@ -1,0 +1,30 @@
+{
+	"name":"davidhirtz/yii2-shop",
+	"type":"yii2-extension",
+	"description":"Yii2 Shop Module",
+	"homepage":"http://www.davidhirtz.com/",
+	"minimum-stability":"dev",
+	"prefer-stable":true,
+	"require":{
+		"davidhirtz/yii2-skeleton":"dev-master",
+		"davidhirtz/yii2-media":"dev-master"
+	},
+	"autoload":{
+		"psr-4":{
+			"davidhirtz\\yii2\\cms\\":""
+		}
+	},
+	"extra":{
+		"bootstrap":"davidhirtz\\yii2\\shop\\composer\\Bootstrap"
+	},
+	"repositories":[
+		{
+			"type":"git",
+			"url":"git@github.com:davidhirtz/yii2-skeleton.git"
+		},
+		{
+			"type":"git",
+			"url":"git@github.com:davidhirtz/yii2-media.git"
+		}
+	]
+}
