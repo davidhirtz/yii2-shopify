@@ -29,23 +29,15 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
-    public $defaultRoute = 'entry';
+    public $defaultRoute = 'product';
 
     /**
      * @var array
      */
     protected $defaultControllerMap = [
-        'entry' => [
+        'product' => [
             'class' => 'davidhirtz\yii2\shop\modules\admin\controllers\ProductController',
-            'viewPath' => '@shop/modules/admin/views/entry',
-        ],
-        'asset' => [
-            'class' => 'davidhirtz\yii2\shop\modules\admin\controllers\AssetController',
-            'viewPath' => '@shop/modules/admin/views/asset',
-        ],
-        'section' => [
-            'class' => 'davidhirtz\yii2\shop\modules\admin\controllers\SectionController',
-            'viewPath' => '@shop/modules/admin/views/section',
+            'viewPath' => '@shop/modules/admin/views/product',
         ],
     ];
 
@@ -60,9 +52,9 @@ class Module extends \yii\base\Module
                     $this->navbarItems = [
                         [
                             'label' => $this->name ?: Yii::t('shop', 'Products'),
-                            'icon' => 'book',
-                            'url' => ['/admin/entry/index'],
-                            'active' => ['admin/entry', 'admin/section', 'shop/'],
+                            'icon' => 'shopping-cart',
+                            'url' => ['/admin/product/index'],
+                            'active' => ['admin/product', 'shop/'],
                         ]
                     ];
                 }
@@ -74,8 +66,8 @@ class Module extends \yii\base\Module
                             'items' => [
                                 [
                                     'label' => Yii::t('shop', 'View All Products'),
-                                    'url' => ['/admin/entry/index'],
-                                    'icon' => 'book',
+                                    'url' => ['/admin/product/index'],
+                                    'icon' => 'shopping-cart',
                                 ],
                             ],
                         ],
