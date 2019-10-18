@@ -42,11 +42,11 @@ class Bootstrap implements BootstrapInterface
             'shop' => [
                 'class' => 'davidhirtz\yii2\shop\Module',
             ],
-            'media' => [
-                'relations' => [
-                    'davidhirtz\yii2\shop\models\Asset',
-                ],
-            ],
+//            'media' => [
+//                'relations' => [
+//                    'davidhirtz\yii2\shop\models\Asset',
+//                ],
+//            ],
         ]);
 
         $this->setMigrationNamespace($app, 'davidhirtz\yii2\media\migrations');

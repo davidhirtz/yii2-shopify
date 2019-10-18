@@ -13,6 +13,12 @@ class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
+    public function init()
+    {
+        dump($this->getModules());
+        parent::init();
+    }
+
     /**
      * @return GatewayModuleInterface
      */
