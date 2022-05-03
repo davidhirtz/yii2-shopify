@@ -1,25 +1,25 @@
 {
-  "name": "davidhirtz/yii2-shop",
+  "name": "davidhirtz/yii2-shopify",
   "type": "yii2-extension",
-  "description": "Yii2 Shop Module",
-  "homepage": "http://www.davidhirtz.com/",
+  "description": "Yii2 Shopify Module",
+  "homepage": "https://www.davidhirtz.com/",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "davidhirtz/yii2-media": "dev-master"
+    "shopify/shopify-api": "^2.0"
   },
   "autoload": {
     "psr-4": {
-      "davidhirtz\\yii2\\shop\\": ""
+      "davidhirtz\\yii2\\shopify\\": ""
     }
   },
   "extra": {
-    "bootstrap": "davidhirtz\\yii2\\shop\\composer\\Bootstrap"
+    "bootstrap": "davidhirtz\\yii2\\shopify\\composer\\Bootstrap"
   },
   "repositories": [
     {
       "type": "git",
-      "url": "git@github.com:davidhirtz/yii2-media.git"
+      "url": "git@github.com:davidhirtz/yii2-cms.git"
     }
   ]
 }

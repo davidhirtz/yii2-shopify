@@ -1,12 +1,12 @@
 <?php
 
-namespace davidhirtz\yii2\shop\models;
+namespace davidhirtz\yii2\shopify\models;
 
 /**
- * Class Product.
- * @package davidhirtz\yii2\shop\models
+ * Class Product
+ * @package davidhirtz\yii2\shopify\models
  *
  */
-class Product extends \davidhirtz\yii2\shop\models\base\Product
+class Product extends base\Product
 {
 }

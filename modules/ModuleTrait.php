@@ -1,13 +1,13 @@
 <?php
 
-namespace davidhirtz\yii2\shop\modules;
+namespace davidhirtz\yii2\shopify\modules;
 
-use davidhirtz\yii2\shop\Module;
+use davidhirtz\yii2\shopify\Module;
 use Yii;
 
 /**
  * Trait ModuleTrait
- * @package davidhirtz\yii2\shop\components
+ * @package davidhirtz\yii2\shopify\components
  */
 trait ModuleTrait
 {
@@ -22,7 +22,7 @@ trait ModuleTrait
     public static function getModule()
     {
         if (static::$_module === null) {
-            static::$_module = Yii::$app->getModule('shop');
+            static::$_module = Yii::$app->getModule('shopify');
         }
 
         return static::$_module;

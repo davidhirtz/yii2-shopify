@@ -1,12 +1,12 @@
 <?php
 
-namespace davidhirtz\yii2\shop\models\queries;
+namespace davidhirtz\yii2\shopify\models\queries;
 
-use davidhirtz\yii2\shop\models\Product;
+use davidhirtz\yii2\shopify\models\Product;
 
 /**
  * Class ProductQuery
- * @package davidhirtz\yii2\shop\models\queries
+ * @package davidhirtz\yii2\shopify\models\queries
  *
  * @method Product one($db = null)
  */

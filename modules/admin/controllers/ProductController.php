@@ -1,15 +1,15 @@
 <?php
 
-namespace davidhirtz\yii2\shop\modules\admin\controllers;
+namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
-use davidhirtz\yii2\shop\modules\ModuleTrait;
+use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
  * Class ProductController.
- * @package davidhirtz\yii2\shop\modules\admin\controllers
+ * @package davidhirtz\yii2\shopify\modules\admin\controllers
  */
 class ProductController extends Controller
 {
@@ -89,7 +89,7 @@ class ProductController extends Controller
 //        $entry->type = $type;
 //
 //        if ($entry->load(Yii::$app->getRequest()->post()) && $entry->insert()) {
-//            $this->success(Yii::t('shop', 'The entry was created.'));
+//            $this->success(Yii::t('shopify', 'The entry was created.'));
 //            return $this->redirect(['update', 'id' => $entry->id]);
 //        }
 //
@@ -112,7 +112,7 @@ class ProductController extends Controller
 //        if ($entry->load(Yii::$app->getRequest()->post())) {
 //
 //            if ($entry->update()) {
-//                $this->success(Yii::t('shop', 'The entry was updated.'));
+//                $this->success(Yii::t('shopify', 'The entry was updated.'));
 //            }
 //
 //            if (!$entry->hasErrors()) {
@@ -137,7 +137,7 @@ class ProductController extends Controller
 //        }
 //
 //        if ($entry->delete()) {
-//            $this->success(Yii::t('shop', 'The entry was deleted.'));
+//            $this->success(Yii::t('shopify', 'The entry was deleted.'));
 //            return $this->redirect(['index']);
 //        }
 //

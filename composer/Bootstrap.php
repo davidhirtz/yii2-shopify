@@ -1,54 +1,46 @@
 <?php
 
-namespace davidhirtz\yii2\shop\composer;
+namespace davidhirtz\yii2\shopify\composer;
 
-use davidhirtz\yii2\skeleton\composer\BootstrapTrait;
 use davidhirtz\yii2\skeleton\web\Application;
 use yii\base\BootstrapInterface;
 use Yii;
 
 /**
  * Class Bootstrap
- * @package davidhirtz\yii2\shop\bootstrap
+ * @package davidhirtz\yii2\shopify\bootstrap
  */
 class Bootstrap implements BootstrapInterface
 {
-    use BootstrapTrait;
-
     /**
      * @param Application $app
      */
     public function bootstrap($app)
     {
-        Yii::setAlias('@shop', dirname(__DIR__));
+        Yii::setAlias('@shopify', dirname(__DIR__));
 
-        $this->extendComponent($app, 'i18n', [
+        $app->extendComponent('i18n', [
             'translations' => [
-                'shop' => [
+                'shopify' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@shop/messages',
+                    'basePath' => '@shopify/messages',
                 ],
             ],
         ]);
 
-        $this->extendModules($app, [
+        $app->extendModules([
             'admin' => [
                 'modules' => [
-                    'shop' => [
-                        'class' => 'davidhirtz\yii2\shop\modules\admin\Module',
+                    'shopify' => [
+                        'class' => 'davidhirtz\yii2\shopify\modules\admin\Module',
                     ],
                 ],
             ],
-            'shop' => [
-                'class' => 'davidhirtz\yii2\shop\Module',
+            'shopify' => [
+                'class' => 'davidhirtz\yii2\shopify\Module',
             ],
-//            'media' => [
-//                'relations' => [
-//                    'davidhirtz\yii2\shop\models\Asset',
-//                ],
-//            ],
         ]);
 
-        $this->setMigrationNamespace($app, 'davidhirtz\yii2\media\migrations');
+        $app->setMigrationNamespace('davidhirtz\yii2\shopify\migrations');
     }
 }

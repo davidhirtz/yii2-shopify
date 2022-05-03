@@ -1,12 +1,12 @@
 <?php
 
-namespace davidhirtz\yii2\shop\modules\admin;
+namespace davidhirtz\yii2\shopify\modules\admin;
 
 use Yii;
 
 /**
  * Class Module
- * @package davidhirtz\yii2\shop\modules\admin
+ * @package davidhirtz\yii2\shopify\modules\admin
  * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
  */
 class Module extends \yii\base\Module
@@ -36,8 +36,8 @@ class Module extends \yii\base\Module
      */
     protected $defaultControllerMap = [
         'product' => [
-            'class' => 'davidhirtz\yii2\shop\modules\admin\controllers\ProductController',
-            'viewPath' => '@shop/modules/admin/views/product',
+            'class' => 'davidhirtz\yii2\shopify\modules\admin\controllers\ProductController',
+            'viewPath' => '@shopify/modules/admin/views/product',
         ],
     ];
 
@@ -50,22 +50,22 @@ class Module extends \yii\base\Module
             if (Yii::$app->getUser()->can('admin')) {
                 if (!$this->navbarItems) {
                     $this->navbarItems = [
-                        [
-                            'label' => $this->name ?: Yii::t('shop', 'Products'),
+                        'shopify' => [
+                            'label' => $this->name ?: Yii::t('shopify', 'Products'),
                             'icon' => 'shopping-cart',
                             'url' => ['/admin/product/index'],
-                            'active' => ['admin/product', 'shop/'],
+                            'active' => ['admin/product', 'shopify/'],
                         ]
                     ];
                 }
 
                 if (!$this->panels) {
                     $this->panels = [
-                        [
-                            'name' => $this->name ?: Yii::t('shop', 'Products'),
+                        'shopify' => [
+                            'name' => $this->name ?: Yii::t('shopify', 'Products'),
                             'items' => [
                                 [
-                                    'label' => Yii::t('shop', 'View All Products'),
+                                    'label' => Yii::t('shopify', 'View All Products'),
                                     'url' => ['/admin/product/index'],
                                     'icon' => 'shopping-cart',
                                 ],

@@ -1,31 +1,32 @@
 <?php
 
-namespace davidhirtz\yii2\shop;
+namespace davidhirtz\yii2\shopify;
 
-use davidhirtz\yii2\shop\modules\GatewayModuleInterface;
 use davidhirtz\yii2\skeleton\modules\ModuleTrait;
+use yii\base\InvalidConfigException;
 
 /**
  * Class Module
- * @package davidhirtz\yii2\shop
+ * @package davidhirtz\yii2\shopify
  */
 class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
-    public function init()
-    {
-        dump($this->getModules());
-        parent::init();
-    }
+    /**
+     * @var string
+     */
+    public $tablePrefix = 'shopify_';
 
     /**
-     * @return GatewayModuleInterface
+     * @return void
      */
-    public function getGateway()
+    public function init()
     {
-        /** @var GatewayModuleInterface $module */
-        $module = $this->getModule('gateway');
-        return $module;
+        if ($this->enableI18nTables) {
+            throw new InvalidConfigException('The shopify module does not support I18N database tables.');
+        }
+
+        parent::init();
     }
 }
