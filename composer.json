@@ -6,7 +6,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "shopify/shopify-api": "^2.0"
+    "shopify/shopify-api": "^2.0",
+    "davidhirtz/yii2-skeleton": "*"
   },
   "autoload": {
     "psr-4": {
