@@ -2,6 +2,7 @@
 
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
+use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
 use yii\filters\AccessControl;
@@ -42,38 +43,17 @@ class ProductController extends Controller
         ]);
     }
 
-//    /**
-//     * @param int $id
-//     * @param int $type
-//     * @param string $q
-//     * @return string
-//     */
-    public function actionIndex($id = null, $type = null, $q = null)
+    /**
+     * @return string
+     */
+    public function actionIndex()
     {
-//        $entry = $id ? ProductForm::findOne($id) : null;
-//
-//        $query = $this->getQuery()
-//            ->andFilterWhere(['type' => $type])
-//            ->orderBy(['position' => SORT_ASC])
-//            ->matching($q);
-//
-//        if ($this->getModule()->defaultProductOrderBy) {
-//            $query->orderBy($this->getModule()->defaultProductOrderBy);
-//        }
-//
-//        if ($entry) {
-//            $query->orderBy($entry->getOrderBy());
-//        }
-//
-//        $provider = new ProductActiveDataProvider([
-//            'query' => $query,
-//        ]);
-//
-//        /** @noinspection MissedViewInspection */
-//        return $this->render('index', [
-//            'provider' => $provider,
-//            'entry' => $entry,
-//        ]);
+        $provider = new ProductActiveDataProvider([
+        ]);
+
+        return $this->render('index', [
+            'provider' => $provider,
+        ]);
     }
 //
 //    /**

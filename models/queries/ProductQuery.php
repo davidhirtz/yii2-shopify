@@ -3,6 +3,7 @@
 namespace davidhirtz\yii2\shopify\models\queries;
 
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\skeleton\db\ActiveQuery;
 
 /**
  * Class ProductQuery
@@ -10,7 +11,7 @@ use davidhirtz\yii2\shopify\models\Product;
  *
  * @method Product one($db = null)
  */
-class ProductQuery extends \davidhirtz\yii2\skeleton\db\ActiveQuery
+class ProductQuery extends ActiveQuery
 {
     /**
      * @param string $search
@@ -22,7 +23,15 @@ class ProductQuery extends \davidhirtz\yii2\skeleton\db\ActiveQuery
             $model = $this->getModelInstance();
             $tableName = $model::tableName();
 
-            $this->andWhere("{$tableName}.[[name]] LIKE :search", [':search' => "%{$search}%"]);
+            if (is_numeric($search)) {
+                $this->andWhere("{$tableName}.[[id]] = :search OR {$tableName}.[[name]] LIKE :search", [
+                    ':search' => "%{$search}%"
+                ]);
+            } else {
+                $this->andWhere("{$tableName}.[[name]] LIKE :search", [
+                    ':search' => "%{$search}%"
+                ]);
+            }
         }
 
         return $this;

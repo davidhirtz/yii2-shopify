@@ -2,14 +2,14 @@
 
 namespace davidhirtz\yii2\shopify\models\base;
 
+use davidhirtz\yii2\shopify\models\ProductImage;
+use davidhirtz\yii2\shopify\models\ProductVariant;
 use davidhirtz\yii2\shopify\models\queries\ProductQuery;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
 use davidhirtz\yii2\skeleton\db\I18nAttributesTrait;
 use davidhirtz\yii2\skeleton\db\StatusAttributeTrait;
-use davidhirtz\yii2\skeleton\db\TypeAttributeTrait;
-use davidhirtz\yii2\skeleton\models\queries\UserQuery;
 use davidhirtz\yii2\skeleton\models\User;
 use Yii;
 use yii\db\ActiveQuery;
@@ -17,20 +17,26 @@ use yii\db\ActiveQuery;
 /**
  * Class Product
  * @package davidhirtz\yii2\shopify\models\base
- * @see Product
  *
  * @property int $id
  * @property int $status
+ * @property int $variant_id
+ * @property int $image_id
  * @property string $name
  * @property string $content
  * @property string $slug
+ * @property string $tags
  * @property string $vendor
+ * @property string $product_type
+ * @property string $options
+ * @property int $image_count
  * @property int $variant_count
- * @property int $updated_by_user_id
+ * @property int $last_import_at
  * @property DateTime $updated_at
  * @property DateTime $created_at
  *
- * @property ProductVariants[] $variants
+ * @property ProductImage[] $images
+ * @property ProductVariant[] $variants
  * @property User $updated
  *
  * @method static Product findOne($condition)
@@ -100,80 +106,44 @@ class Product extends ActiveRecord
     }
 
     /**
-     * @return UserQuery|ActiveQuery
+     * @return array
      */
-    public function getUpdated()
+    public function scenarios(): array
     {
-        return $this->hasOne(User::class, ['id' => 'updated_by_user_id']);
+        return [
+            static::SCENARIO_DEFAULT => ['status'],
+        ];
     }
 
     /**
-     * @param bool $insert
-     * @return bool
+     * @return ActiveQuery
      */
-    public function beforeSave($insert)
+    public function getImages()
     {
-        $this->attachBehaviors([
-            'BlameableBehavior' => 'davidhirtz\yii2\skeleton\behaviors\BlameableBehavior',
-            'TimestampBehavior' => 'davidhirtz\yii2\skeleton\behaviors\TimestampBehavior',
-        ]);
-
-        return parent::beforeSave($insert);
+        return $this->hasMany(ProductImage::class, ['product_id' => 'id'])
+            ->orderBy(['position' => SORT_ASC])
+            ->indexBy('id')
+            ->inverseOf('product');
     }
 
     /**
-     * @inheritdoc
+     * @return ActiveQuery
+     */
+    public function getVariants()
+    {
+        return $this->hasMany(ProductVariant::class, ['product_id' => 'id'])
+            ->orderBy(['position' => SORT_ASC])
+            ->indexBy('id')
+            ->inverseOf('product');
+    }
+
+    /**
      * @return ProductQuery
      */
     public static function find()
     {
         return new ProductQuery(get_called_class());
     }
-
-    /**
-     * @return array
-     */
-    public static function getInventoryStatuses(): array
-    {
-        return [
-            static::INVENTORY_STATUS_IN_STOCK => [
-                'name' => Yii::t('shopify', 'In Stock'),
-            ],
-            static::INVENTORY_STATUS_SOLD_OUT => [
-                'name' => Yii::t('shopify', 'Sold out'),
-            ],
-        ];
-    }
-
-    public static function getInventorySchemas(): array
-    {
-        return [
-            static::INVENTORY_STATUS_IN_STOCK => 'http://schema.org/InStock',
-            static::INVENTORY_STATUS_SOLD_OUT => 'http://schema.org/SoldOut',
-        ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getInventoryStatusName(): string
-    {
-        $statuses = static::getInventoryStatuses();
-        return isset($statuses[$this->inventory_status]) ? $statuses[$this->inventory_status] : '';
-    }
-
-    /**
-     * @return string
-     */
-    public function getInventoryStatusSchema(): string
-    {
-        $schema = static::getInventorySchemas();
-        return isset($schema[$this->inventory_status]) ? $schema[$this->inventory_status] : '';
-    }
-
-    /***********************************************************************
-     * Active Record.
-     ***********************************************************************/
 
     /**
      * @return array
