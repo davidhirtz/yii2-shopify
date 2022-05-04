@@ -5,7 +5,7 @@ namespace davidhirtz\yii2\shopify\migrations;
 use davidhirtz\yii2\shopify\models\base\ProductImage;
 use davidhirtz\yii2\shopify\models\base\ProductVariant;
 use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\Module;
+use davidhirtz\yii2\shopify\models\Webhook;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\db\MigrationTrait;
 use davidhirtz\yii2\skeleton\models\User;
@@ -119,12 +119,16 @@ class M190904193339Shopify extends Migration
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
+        $productUpdate = $auth->createPermission(Product::AUTH_PRODUCT_UPDATE);
+        $productUpdate->description = Yii::t('shopify', 'Manage Shopify products', [], Yii::$app->sourceLanguage);
+        $auth->add($productUpdate);
 
-        $shopifyAdmin = $auth->createPermission(Module::AUTH_SHOPIFY_ADMIN);
-        $shopifyAdmin->description = Yii::t('shopify', 'Manage Shopify administration', [], Yii::$app->sourceLanguage);
-        $auth->add($shopifyAdmin);
+        $shopifyWebhookUpdate = $auth->createPermission(Webhook::AUTH_WEBHOOK_UPDATE);
+        $shopifyWebhookUpdate->description = Yii::t('shopify', 'Manage Shopify webhooks', [], Yii::$app->sourceLanguage);
+        $auth->add($shopifyWebhookUpdate);
 
-        $auth->addChild($admin, $shopifyAdmin);
+        $auth->addChild($admin, $productUpdate);
+        $auth->addChild($admin, $shopifyWebhookUpdate);
     }
 
     /**
@@ -145,6 +149,7 @@ class M190904193339Shopify extends Migration
         $this->dropTable(ProductVariant::tableName());
         $this->dropTable(Product::tableName());
 
-        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => 'categoryUpdate']);
+        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => Product::AUTH_PRODUCT_UPDATE]);
+        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => Webhook::AUTH_WEBHOOK_UPDATE]);
     }
 }

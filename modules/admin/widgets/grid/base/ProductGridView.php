@@ -3,7 +3,6 @@
 namespace davidhirtz\yii2\shopify\modules\admin\widgets\grid\base;
 
 use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\Module;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grid\GridView;
@@ -61,7 +60,7 @@ class ProductGridView extends GridView
                         'options' => ['class' => 'col-12 col-md-6'],
                     ],
                     'options' => [
-                        'class' => 'justify-content-between',
+                        'class' => 'justify-content-end',
                     ],
                 ],
             ];
@@ -168,10 +167,6 @@ class ProductGridView extends GridView
      */
     protected function getRowButtons(Product $product)
     {
-        if (!Yii::$app->getUser()->can(Module::AUTH_SHOPIFY_ADMIN)) {
-            return [];
-        }
-
         return [
             $this->getUpdateButton($product),
             $this->getShopifyAdminProductButton($product),
@@ -210,10 +205,6 @@ class ProductGridView extends GridView
      */
     protected function getCreateProductButton()
     {
-        if (!Yii::$app->getUser()->can(Module::AUTH_SHOPIFY_ADMIN)) {
-            return '';
-        }
-
         return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), ['class' => 'btn btn-primary']);
     }
 
@@ -222,10 +213,6 @@ class ProductGridView extends GridView
      */
     protected function getUpdateAllProductsButton()
     {
-        if (!Yii::$app->getUser()->can(Module::AUTH_SHOPIFY_ADMIN)) {
-            return '';
-        }
-
         return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload All Products')), ['/admin/product/update-all'], [
             'class' => 'btn btn-secondary',
             'data-method' => 'post',

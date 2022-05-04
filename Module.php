@@ -15,8 +15,6 @@ class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
-    public const AUTH_SHOPIFY_ADMIN = 'shopifyAdmin';
-
     /**
      * @var string
      */

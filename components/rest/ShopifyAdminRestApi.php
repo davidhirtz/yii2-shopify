@@ -91,7 +91,7 @@ class ShopifyAdminRestApi extends BaseObject
      */
     public function getWebhooks(): array
     {
-        $results = $this->get('products', ['limit' => static::SHOPIFY_MAX_PRODUCT_LIMIT]);
+        $results = $this->get('webhooks', ['limit' => static::SHOPIFY_MAX_PRODUCT_LIMIT]);
         return $results['webhooks'] ?? [];
     }
 

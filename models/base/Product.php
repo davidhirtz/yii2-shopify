@@ -49,6 +49,7 @@ class Product extends ActiveRecord
     use StatusAttributeTrait;
 
     public const STATUS_ARCHIVED = self::STATUS_DISABLED;
+    public const AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
      * @var mixed used when $contentType is set to "html". use array with the first value containing the

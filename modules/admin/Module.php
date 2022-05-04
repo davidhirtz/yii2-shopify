@@ -2,6 +2,8 @@
 
 namespace davidhirtz\yii2\shopify\modules\admin;
 
+use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\shopify\models\Webhook;
 use Yii;
 
 /**
@@ -56,10 +58,14 @@ class Module extends \yii\base\Module
                     $this->navbarItems = [
                         'shopify' => [
                             'label' => $this->name ?: Yii::t('shopify', 'Products'),
-                            'icon' => 'shopping-cart',
+                            'icon' => 'tags',
                             'url' => ['/admin/product/index'],
-                            'active' => ['admin/product', 'shopify/'],
-                        ]
+                            'active' => ['admin/product', 'admin/shopify-webhook'],
+                            'roles' => [
+                                Product::AUTH_PRODUCT_UPDATE,
+                                Webhook::AUTH_WEBHOOK_UPDATE,
+                            ],
+                        ],
                     ];
                 }
 
@@ -69,9 +75,16 @@ class Module extends \yii\base\Module
                             'name' => $this->name ?: Yii::t('shopify', 'Products'),
                             'items' => [
                                 [
-                                    'label' => Yii::t('shopify', 'View All Products'),
+                                    'label' => Yii::t('shopify', 'View Products'),
                                     'url' => ['/admin/product/index'],
-                                    'icon' => 'shopping-cart',
+                                    'icon' => 'tags',
+                                    'roles' => [Product::AUTH_PRODUCT_UPDATE],
+                                ],
+                                [
+                                    'label' => Yii::t('shopify', 'View Webhooks'),
+                                    'url' => ['/admin/shopify-webhook/index'],
+                                    'icon' => 'satellite-dish',
+                                    'roles' => [Webhook::AUTH_WEBHOOK_UPDATE],
                                 ],
                             ],
                         ],

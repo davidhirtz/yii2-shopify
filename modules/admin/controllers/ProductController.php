@@ -3,6 +3,7 @@
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
 use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminRestApiForm;
+use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
@@ -31,8 +32,8 @@ class ProductController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create', 'index', 'order', 'update', 'update-all', 'delete'],
-                        'roles' => ['admin'],
+                        'actions' => ['delete', 'index', 'update', 'update-all'],
+                        'roles' => [Product::AUTH_PRODUCT_UPDATE],
                     ],
                 ],
             ],
@@ -40,8 +41,8 @@ class ProductController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
-                    'order' => ['post'],
-                    'upload' => ['post'],
+                    'update' => ['post'],
+                    'update-all' => ['post'],
                 ],
             ],
         ]);
