@@ -39,8 +39,9 @@ class Module extends \yii\base\Module
             'class' => 'davidhirtz\yii2\shopify\modules\admin\controllers\ProductController',
             'viewPath' => '@shopify/modules/admin/views/product',
         ],
-        'import' => [
-            'class' => 'davidhirtz\yii2\shopify\modules\admin\controllers\ImportController',
+        'shopify-webhook' => [
+            'class' => 'davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController',
+            'viewPath' => '@shopify/modules/admin/views/webhook',
         ],
     ];
 

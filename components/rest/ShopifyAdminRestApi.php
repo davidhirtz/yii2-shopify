@@ -79,9 +79,20 @@ class ShopifyAdminRestApi extends BaseObject
      */
     public function getProduct($id)
     {
-        return $this->get("products/{$id}", [], [
+        $results = $this->get("products/{$id}", [], [
             'X-Shopify-Api-Features' => 'include-presentment-prices',
         ]);
+
+        return $results['product'] ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getWebhooks(): array
+    {
+        $results = $this->get('products', ['limit' => static::SHOPIFY_MAX_PRODUCT_LIMIT]);
+        return $results['webhooks'] ?? [];
     }
 
     /**

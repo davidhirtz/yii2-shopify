@@ -17,15 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Alt text' => '',
     'Compare at price' => '',
     'Description' => '',
-    'In Stock' => '',
     'Inventory' => '',
     'Price' => '',
     'Products' => '',
     'Quantity' => '',
     'SKU' => '',
-    'Sold out' => '',
     'View All Products' => '',
     'Weight' => '',
 ];

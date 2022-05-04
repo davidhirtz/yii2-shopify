@@ -2,34 +2,37 @@
 
 namespace davidhirtz\yii2\shopify\models\forms;
 
+use DateTimeZone;
 use davidhirtz\yii2\shopify\models\base\ProductImage;
 use davidhirtz\yii2\shopify\models\base\ProductVariant;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
+use Yii;
 
 /**
  * Class ProductShopifyAdminApiForm
  * @package davidhirtz\yii2\shopify\models\forms
  */
-class ProductShopifyAdminApiForm extends Product
+class ProductShopifyAdminRestApiForm
 {
     /**
      * @param array $data
-     * @return static
+     * @return Product
      */
     public static function loadOrCreateFromApiData($data)
     {
-        $product = static::findOne($data['id']) ?? new static();
+        $product = Product::findOne($data['id']) ?? new Product();
         $isNewRecord = $product->getIsNewRecord();
 
         $statusesMap = [
-            'active' => static::STATUS_ENABLED,
-            'draft' => static::STATUS_DRAFT,
-            'archived' => static::STATUS_ARCHIVED,
+            'active' => Product::STATUS_ENABLED,
+            'draft' => Product::STATUS_DRAFT,
+            'archived' => Product::STATUS_ARCHIVED,
         ];
 
         $product->status = $statusesMap[$data['status']];
+        $product->last_import_at = new DateTime();
 
         static::setAttributesFromApiData($product, $data, [
             'id' => 'id',
@@ -87,12 +90,12 @@ class ProductShopifyAdminApiForm extends Product
         }
 
         foreach ($images as $image) {
-            if (in_array($image->id, $imageIds)) {
+            if (!in_array($image->id, $imageIds)) {
                 $image->delete();
             }
         }
 
-        $product->image_id = $data['image']['id'] ?? null;
+        $product->image_id = isset($data['image']['id']) ? (string)$data['image']['id'] : null;
         $product->image_count = count($data['images']);
 
         // Variants.
@@ -137,27 +140,29 @@ class ProductShopifyAdminApiForm extends Product
         }
 
         foreach ($variants as $variant) {
-            if (in_array($variant->id, $variantIds)) {
+            if (!in_array($variant->id, $variantIds)) {
                 $variant->delete();
             }
         }
 
         $product->variant_count = count($data['variants']);
-        $product->updateAttributes(['image_id', 'image_count', 'variant_id', 'variant_count']);
+        $product->update();
 
         return $product;
     }
 
     /**
-     * @param array $data
+     * @param array $results
      * @return int
      */
-    public static function deleteProductsFromApiData($data): int
+    public static function deleteProductsFromApiResult($results): int
     {
         $count = 0;
 
-        if ($productIds = ArrayHelper::getColumn($data, 'id')) {
-            $products = static::find()->where(['!=', 'id', $productIds]);
+        if ($productIds = ArrayHelper::getColumn($results, 'id')) {
+            $products = Product::find()
+                ->where(['not in', 'id', $productIds])
+                ->all();
 
             foreach ($products as $product) {
                 if ($product->delete()) {
@@ -178,11 +183,11 @@ class ProductShopifyAdminApiForm extends Product
     private static function setAttributesFromApiData($model, $data, $attributesMap)
     {
         foreach ($attributesMap as $key => $attributeName) {
-            $model->setAttribute($attributeName, $data[$key] ?? null);
+            $model->setAttribute($attributeName, $data[$key] ?: null);
         }
 
         $model->updated_at = new DateTime($data['updated_at']);
-        $model->last_import_at = new DateTime();
+        $model->updated_at->setTimezone(new DateTimeZone(Yii::$app->getTimeZone()));
 
         if ($model->getIsNewRecord()) {
             $model->created_at = new DateTime($data['created_at']);

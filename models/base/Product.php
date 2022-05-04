@@ -36,6 +36,7 @@ use yii\db\ActiveQuery;
  * @property DateTime $created_at
  *
  * @property ProductImage[] $images
+ * @property ProductVariant $variant
  * @property ProductVariant[] $variants
  * @property User $updated
  *
@@ -93,26 +94,15 @@ class Product extends ActiveRecord
                 $this->getI18nAttributesNames(['name']),
                 'required',
             ],
-            [
-                $this->getI18nAttributesNames(['name']),
-                'filter',
-                'filter' => 'trim',
-            ],
             array_merge(
                 [$this->getI18nAttributesNames(['content'])],
                 (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
             ),
+            [
+                ['id', 'image_id', 'variant_id'],
+                'string',
+            ],
         ]);
-    }
-
-    /**
-     * @return array
-     */
-    public function scenarios(): array
-    {
-        return [
-            static::SCENARIO_DEFAULT => ['status'],
-        ];
     }
 
     /**
@@ -123,6 +113,15 @@ class Product extends ActiveRecord
         return $this->hasMany(ProductImage::class, ['product_id' => 'id'])
             ->orderBy(['position' => SORT_ASC])
             ->indexBy('id')
+            ->inverseOf('product');
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getVariant()
+    {
+        return $this->hasOne(ProductVariant::class, ['id' => 'variant_id'])
             ->inverseOf('product');
     }
 
@@ -148,16 +147,75 @@ class Product extends ActiveRecord
     /**
      * @return array
      */
+    public function getTrailAttributes(): array
+    {
+        return array_diff($this->attributes(), [
+            'last_import_at',
+            'updated_at',
+            'created_at',
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrailModelName()
+    {
+        if ($this->id) {
+            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+                'model' => $this->getTrailModelType(),
+                'id' => $this->id,
+            ]);
+        }
+
+        return $this->getTrailModelType();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrailModelType(): string
+    {
+        return Yii::t('shopify', 'Product');
+    }
+
+    /**
+     * @return array|false
+     */
+    public function getTrailModelAdminRoute()
+    {
+        return $this->getAdminRoute();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdminRoute()
+    {
+        return ['/admin/product/update', 'id' => $this->id];
+    }
+
+    /**
+     * @return array|false
+     */
+    public function getRoute()
+    {
+        return false;
+    }
+
+    /**
+     * @return array
+     */
     public function attributeLabels(): array
     {
         return array_merge(parent::attributeLabels(), [
-            'sku' => Yii::t('shopify', 'SKU'),
-            'price' => Yii::t('shopify', 'Price'),
-            'compare_at_price' => Yii::t('shopify', 'Compare at price'),
-            'weight' => Yii::t('shopify', 'Weight'),
-            'description' => Yii::t('shopify', 'Description'),
-            'quantity' => Yii::t('shopify', 'Quantity'),
-            'inventory_status' => Yii::t('shopify', 'Inventory'),
+            'image_id' => Yii::t('shopify', 'Image'),
+            'variant_id' => Yii::t('shopify', 'Variant'),
+            'name' => Yii::t('shopify', 'Title'),
+            'content' => Yii::t('shopify', 'Description'),
+            'slug' => Yii::t('shopify', 'Shopify slug'),
+            'vendor' => Yii::t('shopify', 'Vendor'),
+            'product_type' => Yii::t('shopify', 'Type'),
         ]);
     }
 

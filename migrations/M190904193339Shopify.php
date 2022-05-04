@@ -5,8 +5,11 @@ namespace davidhirtz\yii2\shopify\migrations;
 use davidhirtz\yii2\shopify\models\base\ProductImage;
 use davidhirtz\yii2\shopify\models\base\ProductVariant;
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\shopify\Module;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\db\MigrationTrait;
+use davidhirtz\yii2\skeleton\models\User;
+use Yii;
 use yii\db\Migration;
 
 /**
@@ -51,7 +54,6 @@ class M190904193339Shopify extends Migration
             'width' => $this->smallInteger()->unsigned()->null(),
             'height' => $this->smallInteger()->unsigned()->null(),
             'src' => $this->string()->null(),
-            'last_import_at' => $this->dateTime()->notNull(),
             'updated_at' => $this->dateTime(),
             'created_at' => $this->dateTime()->notNull(),
         ], $this->getTableOptions());
@@ -75,8 +77,8 @@ class M190904193339Shopify extends Migration
             'grams' => $this->decimal(10, 2)->unsigned()->null(),
             'weight' => $this->string()->null(),
             'weight_unit' => $this->string(2)->null(),
+            'track_inventory' => $this->boolean()->defaultValue(false),
             'inventory_quantity' => $this->smallInteger()->unsigned()->notNull()->defaultValue(0),
-            'last_import_at' => $this->dateTime()->notNull(),
             'updated_at' => $this->dateTime(),
             'created_at' => $this->dateTime()->notNull(),
         ], $this->getTableOptions());
@@ -102,17 +104,27 @@ class M190904193339Shopify extends Migration
         $this->createIndex('product_id', ProductVariant::tableName(), ['product_id', 'position']);
 
         $tableName = $schema->getRawTableName(Product::tableName());
-        $this->addForeignKey($tableName . '_variant_id_ibfk', Product::tableName(), 'image_id', ProductVariant::tableName(), 'id', 'SET NULL');
         $this->addForeignKey($tableName . '_image_id_ibfk', Product::tableName(), 'image_id', ProductImage::tableName(), 'id', 'SET NULL');
+        $this->addForeignKey($tableName . '_variant_id_ibfk', Product::tableName(), 'variant_id', ProductVariant::tableName(), 'id', 'SET NULL');
 
         $tableName = $schema->getRawTableName(ProductImage::tableName());
         $this->addForeignKey($tableName . '_product_id_ibfk', ProductImage::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
 
         $tableName = $schema->getRawTableName(ProductVariant::tableName());
-        $this->addForeignKey($tableName . '_product_id_ibfk', ProductVariant::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
         $this->addForeignKey($tableName . '_image_id_ibfk', ProductVariant::tableName(), 'image_id', ProductImage::tableName(), 'id', 'SET NULL');
+        $this->addForeignKey($tableName . '_product_id_ibfk', ProductVariant::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
 
         $this->addI18nColumns(Product::tableName(), (new Product())->i18nAttributes);
+
+        $auth = Yii::$app->getAuthManager();
+        $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
+
+
+        $shopifyAdmin = $auth->createPermission(Module::AUTH_SHOPIFY_ADMIN);
+        $shopifyAdmin->description = Yii::t('shopify', 'Manage Shopify administration', [], Yii::$app->sourceLanguage);
+        $auth->add($shopifyAdmin);
+
+        $auth->addChild($admin, $shopifyAdmin);
     }
 
     /**
@@ -132,5 +144,7 @@ class M190904193339Shopify extends Migration
         $this->dropTable(ProductImage::tableName());
         $this->dropTable(ProductVariant::tableName());
         $this->dropTable(Product::tableName());
+
+        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => 'categoryUpdate']);
     }
 }
