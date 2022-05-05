@@ -18,6 +18,16 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
+    public $shopifyApiKey;
+
+    /**
+     * @var string
+     */
+    public $shopifyApiSecret;
+
+    /**
+     * @var string
+     */
     public $shopifyAccessToken;
 
     /**
@@ -28,7 +38,30 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
+    public $latestShopifyApiVersion = '2022-04';
+
+    /**
+     * @var string
+     */
     public $shopDomain;
+
+    /**
+     * @var array
+     */
+    public $webhooks = [
+        [
+            'topic' => 'products/create',
+            'route' => ['/shopify/webhook/products-update'],
+        ],
+        [
+            'topic' => 'products/update',
+            'route' => ['/shopify/webhook/products-update'],
+        ],
+        [
+            'topic' => 'products/delete',
+            'route' => ['/shopify/webhook/products-delete'],
+        ],
+    ];
 
     /**
      * @var ShopifyAdminRestApi
@@ -44,16 +77,14 @@ class Module extends \yii\base\Module
             throw new InvalidConfigException('Shopify module does not support I18N database tables.');
         }
 
-        if (!$this->shopDomain) {
-            $this->shopDomain = Yii::$app->params['shopifyShopDomain'] ?? null;
-        }
+        $this->shopifyApiKey = $this->shopifyApiKey ?: Yii::$app->params['shopifyApiKey'] ?? null;
+        $this->shopifyApiSecret = $this->shopifyApiSecret ?: Yii::$app->params['shopifyApiSecret'] ?? null;
+        $this->shopifyAccessToken = $this->shopifyAccessToken ?: Yii::$app->params['shopifyAccessToken'] ?? null;
+        $this->shopDomain = $this->shopDomain ?: Yii::$app->params['shopifyShopDomain'] ?? null;
+        $this->shopifyApiVersion = $this->shopifyApiVersion ?: $this->latestShopifyApiVersion;
 
         if (!$this->shopDomain) {
             throw new InvalidConfigException('Shopify shop domain must be set. Either via "Module::$shopDomain" or via "shopifyShopDomain" param.');
-        }
-
-        if (!$this->shopifyAccessToken) {
-            $this->shopifyAccessToken = Yii::$app->params['shopifyAccessToken'] ?? null;
         }
 
         if (!$this->shopifyAccessToken) {

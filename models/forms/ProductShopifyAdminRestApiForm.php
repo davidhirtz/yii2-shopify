@@ -20,7 +20,7 @@ class ProductShopifyAdminRestApiForm
      * @param array $data
      * @return Product
      */
-    public static function loadOrCreateFromApiData($data)
+    public static function createOrUpdateFromApiData($data)
     {
         $product = Product::findOne($data['id']) ?? new Product();
         $isNewRecord = $product->getIsNewRecord();
@@ -100,6 +100,7 @@ class ProductShopifyAdminRestApiForm
 
         // Variants.
         $variants = !$isNewRecord ? $product->variants : [];
+        $totalInventoryCount = 0;
         $variantIds = [];
 
         foreach ($data['variants'] as $variantData) {
@@ -122,6 +123,7 @@ class ProductShopifyAdminRestApiForm
                 'grams' => 'grams',
                 'weight' => 'weight',
                 'weight_unit' => 'weight_unit',
+                'inventory_management' => 'inventory_management',
                 'inventory_quantity' => 'inventory_quantity',
             ]);
 
@@ -130,6 +132,10 @@ class ProductShopifyAdminRestApiForm
             if ($variant->save()) {
                 if ($variant->position == 1) {
                     $product->variant_id = $variant->id;
+                }
+
+                if ($variant->inventory_management) {
+                    $totalInventoryCount += $variant->inventory_quantity;
                 }
 
                 $variantIds[] = $variant->id;

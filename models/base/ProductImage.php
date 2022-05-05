@@ -85,6 +85,15 @@ class ProductImage extends ActiveRecord
     }
 
     /**
+     * @param array $params
+     * @return string
+     */
+    public function getUrl($params = [])
+    {
+        return $this->src . ($params ? ((strpos($this->src, '?') ? '&' : '?') . http_build_query($params)) : '');
+    }
+
+    /**
      * @return array
      */
     public function getTrailAttributes(): array

@@ -28,12 +28,12 @@ use Yii;
  * @property string $barcode
  * @property string $sku
  * @property bool $is_taxable
- * @property bool $requires_shipping
  * @property int $grams
  * @property int $weight
  * @property string $weight_unit
- * @property bool $track_inventory
+ * @property bool $inventory_management
  * @property int $inventory_quantity
+ * @property string $inventory_policy
  * @property DateTime $updated_at
  * @property DateTime $created_at
  *
@@ -72,7 +72,7 @@ class ProductVariant extends ActiveRecord
                 'string',
             ],
             [
-                ['is_taxable', 'requires_shipping', 'track_inventory'],
+                ['is_taxable'],
                 'boolean',
             ],
             [
@@ -169,12 +169,12 @@ class ProductVariant extends ActiveRecord
             'barcode' => Yii::t('shopify', 'Barcode (ISBN, UPC, GTIN, etc.)'),
             'sku' => Yii::t('shopify', 'SKU (Stock Keeping Unit)'),
             'is_taxable' => Yii::t('shopify', 'Taxable'),
-            'requires_shipping' => Yii::t('shopify', 'Shipping'),
             'grams' => Yii::t('shopify', 'Weight (grams)'),
             'weight' => Yii::t('shopify', 'Weight'),
             'weight_unit' => Yii::t('shopify', 'Weight unit'),
-            'track_inventory' => Yii::t('shopify', 'Track quantity'),
+            'inventory_management' => Yii::t('shopify', 'Inventory management'),
             'inventory_quantity' => Yii::t('shopify', 'Quantity'),
+            'inventory_policy' => Yii::t('shopify', 'Inventory policy'),
         ]);
     }
 

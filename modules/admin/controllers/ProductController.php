@@ -32,7 +32,7 @@ class ProductController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['delete', 'index', 'update', 'update-all'],
+                        'actions' => ['index', 'update', 'update-all'],
                         'roles' => [Product::AUTH_PRODUCT_UPDATE],
                     ],
                 ],
@@ -40,7 +40,6 @@ class ProductController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['post'],
                     'update' => ['post'],
                     'update-all' => ['post'],
                 ],
@@ -51,9 +50,10 @@ class ProductController extends Controller
     /**
      * @return string
      */
-    public function actionIndex($q = null)
+    public function actionIndex($status = null, $q = null)
     {
         $provider = new ProductActiveDataProvider([
+            'status' => $status,
             'searchString' => $q,
         ]);
 
@@ -74,7 +74,7 @@ class ProductController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $product = ProductShopifyAdminRestApiForm::loadOrCreateFromApiData($data);
+        $product = ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
 
         if (!$product->hasErrors()) {
             $this->success(Yii::t('shopify', 'The product was updated via Shopify.'));
@@ -94,7 +94,7 @@ class ProductController extends Controller
         $products = $api->getProducts();
 
         foreach ($products as $data) {
-            $product = ProductShopifyAdminRestApiForm::loadOrCreateFromApiData($data);
+            $product = ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
 
             if ($product->hasErrors()) {
                 $this->error($product);

@@ -3,6 +3,7 @@
 namespace davidhirtz\yii2\shopify\modules\admin\widgets\grid\base;
 
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grid\GridView;
@@ -14,6 +15,7 @@ use Yii;
 /**
  * Class ProductGridView
  * @package davidhirtz\yii2\shopify\modules\admin\widgets\grid\base
+ * @property ProductActiveDataProvider $dataProvider
  */
 class ProductGridView extends GridView
 {
@@ -33,13 +35,16 @@ class ProductGridView extends GridView
         if (!$this->columns) {
             $this->columns = [
                 $this->statusColumn(),
+                $this->thumbnailColumn(),
                 $this->nameColumn(),
-                $this->variantCountColumn(),
+                $this->totalInventoryQuantityColumn(),
                 $this->variantCountColumn(),
                 $this->updatedAtColumn(),
                 $this->buttonsColumn(),
             ];
         }
+
+        $this->status = $this->dataProvider->status;
 
         $this->initHeader();
         $this->initFooter();
@@ -56,11 +61,15 @@ class ProductGridView extends GridView
             $this->header = [
                 [
                     [
+                        'content' => $this->statusDropdown(),
+                        'options' => ['class' => 'col-12 col-md-3'],
+                    ],
+                    [
                         'content' => $this->getSearchInput(),
                         'options' => ['class' => 'col-12 col-md-6'],
                     ],
                     'options' => [
-                        'class' => 'justify-content-end',
+                        'class' => 'justify-content-between',
                     ],
                 ],
             ];
@@ -91,6 +100,30 @@ class ProductGridView extends GridView
     /**
      * @return array
      */
+    public function thumbnailColumn(): array
+    {
+        return [
+            'headerOptions' => ['style' => 'width:150px'],
+            'content' => function (Product $product) {
+                if (!$product->image_id) {
+                    return '';
+                }
+
+                $html = Html::tag('div', '', [
+                    'style' => 'background-image:url(' . $product->image->getUrl(['width' => 300, 'height' => 300]) . ');',
+                    'class' => 'thumb',
+                ]);
+
+                return Html::a($html, $this->getShopifyAdminProductLink($product), [
+                    'target' => '_blank',
+                ]);
+            }
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function nameColumn()
     {
         return [
@@ -106,6 +139,28 @@ class ProductGridView extends GridView
                 }
 
                 return $html;
+            }
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function totalInventoryQuantityColumn()
+    {
+        return [
+            'attribute' => 'total_inventory_quantity',
+            'headerOptions' => ['class' => 'd-none d-md-table-cell text-center'],
+            'contentOptions' => ['class' => 'd-none d-md-table-cell text-center'],
+            'content' => function (Product $product) {
+                if ($product->variant->inventory_management) {
+                    return Html::a(Yii::$app->getFormatter()->asInteger($product->total_inventory_quantity), $this->getShopifyAdminProductLink($product), [
+                        'class' => 'badge',
+                        'target' => '_blank',
+                    ]);
+                }
+
+                return '-';
             }
         ];
     }
@@ -140,6 +195,7 @@ class ProductGridView extends GridView
     public function updatedAtColumn()
     {
         return [
+            'attribute' => 'updated_at',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
             'content' => function (Product $product) {

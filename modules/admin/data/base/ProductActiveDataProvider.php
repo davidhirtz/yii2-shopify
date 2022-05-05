@@ -14,6 +14,11 @@ use yii\data\ActiveDataProvider;
 class ProductActiveDataProvider extends ActiveDataProvider
 {
     /**
+     * @var int
+     */
+    public $status;
+
+    /**
      * @var string
      */
     public $searchString;
@@ -34,7 +39,11 @@ class ProductActiveDataProvider extends ActiveDataProvider
      */
     protected function initQuery()
     {
-        $this->query->with('variant');
+        $this->query->with(['image', 'variant']);
+
+        if ($this->status !== null) {
+            $this->query->andWhere([Product::tableName() . '.[[status]]' => $this->status]);
+        }
 
         if ($this->searchString) {
             $this->query->matching($this->searchString);

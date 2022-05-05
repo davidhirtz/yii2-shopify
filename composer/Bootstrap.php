@@ -41,6 +41,10 @@ class Bootstrap implements BootstrapInterface
             ],
         ]);
 
+        $app->getUrlManager()->addRules([
+            'shopify/webhook/<action>' => 'shopify/webhook/<action>',
+        ], false);
+
         $app->setMigrationNamespace('davidhirtz\yii2\shopify\migrations');
     }
 }

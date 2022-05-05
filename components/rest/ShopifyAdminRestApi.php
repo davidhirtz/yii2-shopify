@@ -35,11 +35,6 @@ class ShopifyAdminRestApi extends BaseObject
     public $shopDomain;
 
     /**
-     * @var string
-     */
-    public $latestShopifyApiVersion = '2022-04';
-
-    /**
      * @var array
      */
     private $_errors = [];
@@ -50,24 +45,17 @@ class ShopifyAdminRestApi extends BaseObject
     private $_client;
 
     /**
-     * @return void
-     */
-    public function init()
-    {
-        if (!$this->shopifyApiVersion) {
-            $this->shopifyApiVersion = $this->latestShopifyApiVersion;
-        }
-
-        parent::init();
-    }
-
-    /**
      * @return array
      */
     public function getProducts(): array
     {
-        $results = $this->get('products', ['limit' => static::SHOPIFY_MAX_PRODUCT_LIMIT], [
-            'X-Shopify-Api-Features' => 'include-presentment-prices',
+        $results = $this->get('products', [
+            'query' => [
+                'limit' => static::SHOPIFY_MAX_PRODUCT_LIMIT,
+            ],
+            'headers' => [
+                'X-Shopify-Api-Features' => 'include-presentment-prices',
+            ],
         ]);
 
         return $results['products'] ?? [];
@@ -79,8 +67,10 @@ class ShopifyAdminRestApi extends BaseObject
      */
     public function getProduct($id)
     {
-        $results = $this->get("products/{$id}", [], [
-            'X-Shopify-Api-Features' => 'include-presentment-prices',
+        $results = $this->get("products/{$id}", [
+            'headers' => [
+                'X-Shopify-Api-Features' => 'include-presentment-prices',
+            ],
         ]);
 
         return $results['product'] ?? [];
@@ -91,42 +81,77 @@ class ShopifyAdminRestApi extends BaseObject
      */
     public function getWebhooks(): array
     {
-        $results = $this->get('webhooks', ['limit' => static::SHOPIFY_MAX_PRODUCT_LIMIT]);
+        $results = $this->get('webhooks', [
+            'query' => [
+                'limit' => static::SHOPIFY_MAX_PRODUCT_LIMIT,
+            ],
+        ]);
+
         return $results['webhooks'] ?? [];
     }
 
     /**
-     * @param string $endpoint
-     * @param array $query
-     * @param array $headers
+     * @param array $params
      * @return array
      */
-    public function get($endpoint, $query = [], $headers = []): ?array
+    public function setWebhook($params): array
     {
-        return $this->request('GET', $endpoint, $query, $headers);
+        $results = $this->post('webhooks', [
+            'form_params' => [
+                'webhook' => $params,
+            ],
+        ]);
+
+        return $results['webhook'] ?? [];
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteWebhook($id)
+    {
+        $this->request('DELETE', "webhooks/{$id}");
+        return empty($this->getErrors());
+    }
+
+    /**
+     * @param string $endpoint
+     * @param array $options
+     * @return array
+     */
+    public function get($endpoint, $options = []): ?array
+    {
+        return $this->request('GET', $endpoint, $options);
+    }
+
+    /**
+     * @param string $endpoint
+     * @param array $options
+     * @return array
+     */
+    public function post($endpoint, $options = []): ?array
+    {
+        return $this->request('POST', $endpoint, $options);
     }
 
     /**
      * @param string $method
      * @param string $endpoint
-     * @param array $query
-     * @param array $headers
+     * @param array $options
      * @return array|null
      */
-    public function request($method, $endpoint, $query = [], $headers = []): ?array
+    public function request($method, $endpoint, $options = []): ?array
     {
         $uri = "https://{$this->shopDomain}/admin/api/{$this->shopifyApiVersion}/{$endpoint}.json";
-        $headers['X-Shopify-Access-Token'] = $this->shopifyAccessToken;
+
+        $options['headers']['X-Shopify-Access-Token'] = $this->shopifyAccessToken;
+        $options['on_stats'] = function (TransferStats $stats) use (&$url) {
+            Yii::debug("Requesting Shopify Admin REST API: {$stats->getEffectiveUri()}");
+        };
 
         try {
-            $request = $this->getClient()->request($method, $uri, [
-                'headers' => $headers,
-                'query' => $query,
-                'on_stats' => function (TransferStats $stats) use (&$url) {
-                    Yii::debug("Requesting Shopify Admin REST API: {$stats->getEffectiveUri()}");
-                },
-            ]);
-
+            $request = $this->getClient()->request($method, $uri, $options);
             $content = json_decode($request->getBody()->getContents(), true);
 
             if ($content) {
@@ -142,7 +167,8 @@ class ShopifyAdminRestApi extends BaseObject
             // consulting the error log ...
             if ($exception instanceof ClientException) {
                 $contents = json_decode($exception->getResponse()->getBody()->getContents(), true);
-                $this->_errors[] = $contents['errors'] ?? $exception->getMessage() ?: 'Unknown API Error';
+                $this->_errors = $contents['errors'] ?? [$exception->getMessage() ?: 'Unknown API Error'];
+                Yii::debug($this->_errors);
             }
 
             Yii::error($exception);

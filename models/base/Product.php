@@ -31,10 +31,12 @@ use yii\db\ActiveQuery;
  * @property string $options
  * @property int $image_count
  * @property int $variant_count
+ * @property int $total_inventory_quantity
  * @property int $last_import_at
  * @property DateTime $updated_at
  * @property DateTime $created_at
  *
+ * @property ProductImage $image
  * @property ProductImage[] $images
  * @property ProductVariant $variant
  * @property ProductVariant[] $variants
@@ -49,6 +51,7 @@ class Product extends ActiveRecord
     use StatusAttributeTrait;
 
     public const STATUS_ARCHIVED = self::STATUS_DISABLED;
+
     public const AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
@@ -104,6 +107,15 @@ class Product extends ActiveRecord
                 'string',
             ],
         ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->hasOne(ProductImage::class, ['id' => 'image_id'])
+            ->inverseOf('product');
     }
 
     /**
@@ -217,6 +229,8 @@ class Product extends ActiveRecord
             'slug' => Yii::t('shopify', 'Shopify slug'),
             'vendor' => Yii::t('shopify', 'Vendor'),
             'product_type' => Yii::t('shopify', 'Type'),
+            'variant_count' => Yii::t('shopify', 'Variants'),
+            'total_inventory_quantity' => Yii::t('shopify', 'Inventory')
         ]);
     }
 
