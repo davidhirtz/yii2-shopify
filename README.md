@@ -11,8 +11,8 @@ CONFIGURATION
 First, a custom app needs to be created in the Shopify admin under `Apps` > `Develop apps` > `Create an app`.
 Once completed, the app needs to be configured to allow at least these Admin API access scopes:
 
-> `read_inventory`
-> `read_products`
+- `read_inventory`
+- `read_products`
 
 ### Credentials
 
