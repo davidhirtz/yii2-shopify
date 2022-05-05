@@ -269,7 +269,7 @@ class ProductGridView extends GridView
      */
     protected function getUpdateAllProductsButton()
     {
-        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload All Products')), ['/admin/product/update-all'], [
+        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
             'class' => 'btn btn-secondary',
             'data-method' => 'post',
         ]);

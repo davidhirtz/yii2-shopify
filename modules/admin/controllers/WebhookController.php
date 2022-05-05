@@ -51,7 +51,7 @@ class WebhookController extends Controller
     public function actionIndex()
     {
         if (!static::getModule()->shopifyApiSecret) {
-            $this->error(Yii::t('shopify', 'Shopify Admin REST API secret must be set to use webhooks.'));
+            $this->error(Yii::t('shopify', 'Shopify Admin API secret key must be set to use webhooks.'));
         }
 
         $webhooks = [];
@@ -73,7 +73,7 @@ class WebhookController extends Controller
     public function actionUpdateAll()
     {
         if (!static::getModule()->shopifyApiSecret) {
-            throw new InvalidConfigException('Shopify Admin REST API secret must be set to use webhooks. Either via "Module::$shopifyApiKey" or via "shopifyApiKey" param.');
+            throw new InvalidConfigException('Shopify Admin API secret key must be set to use webhooks. Either via "Module::$shopifyApiSecret" or via "shopifyApiSecret" param.');
         }
 
         Yii::$app->getRequest()->setHostInfo('https://1a11-2001-a61-2b39-e001-101e-988d-78e6-f5fe.eu.ngrok.io/');

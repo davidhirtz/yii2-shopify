@@ -151,7 +151,7 @@ class WebhookGridView extends GridView
      */
     protected function getUpdateAllWebhooksButton()
     {
-        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Refresh All Webhooks')), ['/admin/shopify-webhook/update-all'], [
+        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Webhooks')), ['/admin/shopify-webhook/update-all'], [
             'class' => 'btn btn-secondary',
             'data-method' => 'post',
         ]);
