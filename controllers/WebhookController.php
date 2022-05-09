@@ -44,7 +44,17 @@ class WebhookController extends Controller
     }
 
     /**
-     * Webhook endpoint for webhook topics "products/update" and "products/create".
+     * Webhook endpoint for webhook topics "products/create".
+     * @return void
+     */
+    public function actionProductsCreate()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+    }
+
+    /**
+     * Webhook endpoint for webhook topics "products/update".
      * @return void
      */
     public function actionProductsUpdate()

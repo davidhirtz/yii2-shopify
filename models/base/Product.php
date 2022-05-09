@@ -205,7 +205,7 @@ class Product extends ActiveRecord
      */
     public function getAdminRoute()
     {
-        return ['/admin/product/update', 'id' => $this->id];
+        return $this->getShopifyAdminUrl();
     }
 
     /**
@@ -214,6 +214,14 @@ class Product extends ActiveRecord
     public function getRoute()
     {
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getShopifyAdminUrl()
+    {
+        return static::getModule()->getShopUrl("admin/products/{$this->id}");
     }
 
     /**

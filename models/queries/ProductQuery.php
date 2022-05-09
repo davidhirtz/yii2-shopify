@@ -10,6 +10,7 @@ use davidhirtz\yii2\skeleton\db\ActiveQuery;
  * @package davidhirtz\yii2\shopify\models\queries
  *
  * @method Product one($db = null)
+ * @method Product[] all($db = null)
  */
 class ProductQuery extends ActiveQuery
 {

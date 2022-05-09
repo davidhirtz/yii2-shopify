@@ -51,7 +51,7 @@ class Module extends \yii\base\Module
     public $webhooks = [
         [
             'topic' => 'products/create',
-            'route' => ['/shopify/webhook/products-update'],
+            'route' => ['/shopify/webhook/products-create'],
         ],
         [
             'topic' => 'products/update',

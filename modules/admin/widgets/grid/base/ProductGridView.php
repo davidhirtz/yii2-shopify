@@ -114,7 +114,7 @@ class ProductGridView extends GridView
                     'class' => 'thumb',
                 ]);
 
-                return Html::a($html, $this->getShopifyAdminProductLink($product), [
+                return Html::a($html, $product->getAdminRoute(), [
                     'target' => '_blank',
                 ]);
             }
@@ -130,7 +130,7 @@ class ProductGridView extends GridView
             'attribute' => $this->getModel()->getI18nAttributeName('name'),
             'content' => function (Product $product) {
                 $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name')), $this->search);
-                $html = Html::tag('strong', Html::a($html, $this->getShopifyAdminProductLink($product), [
+                $html = Html::tag('strong', Html::a($html, $product->getAdminRoute(), [
                     'target' => '_blank',
                 ]));
 
@@ -154,7 +154,7 @@ class ProductGridView extends GridView
             'contentOptions' => ['class' => 'd-none d-md-table-cell text-center'],
             'content' => function (Product $product) {
                 if ($product->variant->inventory_management) {
-                    return Html::a(Yii::$app->getFormatter()->asInteger($product->total_inventory_quantity), $this->getShopifyAdminProductLink($product), [
+                    return Html::a(Yii::$app->getFormatter()->asInteger($product->total_inventory_quantity), $product->getAdminRoute(), [
                         'class' => 'badge',
                         'target' => '_blank',
                     ]);
@@ -248,15 +248,6 @@ class ProductGridView extends GridView
     }
 
     /**
-     * @param Product $product
-     * @return string
-     */
-    protected function getShopifyAdminProductLink($product)
-    {
-        return static::getModule()->getShopUrl("admin/products/{$product->id}");
-    }
-
-    /**
      * @return string
      */
     protected function getCreateProductButton()
@@ -293,7 +284,7 @@ class ProductGridView extends GridView
      */
     protected function getShopifyAdminProductButton($product): string
     {
-        return Html::a(Icon::tag('wrench'), $this->getShopifyAdminProductLink($product), [
+        return Html::a(Icon::tag('wrench'), $product->getAdminRoute(), [
             'class' => 'btn btn-primary d-none d-md-inline-block',
             'target' => '_blank'
         ]);
