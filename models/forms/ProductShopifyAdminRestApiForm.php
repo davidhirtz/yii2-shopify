@@ -151,6 +151,7 @@ class ProductShopifyAdminRestApiForm
             }
         }
 
+        $product->total_inventory_quantity = $totalInventoryCount;
         $product->variant_count = count($data['variants']);
         $product->update();
 
