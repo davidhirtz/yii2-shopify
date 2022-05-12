@@ -127,7 +127,7 @@ class ProductShopifyAdminRestApiForm
                 'inventory_quantity' => 'inventory_quantity',
             ]);
 
-            $variant->presentment_prices = count($variantData['presentment_prices']) > 1 ? json_encode($variantData['presentment_prices']) : null;
+            $variant->presentment_prices = count($variantData['presentment_prices'] ?? []) > 1 ? json_encode($variantData['presentment_prices']) : null;
 
             if ($variant->save()) {
                 if ($variant->position == 1) {

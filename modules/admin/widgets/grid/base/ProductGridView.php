@@ -252,7 +252,10 @@ class ProductGridView extends GridView
      */
     protected function getCreateProductButton()
     {
-        return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), ['class' => 'btn btn-primary']);
+        return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
+            'class' => 'btn btn-primary',
+            'target' => '_blank',
+        ]);
     }
 
     /**
