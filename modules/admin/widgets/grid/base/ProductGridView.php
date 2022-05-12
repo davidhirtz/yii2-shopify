@@ -153,7 +153,7 @@ class ProductGridView extends GridView
             'headerOptions' => ['class' => 'd-none d-md-table-cell text-center'],
             'contentOptions' => ['class' => 'd-none d-md-table-cell text-center'],
             'content' => function (Product $product) {
-                if ($product->variant->inventory_management) {
+                if ($product->variant->inventory_management ?? false) {
                     return Html::a(Yii::$app->getFormatter()->asInteger($product->total_inventory_quantity), $product->getAdminRoute(), [
                         'class' => 'badge',
                         'target' => '_blank',
