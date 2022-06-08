@@ -25,16 +25,26 @@ completed, the app needs to be configured to allow at least these Admin API acce
 - `read_inventory`
 - `read_products`
 
+To use the Storefront API (shopify.js) activate the Storefront API integration with following permissions:
+
+- `unauthenticated_write_checkouts`
+- `unauthenticated_read_checkouts`
+- `unauthenticated_write_customers`
+- `unauthenticated_read_customers`
+- `unauthenticated_read_product_listings`
+- `unauthenticated_read_product_inventory`
+
 ### Credentials
 
 Following Shopify credentials need to be either added to `config/params.php` or directly set as properties in
 `davidhirtz\yii2\shopify\Module`. They can be found under `API credentials` in your private app settings in the Shopify
 admin.
 
-    shopifyApiKey           API key (API key and secret key)
-    shopifyApiSecret        API secret (API key and secret key)
-    shopifyAccessToken      Admin API access token (IMPORTANT: Can only be accessed once!)
-    shopDomain              Your shop URL (example: YOUR_NAME.myshopify.com)
+    shopifyApiKey                   API key (API key and secret key)
+    shopifyApiSecret                API secret (API key and secret key)
+    shopifyAccessToken              Admin API access token (IMPORTANT: Can only be accessed once!)
+    shopDomain                      Your shop URL (example: YOUR_NAME.myshopify.com)
+    shopifyStorefrontAccessToken    Storefront access token
 
 ### Webhooks
 
