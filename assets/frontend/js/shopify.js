@@ -1,10 +1,11 @@
 class Shopify {
-    storageKey = 'shopifyCheckout';
-    itemCount = 0;
-    checkout = null;
 
     constructor(config) {
         const _ = this;
+
+        _.storageKey = 'shopifyCheckout';
+        _.itemCount = 0;
+        _.checkout = null;
 
         _.client = ShopifyBuy.buildClient(config);
 
@@ -15,7 +16,7 @@ class Shopify {
         }
     }
 
-    setCheckout = (checkout) => {
+    setCheckout(checkout) {
         const _ = this;
 
         if (checkout) {
@@ -26,7 +27,7 @@ class Shopify {
         }
     }
 
-    createCheckout = () => {
+    createCheckout() {
         const _ = this;
 
         _.client.checkout.create().then(function (checkout) {
@@ -35,7 +36,7 @@ class Shopify {
         });
     }
 
-    updateCheckout = () => {
+    updateCheckout() {
         const _ = this;
 
         if (_.checkout) {
@@ -51,7 +52,7 @@ class Shopify {
         }
     }
 
-    addLineItem = (variantId, quantity = 1) => {
+    addLineItem(variantId, quantity = 1) {
         const _ = this;
 
         return _.client.checkout.addLineItems(_.checkout.id, [
@@ -62,7 +63,7 @@ class Shopify {
         ]).then(_.setCheckout);
     }
 
-    updateLineItem = (lineItemId, quantity) => {
+    updateLineItem(lineItemId, quantity) {
         const _ = this;
 
         return _.client.checkout.updateLineItems(_.checkout.id, [
@@ -73,18 +74,18 @@ class Shopify {
         ]).then(_.setCheckout);
     }
 
-    removeLineItem = (lineItemId) => {
+    removeLineItem(lineItemId) {
         const _ = this;
         return _.client.checkout.removeLineItems(_.checkout.id, [lineItemId]).then(_.setCheckout);
     }
 
-    formatPrice = (price) => {
+    formatPrice(price) {
         return parseFloat(price).toLocaleString(this.client.config.language || undefined, {minimumFractionDigits: 2})
     }
 
-    onItemCountChange = () => {
+    onItemCountChange() {
     }
 
-    afterCheckoutUpdate = () => {
+    afterCheckoutUpdate() {
     }
 }
