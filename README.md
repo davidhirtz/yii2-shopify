@@ -56,9 +56,9 @@ required) and click on `Setup Webhooks` to register the necessary webhooks which
 Products are synced automatically on change in Shopify admin. If products were already created before the webhooks were
 registered or there seems to be an issue with the sync, click on `Reload Products` to load all products from Shopify.
 
-### Checkout
+### Shopify Theme
 
-Optional you can add custom code to the Shopify "Thank you" page to add trackers or a "back to website" button. The textfield "Additional scripts" is located in your Shopify Backend at domain.myshopify.com/admin/settings/checkout. It accepts HTML, JS and the liquid objects `shop` and ` checkout`.
+To disable to "Online shop" app in the backend, you can create a minimal theme or upload this [package](https://github.com/instantcommerce/shopify-headless-theme). Additonally you can add custom code to the Shopify "Thank you" page to add trackers or a "back to website" button. The textfield "Additional scripts" is located in your Shopify Backend at domain.myshopify.com/admin/settings/checkout. It accepts HTML, JS and the liquid objects `shop` and ` checkout`.
 
 ```html
 <a href="https://www.domain.com/" target="_blank" class="btn" style="margin-top:30px">
