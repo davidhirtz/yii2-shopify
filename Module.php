@@ -43,6 +43,11 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
+    public $shopifyStorefrontAccessToken;
+
+    /**
+     * @var string
+     */
     public $shopifyApiVersion;
 
     /**
@@ -83,10 +88,14 @@ class Module extends \yii\base\Module
         }
 
         $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
-        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "https://{$this->shopifyShopName}.myshopify.com";
+
+        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "{$this->shopifyShopName}.myshopify.com";
+        $this->shopifyShopDomain = parse_url($this->shopifyShopDomain, PHP_URL_HOST);
+
         $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;
         $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?? null;
         $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'] ?? null;
+        $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'] ?? null;
         $this->shopifyApiVersion ??= $this->latestShopifyApiVersion;
 
         if (!$this->shopifyShopName) {
@@ -96,6 +105,7 @@ class Module extends \yii\base\Module
         if (!$this->shopifyAccessToken) {
             throw new InvalidConfigException('Shopify Admin REST API access token must be set. Either via "Module::$shopifyAccessToken" or via "shopifyAccessToken" param.');
         }
+
 
         parent::init();
     }
