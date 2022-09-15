@@ -40,16 +40,17 @@ Following Shopify credentials need to be either added to `config/params.php` or 
 `davidhirtz\yii2\shopify\Module`. They can be found under `API credentials` in your private app settings in the Shopify
 admin.
 
+    shopifyShopName                 The shopify name of your shop (https://NAME.myshopify.com/)
+    shopifyShopDomain               Your optional custom shop URL
     shopifyApiKey                   API key (API key and secret key)
     shopifyApiSecret                API secret (API key and secret key)
     shopifyAccessToken              Admin API access token (IMPORTANT: Can only be accessed once!)
-    shopDomain                      Your shop URL (example: YOUR_NAME.myshopify.com)
     shopifyStorefrontAccessToken    Storefront access token
 
 ### Webhooks
 
 After the configuration is completed, go to `Products` > `Webhooks` (the user permission `Manage Shopify webhooks` is
-required) and click on `Setup Webhooks` to register the necessary webhooks which sync the Shopify admin with the website.
+required) and click on `Install Webhooks` to register the necessary webhooks which sync the Shopify admin with the website.
 
 ### Products
 

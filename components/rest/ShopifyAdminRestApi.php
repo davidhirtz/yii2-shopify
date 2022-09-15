@@ -22,17 +22,17 @@ class ShopifyAdminRestApi extends BaseObject
     /**
      * @var string
      */
+    public $shopifyShopName;
+
+    /**
+     * @var string
+     */
     public $shopifyAccessToken;
 
     /**
      * @var string
      */
     public $shopifyApiVersion;
-
-    /**
-     * @var string
-     */
-    public $shopDomain;
 
     /**
      * @var array
@@ -143,7 +143,7 @@ class ShopifyAdminRestApi extends BaseObject
      */
     public function request($method, $endpoint, $options = []): ?array
     {
-        $uri = "https://{$this->shopDomain}/admin/api/{$this->shopifyApiVersion}/{$endpoint}.json";
+        $uri = "https://{$this->shopifyShopName}.myshopify.com/admin/api/{$this->shopifyApiVersion}/{$endpoint}.json";
 
         $options['headers']['X-Shopify-Access-Token'] = $this->shopifyAccessToken;
         $options['on_stats'] = function (TransferStats $stats) use (&$url) {

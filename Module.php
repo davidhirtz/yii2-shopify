@@ -18,6 +18,16 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
+    public $shopifyShopName;
+
+    /**
+     * @var string|null optional custom shopify domain
+     */
+    public $shopifyShopDomain;
+
+    /**
+     * @var string
+     */
     public $shopifyApiKey;
 
     /**
@@ -38,12 +48,7 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
-    public $latestShopifyApiVersion = '2022-04';
-
-    /**
-     * @var string
-     */
-    public $shopDomain;
+    public $latestShopifyApiVersion = '2022-07';
 
     /**
      * @var array
@@ -77,14 +82,15 @@ class Module extends \yii\base\Module
             throw new InvalidConfigException('Shopify module does not support I18N database tables.');
         }
 
-        $this->shopifyApiKey = $this->shopifyApiKey ?: Yii::$app->params['shopifyApiKey'] ?? null;
-        $this->shopifyApiSecret = $this->shopifyApiSecret ?: Yii::$app->params['shopifyApiSecret'] ?? null;
-        $this->shopifyAccessToken = $this->shopifyAccessToken ?: Yii::$app->params['shopifyAccessToken'] ?? null;
-        $this->shopDomain = $this->shopDomain ?: Yii::$app->params['shopifyShopDomain'] ?? null;
-        $this->shopifyApiVersion = $this->shopifyApiVersion ?: $this->latestShopifyApiVersion;
+        $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
+        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "https://{$this->shopifyShopName}.myshopify.com";
+        $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;
+        $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?? null;
+        $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'] ?? null;
+        $this->shopifyApiVersion ??= $this->latestShopifyApiVersion;
 
-        if (!$this->shopDomain) {
-            throw new InvalidConfigException('Shopify shop domain must be set. Either via "Module::$shopDomain" or via "shopifyShopDomain" param.');
+        if (!$this->shopifyShopName) {
+            throw new InvalidConfigException('Shopify shop name must be set. Either via "Module::$shopifyShopName" or via "shopifyShopName" param.');
         }
 
         if (!$this->shopifyAccessToken) {
@@ -100,7 +106,7 @@ class Module extends \yii\base\Module
      */
     public function getShopUrl($query = ''): string
     {
-        return "https://{$this->shopDomain}/{$query}";
+        return "{$this->shopifyShopDomain}/{$query}";
     }
 
     /**
@@ -112,7 +118,7 @@ class Module extends \yii\base\Module
             $this->_api = new ShopifyAdminRestApi([
                 'shopifyAccessToken' => $this->shopifyAccessToken,
                 'shopifyApiVersion' => $this->shopifyApiVersion,
-                'shopDomain' => $this->shopDomain,
+                'shopifyShopName' => $this->shopifyShopName,
             ]);
         }
 
