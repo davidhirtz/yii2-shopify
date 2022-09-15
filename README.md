@@ -55,3 +55,17 @@ required) and click on `Setup Webhooks` to register the necessary webhooks which
 
 Products are synced automatically on change in Shopify admin. If products were already created before the webhooks were
 registered or there seems to be an issue with the sync, click on `Reload Products` to load all products from Shopify.
+
+### Checkout
+
+Optional you can add custom code to the Shopify "Thank you" page to add trackers or a "back to website" button. The textfield "Additional scripts" is located in your Shopify Backend at domain.myshopify.com/admin/settings/checkout. It accepts HTML, JS and the liquid objects `shop` and ` checkout`.
+
+```html
+<a href="https://www.domain.com/" target="_blank" class="btn" style="margin-top:30px">
+{% if shop.locale == "de" %}
+Zurück zum Shop
+{% else %}
+Return to shop
+{% endif %}
+</a>
+```
