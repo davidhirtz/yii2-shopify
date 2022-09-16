@@ -148,7 +148,7 @@ class ProductVariant extends ActiveRecord
      */
     public function getAdminRoute()
     {
-        return ['/admin/product-variant/update', 'id' => $this->id];
+        return ['/admin/product/update', 'id' => $this->product_id];
     }
 
     /**
