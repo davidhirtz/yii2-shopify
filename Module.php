@@ -116,7 +116,7 @@ class Module extends \yii\base\Module
      */
     public function getShopUrl($query = ''): string
     {
-        return "{$this->shopifyShopDomain}/{$query}";
+        return "https://{$this->shopifyShopDomain}/{$query}";
     }
 
     /**
