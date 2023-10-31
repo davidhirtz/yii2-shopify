@@ -22,7 +22,7 @@ class ProductShopifyAdminRestApiForm
      */
     public static function createOrUpdateFromApiData($data)
     {
-        $product = Product::findOne($data['id']) ?? new Product();
+        $product = Product::findOne($data['id']) ?? Product::create();
         $isNewRecord = $product->getIsNewRecord();
 
         $statusesMap = [
@@ -69,7 +69,7 @@ class ProductShopifyAdminRestApiForm
         $imageIds = [];
 
         foreach ($data['images'] as $imageData) {
-            $image = $images[$imageData['id']] ?? new ProductImage();
+            $image = $images[$imageData['id']] ?? ProductImage::create();
             $image->populateProductRelation($product);
 
             static::setAttributesFromApiData($image, $imageData, [
@@ -104,7 +104,7 @@ class ProductShopifyAdminRestApiForm
         $variantIds = [];
 
         foreach ($data['variants'] as $variantData) {
-            $variant = $variants[$variantData['id']] ?? new ProductVariant();
+            $variant = $variants[$variantData['id']] ?? ProductVariant::create();
             $variant->populateProductRelation($product);
 
             static::setAttributesFromApiData($variant, $variantData, [

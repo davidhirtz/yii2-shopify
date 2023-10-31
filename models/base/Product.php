@@ -149,12 +149,9 @@ class Product extends ActiveRecord
             ->inverseOf('product');
     }
 
-    /**
-     * @return ProductQuery
-     */
-    public static function find()
+    public static function find(): ProductQuery
     {
-        return new ProductQuery(get_called_class());
+        return Yii::createObject(ProductQuery::class, [get_called_class()]);
     }
 
     /**

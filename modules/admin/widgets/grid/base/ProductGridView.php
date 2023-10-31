@@ -25,12 +25,9 @@ class ProductGridView extends GridView
     /**
      * @var bool whether product urls should be displayed in the name column
      */
-    public $showUrl = false;
+    public bool $showUrl = false;
 
-    /**
-     * @return void
-     */
-    public function init()
+    public function init(): void
     {
         if (!$this->columns) {
             $this->columns = [
@@ -46,55 +43,42 @@ class ProductGridView extends GridView
 
         $this->status = $this->dataProvider->status;
 
-        $this->initHeader();
-        $this->initFooter();
-
         parent::init();
     }
 
-    /**
-     * Sets up grid header.
-     */
-    protected function initHeader()
+    protected function initHeader(): void
     {
-        if ($this->header === null) {
-            $this->header = [
+        $this->header ??= [
+            [
                 [
-                    [
-                        'content' => $this->statusDropdown(),
-                        'options' => ['class' => 'col-12 col-md-3'],
-                    ],
-                    [
-                        'content' => $this->getSearchInput(),
-                        'options' => ['class' => 'col-12 col-md-6'],
-                    ],
-                    'options' => [
-                        'class' => 'justify-content-between',
-                    ],
+                    'content' => $this->statusDropdown(),
+                    'options' => ['class' => 'col-12 col-md-3'],
                 ],
-            ];
-        }
+                [
+                    'content' => $this->getSearchInput(),
+                    'options' => ['class' => 'col-12 col-md-6'],
+                ],
+                'options' => [
+                    'class' => 'justify-content-between',
+                ],
+            ],
+        ];
     }
 
-    /**
-     * Sets up grid footer.
-     */
-    protected function initFooter()
+    protected function initFooter(): void
     {
-        if ($this->footer === null) {
-            $this->footer = [
+        $this->footer ??= [
+            [
                 [
-                    [
-                        'content' => $this->getCreateProductButton(),
-                        'options' => ['class' => 'col'],
-                    ],
-                    [
-                        'content' => $this->getUpdateAllProductsButton(),
-                        'options' => ['class' => 'col text-right'],
-                    ],
+                    'content' => $this->getCreateProductButton(),
+                    'options' => ['class' => 'col'],
                 ],
-            ];
-        }
+                [
+                    'content' => $this->getUpdateAllProductsButton(),
+                    'options' => ['class' => 'col text-right'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -293,11 +277,7 @@ class ProductGridView extends GridView
         ]);
     }
 
-
-    /**
-     * @return Product
-     */
-    public function getModel()
+    public function getModel(): Product
     {
         return Product::instance();
     }

@@ -59,7 +59,7 @@ class WebhookGridView extends GridView
     /**
      * Sets up grid footer.
      */
-    protected function initFooter()
+    protected function initFooter(): void
     {
         if ($this->footer === null) {
             $this->footer = [

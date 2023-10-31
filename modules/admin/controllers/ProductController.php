@@ -47,12 +47,9 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function actionIndex($status = null, $q = null)
+    public function actionIndex(?int $status = null, ?string $q = null): Response|string
     {
-        $provider = new ProductActiveDataProvider([
+        $provider = Yii::$container->get(ProductActiveDataProvider::class, [], [
             'status' => $status,
             'searchString' => $q,
         ]);
@@ -62,11 +59,7 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return Response
-     */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): Response|string
     {
         $api = static::getModule()->getApi();
 
@@ -85,10 +78,7 @@ class ProductController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * @return Response
-     */
-    public function actionUpdateAll()
+    public function actionUpdateAll(): Response
     {
         $api = static::getModule()->getApi();
         $products = $api->getProducts();

@@ -57,7 +57,9 @@ class WebhookController extends Controller
         $webhooks = [];
 
         foreach (static::getModule()->getApi()->getWebhooks() as $data) {
-            $webhooks[] = new Webhook($data);
+            $webhooks[] = Yii::createObject(array_merge($data, [
+                'class' => Webhook::class,
+            ]));
         }
 
         usort($webhooks, fn(Webhook $a, Webhook $b) => strcmp($b->updated_at, $a->updated_at));
@@ -77,7 +79,7 @@ class WebhookController extends Controller
         }
 
         foreach (static::getModule()->webhooks as $attributes) {
-            $webhook = new Webhook();
+            $webhook = Yii::createObject(Webhook::class);
             $webhook->setAttributes($attributes);
             if ($webhook->create()) {
                 $this->success(Yii::t('shopify', "The webhook \"{topic}\" was created.", [

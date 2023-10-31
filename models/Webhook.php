@@ -7,11 +7,6 @@ use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use Yii;
 use yii\base\Model;
 
-/**
- * Class Webhook
- * @package davidhirtz\yii2\shopify\models
- *
- */
 class Webhook extends Model
 {
     use ModuleTrait;
