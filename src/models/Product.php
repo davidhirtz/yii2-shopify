@@ -153,12 +153,12 @@ class Product extends ActiveRecord
         return Yii::t('shopify', 'Product');
     }
 
-    public function getTrailModelAdminRoute(): array|false
+    public function getTrailModelAdminRoute(): array|string|false
     {
         return $this->getAdminRoute();
     }
 
-    public function getAdminRoute(): array|false
+    public function getAdminRoute(): array|string|false
     {
         return $this->getShopifyAdminUrl();
     }
