@@ -7,58 +7,54 @@ use davidhirtz\yii2\skeleton\modules\ModuleTrait;
 use Yii;
 use yii\base\InvalidConfigException;
 
-/**
- * Class Module
- * @package davidhirtz\yii2\shopify
- */
 class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
     /**
-     * @var string
+     * @var string|null the Shopify shop name, defaults to params `shopifyShopDomain` domain name.
      */
-    public $shopifyShopName;
+    public ?string $shopifyShopName = null;
 
     /**
-     * @var string|null optional custom shopify domain
+     * @var string|null the optional custom Shopify shop domain
      */
-    public $shopifyShopDomain;
+    public ?string $shopifyShopDomain = null;
 
     /**
-     * @var string
+     * @var string|null the Shopify API key, defaults to params `shopifyApiKey`.
      */
-    public $shopifyApiKey;
+    public ?string $shopifyApiKey = null;
 
     /**
-     * @var string
+     * @var string|null the Shopify API secret, defaults to params `shopifyApiSecret`.
      */
-    public $shopifyApiSecret;
+    public ?string $shopifyApiSecret = null;
 
     /**
-     * @var string
+     * @var string|null the Shopify Admin REST API access token, defaults to params `shopifyAccessToken`.
      */
-    public $shopifyAccessToken;
+    public ?string $shopifyAccessToken = null;
 
     /**
-     * @var string
+     * @var string|null the Shopify Storefront API access token, defaults to params `shopifyStorefrontAccessToken`.
      */
-    public $shopifyStorefrontAccessToken;
+    public ?string $shopifyStorefrontAccessToken = null;
 
     /**
-     * @var string
+     * @var string|null the Shopify Admin REST API version, defaults to the latest version.
      */
-    public $shopifyApiVersion;
+    public ?string $shopifyApiVersion = null;
 
     /**
-     * @var string
+     * @var string the latest Shopify Admin REST API version supported by this module.
      */
-    public $latestShopifyApiVersion = '2022-07';
+    protected string $latestShopifyApiVersion = '2022-07';
 
     /**
      * @var array
      */
-    public $webhooks = [
+    public array $webhooks = [
         [
             'topic' => 'products/create',
             'route' => ['/shopify/webhook/products-create'],
@@ -73,14 +69,8 @@ class Module extends \yii\base\Module
         ],
     ];
 
-    /**
-     * @var ShopifyAdminRestApi
-     */
-    private $_api;
+    private ?ShopifyAdminRestApi $_api = null;
 
-    /**
-     * @return void
-     */
     public function init(): void
     {
         if ($this->enableI18nTables) {
@@ -89,8 +79,8 @@ class Module extends \yii\base\Module
 
         $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
 
-        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "{$this->shopifyShopName}.myshopify.com";
-        $this->shopifyShopDomain = rtrim(preg_replace("(^https?://)", "", $this->shopifyShopDomain), '/');
+        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "$this->shopifyShopName.myshopify.com";
+        $this->shopifyShopDomain = rtrim(preg_replace('(^https?://)', '', $this->shopifyShopDomain), '/');
 
         $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;
         $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?? null;
@@ -110,27 +100,18 @@ class Module extends \yii\base\Module
         parent::init();
     }
 
-    /**
-     * @param string $query
-     * @return string
-     */
-    public function getShopUrl($query = ''): string
+    public function getShopUrl(string $query = ''): string
     {
-        return "https://{$this->shopifyShopDomain}/{$query}";
+        return "https://$this->shopifyShopDomain/$query";
     }
 
-    /**
-     * @return ShopifyAdminRestApi
-     */
-    public function getApi()
+    public function getApi(): ShopifyAdminRestApi
     {
-        if ($this->_api === null) {
-            $this->_api = new ShopifyAdminRestApi([
-                'shopifyAccessToken' => $this->shopifyAccessToken,
-                'shopifyApiVersion' => $this->shopifyApiVersion,
-                'shopifyShopName' => $this->shopifyShopName,
-            ]);
-        }
+        $this->_api ??= new ShopifyAdminRestApi([
+            'shopifyAccessToken' => $this->shopifyAccessToken,
+            'shopifyApiVersion' => $this->shopifyApiVersion,
+            'shopifyShopName' => $this->shopifyShopName,
+        ]);
 
         return $this->_api;
     }

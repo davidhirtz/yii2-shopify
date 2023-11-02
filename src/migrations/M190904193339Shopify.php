@@ -2,8 +2,8 @@
 
 namespace davidhirtz\yii2\shopify\migrations;
 
-use davidhirtz\yii2\shopify\models\base\ProductImage;
-use davidhirtz\yii2\shopify\models\base\ProductVariant;
+use davidhirtz\yii2\shopify\models\ProductImage;
+use davidhirtz\yii2\shopify\models\ProductVariant;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\Webhook;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
@@ -13,17 +13,14 @@ use Yii;
 use yii\db\Migration;
 
 /**
- * Class M190904193339Shopify
+ * @noinspection PhpUnused
  */
 class M190904193339Shopify extends Migration
 {
     use MigrationTrait;
     use ModuleTrait;
 
-    /**
-     * @inheritDoc
-     */
-    public function safeUp()
+    public function safeUp(): void
     {
         $schema = $this->getDb()->getSchema();
 
@@ -132,10 +129,7 @@ class M190904193339Shopify extends Migration
         $auth->addChild($admin, $shopifyWebhookUpdate);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function safeDown()
+    public function safeDown(): void
     {
         $schema = $this->getDb()->getSchema();
 

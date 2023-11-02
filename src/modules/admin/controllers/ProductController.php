@@ -13,17 +13,10 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * Class ProductController.
- * @package davidhirtz\yii2\shopify\modules\admin\controllers
- */
 class ProductController extends Controller
 {
     use ModuleTrait;
 
-    /**
-     * @inheritdoc
-     */
     public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [

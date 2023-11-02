@@ -3,8 +3,8 @@
 namespace davidhirtz\yii2\shopify\models\forms;
 
 use DateTimeZone;
-use davidhirtz\yii2\shopify\models\base\ProductImage;
-use davidhirtz\yii2\shopify\models\base\ProductVariant;
+use davidhirtz\yii2\shopify\models\ProductImage;
+use davidhirtz\yii2\shopify\models\ProductVariant;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
@@ -182,7 +182,7 @@ class ProductShopifyAdminRestApiForm
     }
 
     /**
-     * @param Product|ProductImage|ProductVariant $model
+     * @param Product|\davidhirtz\yii2\shopify\models\ProductImage|\davidhirtz\yii2\shopify\models\ProductVariant $model
      * @param array $data
      * @param array $attributesMap
      * @return void

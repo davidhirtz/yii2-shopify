@@ -11,17 +11,10 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
-/**
- * Class WebhookController
- * @package davidhirtz\yii2\shopify\modules\admin\controllers
- */
 class WebhookController extends Controller
 {
     use ModuleTrait;
 
-    /**
-     * @inheritdoc
-     */
     public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [
@@ -45,10 +38,7 @@ class WebhookController extends Controller
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function actionIndex()
+    public function actionIndex(): Response|string
     {
         if (!static::getModule()->shopifyApiSecret) {
             $this->error(Yii::t('shopify', 'Shopify Admin API secret key must be set to use webhooks.'));
@@ -69,10 +59,7 @@ class WebhookController extends Controller
         ]);
     }
 
-    /**
-     * @return Response
-     */
-    public function actionUpdateAll()
+    public function actionUpdateAll():Response|string
     {
         if (!static::getModule()->shopifyApiSecret) {
             throw new InvalidConfigException('Shopify Admin API secret key must be set to use webhooks. Either via "Module::$shopifyApiSecret" or via "shopifyApiSecret" param.');
@@ -97,10 +84,7 @@ class WebhookController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * @return Response
-     */
-    public function actionDelete($id)
+    public function actionDelete(int $id):Response|string
     {
         $api = static::getModule()->getApi();
 

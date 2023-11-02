@@ -7,27 +7,24 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\Module;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
-use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
-/**
- * Class WebhookController
- * @package davidhirtz\yii2\shopify\controllers
- */
 class WebhookController extends Controller
 {
     use ModuleTrait;
 
     /**
-     * @var bool
+     * Disables CSRF validation for webhook endpoints
      */
-    public $enableCsrfValidation = false;
+    public function init(): void
+    {
+        $this->enableCsrfValidation = false;
+        parent::init();
+    }
 
     /**
      * Validates webhooks from Shopify, this only works when is {@see Module::$shopifyApiSecret} set
-     * @param Action $action
-     * @return bool
      */
     public function beforeAction($action): bool
     {
@@ -45,9 +42,8 @@ class WebhookController extends Controller
 
     /**
      * Webhook endpoint for webhook topics "products/create".
-     * @return void
      */
-    public function actionProductsCreate()
+    public function actionProductsCreate(): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
         ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
@@ -55,9 +51,8 @@ class WebhookController extends Controller
 
     /**
      * Webhook endpoint for webhook topics "products/update".
-     * @return void
      */
-    public function actionProductsUpdate()
+    public function actionProductsUpdate(): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
         ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
@@ -65,14 +60,13 @@ class WebhookController extends Controller
 
     /**
      * Webhook endpoint for webhook topic "products/delete".
-     * @return void
      */
-    public function actionProductsDelete()
+    public function actionProductsDelete(): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $id = $data['id'] ?? null;
+        $product = Product::findOne($data['id'] ?? null);
 
-        if (!($product = $id ? Product::findOne($id) : null)) {
+        if (!$product) {
             throw new NotFoundHttpException();
         }
 

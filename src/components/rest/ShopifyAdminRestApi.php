@@ -10,43 +10,16 @@ use GuzzleHttp\TransferStats;
 use Yii;
 use yii\base\BaseObject;
 
-/**
- * Class ShopifyAdminRestApi
- * @package davidhirtz\yii2\shopify\models
- *
- */
 class ShopifyAdminRestApi extends BaseObject
 {
     public const SHOPIFY_MAX_PRODUCT_LIMIT = 250;
 
-    /**
-     * @var string
-     */
-    public $shopifyShopName;
+    public ?string $shopifyShopName = null;
+    public ?string $shopifyAccessToken = null;
+    public ?string $shopifyApiVersion = null;
+    private array $_errors = [];
+    private ?Client $_client = null;
 
-    /**
-     * @var string
-     */
-    public $shopifyAccessToken;
-
-    /**
-     * @var string
-     */
-    public $shopifyApiVersion;
-
-    /**
-     * @var array
-     */
-    private $_errors = [];
-
-    /**
-     * @var Client
-     */
-    private $_client;
-
-    /**
-     * @return array
-     */
     public function getProducts(): array
     {
         $results = $this->get('products', [
@@ -61,13 +34,9 @@ class ShopifyAdminRestApi extends BaseObject
         return $results['products'] ?? [];
     }
 
-    /**
-     * @param int $id
-     * @return array|null
-     */
-    public function getProduct($id)
+    public function getProduct(int $id): array
     {
-        $results = $this->get("products/{$id}", [
+        $results = $this->get("products/$id", [
             'headers' => [
                 'X-Shopify-Api-Features' => 'include-presentment-prices',
             ],
@@ -76,9 +45,6 @@ class ShopifyAdminRestApi extends BaseObject
         return $results['product'] ?? [];
     }
 
-    /**
-     * @return array
-     */
     public function getWebhooks(): array
     {
         $results = $this->get('webhooks', [
@@ -90,11 +56,7 @@ class ShopifyAdminRestApi extends BaseObject
         return $results['webhooks'] ?? [];
     }
 
-    /**
-     * @param array $params
-     * @return array
-     */
-    public function setWebhook($params): array
+    public function setWebhook(array $params): array
     {
         $results = $this->post('webhooks', [
             'form_params' => [
@@ -105,45 +67,25 @@ class ShopifyAdminRestApi extends BaseObject
         return $results['webhook'] ?? [];
     }
 
-    /**
-     * @param int $id
-     * @return bool
-     */
-    public function deleteWebhook($id)
+    public function deleteWebhook(int $id): bool
     {
-        $this->request('DELETE', "webhooks/{$id}");
+        $this->request('DELETE', "webhooks/$id");
         return empty($this->getErrors());
     }
 
-    /**
-     * @param string $endpoint
-     * @param array $options
-     * @return array
-     */
-    public function get($endpoint, $options = []): ?array
+    public function get(string $endpoint, array $options = []): ?array
     {
         return $this->request('GET', $endpoint, $options);
     }
 
-    /**
-     * @param string $endpoint
-     * @param array $options
-     * @return array
-     */
-    public function post($endpoint, $options = []): ?array
+    public function post(string $endpoint, array $options = []): ?array
     {
         return $this->request('POST', $endpoint, $options);
     }
 
-    /**
-     * @param string $method
-     * @param string $endpoint
-     * @param array $options
-     * @return array|null
-     */
-    public function request($method, $endpoint, $options = []): ?array
+    public function request(string $method, string $endpoint, array $options = []): ?array
     {
-        $uri = "https://{$this->shopifyShopName}.myshopify.com/admin/api/{$this->shopifyApiVersion}/{$endpoint}.json";
+        $uri = "https://$this->shopifyShopName.myshopify.com/admin/api/$this->shopifyApiVersion/$endpoint.json";
 
         $options['headers']['X-Shopify-Access-Token'] = $this->shopifyAccessToken;
         $options['on_stats'] = function (TransferStats $stats) use (&$url) {
@@ -180,10 +122,8 @@ class ShopifyAdminRestApi extends BaseObject
     /**
      * Finds "next" link in header for paginated results.
      * For more information see: https://shopify.dev/api/usage/pagination-rest
-     * @param array $headers
-     * @return false|mixed
      */
-    private function getNextLinkFromHeader($headers)
+    private function getNextLinkFromHeader(array $headers): ?string
     {
         if ($links = explode(',', $headers['Link'][0] ?? '')) {
             foreach ($links as $link) {
@@ -193,26 +133,17 @@ class ShopifyAdminRestApi extends BaseObject
             }
         }
 
-        return false;
+        return null;
     }
 
-    /**
-     * @return array
-     */
     public function getErrors(): array
     {
         return $this->_errors;
     }
 
-    /**
-     * @return Client
-     */
-    public function getClient()
+    public function getClient(): Client
     {
-        if ($this->_client === null) {
-            $this->_client = new Client();
-        }
-
+        $this->_client ??= new Client();
         return $this->_client;
     }
 }

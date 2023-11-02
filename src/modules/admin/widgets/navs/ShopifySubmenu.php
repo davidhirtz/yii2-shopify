@@ -1,26 +1,16 @@
 <?php
 
-namespace davidhirtz\yii2\shopify\modules\admin\widgets\nav\base;
+namespace davidhirtz\yii2\shopify\modules\admin\widgets\navs;
 
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\Webhook;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Submenu;
 use Yii;
 
-/**
- * Class Submenu
- * @package davidhirtz\yii2\shopify\modules\admin\widgets\nav\base
- */
 class ShopifySubmenu extends Submenu
 {
-    /**
-     * @var Product
-     */
-    public $model;
+    public ?Product $model = null;
 
-    /**
-     * Initializes the nav items.
-     */
     public function init(): void
     {
         $this->title = $this->title ?: Yii::t('shopify', 'Shopify');
@@ -29,9 +19,6 @@ class ShopifySubmenu extends Submenu
         parent::init();
     }
 
-    /**
-     * @return array
-     */
     protected function getDefaultItems(): array
     {
         return [

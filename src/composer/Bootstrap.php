@@ -2,27 +2,26 @@
 
 namespace davidhirtz\yii2\shopify\composer;
 
+use davidhirtz\yii2\shopify\controllers\WebhookController;
+use davidhirtz\yii2\shopify\Module;
 use davidhirtz\yii2\skeleton\web\Application;
 use yii\base\BootstrapInterface;
 use Yii;
+use yii\i18n\PhpMessageSource;
 
-/**
- * Class Bootstrap
- * @package davidhirtz\yii2\shopify\bootstrap
- */
 class Bootstrap implements BootstrapInterface
 {
     /**
      * @param Application $app
      */
-    public function bootstrap($app)
+    public function bootstrap($app): void
     {
         Yii::setAlias('@shopify', dirname(__DIR__));
 
         $app->extendComponent('i18n', [
             'translations' => [
                 'shopify' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
+                    'class' => PhpMessageSource::class,
                     'basePath' => '@shopify/messages',
                 ],
             ],
@@ -32,18 +31,21 @@ class Bootstrap implements BootstrapInterface
             'admin' => [
                 'modules' => [
                     'shopify' => [
-                        'class' => 'davidhirtz\yii2\shopify\modules\admin\Module',
+                        'class' => \davidhirtz\yii2\shopify\modules\admin\Module::class,
                     ],
                 ],
             ],
             'shopify' => [
-                'class' => 'davidhirtz\yii2\shopify\Module',
+                'class' => Module::class,
             ],
         ]);
 
-        $app->getUrlManager()->addRules([
-            'shopify/webhook/<action>' => 'shopify/webhook/<action>',
-        ], false);
+        /**
+         * @see WebhookController::actionProductsCreate()
+         * @see WebhookController::actionProductsDelete()
+         * @see WebhookController::actionProductsUpdate()
+         */
+        $app->getUrlManager()->addRules(['shopify/webhook/<action>' => 'shopify/webhook/<action>'], false);
 
         $app->setMigrationNamespace('davidhirtz\yii2\shopify\migrations');
     }

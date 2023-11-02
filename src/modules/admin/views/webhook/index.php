@@ -7,8 +7,8 @@
  * @var array $webhooks
  */
 
-use davidhirtz\yii2\shopify\modules\admin\widgets\grid\WebhookGridView;
-use davidhirtz\yii2\shopify\modules\admin\widgets\nav\ShopifySubmenu;
+use davidhirtz\yii2\shopify\modules\admin\widgets\grids\WebhookGridView;
+use davidhirtz\yii2\shopify\modules\admin\widgets\navs\ShopifySubmenu;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
 

@@ -4,52 +4,40 @@ namespace davidhirtz\yii2\shopify\modules\admin;
 
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\Webhook;
+use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
+use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use Yii;
 
-/**
- * Class Module
- * @package davidhirtz\yii2\shopify\modules\admin
- * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
- */
 class Module extends \yii\base\Module
 {
     /**
-     * @var string the module display name, defaults to "Products"
+     * @var string|null the module display name, defaults to "Products"
      */
-    public $name;
+    public ?string $name = null;
 
     /**
      * @var array containing the admin menu items
      */
-    public $navbarItems = [];
+    public array $navbarItems = [];
 
     /**
      * @var array containing the panel items
      */
-    public $panels = [];
+    public array $panels = [];
 
-    /**
-     * @var string
-     */
     public $defaultRoute = 'product';
 
-    /**
-     * @var array
-     */
-    protected $defaultControllerMap = [
+    protected array $defaultControllerMap = [
         'product' => [
-            'class' => 'davidhirtz\yii2\shopify\modules\admin\controllers\ProductController',
+            'class' => ProductController::class,
             'viewPath' => '@shopify/modules/admin/views/product',
         ],
         'shopify-webhook' => [
-            'class' => 'davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController',
+            'class' => WebhookController::class,
             'viewPath' => '@shopify/modules/admin/views/webhook',
         ],
     ];
 
-    /**
-     * @inheritdoc
-     */
     public function init(): void
     {
         if (!Yii::$app->getRequest()->getIsConsoleRequest()) {

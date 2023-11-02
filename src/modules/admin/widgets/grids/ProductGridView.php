@@ -1,11 +1,13 @@
 <?php
 
-namespace davidhirtz\yii2\shopify\modules\admin\widgets\grid\base;
+namespace davidhirtz\yii2\shopify\modules\admin\widgets\grids;
 
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
+use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\columns\CounterColumn;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
@@ -13,8 +15,6 @@ use davidhirtz\yii2\timeago\Timeago;
 use Yii;
 
 /**
- * Class ProductGridView
- * @package davidhirtz\yii2\shopify\modules\admin\widgets\grid\base
  * @property ProductActiveDataProvider $dataProvider
  */
 class ProductGridView extends GridView
@@ -105,10 +105,7 @@ class ProductGridView extends GridView
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function nameColumn()
+    public function nameColumn(): array
     {
         return [
             'attribute' => $this->getModel()->getI18nAttributeName('name'),
@@ -127,71 +124,37 @@ class ProductGridView extends GridView
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function totalInventoryQuantityColumn()
+    public function totalInventoryQuantityColumn(): array
     {
         return [
             'attribute' => 'total_inventory_quantity',
-            'headerOptions' => ['class' => 'd-none d-md-table-cell text-center'],
-            'contentOptions' => ['class' => 'd-none d-md-table-cell text-center'],
-            'content' => function (Product $product) {
-                if ($product->variant->inventory_management ?? false) {
-                    return Html::a(Yii::$app->getFormatter()->asInteger($product->total_inventory_quantity), $product->getAdminRoute(), [
-                        'class' => 'badge',
-                        'target' => '_blank',
-                    ]);
-                }
-
-                return '-';
-            }
+            'class' => CounterColumn::class,
+            'route' => fn(Product $product) => $product->getAdminRoute(),
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function variantCountColumn()
+    public function variantCountColumn(): array
     {
         return [
             'attribute' => 'variant_count',
-            'headerOptions' => ['class' => 'd-none d-md-table-cell text-center'],
-            'contentOptions' => ['class' => 'd-none d-md-table-cell text-center'],
-            'content' => function (Product $product) {
-                if ($product->variant_count > 1) {
-                    $query = "admin/products/{$product->id}/variants/{$product->variant_id}";
-
-                    return Html::a(Yii::$app->getFormatter()->asInteger($product->variant_count), static::getModule()->getShopUrl($query), [
-                        'class' => 'badge',
-                        'target' => '_blank',
-                    ]);
-                }
-
-                return '';
-            }
+            'class' => CounterColumn::class,
+            'route' => fn(Product $product) => static::getModule()->getShopUrl("admin/products/$product->id/variants/$product->variant_id"),
+            'countHtmlOptions' => [
+                'class' => 'badge',
+                'target' => '_blank',
+            ]
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function updatedAtColumn()
+    public function updatedAtColumn(): array
     {
         return [
             'attribute' => 'updated_at',
-            'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
-            'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => function (Product $product) {
-                return Timeago::tag($product->updated_at);
-            }
+            'class' => Timeago::class,
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function buttonsColumn()
+    public function buttonsColumn(): array
     {
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
@@ -201,11 +164,7 @@ class ProductGridView extends GridView
         ];
     }
 
-    /**
-     * @param Product $product
-     * @return array
-     */
-    protected function getRowButtons(Product $product)
+    protected function getRowButtons(Product $product): array
     {
         return [
             $this->getUpdateButton($product),
@@ -213,11 +172,7 @@ class ProductGridView extends GridView
         ];
     }
 
-    /**
-     * @param Product $product
-     * @return string
-     */
-    protected function getUrl($product): string
+    protected function getUrl(Product $product): string
     {
         if ($route = $product->getRoute()) {
             $urlManager = Yii::$app->getUrlManager();
@@ -231,10 +186,7 @@ class ProductGridView extends GridView
         return '';
     }
 
-    /**
-     * @return string
-     */
-    protected function getCreateProductButton()
+    protected function getCreateProductButton(): string
     {
         return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
             'class' => 'btn btn-primary',
@@ -243,9 +195,9 @@ class ProductGridView extends GridView
     }
 
     /**
-     * @return string
+     * @see ProductController::actionUpdateAll()
      */
-    protected function getUpdateAllProductsButton()
+    protected function getUpdateAllProductsButton(): string
     {
         return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
             'class' => 'btn btn-secondary',
@@ -253,10 +205,6 @@ class ProductGridView extends GridView
         ]);
     }
 
-    /**
-     * @param Product $model
-     * @return string
-     */
     protected function getUpdateButton($model): string
     {
         return Html::a(Icon::tag('sync'), $this->getRoute($model), [
@@ -265,11 +213,7 @@ class ProductGridView extends GridView
         ]);
     }
 
-    /**
-     * @param Product $product
-     * @return string
-     */
-    protected function getShopifyAdminProductButton($product): string
+    protected function getShopifyAdminProductButton(Product $product): string
     {
         return Html::a(Icon::tag('wrench'), $product->getAdminRoute(), [
             'class' => 'btn btn-primary d-none d-md-inline-block',

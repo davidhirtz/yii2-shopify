@@ -8,8 +8,8 @@
  */
 
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
-use davidhirtz\yii2\shopify\modules\admin\widgets\grid\ProductGridView;
-use davidhirtz\yii2\shopify\modules\admin\widgets\nav\ShopifySubmenu;
+use davidhirtz\yii2\shopify\modules\admin\widgets\grids\ProductGridView;
+use davidhirtz\yii2\shopify\modules\admin\widgets\navs\ShopifySubmenu;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
 
