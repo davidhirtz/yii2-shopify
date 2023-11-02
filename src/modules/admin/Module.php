@@ -50,7 +50,7 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         if (!Yii::$app->getRequest()->getIsConsoleRequest()) {
             if (Yii::$app->getUser()->can('admin')) {

@@ -47,7 +47,7 @@ class ProductImage extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return $this->getI18nRules([
             [

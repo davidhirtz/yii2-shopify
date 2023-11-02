@@ -29,7 +29,7 @@ class WebhookController extends Controller
      * @param Action $action
      * @return bool
      */
-    public function beforeAction($action)
+    public function beforeAction($action): bool
     {
         $hmacHeader = $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] ?? '';
         $data = file_get_contents('php://input');

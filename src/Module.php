@@ -81,7 +81,7 @@ class Module extends \yii\base\Module
     /**
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         if ($this->enableI18nTables) {
             throw new InvalidConfigException('Shopify module does not support I18N database tables.');

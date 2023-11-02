@@ -5,7 +5,7 @@ namespace davidhirtz\yii2\shopify\modules\admin\widgets\grid\base;
 use davidhirtz\yii2\shopify\models\Webhook;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\grid\GridView;
+use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\Timeago;
 use Yii;
@@ -27,7 +27,7 @@ class WebhookGridView extends GridView
     /**
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         if (!$this->dataProvider) {
             $this->dataProvider = new ArrayDataProvider([

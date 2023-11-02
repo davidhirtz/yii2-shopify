@@ -6,8 +6,8 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\grid\GridView;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\grid\StatusGridViewTrait;
+use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
+use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\Timeago;
 use Yii;
@@ -113,7 +113,7 @@ class ProductGridView extends GridView
         return [
             'attribute' => $this->getModel()->getI18nAttributeName('name'),
             'content' => function (Product $product) {
-                $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name')), $this->search);
+                $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name') ?? ''), $this->search);
                 $html = Html::tag('strong', Html::a($html, $product->getAdminRoute(), [
                     'target' => '_blank',
                 ]));
