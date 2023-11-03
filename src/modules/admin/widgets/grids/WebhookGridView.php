@@ -1,8 +1,9 @@
 <?php
 
-namespace davidhirtz\yii2\shopify\modules\admin\widgets\grid\base;
+namespace davidhirtz\yii2\shopify\modules\admin\widgets\grids;
 
 use davidhirtz\yii2\shopify\models\Webhook;
+use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
@@ -11,10 +12,6 @@ use davidhirtz\yii2\timeago\Timeago;
 use Yii;
 use yii\data\ArrayDataProvider;
 
-/**
- * Class WebhookGridView
- * @package davidhirtz\yii2\shopify\modules\admin\widgets\grid\base
- */
 class WebhookGridView extends GridView
 {
     use ModuleTrait;
@@ -22,11 +19,8 @@ class WebhookGridView extends GridView
     /**
      * @var Webhook[]
      */
-    public $webhooks;
+    public ?array $webhooks = [];
 
-    /**
-     * @return void
-     */
     public function init(): void
     {
         if (!$this->dataProvider) {
@@ -37,7 +31,7 @@ class WebhookGridView extends GridView
 
         if (!$this->rowOptions) {
             $this->rowOptions = function (Webhook $model) {
-                return ['id' => "#webhook-{$model->id}"];
+                return ['id' => "#webhook-$model->id"];
             };
         }
 
@@ -56,9 +50,6 @@ class WebhookGridView extends GridView
         parent::init();
     }
 
-    /**
-     * Sets up grid footer.
-     */
     protected function initFooter(): void
     {
         if ($this->footer === null) {
@@ -73,10 +64,7 @@ class WebhookGridView extends GridView
         }
     }
 
-    /**
-     * @return array
-     */
-    public function topicColumn()
+    public function topicColumn(): array
     {
         return [
             'attribute' => 'topic',
@@ -89,10 +77,7 @@ class WebhookGridView extends GridView
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function apiVersionColumn()
+    public function apiVersionColumn(): array
     {
         return [
             'attribute' => 'api_version',
@@ -104,10 +89,7 @@ class WebhookGridView extends GridView
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function formatColumn()
+    public function formatColumn(): array
     {
         return [
             'attribute' => 'format',
@@ -119,10 +101,7 @@ class WebhookGridView extends GridView
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function updatedAtColumn()
+    public function updatedAtColumn(): array
     {
         return [
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
@@ -133,10 +112,7 @@ class WebhookGridView extends GridView
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function buttonsColumn()
+    public function buttonsColumn(): array
     {
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
@@ -147,9 +123,9 @@ class WebhookGridView extends GridView
     }
 
     /**
-     * @return string
+     * @see WebhookController::actionUpdateAll()
      */
-    protected function getUpdateAllWebhooksButton()
+    protected function getUpdateAllWebhooksButton(): string
     {
         $content = $this->dataProvider->getModels() ? Yii::t('shopify', 'Reload Webhooks') : Yii::t('shopify', 'Install Webhooks');
 
@@ -159,27 +135,22 @@ class WebhookGridView extends GridView
         ]);
     }
 
-    /**
-     * @param Webhook $webhook
-     * @return array
-     */
-    protected function getRowButtons(Webhook $webhook)
+    protected function getRowButtons(Webhook $webhook): array
     {
         return [
-            $this->getUpdateButton($webhook),
+            $this->getUnlinkButton($webhook),
         ];
     }
 
     /**
-     * @param Webhook $model
-     * @return string
+     * @see WebhookController::actionDelete()
      */
-    protected function getUpdateButton($model): string
+    protected function getUnlinkButton(Webhook $model): string
     {
         return Html::a(Icon::tag('trash'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data-confirm' => Yii::t('shopify', 'Are you sure you want to remove this webhook?'),
-            'data-target' => "#webhook-{$model->id}",
+            'data-target' => "#webhook-$model->id",
             'data-ajax' => 'remove',
         ]);
     }
