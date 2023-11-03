@@ -1,12 +1,12 @@
 <?php
 /**
- * Entries
- * @see \davidhirtz\yii2\cms\modules\admin\controllers\ProductController::actionIndex()
+ * @see ProductController::actionIndex()
  *
  * @var View $this
  * @var ProductActiveDataProvider $provider
  */
 
+use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\admin\widgets\grids\ProductGridView;
 use davidhirtz\yii2\shopify\modules\admin\widgets\navs\ShopifySubmenu;

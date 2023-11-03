@@ -1,12 +1,12 @@
 <?php
 /**
- * Webhooks
- * @see \davidhirtz\yii2\cms\modules\admin\controllers\WebhookController::actionIndex()
+ * @see WebhookController::actionIndex()
  *
  * @var View $this
  * @var array $webhooks
  */
 
+use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use davidhirtz\yii2\shopify\modules\admin\widgets\grids\WebhookGridView;
 use davidhirtz\yii2\shopify\modules\admin\widgets\navs\ShopifySubmenu;
 use davidhirtz\yii2\skeleton\web\View;
