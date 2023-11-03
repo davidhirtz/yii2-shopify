@@ -1,21 +1,4 @@
-README
-============================
-
-Shopify backend based on the [Yii 2](http://www.yiiframework.com/) extension [yii2-skeleton](https://github.com/davidhirtz/yii2-skeleton/) by David Hirtz.
-
-INSTALLATION
--------------
-
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
-
-```
-composer require davidhirtz/yii2-shopify
-```
-
-Make sure to run the migrations after the installation via `php yii migrate`.
-
-CONFIGURATION
--------------
+Shopify backend based on the [Yii 2](http://www.yiiframework.com/) extension [yii2-skeleton](https://github.com/davidhirtz/yii2-skeleton/).
 
 ### Shopify setup
 
@@ -25,7 +8,7 @@ completed, the app needs to be configured to allow at least these Admin API acce
 - `read_inventory`
 - `read_products`
 
-To use the Storefront API (shopify.js) activate the Storefront API integration with following permissions:
+To use the Storefront API (shopify.js), activate the Storefront API integration with the following permissions:
 
 - `unauthenticated_write_checkouts`
 - `unauthenticated_read_checkouts`
@@ -59,7 +42,7 @@ registered or there seems to be an issue with the sync, click on `Reload Product
 
 ### Shopify Theme
 
-To disable to "Online shop" app in the backend, you can create a minimal theme or upload this [package](https://github.com/instantcommerce/shopify-headless-theme). Additonally you can add custom code to the Shopify "Thank you" page to add trackers or a "back to website" button. The textfield "Additional scripts" is located in your Shopify Backend at domain.myshopify.com/admin/settings/checkout. It accepts HTML, JS and the liquid objects `shop` and ` checkout`.
+To disable the "Online shop" app in the backend, you can create a minimal theme or upload this [package](https://github.com/instantcommerce/shopify-headless-theme). Additionally, you can add custom code to the Shopify "Thank you" page to add trackers or a "back to website" button. The text field "Additional scripts" is located in your Shopify Backend at domain.myshopify.com/admin/settings/checkout. It accepts HTML, JS and the liquid objects `shop` and ` checkout`.
 
 ```html
 <a href="https://www.domain.com/" target="_blank" class="btn" style="margin-top:30px">
