@@ -1,4 +1,4 @@
-## v2.0.0 (Nov 3, 2023)
+## 2.0.0 (Nov 3, 2023)
 
 - Moved source code to `src` folder
 - Moved all models, data providers and widgets out of `base` folder, to override them use Yii's dependency injection
@@ -8,6 +8,6 @@
   to `davidhirtz\yii2\shopify\admin\widgets\grids` and `davidhirtz\yii2\skeleton\shopify\widgets\nav`
   to `davidhirtz\yii2\shopify\admin\widgets\navs`
 
-## v1.1.7 (Oct 31, 2023)
+## 1.1.7 (Oct 31, 2023)
 
 - Locked `davidhirtz\yii2-skeleton` to version `^1.9`, upgrade to version 2.0 to use the latest version of this package
