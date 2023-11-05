@@ -1,3 +1,7 @@
+## v2.0.1 (Nov 5, 2023)
+
+- Moved `Bootstrap` class to base package namespace for consistency
+
 ## 2.0.0 (Nov 3, 2023)
 
 - Moved source code to `src` folder

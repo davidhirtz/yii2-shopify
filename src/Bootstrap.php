@@ -1,9 +1,8 @@
 <?php
 
-namespace davidhirtz\yii2\shopify\composer;
+namespace davidhirtz\yii2\shopify;
 
 use davidhirtz\yii2\shopify\controllers\WebhookController;
-use davidhirtz\yii2\shopify\Module;
 use davidhirtz\yii2\skeleton\web\Application;
 use yii\base\BootstrapInterface;
 use Yii;
@@ -16,7 +15,7 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app): void
     {
-        Yii::setAlias('@shopify', dirname(__DIR__));
+        Yii::setAlias('@shopify', __DIR__);
 
         $app->extendComponent('i18n', [
             'translations' => [
@@ -31,7 +30,7 @@ class Bootstrap implements BootstrapInterface
             'admin' => [
                 'modules' => [
                     'shopify' => [
-                        'class' => \davidhirtz\yii2\shopify\modules\admin\Module::class,
+                        'class' => modules\admin\Module::class,
                     ],
                 ],
             ],
