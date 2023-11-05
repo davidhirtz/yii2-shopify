@@ -8,7 +8,7 @@ use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
-use davidhirtz\yii2\skeleton\db\I18nAttributesTrait;
+use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
 use Yii;
 
 /**
