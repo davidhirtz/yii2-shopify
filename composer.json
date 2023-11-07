@@ -1,10 +1,14 @@
 {
   "name": "davidhirtz/yii2-shopify",
-  "type": "yii2-extension",
-  "description": "Yii2 Shopify Module",
-  "homepage": "https://www.davidhirtz.com/",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  "description": "Shopify module for admin panel based on Yii 2.0 framework",
+  "license": "proprietary",
+  "homepage": "https://www.github.com/davidhirtz/yii2-shopify",
+  "authors": [
+    {
+      "name": "David Hirtz",
+      "homepage": "https://www.davidhirtz.com/"
+    }
+  ],
   "require": {
     "davidhirtz/yii2-skeleton": "^2.0.2"
   },
