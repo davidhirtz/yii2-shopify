@@ -1,3 +1,7 @@
+## v2.0.2 (Dec 8, 2023)
+
+- Replaced `ActiveRecord::logErrors()` with `\davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger::log()
+
 ## v2.0.1 (Nov 6, 2023)
 
 - Moved `Bootstrap` class to base package namespace for consistency

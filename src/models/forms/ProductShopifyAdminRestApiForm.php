@@ -8,6 +8,7 @@ use davidhirtz\yii2\shopify\models\ProductVariant;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
+use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
 
 /**
@@ -60,7 +61,7 @@ class ProductShopifyAdminRestApiForm
         $product->options = $options ? json_encode($options) : null;
 
         if (!$product->save()) {
-            $product->logErrors();
+            ActiveRecordErrorLogger::log($product);
             return $product;
         }
 
@@ -84,8 +85,8 @@ class ProductShopifyAdminRestApiForm
             if ($image->save()) {
                 $imageIds[] = $image->id;
             } elseif ($errors = $image->getErrors()) {
+                ActiveRecordErrorLogger::log($image);
                 $product->addErrors($errors);
-                $image->logErrors();
             }
         }
 
@@ -140,8 +141,8 @@ class ProductShopifyAdminRestApiForm
 
                 $variantIds[] = $variant->id;
             } elseif ($errors = $variant->getErrors()) {
+                ActiveRecordErrorLogger::log($variant);
                 $product->addErrors($errors);
-                $variant->logErrors();
             }
         }
 

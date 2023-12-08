@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "davidhirtz/yii2-skeleton": "^2.0.2"
+    "davidhirtz/yii2-skeleton": "^2.0.14"
   },
   "autoload": {
     "psr-4": {
