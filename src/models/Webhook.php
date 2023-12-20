@@ -107,7 +107,7 @@ class Webhook extends Model
     /**
      * @return bool
      */
-    public function create()
+    public function create(): bool
     {
         if ($this->validate()) {
             $params = array_filter([

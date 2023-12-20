@@ -158,9 +158,7 @@ class ProductGridView extends GridView
     {
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => function (Product $product) {
-                return Html::buttons($this->getRowButtons($product));
-            }
+            'content' => fn(Product $product): string => Html::buttons($this->getRowButtons($product))
         ];
     }
 

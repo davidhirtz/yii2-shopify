@@ -10,11 +10,8 @@ use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
+use yii\helpers\Json;
 
-/**
- * Class ProductShopifyAdminApiForm
- * @package davidhirtz\yii2\shopify\models\forms
- */
 class ProductShopifyAdminRestApiForm
 {
     /**
@@ -58,7 +55,7 @@ class ProductShopifyAdminRestApiForm
         }
 
         ksort($options);
-        $product->options = $options ? json_encode($options) : null;
+        $product->options = $options ? Json::encode($options) : null;
 
         if (!$product->save()) {
             ActiveRecordErrorLogger::log($product);
@@ -128,7 +125,9 @@ class ProductShopifyAdminRestApiForm
                 'inventory_quantity' => 'inventory_quantity',
             ]);
 
-            $variant->presentment_prices = count($variantData['presentment_prices'] ?? []) > 1 ? json_encode($variantData['presentment_prices']) : null;
+            $variant->presentment_prices = count($variantData['presentment_prices'] ?? []) > 1
+                ? Json::encode($variantData['presentment_prices'])
+                : null;
 
             if ($variant->save()) {
                 if ($variant->position == 1) {
@@ -183,12 +182,12 @@ class ProductShopifyAdminRestApiForm
     }
 
     /**
-     * @param Product|\davidhirtz\yii2\shopify\models\ProductImage|\davidhirtz\yii2\shopify\models\ProductVariant $model
+     * @param Product|ProductImage|ProductVariant $model
      * @param array $data
      * @param array $attributesMap
      * @return void
      */
-    private static function setAttributesFromApiData($model, $data, $attributesMap)
+    protected static function setAttributesFromApiData($model, $data, $attributesMap)
     {
         foreach ($attributesMap as $key => $attributeName) {
             $model->setAttribute($attributeName, $data[$key] ?: null);

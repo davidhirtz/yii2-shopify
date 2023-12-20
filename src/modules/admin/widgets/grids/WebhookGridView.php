@@ -30,9 +30,7 @@ class WebhookGridView extends GridView
         }
 
         if (!$this->rowOptions) {
-            $this->rowOptions = function (Webhook $model) {
-                return ['id' => "#webhook-$model->id"];
-            };
+            $this->rowOptions = fn(Webhook $model) => ['id' => "#webhook-$model->id"];
         }
 
         if (!$this->columns) {
@@ -68,7 +66,7 @@ class WebhookGridView extends GridView
     {
         return [
             'attribute' => 'topic',
-            'content' => function (Webhook $webhook) {
+            'content' => function (Webhook $webhook): string {
                 $html = Html::tag('div', $webhook->getFormattedTopic(), ['class' => 'strong']);
                 $html .= Html::tag('div', $webhook->address, ['class' => 'small']);
 
@@ -83,9 +81,7 @@ class WebhookGridView extends GridView
             'attribute' => 'api_version',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => function (Webhook $webhook) {
-                return strtoupper($webhook->api_version);
-            }
+            'content' => fn(Webhook $webhook): string => strtoupper($webhook->api_version)
         ];
     }
 
@@ -95,9 +91,7 @@ class WebhookGridView extends GridView
             'attribute' => 'format',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => function (Webhook $webhook) {
-                return strtoupper($webhook->format);
-            }
+            'content' => fn(Webhook $webhook): string => strtoupper($webhook->format)
         ];
     }
 
@@ -106,9 +100,7 @@ class WebhookGridView extends GridView
         return [
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => function (Webhook $webhook) {
-                return Timeago::tag($webhook->updated_at);
-            }
+            'content' => fn(Webhook $webhook): string => Timeago::tag($webhook->updated_at)
         ];
     }
 
@@ -116,9 +108,7 @@ class WebhookGridView extends GridView
     {
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => function (Webhook $webhook) {
-                return Html::buttons($this->getRowButtons($webhook));
-            }
+            'content' => fn(Webhook $webhook): string => Html::buttons($this->getRowButtons($webhook))
         ];
     }
 

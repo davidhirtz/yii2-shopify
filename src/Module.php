@@ -80,7 +80,7 @@ class Module extends \yii\base\Module
         $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
 
         $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "$this->shopifyShopName.myshopify.com";
-        $this->shopifyShopDomain = rtrim(preg_replace('(^https?://)', '', $this->shopifyShopDomain), '/');
+        $this->shopifyShopDomain = rtrim(preg_replace('(^https?://)', '', (string)$this->shopifyShopDomain), '/');
 
         $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;
         $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?? null;

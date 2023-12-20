@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\TransferStats;
 use Yii;
 use yii\base\BaseObject;
+use yii\helpers\Json;
 
 class ShopifyAdminRestApi extends BaseObject
 {
@@ -94,7 +95,7 @@ class ShopifyAdminRestApi extends BaseObject
 
         try {
             $request = $this->getClient()->request($method, $uri, $options);
-            $content = json_decode($request->getBody()->getContents(), true);
+            $content = Json::decode($request->getBody()->getContents());
 
             if ($content) {
                 if ($next = $this->getNextLinkFromHeader($request->getHeaders())) {
@@ -108,7 +109,7 @@ class ShopifyAdminRestApi extends BaseObject
             // Return error to user as this could be a missing scope or invalid API key which could be fixed without
             // consulting the error log ...
             if ($exception instanceof ClientException) {
-                $contents = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                $contents = Json::decode($exception->getResponse()->getBody()->getContents());
                 $this->_errors = $contents['errors'] ?? [$exception->getMessage() ?: 'Unknown API Error'];
                 Yii::debug($this->_errors);
             }

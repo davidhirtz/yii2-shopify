@@ -7,6 +7,7 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\Module;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -45,7 +46,7 @@ class WebhookController extends Controller
      */
     public function actionProductsCreate(): void
     {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = Json::decode(file_get_contents('php://input'));
         ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
     }
 
@@ -54,7 +55,7 @@ class WebhookController extends Controller
      */
     public function actionProductsUpdate(): void
     {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = Json::decode(file_get_contents('php://input'));
         ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
     }
 
@@ -63,7 +64,7 @@ class WebhookController extends Controller
      */
     public function actionProductsDelete(): void
     {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = Json::decode(file_get_contents('php://input'));
         $product = Product::findOne($data['id'] ?? null);
 
         if (!$product) {

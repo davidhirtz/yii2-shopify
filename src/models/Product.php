@@ -8,8 +8,9 @@ use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
+use davidhirtz\yii2\skeleton\models\interfaces\DraftStatusAttributeInterface;
+use davidhirtz\yii2\skeleton\models\traits\DraftStatusAttributeTrait;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
-use davidhirtz\yii2\skeleton\models\traits\StatusAttributeTrait;
 use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
 use davidhirtz\yii2\skeleton\validators\DynamicRangeValidator;
 use davidhirtz\yii2\skeleton\validators\HtmlValidator;
@@ -40,11 +41,11 @@ use yii\db\ActiveQuery;
  * @property-read ProductVariant $variant {@see static::getVariant()}
  * @property-read ProductVariant[] $variants {@see static::getVariants()}
  */
-class Product extends ActiveRecord
+class Product extends ActiveRecord implements DraftStatusAttributeInterface
 {
     use I18nAttributesTrait;
     use ModuleTrait;
-    use StatusAttributeTrait;
+    use DraftStatusAttributeTrait;
     use UpdatedByUserTrait;
 
     public const STATUS_ARCHIVED = self::STATUS_DISABLED;
