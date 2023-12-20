@@ -8,6 +8,9 @@ use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
 use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use Yii;
 
+/**
+ * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
+ */
 class Module extends \yii\base\Module
 {
     /**
