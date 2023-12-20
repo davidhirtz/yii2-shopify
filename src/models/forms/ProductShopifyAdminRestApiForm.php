@@ -3,10 +3,10 @@
 namespace davidhirtz\yii2\shopify\models\forms;
 
 use DateTimeZone;
+use davidhirtz\yii2\datetime\DateTime;
+use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\shopify\models\ProductVariant;
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;

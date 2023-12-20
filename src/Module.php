@@ -51,9 +51,7 @@ class Module extends \yii\base\Module
      */
     protected string $latestShopifyApiVersion = '2022-07';
 
-    /**
-     * @var array
-     */
+    
     public array $webhooks = [
         [
             'topic' => 'products/create',

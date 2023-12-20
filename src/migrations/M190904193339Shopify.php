@@ -2,9 +2,9 @@
 
 namespace davidhirtz\yii2\shopify\migrations;
 
+use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\shopify\models\ProductVariant;
-use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\Webhook;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;

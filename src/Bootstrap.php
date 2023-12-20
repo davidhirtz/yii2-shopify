@@ -4,8 +4,8 @@ namespace davidhirtz\yii2\shopify;
 
 use davidhirtz\yii2\shopify\controllers\WebhookController;
 use davidhirtz\yii2\skeleton\web\Application;
-use yii\base\BootstrapInterface;
 use Yii;
+use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
 
 class Bootstrap implements BootstrapInterface

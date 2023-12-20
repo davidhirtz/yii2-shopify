@@ -2,7 +2,6 @@
 
 namespace davidhirtz\yii2\shopify\models;
 
-use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use Yii;
 use yii\base\Model;

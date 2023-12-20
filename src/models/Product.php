@@ -2,10 +2,10 @@
 
 namespace davidhirtz\yii2\shopify\models;
 
+use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use davidhirtz\yii2\shopify\models\queries\ProductQuery;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
-use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
 use davidhirtz\yii2\skeleton\models\interfaces\DraftStatusAttributeInterface;
@@ -53,9 +53,9 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     public const AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
-     * @var array|string used when $contentType is set to "html". use an array with the first value containing a
-     * validator class, following keys can be used to configure the validator, string containing the class
-     * name or false for disabling the validation.
+     * @var array|string used when `$contentType`is set to "html". use an array with the first value containing a
+     * validator class, following keys can be used to configure the validator, string containing the class name or
+     * false for disabling the validation.
      */
     public array|string $htmlValidator = HtmlValidator::class;
 
