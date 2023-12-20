@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\TransferStats;
 use Yii;
 use yii\base\BaseObject;
+use yii\helpers\Json;
 
 /**
  * Class ShopifyAdminRestApi
@@ -135,29 +136,29 @@ class ShopifyAdminRestApi extends BaseObject
         return $this->request('POST', $endpoint, $options);
     }
 
-    /**
-     * @param string $method
-     * @param string $endpoint
-     * @param array $options
-     * @return array|null
-     */
-    public function request($method, $endpoint, $options = []): ?array
+    public function request(string $method, string $endpoint, array $options = []): ?array
     {
-        $uri = "https://{$this->shopifyShopName}.myshopify.com/admin/api/{$this->shopifyApiVersion}/{$endpoint}.json";
+        $uri = "https://$this->shopifyShopName.myshopify.com/admin/api/$this->shopifyApiVersion/$endpoint.json";
 
-        $options['headers']['X-Shopify-Access-Token'] = $this->shopifyAccessToken;
-        $options['on_stats'] = function (TransferStats $stats) use (&$url) {
+        $options['headers']['X-Shopify-Access-Token'] ??= $this->shopifyAccessToken;
+
+        $options['on_stats'] ??= function (TransferStats $stats) {
             Yii::debug("Requesting Shopify Admin REST API: {$stats->getEffectiveUri()}");
         };
 
+        return $this->requestInternal($method, $uri, $options);
+    }
+
+    protected function requestInternal(string $method, string $uri, array $options = []): ?array
+    {
         try {
             $request = $this->getClient()->request($method, $uri, $options);
-            $content = json_decode($request->getBody()->getContents(), true);
+            $content = Json::decode($request->getBody()->getContents());
 
             if ($content) {
                 if ($next = $this->getNextLinkFromHeader($request->getHeaders())) {
                     $query = parse_url($next, PHP_URL_QUERY);
-                    $content = ArrayHelper::merge($content, $this->request($method, $endpoint, $query));
+                    $content = ArrayHelper::merge($content, $this->requestInternal($method, $query, $options));
                 }
             }
 
@@ -166,9 +167,8 @@ class ShopifyAdminRestApi extends BaseObject
             // Return error to user as this could be a missing scope or invalid API key which could be fixed without
             // consulting the error log ...
             if ($exception instanceof ClientException) {
-                $contents = json_decode($exception->getResponse()->getBody()->getContents(), true);
+                $contents = Json::decode($exception->getResponse()->getBody()->getContents());
                 $this->_errors = $contents['errors'] ?? [$exception->getMessage() ?: 'Unknown API Error'];
-                Yii::debug($this->_errors);
             }
 
             Yii::error($exception);
