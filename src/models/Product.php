@@ -21,22 +21,22 @@ use yii\db\ActiveQuery;
  * @property int $id
  * @property int $status
  * @property int $variant_id
- * @property int $image_id
+ * @property int|null $image_id
  * @property string $name
- * @property string $content
+ * @property string|null $content
  * @property string $slug
- * @property string $tags
- * @property string $vendor
- * @property string $product_type
- * @property string $options
+ * @property string|null $tags
+ * @property string|null $vendor
+ * @property string|null $product_type
+ * @property string|null $options
  * @property int $image_count
  * @property int $variant_count
  * @property int $total_inventory_quantity
- * @property int $last_import_at
- * @property DateTime $updated_at
+ * @property DateTime $last_import_at
+ * @property DateTime|null $updated_at
  * @property DateTime $created_at
  *
- * @property-read ProductImage $image {@see static::getImage()}
+ * @property-read ProductImage|null $image {@see static::getImage()}
  * @property-read ProductImage[] $images {@see static::getImages()}
  * @property-read ProductVariant $variant {@see static::getVariant()}
  * @property-read ProductVariant[] $variants {@see static::getVariants()}

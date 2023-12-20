@@ -88,15 +88,6 @@ class Module extends \yii\base\Module
         $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'] ?? null;
         $this->shopifyApiVersion ??= $this->latestShopifyApiVersion;
 
-        if (!$this->shopifyShopName) {
-            throw new InvalidConfigException('Shopify shop name must be set. Either via "Module::$shopifyShopName" or via "shopifyShopName" param.');
-        }
-
-        if (!$this->shopifyAccessToken) {
-            throw new InvalidConfigException('Shopify Admin REST API access token must be set. Either via "Module::$shopifyAccessToken" or via "shopifyAccessToken" param.');
-        }
-
-
         parent::init();
     }
 

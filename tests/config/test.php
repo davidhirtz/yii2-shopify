@@ -7,7 +7,7 @@ return [
     'id' => 'yii2-cms',
     'aliases' => [
         // This is a fix for the broken aliasing of `BaseMigrateController::getNamespacePath()`
-        '@davidhirtz/yii2/cms' => __DIR__ . '/../../src/',
+        '@davidhirtz/yii2/shopify' => __DIR__ . '/../../src/',
     ],
     'bootstrap' => [
         Bootstrap::class,

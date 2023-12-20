@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\TransferStats;
 use Yii;
 use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 use yii\helpers\Json;
 
 class ShopifyAdminRestApi extends BaseObject
@@ -20,6 +21,19 @@ class ShopifyAdminRestApi extends BaseObject
     public ?string $shopifyApiVersion = null;
     private array $_errors = [];
     private ?Client $_client = null;
+
+    public function init(): void
+    {
+        if (!$this->shopifyShopName) {
+            throw new InvalidConfigException('Shopify shop name must be set. Either via "Module::$shopifyShopName" or via "shopifyShopName" param.');
+        }
+
+        if (!$this->shopifyAccessToken) {
+            throw new InvalidConfigException('Shopify Admin REST API access token must be set. Either via "Module::$shopifyAccessToken" or via "shopifyAccessToken" param.');
+        }
+
+        parent::init();
+    }
 
     public function getProducts(): array
     {
@@ -88,11 +102,17 @@ class ShopifyAdminRestApi extends BaseObject
     {
         $uri = "https://$this->shopifyShopName.myshopify.com/admin/api/$this->shopifyApiVersion/$endpoint.json";
 
-        $options['headers']['X-Shopify-Access-Token'] = $this->shopifyAccessToken;
-        $options['on_stats'] = function (TransferStats $stats) use (&$url) {
+        $options['headers']['X-Shopify-Access-Token'] ??= $this->shopifyAccessToken;
+
+        $options['on_stats'] ??= function (TransferStats $stats) {
             Yii::debug("Requesting Shopify Admin REST API: {$stats->getEffectiveUri()}");
         };
 
+        return $this->requestInternal($method, $uri, $options);
+    }
+
+    protected function requestInternal(string $method, string $uri, array $options = []): ?array
+    {
         try {
             $request = $this->getClient()->request($method, $uri, $options);
             $content = Json::decode($request->getBody()->getContents());
@@ -100,7 +120,7 @@ class ShopifyAdminRestApi extends BaseObject
             if ($content) {
                 if ($next = $this->getNextLinkFromHeader($request->getHeaders())) {
                     $query = parse_url($next, PHP_URL_QUERY);
-                    $content = ArrayHelper::merge($content, $this->request($method, $endpoint, $query));
+                    $content = ArrayHelper::merge($content, $this->requestInternal($method, $query, $options));
                 }
             }
 
@@ -111,7 +131,6 @@ class ShopifyAdminRestApi extends BaseObject
             if ($exception instanceof ClientException) {
                 $contents = Json::decode($exception->getResponse()->getBody()->getContents());
                 $this->_errors = $contents['errors'] ?? [$exception->getMessage() ?: 'Unknown API Error'];
-                Yii::debug($this->_errors);
             }
 
             Yii::error($exception);
@@ -126,7 +145,11 @@ class ShopifyAdminRestApi extends BaseObject
      */
     private function getNextLinkFromHeader(array $headers): ?string
     {
-        if ($links = explode(',', $headers['Link'][0] ?? '')) {
+        $links = $headers['Link'][0] ?? null;
+
+        if ($links) {
+            $links = explode(',', $links);
+
             foreach ($links as $link) {
                 if (preg_match('/<(.*)>;\srel=\"next\"/', $link, $matches)) {
                     return $matches[1];

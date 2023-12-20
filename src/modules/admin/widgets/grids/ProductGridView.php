@@ -29,6 +29,8 @@ class ProductGridView extends GridView
 
     public function init(): void
     {
+        $this->id = $this->getId(false) ?? 'products';
+
         if (!$this->columns) {
             $this->columns = [
                 $this->statusColumn(),
@@ -129,7 +131,7 @@ class ProductGridView extends GridView
         return [
             'attribute' => 'total_inventory_quantity',
             'class' => CounterColumn::class,
-            'route' => fn(Product $product) => $product->getAdminRoute(),
+            'route' => fn (Product $product) => $product->getAdminRoute(),
         ];
     }
 
@@ -138,7 +140,7 @@ class ProductGridView extends GridView
         return [
             'attribute' => 'variant_count',
             'class' => CounterColumn::class,
-            'route' => fn(Product $product) => static::getModule()->getShopUrl("admin/products/$product->id/variants/$product->variant_id"),
+            'route' => fn (Product $product) => static::getModule()->getShopUrl("admin/products/$product->id/variants/$product->variant_id"),
             'countHtmlOptions' => [
                 'class' => 'badge',
                 'target' => '_blank',
@@ -158,7 +160,7 @@ class ProductGridView extends GridView
     {
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => fn(Product $product): string => Html::buttons($this->getRowButtons($product))
+            'content' => fn (Product $product): string => Html::buttons($this->getRowButtons($product))
         ];
     }
 

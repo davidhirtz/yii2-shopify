@@ -7,7 +7,7 @@ use davidhirtz\yii2\shopify\models\queries\ProductQuery;
 use yii\data\ActiveDataProvider;
 
 /**
- * @property ProductQuery $query
+ * @property ProductQuery|null $query
  */
 class ProductActiveDataProvider extends ActiveDataProvider
 {

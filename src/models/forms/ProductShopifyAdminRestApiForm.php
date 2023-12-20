@@ -14,11 +14,7 @@ use yii\helpers\Json;
 
 class ProductShopifyAdminRestApiForm
 {
-    /**
-     * @param array $data
-     * @return Product
-     */
-    public static function createOrUpdateFromApiData($data)
+    public static function createOrUpdateFromApiData(array $data): ?Product
     {
         $product = Product::findOne($data['id']) ?? Product::create();
         $isNewRecord = $product->getIsNewRecord();
@@ -93,7 +89,7 @@ class ProductShopifyAdminRestApiForm
             }
         }
 
-        $product->image_id = isset($data['image']['id']) ? (string)$data['image']['id'] : null;
+        $product->image_id = $data['image']['id'] ?? null;
         $product->image_count = count($data['images']);
 
         // Variants.
@@ -158,11 +154,7 @@ class ProductShopifyAdminRestApiForm
         return $product;
     }
 
-    /**
-     * @param array $results
-     * @return int
-     */
-    public static function deleteProductsFromApiResult($results): int
+    public static function deleteProductsFromApiResult(array $results): int
     {
         $count = 0;
 
@@ -181,13 +173,7 @@ class ProductShopifyAdminRestApiForm
         return $count;
     }
 
-    /**
-     * @param Product|ProductImage|ProductVariant $model
-     * @param array $data
-     * @param array $attributesMap
-     * @return void
-     */
-    protected static function setAttributesFromApiData($model, $data, $attributesMap)
+    protected static function setAttributesFromApiData(Product|ProductImage|ProductVariant $model, array $data, array $attributesMap): void
     {
         foreach ($attributesMap as $key => $attributeName) {
             $model->setAttribute($attributeName, $data[$key] ?: null);

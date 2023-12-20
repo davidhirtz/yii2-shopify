@@ -12,8 +12,9 @@ trait ProductRelationTrait
 {
     public function getProduct(): ProductQuery
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->hasOne(Product::class, ['id' => 'product_id']);
+        /** @var ProductQuery $relation */
+        $relation = $this->hasOne(Product::class, ['id' => 'product_id']);
+        return $relation;
     }
 
     public function populateProductRelation(?Product $product): void

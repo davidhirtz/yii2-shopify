@@ -52,14 +52,14 @@ class WebhookController extends Controller
             ]));
         }
 
-        usort($webhooks, fn(Webhook $a, Webhook $b) => strcmp($b->updated_at, $a->updated_at));
+        usort($webhooks, fn (Webhook $a, Webhook $b) => strcmp($b->updated_at, $a->updated_at));
 
         return $this->render('index', [
             'webhooks' => $webhooks,
         ]);
     }
 
-    public function actionUpdateAll():Response|string
+    public function actionUpdateAll(): Response|string
     {
         if (!static::getModule()->shopifyApiSecret) {
             throw new InvalidConfigException('Shopify Admin API secret key must be set to use webhooks. Either via "Module::$shopifyApiSecret" or via "shopifyApiSecret" param.');
@@ -68,6 +68,7 @@ class WebhookController extends Controller
         foreach (static::getModule()->webhooks as $attributes) {
             $webhook = Yii::createObject(Webhook::class);
             $webhook->setAttributes($attributes);
+
             if ($webhook->create()) {
                 $this->success(Yii::t('shopify', "The webhook \"{topic}\" was created.", [
                     'topic' => $webhook->getFormattedTopic(),
@@ -84,7 +85,7 @@ class WebhookController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionDelete(int $id):Response|string
+    public function actionDelete(int $id): Response|string
     {
         $api = static::getModule()->getApi();
 

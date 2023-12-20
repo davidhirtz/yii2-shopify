@@ -8,7 +8,7 @@ use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
-use davidhirtz\yii2\timeago\Timeago;
+use davidhirtz\yii2\timeago\TimeagoColumn;
 use Yii;
 use yii\data\ArrayDataProvider;
 
@@ -23,14 +23,12 @@ class WebhookGridView extends GridView
 
     public function init(): void
     {
-        if (!$this->dataProvider) {
-            $this->dataProvider = new ArrayDataProvider([
-                'allModels' => $this->webhooks,
-            ]);
-        }
+        $this->dataProvider ??= new ArrayDataProvider([
+            'allModels' => $this->webhooks,
+        ]);
 
         if (!$this->rowOptions) {
-            $this->rowOptions = fn(Webhook $model) => ['id' => "#webhook-$model->id"];
+            $this->rowOptions = fn (Webhook $model) => ['id' => "#webhook-$model->id"];
         }
 
         if (!$this->columns) {
@@ -50,16 +48,14 @@ class WebhookGridView extends GridView
 
     protected function initFooter(): void
     {
-        if ($this->footer === null) {
-            $this->footer = [
+        $this->footer ??= [
+            [
                 [
-                    [
-                        'content' => $this->getUpdateAllWebhooksButton(),
-                        'options' => ['class' => 'col text-right'],
-                    ],
+                    'content' => $this->getUpdateAllWebhooksButton(),
+                    'options' => ['class' => 'col text-right'],
                 ],
-            ];
-        }
+            ],
+        ];
     }
 
     public function topicColumn(): array
@@ -81,7 +77,7 @@ class WebhookGridView extends GridView
             'attribute' => 'api_version',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn(Webhook $webhook): string => strtoupper($webhook->api_version)
+            'content' => fn (Webhook $webhook): string => strtoupper($webhook->api_version)
         ];
     }
 
@@ -91,16 +87,15 @@ class WebhookGridView extends GridView
             'attribute' => 'format',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn(Webhook $webhook): string => strtoupper($webhook->format)
+            'content' => fn (Webhook $webhook): string => strtoupper($webhook->format)
         ];
     }
 
     public function updatedAtColumn(): array
     {
         return [
-            'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
-            'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn(Webhook $webhook): string => Timeago::tag($webhook->updated_at)
+            'class' => TimeagoColumn::class,
+            'attribute' => 'updated_at',
         ];
     }
 
@@ -108,7 +103,7 @@ class WebhookGridView extends GridView
     {
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => fn(Webhook $webhook): string => Html::buttons($this->getRowButtons($webhook))
+            'content' => fn (Webhook $webhook): string => Html::buttons($this->getRowButtons($webhook))
         ];
     }
 

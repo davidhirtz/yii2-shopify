@@ -2,7 +2,7 @@
 
 namespace davidhirtz\yii2\shopify\models;
 
-use DateTime;
+use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use Yii;
 use yii\base\Model;
@@ -13,64 +13,18 @@ class Webhook extends Model
 
     public const AUTH_WEBHOOK_UPDATE = 'shopifyWebhookUpdate';
 
-    /**
-     * @var int
-     */
-    public $id;
+    public ?int $id = null;
+    public ?string $address = null;
+    public array $route = [];
+    public ?string $topic = null;
+    public ?string $format = null;
+    public array $fields = [];
+    public array $metafield_namespaces = [];
+    public array $private_metafield_namespaces = [];
+    public ?string $api_version = null;
+    public ?string $updated_at = null;
+    public ?string $created_at = null;
 
-    /**
-     * @var string
-     */
-    public $address;
-
-    /**
-     * @var array
-     */
-    public $route = [];
-
-    /**
-     * @var string
-     */
-    public $topic;
-
-    /**
-     * @var string
-     */
-    public $format;
-
-    /**
-     * @var array
-     */
-    public $fields = [];
-
-    /**
-     * @var array
-     */
-    public $metafield_namespaces = [];
-
-    /**
-     * @var array
-     */
-    public $private_metafield_namespaces = [];
-
-    /**
-     * @var string
-     */
-    public $api_version;
-
-    /**
-     * @var DateTime
-     */
-    public $updated_at;
-
-    /**
-     * @var DateTime
-     */
-    public $created_at;
-
-    /**
-     * @return array
-     */
     public function rules(): array
     {
         return [
@@ -96,7 +50,7 @@ class Webhook extends Model
         ];
     }
 
-    public function beforeValidate()
+    public function beforeValidate(): bool
     {
         $this->address = $this->address ?: Yii::$app->getUrlManager()->createAbsoluteUrl($this->route);
         $this->api_version = $this->api_version ?: static::getModule()->shopifyApiVersion;
@@ -104,9 +58,6 @@ class Webhook extends Model
         return parent::beforeValidate();
     }
 
-    /**
-     * @return bool
-     */
     public function create(): bool
     {
         if ($this->validate()) {
@@ -138,18 +89,12 @@ class Webhook extends Model
         return false;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormattedTopic()
+    public function getFormattedTopic(): string
     {
         return static::getTopics()[$this->topic] ?? ucfirst(str_replace('/', ' ', $this->topic));
     }
 
-    /**
-     * @return array
-     */
-    public static function getTopics()
+    public static function getTopics(): array
     {
         return [
             'products/create' => Yii::t('shopify', 'Product created'),
@@ -158,9 +103,6 @@ class Webhook extends Model
         ];
     }
 
-    /**
-     * @return array
-     */
     public function attributeLabels(): array
     {
         return [

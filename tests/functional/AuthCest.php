@@ -48,7 +48,7 @@ class AuthCest extends BaseCest
     public function checkIndexWithPermission(FunctionalTester $I): void
     {
         $user = $this->getLoggedInUser();
-        $auth = Yii::$app->getAuthManager()->getRole(Product::AUTH_PRODUCT_UPDATE);
+        $auth = Yii::$app->getAuthManager()->getPermission(Product::AUTH_PRODUCT_UPDATE);
         Yii::$app->getAuthManager()->assign($auth, $user->id);
 
         $widget = Yii::$container->get(ProductGridView::class, [], [

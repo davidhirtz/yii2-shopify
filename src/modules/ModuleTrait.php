@@ -11,7 +11,10 @@ trait ModuleTrait
 
     public static function getModule(): Module
     {
-        static::$_module ??= Yii::$app->getModule('shopify');
-        return static::$_module;
+        /** @var Module $module */
+        $module = Yii::$app->getModule('shopify');
+        self::$_module ??= $module;
+
+        return self::$_module;
     }
 }
