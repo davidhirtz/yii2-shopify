@@ -1,3 +1,8 @@
+## 2.1.1 (Jan 29, 2024)
+
+- Minor improvements
+- Updated dependencies
+
 ## 2.1.0 (Dec 20, 2023)
 
 - Added Codeception test suite

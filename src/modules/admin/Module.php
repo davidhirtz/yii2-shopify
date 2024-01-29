@@ -43,51 +43,53 @@ class Module extends \yii\base\Module
 
     public function init(): void
     {
-        if (!Yii::$app->getRequest()->getIsConsoleRequest()) {
-            if (Yii::$app->getUser()->can('admin')) {
-                if (!$this->navbarItems) {
-                    $this->navbarItems = [
-                        'shopify' => [
-                            'label' => $this->name ?: Yii::t('shopify', 'Products'),
-                            'icon' => 'tags',
-                            'url' => ['/admin/product/index'],
-                            'active' => ['admin/product', 'admin/shopify-webhook'],
-                            'roles' => [
-                                Product::AUTH_PRODUCT_UPDATE,
-                                Webhook::AUTH_WEBHOOK_UPDATE,
-                            ],
+        if (Yii::$app->has('user')) {
+            if (!$this->navbarItems) {
+                $this->navbarItems = [
+                    'shopify' => [
+                        'label' => $this->name ?: Yii::t('shopify', 'Products'),
+                        'icon' => 'tags',
+                        'url' => ['/admin/product/index'],
+                        'active' => ['admin/product', 'admin/shopify-webhook'],
+                        'roles' => [
+                            Product::AUTH_PRODUCT_UPDATE,
+                            Webhook::AUTH_WEBHOOK_UPDATE,
                         ],
-                    ];
-                }
+                    ],
+                ];
+            }
 
-                if (!$this->panels) {
-                    $this->panels = [
-                        'shopify' => [
-                            'name' => $this->name ?: Yii::t('shopify', 'Products'),
-                            'items' => [
-                                [
-                                    'label' => Yii::t('shopify', 'View Products'),
-                                    'url' => ['/admin/product/index'],
-                                    'icon' => 'tags',
-                                    'roles' => [Product::AUTH_PRODUCT_UPDATE],
-                                ],
-                                [
-                                    'label' => Yii::t('shopify', 'View Webhooks'),
-                                    'url' => ['/admin/shopify-webhook/index'],
-                                    'icon' => 'satellite-dish',
-                                    'roles' => [Webhook::AUTH_WEBHOOK_UPDATE],
-                                ],
+            if (!$this->panels) {
+                $this->panels = [
+                    'shopify' => [
+                        'name' => $this->name ?: Yii::t('shopify', 'Products'),
+                        'items' => [
+                            [
+                                'label' => Yii::t('shopify', 'View Products'),
+                                'url' => ['/admin/product/index'],
+                                'icon' => 'tags',
+                                'roles' => [Product::AUTH_PRODUCT_UPDATE],
+                            ],
+                            [
+                                'label' => Yii::t('shopify', 'View Webhooks'),
+                                'url' => ['/admin/shopify-webhook/index'],
+                                'icon' => 'satellite-dish',
+                                'roles' => [Webhook::AUTH_WEBHOOK_UPDATE],
                             ],
                         ],
-                    ];
-                }
+                    ],
+                ];
             }
 
             $this->module->navbarItems = array_merge($this->module->navbarItems, $this->navbarItems);
             $this->module->panels = array_merge($this->module->panels, $this->panels);
         }
 
-        $this->module->controllerMap = array_merge($this->module->controllerMap, $this->defaultControllerMap, $this->controllerMap);
+        $this->module->controllerMap = [
+            ...$this->module->controllerMap,
+            ...$this->defaultControllerMap,
+            ...$this->controllerMap,
+        ];
 
         parent::init();
     }

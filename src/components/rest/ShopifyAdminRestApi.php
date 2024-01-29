@@ -148,7 +148,7 @@ class ShopifyAdminRestApi extends BaseObject
         $links = $headers['Link'][0] ?? null;
 
         if ($links) {
-            $links = explode(',', $links);
+            $links = explode(',', (string) $links);
 
             foreach ($links as $link) {
                 if (preg_match('/<(.*)>;\srel=\"next\"/', $link, $matches)) {

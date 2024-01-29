@@ -30,10 +30,11 @@ class ProductImage extends ActiveRecord
 
     public function behaviors(): array
     {
-        return array_merge(parent::behaviors(), [
+        return [
+            ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
-        ]);
+        ];
     }
 
     public function rules(): array

@@ -3,6 +3,10 @@
 use davidhirtz\yii2\shopify\Bootstrap;
 use yii\web\Session;
 
+if (is_file(__DIR__ . '/db.php')) {
+    require(__DIR__ . '/db.php');
+}
+
 return [
     'id' => 'yii2-cms',
     'aliases' => [
@@ -21,10 +25,6 @@ return [
             'username' => getenv('MYSQL_USER') ?: 'root',
             'password' => getenv('MYSQL_PASSWORD') ?: '',
             'charset' => 'utf8',
-            ...is_file(__DIR__ . '/db.php') ? require (__DIR__ . '/db.php') : [],
-        ],
-        'mailer' => [
-            'useFileTransport' => true,
         ],
         'session' => [
             'class' => Session::class,

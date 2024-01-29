@@ -19,7 +19,8 @@ class ProductController extends Controller
 
     public function behaviors(): array
     {
-        return array_merge(parent::behaviors(), [
+        return [
+            ...parent::behaviors(),
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
@@ -37,7 +38,7 @@ class ProductController extends Controller
                     'update-all' => ['post'],
                 ],
             ],
-        ]);
+        ];
     }
 
     public function actionIndex(?int $status = null, ?string $q = null): Response|string

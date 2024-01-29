@@ -139,7 +139,7 @@ class ProductGridView extends GridView
             'attribute' => 'variant_count',
             'class' => CounterColumn::class,
             'route' => fn (Product $product) => static::getModule()->getShopUrl("admin/products/$product->id/variants/$product->variant_id"),
-            'countHtmlOptions' => [
+            'wrapperOptions' => [
                 'class' => 'badge',
                 'target' => '_blank',
             ]
