@@ -6,7 +6,8 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\queries\ProductQuery;
 
 /**
- * @property-read Product $product {@see static::getProduct()}
+ * @property int|null $product_id
+ * @property-read Product|null $product {@see static::getProduct()}
  */
 trait ProductRelationTrait
 {
