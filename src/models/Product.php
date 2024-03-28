@@ -20,7 +20,7 @@ use yii\db\ActiveQuery;
 /**
  * @property int $id
  * @property int $status
- * @property int $variant_id
+ * @property int|null $variant_id
  * @property int|null $image_id
  * @property string $name
  * @property string|null $content
@@ -38,7 +38,7 @@ use yii\db\ActiveQuery;
  *
  * @property-read ProductImage|null $image {@see static::getImage()}
  * @property-read ProductImage[] $images {@see static::getImages()}
- * @property-read ProductVariant $variant {@see static::getVariant()}
+ * @property-read ProductVariant|null $variant {@see static::getVariant()}
  * @property-read ProductVariant[] $variants {@see static::getVariants()}
  */
 class Product extends ActiveRecord implements DraftStatusAttributeInterface

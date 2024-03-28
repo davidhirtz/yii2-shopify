@@ -18,21 +18,21 @@ use Yii;
  * @property string $name
  * @property int $position
  * @property int $price
- * @property int $compare_at_price
- * @property string $presentment_prices
- * @property string $option_1
- * @property string $option_2
- * @property string $option_3
- * @property string $barcode
- * @property string $sku
+ * @property int|null $compare_at_price
+ * @property string|null $presentment_prices
+ * @property string|null $option_1
+ * @property string|null $option_2
+ * @property string|null $option_3
+ * @property string|null $barcode
+ * @property string|null $sku
  * @property bool $is_taxable
- * @property int $grams
- * @property int $weight
- * @property string $weight_unit
- * @property bool $inventory_management
- * @property int $inventory_quantity
- * @property string $inventory_policy
- * @property DateTime $updated_at
+ * @property int|null $grams
+ * @property int|null $weight
+ * @property string|null $weight_unit
+ * @property string|null $inventory_management
+ * @property int|null $inventory_quantity
+ * @property string|null $inventory_policy
+ * @property DateTime|null $updated_at
  * @property DateTime $created_at
  */
 class ProductVariant extends ActiveRecord
@@ -41,7 +41,6 @@ class ProductVariant extends ActiveRecord
     use ModuleTrait;
     use ProductRelationTrait;
 
-    
     public function behaviors(): array
     {
         return [
@@ -51,7 +50,6 @@ class ProductVariant extends ActiveRecord
         ];
     }
 
-    
     public function rules(): array
     {
         return $this->getI18nRules([

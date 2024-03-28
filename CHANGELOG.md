@@ -1,3 +1,8 @@
+## 2.1.2 (Mar 28, 2024)
+
+- Fixed `inventory_quantity` allowing `null` values (Issue #3)
+- Fixed API error handling (Issue #2)
+
 ## 2.1.1 (Jan 29, 2024)
 
 - Minor improvements

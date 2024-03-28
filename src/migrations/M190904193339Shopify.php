@@ -70,7 +70,7 @@ class M190904193339Shopify extends Migration
             'option_3' => $this->string()->null(),
             'barcode' => $this->string()->null(),
             'sku' => $this->string()->null(),
-            'is_taxable' => $this->boolean()->defaultValue(false),
+            'is_taxable' => $this->boolean()->defaultValue(false)->notNull(),
             'grams' => $this->decimal(10, 2)->unsigned()->null(),
             'weight' => $this->string()->null(),
             'weight_unit' => $this->string(2)->null(),

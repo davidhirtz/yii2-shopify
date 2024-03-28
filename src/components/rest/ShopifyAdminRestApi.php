@@ -130,7 +130,8 @@ class ShopifyAdminRestApi extends BaseObject
             // consulting the error log ...
             if ($exception instanceof ClientException) {
                 $contents = Json::decode($exception->getResponse()->getBody()->getContents());
-                $this->_errors = $contents['errors'] ?? [$exception->getMessage() ?: 'Unknown API Error'];
+                $errors = $contents['errors'] ?? $exception->getMessage() ?: 'Unknown API Error';
+                $this->_errors = (array)$errors;
             }
 
             Yii::error($exception);
@@ -148,7 +149,7 @@ class ShopifyAdminRestApi extends BaseObject
         $links = $headers['Link'][0] ?? null;
 
         if ($links) {
-            $links = explode(',', (string) $links);
+            $links = explode(',', (string)$links);
 
             foreach ($links as $link) {
                 if (preg_match('/<(.*)>;\srel=\"next\"/', $link, $matches)) {

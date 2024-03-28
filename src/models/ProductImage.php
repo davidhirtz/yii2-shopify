@@ -15,11 +15,11 @@ use Yii;
  * @property int $id
  * @property int $product_id
  * @property int $position
- * @property string $alt_text
- * @property int $width
- * @property int $height
- * @property string $src
- * @property DateTime $updated_at
+ * @property string|null $alt_text
+ * @property int|null $width
+ * @property int|null $height
+ * @property string|null $src
+ * @property DateTime|null $updated_at
  * @property DateTime $created_at
  */
 class ProductImage extends ActiveRecord
