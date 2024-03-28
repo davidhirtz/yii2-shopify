@@ -49,7 +49,7 @@ class Module extends \yii\base\Module
     /**
      * @var string the latest Shopify Admin REST API version supported by this module.
      */
-    protected string $latestShopifyApiVersion = '2022-07';
+    protected string $latestShopifyApiVersion = '2024-01';
 
     
     public array $webhooks = [
