@@ -104,7 +104,6 @@ class ProductShopifyAdminRestApiForm
         $product->image_count = count($data['images']);
     }
 
-
     protected static function saveVariantsFromApiData(Product $product, array $data): void
     {
         $variants = $product->variant_count ? $product->variants : [];

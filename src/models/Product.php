@@ -75,25 +75,28 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
 
     public function rules(): array
     {
-        return $this->getI18nRules([
-            [
-                ['status'],
-                DynamicRangeValidator::class,
-                'skipOnEmpty' => false,
-            ],
-            [
-                $this->getI18nAttributesNames(['name']),
-                'required',
-            ],
-            array_merge(
-                [$this->getI18nAttributesNames(['content'])],
-                (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
-            ),
-            [
-                ['id', 'image_id', 'variant_id'],
-                'string',
-            ],
-        ]);
+        return [
+            ...parent::rules(),
+            ...$this->getI18nRules([
+                [
+                    ['status'],
+                    DynamicRangeValidator::class,
+                    'skipOnEmpty' => false,
+                ],
+                [
+                    $this->getI18nAttributesNames(['name']),
+                    'required',
+                ],
+                array_merge(
+                    [$this->getI18nAttributesNames(['content'])],
+                    (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
+                ),
+                [
+                    ['id', 'image_id', 'variant_id'],
+                    'string',
+                ],
+            ]),
+        ];
     }
 
     public function getImage(): ActiveQuery
@@ -177,7 +180,8 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
 
     public function attributeLabels(): array
     {
-        return array_merge(parent::attributeLabels(), [
+        return [
+            ...parent::attributeLabels(),
             'image_id' => Yii::t('shopify', 'Image'),
             'variant_id' => Yii::t('shopify', 'Variant'),
             'name' => Yii::t('shopify', 'Title'),
@@ -187,7 +191,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
             'product_type' => Yii::t('shopify', 'Type'),
             'variant_count' => Yii::t('shopify', 'Variants'),
             'total_inventory_quantity' => Yii::t('shopify', 'Inventory')
-        ]);
+        ];
     }
 
     public function formName(): string
