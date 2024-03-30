@@ -1,3 +1,7 @@
+## 2.1.3 (under development)
+
+- Fixed default `Product::$variant_id` if variants to start at position 1
+
 ## 2.1.2 (Mar 28, 2024)
 
 - Fixed `inventory_quantity` allowing `null` values (Issue #3)

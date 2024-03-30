@@ -17,12 +17,11 @@ class ProductShopifyAdminRestApiForm
     public static function createOrUpdateFromApiData(array $data): ?Product
     {
         $product = Product::findOne($data['id']) ?? Product::create();
-        $isNewRecord = $product->getIsNewRecord();
 
         $statusesMap = [
-            'active' => Product::STATUS_ENABLED,
-            'draft' => Product::STATUS_DRAFT,
-            'archived' => Product::STATUS_ARCHIVED,
+            'active' => $product::STATUS_ENABLED,
+            'draft' => $product::STATUS_DRAFT,
+            'archived' => $product::STATUS_ARCHIVED,
         ];
 
         $product->status = $statusesMap[$data['status']];
@@ -40,8 +39,11 @@ class ProductShopifyAdminRestApiForm
 
         $options = [];
 
-        if (count($data['options']) !== 1 || $data['options'][0]['name'] !== 'Title' ||
-            count($data['options'][0]['values']) !== 1 || $data['options'][0]['values'][0] !== 'Default Title') {
+        if (count($data['options']) !== 1
+            || $data['options'][0]['name'] !== 'Title'
+            || count($data['options'][0]['values']) !== 1
+            || $data['options'][0]['values'][0] !== 'Default Title'
+        ) {
             foreach ($data['options'] as $option) {
                 $options[$option['position']] = [
                     'name' => $option['name'],
@@ -58,8 +60,17 @@ class ProductShopifyAdminRestApiForm
             return $product;
         }
 
-        // Images.
-        $images = !$isNewRecord ? $product->images : [];
+        static::saveImagesFromApiData($product, $data);
+        static::saveVariantsFromApiData($product, $data);
+
+        $product->update();
+
+        return $product;
+    }
+
+    protected static function saveImagesFromApiData(Product $product, array $data): void
+    {
+        $images = $product->image_count ? $product->images : [];
         $imageIds = [];
 
         foreach ($data['images'] as $imageData) {
@@ -91,11 +102,16 @@ class ProductShopifyAdminRestApiForm
 
         $product->image_id = $data['image']['id'] ?? null;
         $product->image_count = count($data['images']);
+    }
 
-        // Variants.
-        $variants = !$isNewRecord ? $product->variants : [];
+
+    protected static function saveVariantsFromApiData(Product $product, array $data): void
+    {
+        $variants = $product->variant_count ? $product->variants : [];
         $totalInventoryCount = 0;
         $variantIds = [];
+
+        $product->variant_id = null;
 
         foreach ($data['variants'] as $variantData) {
             $variant = $variants[$variantData['id']] ?? ProductVariant::create();
@@ -126,32 +142,38 @@ class ProductShopifyAdminRestApiForm
                 : null;
 
             if ($variant->save()) {
-                if ($variant->position == 1) {
-                    $product->variant_id = $variant->id;
-                }
-
                 if ($variant->inventory_management) {
                     $totalInventoryCount += $variant->inventory_quantity;
                 }
 
                 $variantIds[] = $variant->id;
-            } elseif ($errors = $variant->getErrors()) {
+                continue;
+            }
+
+            if ($errors = $variant->getErrors()) {
                 ActiveRecordErrorLogger::log($variant);
                 $product->addErrors($errors);
             }
         }
 
-        foreach ($variants as $variant) {
+        foreach ($variants as $key => $variant) {
             if (!in_array($variant->id, $variantIds)) {
                 $variant->delete();
+                unset($variants[$key]);
             }
         }
 
+        $firstVariant = array_reduce($variants, function ($carry, ProductVariant $variant) {
+            if ($carry === null || $variant->position < $carry->position) {
+                $carry = $variant;
+            }
+
+            return $carry;
+        });
+
+        $product->variant_id = $firstVariant->id ?? null;
         $product->total_inventory_quantity = $totalInventoryCount;
         $product->variant_count = count($data['variants']);
-        $product->update();
-
-        return $product;
     }
 
     public static function deleteProductsFromApiResult(array $results): int
