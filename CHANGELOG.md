@@ -1,4 +1,4 @@
-## 2.1.3 (under development)
+## 2.1.3 (Ape 3, 2024)
 
 - Fixed default `Product::$variant_id` if variants to start at position 1
 
