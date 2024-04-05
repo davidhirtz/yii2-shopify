@@ -1,4 +1,8 @@
-## 2.1.3 (Ape 3, 2024)
+## 2.1.4 (Apr 5, 2024)
+
+- Updated admin according to `davidhirtz\yii2\skeleton\modules\admin\ModuleInterface`
+
+## 2.1.3 (Apr 3, 2024)
 
 - Fixed default `Product::$variant_id` if variants to start at position 1
 
