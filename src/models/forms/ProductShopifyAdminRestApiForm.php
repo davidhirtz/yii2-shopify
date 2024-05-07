@@ -140,8 +140,12 @@ class ProductShopifyAdminRestApiForm
                 ? Json::encode($variantData['presentment_prices'])
                 : null;
 
+            if ($variant->inventory_quantity < 0) {
+                $variant->inventory_quantity = null;
+            }
+
             if ($variant->save()) {
-                if ($variant->inventory_management) {
+                if ($variant->inventory_management && $variant->inventory_quantity !== null) {
                     $totalInventoryCount += $variant->inventory_quantity;
                 }
 

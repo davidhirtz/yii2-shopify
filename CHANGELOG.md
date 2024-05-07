@@ -1,3 +1,7 @@
+## 2.1.5 (May 7, 2024)
+
+- Fixed `inventory_quantity` for `-1` API values
+
 ## 2.1.4 (Apr 5, 2024)
 
 - Updated admin according to `davidhirtz\yii2\skeleton\modules\admin\ModuleInterface`
