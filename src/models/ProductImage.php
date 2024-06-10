@@ -41,6 +41,10 @@ class ProductImage extends ActiveRecord
     {
         return $this->getI18nRules([
             [
+                ['id'],
+                'unique',
+            ],
+            [
                 ['id', 'product_id', 'position', 'width', 'height', 'src'],
                 'required',
             ],

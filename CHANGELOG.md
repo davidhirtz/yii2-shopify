@@ -1,3 +1,7 @@
+## 2.1.6 (Jun 10, 2024)
+
+- Added `unique` validation rule for all model IDs updated via webhook
+
 ## 2.1.5 (May 7, 2024)
 
 - Fixed `inventory_quantity` for `-1` API values

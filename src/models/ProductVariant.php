@@ -54,6 +54,10 @@ class ProductVariant extends ActiveRecord
     {
         return $this->getI18nRules([
             [
+                ['id'],
+                'unique',
+            ],
+            [
                 ['id', 'product_id', 'position'],
                 'required',
             ],

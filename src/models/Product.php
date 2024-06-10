@@ -79,6 +79,10 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
             ...parent::rules(),
             ...$this->getI18nRules([
                 [
+                    ['id'],
+                    'unique',
+                ],
+                [
                     ['status'],
                     DynamicRangeValidator::class,
                     'skipOnEmpty' => false,
