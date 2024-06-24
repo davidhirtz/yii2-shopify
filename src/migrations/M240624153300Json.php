@@ -26,6 +26,7 @@ class M240624153300Json extends Migration
         $query = Product::find()->select(['id', 'options']);
 
         foreach ($query->each() as $products) {
+            // @phpstan-ignore-next-line
             if (is_string($products->options)) {
                 $products->updateAttributes(['options' => json_decode($products->options, true)]);
                 $updatedCount++;
@@ -37,6 +38,7 @@ class M240624153300Json extends Migration
         $query = ProductVariant::find()->select(['id', 'presentment_prices']);
 
         foreach ($query->each() as $products) {
+            // @phpstan-ignore-next-line
             if (is_string($products->presentment_prices)) {
                 $products->updateAttributes(['presentment_prices' => json_decode($products->presentment_prices, true)]);
                 $updatedCount++;

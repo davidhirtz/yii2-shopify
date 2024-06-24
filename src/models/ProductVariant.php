@@ -19,7 +19,7 @@ use Yii;
  * @property int $position
  * @property int $price
  * @property int|null $compare_at_price
- * @property string|null $presentment_prices
+ * @property array|null $presentment_prices
  * @property string|null $option_1
  * @property string|null $option_2
  * @property string|null $option_3
