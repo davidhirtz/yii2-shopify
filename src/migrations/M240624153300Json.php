@@ -5,7 +5,6 @@ namespace davidhirtz\yii2\shopify\migrations;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductVariant;
 use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
-use davidhirtz\yii2\skeleton\models\Trail;
 use Yii;
 use yii\db\Migration;
 

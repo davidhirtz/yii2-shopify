@@ -87,7 +87,6 @@ class ProductShopifyAdminRestApiForm
 
             if ($image->save()) {
                 $imageIds[] = $image->id;
-
             } elseif ($errors = $image->getErrors()) {
                 ActiveRecordErrorLogger::log($image);
                 $product->addErrors($errors);
@@ -148,7 +147,6 @@ class ProductShopifyAdminRestApiForm
                 }
 
                 $variantIds[] = $variant->id;
-
             } elseif ($errors = $variant->getErrors()) {
                 ActiveRecordErrorLogger::log($variant);
                 $product->addErrors($errors);
