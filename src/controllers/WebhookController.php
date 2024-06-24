@@ -32,7 +32,7 @@ class WebhookController extends Controller
         $hmacHeader = $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] ?? '';
         $data = file_get_contents('php://input');
 
-        $calculatedHmac = base64_encode(hash_hmac('sha256', $data, static::getModule()->shopifyApiSecret, true));
+        $calculatedHmac = base64_encode(hash_hmac('sha256', $data, (string) static::getModule()->shopifyApiSecret, true));
 
         if (!hash_equals($hmacHeader, $calculatedHmac)) {
             throw new UnauthorizedHttpException();

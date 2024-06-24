@@ -53,7 +53,7 @@ class WebhookController extends Controller
             ]));
         }
 
-        usort($webhooks, fn (Webhook $a, Webhook $b) => strcmp($b->updated_at, $a->updated_at));
+        usort($webhooks, fn (Webhook $a, Webhook $b) => strcmp((string) $b->updated_at, (string) $a->updated_at));
 
         return $this->render('index', [
             'webhooks' => $webhooks,

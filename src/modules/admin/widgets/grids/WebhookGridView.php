@@ -77,7 +77,7 @@ class WebhookGridView extends GridView
             'attribute' => 'api_version',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (Webhook $webhook): string => strtoupper($webhook->api_version)
+            'content' => fn (Webhook $webhook): string => strtoupper((string) $webhook->api_version)
         ];
     }
 
@@ -87,7 +87,7 @@ class WebhookGridView extends GridView
             'attribute' => 'format',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (Webhook $webhook): string => strtoupper($webhook->format)
+            'content' => fn (Webhook $webhook): string => strtoupper((string) $webhook->format)
         ];
     }
 
