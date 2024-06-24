@@ -1,3 +1,8 @@
+## 2.1.7 (Jun 24, 2024)
+
+- Fixed MySQL JSON columns bug via migration. This normalizes JSON columns for MariaDB and MySQL with the introduction
+  of JSON support in Yii 2.0.49.
+
 ## 2.1.6 (Jun 10, 2024)
 
 - Added `unique` validation rule for all model IDs updated via webhook

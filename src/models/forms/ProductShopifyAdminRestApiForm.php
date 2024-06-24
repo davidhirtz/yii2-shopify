@@ -10,7 +10,6 @@ use davidhirtz\yii2\shopify\models\ProductVariant;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
-use yii\helpers\Json;
 
 class ProductShopifyAdminRestApiForm
 {
@@ -53,7 +52,7 @@ class ProductShopifyAdminRestApiForm
         }
 
         ksort($options);
-        $product->options = $options ? Json::encode($options) : null;
+        $product->options = $options ?: null;
 
         if (!$product->save()) {
             ActiveRecordErrorLogger::log($product);
@@ -137,9 +136,7 @@ class ProductShopifyAdminRestApiForm
                 'inventory_quantity' => 'inventory_quantity',
             ]);
 
-            $variant->presentment_prices = count($variantData['presentment_prices'] ?? []) > 1
-                ? Json::encode($variantData['presentment_prices'])
-                : null;
+            $variant->presentment_prices = $variantData['presentment_prices'] ?? null;
 
             if ($variant->inventory_quantity < 0) {
                 $variant->inventory_quantity = null;
