@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="728f78e1-a9ae-4ed8-bfae-a75bd646fe2d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/forms/ProductShopifyAdminRestApiForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/forms/ProductShopifyAdminRestApiForm.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;davidhirtz&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:davidhirtz/yii2-shopify.git&quot;,
+    &quot;accountId&quot;: &quot;b3fb2a39-c7e2-4f23-8060-86d1adf941e4&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.1">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-diff" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-sequence-matcher" />
+      <path value="$PROJECT_DIR$/vendor/robthree/twofactorauth" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-color-output" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/bootstrap" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/bootbox" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-file-upload" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-tmpl" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-load-image" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/jstimezonedetect" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-canvas-to-blob" />
+      <path value="$PROJECT_DIR$/vendor/davidhirtz/yii2-datetime-behavior" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/davidhirtz/yii2-timeago" />
+      <path value="$PROJECT_DIR$/vendor/davidhirtz/yii2-skeleton" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-httpclient" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-mb-string" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/oauth-subscriber" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/punycode" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/inputmask" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/yii2-pjax" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/jquery-timeago" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/tinymce/tinymce" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-symfonymailer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-authclient" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-bootstrap4" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-composer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-imagine" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/seld/cli-prompt" />
+      <path value="$PROJECT_DIR$/vendor/cebe/markdown" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
+    </include_path>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2ZoFA7sKY6dh9X4wSQstLyt3qdz" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "v1",
+    "last_opened_file_path": "/Users/hirtz/Sites/yii2-app/packages/davidhirtz/yii2-shopify",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/config" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/migrations" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="CodeceptionConfigurationType" factoryName="Codeception">
+      <PhpTestRunnerSettings configuration_file="$PROJECT_DIR$/codeception.yml" scope="ConfigurationFile" use_alternative_configuration_file="true" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.18034.69" />
+        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.18034.69" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="728f78e1-a9ae-4ed8-bfae-a75bd646fe2d" name="Changes" comment="" />
+      <created>1703087096451</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703087096451</updated>
+      <workItem from="1703087097523" duration="121000" />
+      <workItem from="1703087689223" duration="3000" />
+      <workItem from="1705054349624" duration="990000" />
+      <workItem from="1705096622861" duration="1221000" />
+      <workItem from="1705145475922" duration="40000" />
+      <workItem from="1706550050069" duration="317000" />
+      <workItem from="1711625169769" duration="716000" />
+      <workItem from="1711633963701" duration="1309000" />
+      <workItem from="1711635697484" duration="2171000" />
+      <workItem from="1711800792241" duration="3931000" />
+      <workItem from="1715076902310" duration="966000" />
+      <workItem from="1718008038940" duration="642000" />
+      <workItem from="1719235890010" duration="1604000" />
+      <workItem from="1721990506122" duration="865000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

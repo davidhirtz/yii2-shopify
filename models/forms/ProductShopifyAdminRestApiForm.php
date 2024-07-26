@@ -57,7 +57,7 @@ class ProductShopifyAdminRestApiForm
         }
 
         ksort($options);
-        $product->options = $options ? json_encode($options) : null;
+        $product->options = $options ?: null;
 
         if (!$product->save()) {
             $product->logErrors();
@@ -127,7 +127,7 @@ class ProductShopifyAdminRestApiForm
                 'inventory_quantity' => 'inventory_quantity',
             ]);
 
-            $variant->presentment_prices = count($variantData['presentment_prices'] ?? []) > 1 ? json_encode($variantData['presentment_prices']) : null;
+            $variant->presentment_prices = count($variantData['presentment_prices'] ?? []) > 1 ? $variantData['presentment_prices'] : null;
 
             if ($variant->save()) {
                 if ($variant->position == 1) {

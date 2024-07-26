@@ -15,5 +15,16 @@
   },
   "extra": {
     "bootstrap": "davidhirtz\\yii2\\shopify\\composer\\Bootstrap"
-  }
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
 }
