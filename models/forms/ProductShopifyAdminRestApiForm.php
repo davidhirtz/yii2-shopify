@@ -130,10 +130,6 @@ class ProductShopifyAdminRestApiForm
             $variant->presentment_prices = count($variantData['presentment_prices'] ?? []) > 1 ? $variantData['presentment_prices'] : null;
 
             if ($variant->save()) {
-                if ($variant->position == 1) {
-                    $product->variant_id = $variant->id;
-                }
-
                 if ($variant->inventory_management) {
                     $totalInventoryCount += $variant->inventory_quantity;
                 }
@@ -151,6 +147,15 @@ class ProductShopifyAdminRestApiForm
             }
         }
 
+        $firstVariant = array_reduce($variants, function ($carry, ProductVariant $variant) {
+            if ($carry === null || $variant->position < $carry->position) {
+                $carry = $variant;
+            }
+
+            return $carry;
+        });
+
+        $product->variant_id = $firstVariant->id ?? null;
         $product->total_inventory_quantity = $totalInventoryCount;
         $product->variant_count = count($data['variants']);
         $product->update();
