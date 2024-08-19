@@ -44,8 +44,7 @@ class Bootstrap implements BootstrapInterface
          * @see WebhookController::actionProductsDelete()
          * @see WebhookController::actionProductsUpdate()
          */
-        $app->getUrlManager()->addRules(['shopify/webhook/<action>' => 'shopify/webhook/<action>'], false);
-
+        $app->addUrlManagerRules(['shopify/webhook/<action>' => 'shopify/webhook/<action>'], false);
         $app->setMigrationNamespace('davidhirtz\yii2\shopify\migrations');
     }
 }

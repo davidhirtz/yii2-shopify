@@ -42,11 +42,12 @@ class AuthCest extends BaseCest
         $auth = Yii::$app->getAuthManager()->getPermission(Product::AUTH_PRODUCT_UPDATE);
         Yii::$app->getAuthManager()->assign($auth, $user->id);
 
+        $I->amOnPage('/admin/product/index');
+
         $widget = Yii::$container->get(ProductGridView::class, [], [
             'dataProvider' => Yii::createObject(ProductActiveDataProvider::class),
         ]);
 
-        $I->amOnPage('/admin/product/index');
         $I->seeElement("#$widget->id");
     }
 
