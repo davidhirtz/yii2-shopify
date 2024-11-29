@@ -1,8 +1,14 @@
+## 2.1.9 (Nov 29, 2024)
+
+- Fixed `ProductGridView` button method signature
+- Forced strict types for all PHP files
+
 ## 2.1.8 (Aug 19, 2024)
 
 - Changed `Bootstrap` to use `ApplicationTrait::addUrlManagerRules()` to prevent the initialization of the URL manager
   before the bootstrap is completed
-- 
+-
+
 ## 2.1.7 (Jun 24, 2024)
 
 - Fixed MySQL JSON columns bug via migration. This normalizes JSON columns for MariaDB and MySQL with the introduction
