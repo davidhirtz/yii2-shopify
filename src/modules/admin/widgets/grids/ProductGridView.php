@@ -83,7 +83,7 @@ class ProductGridView extends GridView
         ];
     }
 
-    
+
     public function thumbnailColumn(): array
     {
         return [
@@ -186,7 +186,7 @@ class ProductGridView extends GridView
 
     protected function getCreateProductButton(): string
     {
-        return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
+        return Html::a((string)Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
             'class' => 'btn btn-primary',
             'target' => '_blank',
         ]);
@@ -197,23 +197,25 @@ class ProductGridView extends GridView
      */
     protected function getUpdateAllProductsButton(): string
     {
-        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
+        return Html::a((string)Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
             'class' => 'btn btn-secondary',
             'data-method' => 'post',
         ]);
     }
 
-    protected function getUpdateButton($model): string
+    protected function getUpdateButton($model, array $options = []): string
     {
-        return Html::a(Icon::tag('sync'), $this->getRoute($model), [
+        return parent::getUpdateButton($model, [
+            'icon' => 'sync',
             'class' => 'btn btn-secondary',
             'data-method' => 'post',
+            ...$options,
         ]);
     }
 
     protected function getShopifyAdminProductButton(Product $product): string
     {
-        return Html::a(Icon::tag('wrench'), $product->getAdminRoute(), [
+        return Html::a((string)Icon::tag('wrench'), $product->getAdminRoute(), [
             'class' => 'btn btn-primary d-none d-md-inline-block',
             'target' => '_blank'
         ]);
