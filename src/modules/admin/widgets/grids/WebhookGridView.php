@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\shopify\modules\admin\widgets\grids;
 
 use davidhirtz\yii2\shopify\models\Webhook;
@@ -132,7 +134,7 @@ class WebhookGridView extends GridView
      */
     protected function getUnlinkButton(Webhook $model): string
     {
-        return Html::a(Icon::tag('trash'), ['delete', 'id' => $model->id], [
+        return Html::a((string)Icon::tag('trash'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data-confirm' => Yii::t('shopify', 'Are you sure you want to remove this webhook?'),
             'data-target' => "#webhook-$model->id",

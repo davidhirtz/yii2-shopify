@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\shopify\migrations;
 
 use davidhirtz\yii2\shopify\models\ProductVariant;
@@ -16,7 +18,7 @@ class M240328135307ProductVariant extends Migration
 
     public function safeUp(): void
     {
-        $this->alterColumn(ProductVariant::tableName(), 'inventory_quantity', $this->integer()
+        $this->alterColumn(ProductVariant::tableName(), 'inventory_quantity', (string)$this->integer()
             ->unsigned()
             ->null());
     }

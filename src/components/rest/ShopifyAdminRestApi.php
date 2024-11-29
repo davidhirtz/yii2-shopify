@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\shopify\components\rest;
 
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
@@ -134,7 +136,7 @@ class ShopifyAdminRestApi extends BaseObject
                 $this->_errors = (array)$errors;
             }
 
-            Yii::error($exception);
+            Yii::error($exception->getMessage());
         }
 
         return null;

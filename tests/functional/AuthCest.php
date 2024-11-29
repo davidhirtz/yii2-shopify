@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @noinspection PhpUnused
  */
-
 namespace davidhirtz\yii2\shopify\tests\functional;
 
 use davidhirtz\yii2\shopify\models\Product;

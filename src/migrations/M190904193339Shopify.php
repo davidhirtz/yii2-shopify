@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\shopify\migrations;
 
 use davidhirtz\yii2\shopify\models\Product;
