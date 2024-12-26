@@ -19,14 +19,10 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::setAlias('@shopify', __DIR__);
 
-        $app->extendComponent('i18n', [
-            'translations' => [
-                'shopify' => [
-                    'class' => PhpMessageSource::class,
-                    'basePath' => '@shopify/messages',
-                ],
-            ],
-        ]);
+        $app->getI18n()->translations['shopify'] ??= [
+            'class' => PhpMessageSource::class,
+            'basePath' => '@shopify/messages',
+        ];
 
         $app->extendModules([
             'admin' => [

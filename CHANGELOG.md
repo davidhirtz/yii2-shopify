@@ -1,3 +1,7 @@
+## 2.1.10 (in development)
+
+- Changed `Bootstrap` I18N configuration
+
 ## 2.1.9 (Nov 29, 2024)
 
 - Fixed `ProductGridView` button method signature
