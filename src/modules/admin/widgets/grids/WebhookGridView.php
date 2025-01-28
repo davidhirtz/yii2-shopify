@@ -8,8 +8,8 @@ use davidhirtz\yii2\shopify\models\Webhook;
 use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
+use davidhirtz\yii2\skeleton\html\Icon;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
-use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -134,7 +134,7 @@ class WebhookGridView extends GridView
      */
     protected function getUnlinkButton(Webhook $model): string
     {
-        return Html::a((string)Icon::tag('trash'), ['delete', 'id' => $model->id], [
+        return Html::a(Icon::tag('trash')->render(), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data-confirm' => Yii::t('shopify', 'Are you sure you want to remove this webhook?'),
             'data-target' => "#webhook-$model->id",

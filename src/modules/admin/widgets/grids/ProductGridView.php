@@ -9,10 +9,10 @@ use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
+use davidhirtz\yii2\skeleton\html\Icon;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\columns\CounterColumn;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
-use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
 use Yii;
 
@@ -54,17 +54,8 @@ class ProductGridView extends GridView
     {
         $this->header ??= [
             [
-                [
-                    'content' => $this->statusDropdown(),
-                    'options' => ['class' => 'col-12 col-md-3'],
-                ],
-                [
-                    'content' => $this->getSearchInput(),
-                    'options' => ['class' => 'col-12 col-md-6'],
-                ],
-                'options' => [
-                    'class' => 'justify-content-between',
-                ],
+                $this->statusDropdown(),
+                $this->search->getColumn(),
             ],
         ];
     }
@@ -73,13 +64,10 @@ class ProductGridView extends GridView
     {
         $this->footer ??= [
             [
-                [
-                    'content' => $this->getCreateProductButton(),
-                    'options' => ['class' => 'col'],
-                ],
+                $this->getCreateProductButton(),
                 [
                     'content' => $this->getUpdateAllProductsButton(),
-                    'options' => ['class' => 'col text-right'],
+                    'options' => ['class' => 'ms-auto'],
                 ],
             ],
         ];
@@ -112,7 +100,7 @@ class ProductGridView extends GridView
         return [
             'attribute' => $this->getModel()->getI18nAttributeName('name'),
             'content' => function (Product $product) {
-                $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name') ?? ''), $this->search);
+                $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name') ?? ''), $this->search->getKeywords());
                 $html = Html::tag('strong', Html::a($html, $product->getAdminRoute(), [
                     'target' => '_blank',
                 ]));
@@ -159,7 +147,7 @@ class ProductGridView extends GridView
     public function buttonsColumn(): array
     {
         return [
-            'contentOptions' => ['class' => 'text-right text-nowrap'],
+            'contentOptions' => ['class' => 'text-end text-nowrap'],
             'content' => fn (Product $product): string => Html::buttons($this->getRowButtons($product))
         ];
     }
@@ -188,7 +176,7 @@ class ProductGridView extends GridView
 
     protected function getCreateProductButton(): string
     {
-        return Html::a((string)Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
+        return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
             'class' => 'btn btn-primary',
             'target' => '_blank',
         ]);
@@ -199,7 +187,7 @@ class ProductGridView extends GridView
      */
     protected function getUpdateAllProductsButton(): string
     {
-        return Html::a((string)Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
+        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
             'class' => 'btn btn-secondary',
             'data-method' => 'post',
         ]);
@@ -217,7 +205,7 @@ class ProductGridView extends GridView
 
     protected function getShopifyAdminProductButton(Product $product): string
     {
-        return Html::a((string)Icon::tag('wrench'), $product->getAdminRoute(), [
+        return Html::a(Icon::tag('wrench')->render(), $product->getAdminRoute(), [
             'class' => 'btn btn-primary d-none d-md-inline-block',
             'target' => '_blank'
         ]);
