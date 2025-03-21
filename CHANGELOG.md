@@ -1,3 +1,7 @@
+## 2.1.11 (in development)
+
+- Changed Shopify credentials defaults from null-coalescing to ternary operator
+
 ## 2.1.10 (Jan 28, 2025)
 
 - Changed `Bootstrap` I18N configuration
