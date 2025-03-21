@@ -140,7 +140,15 @@ class ProductGridView extends GridView
         return [
             'attribute' => 'variant_count',
             'class' => CounterColumn::class,
-            'route' => fn (Product $product) => static::getModule()->getShopUrl("admin/products/$product->id/variants/$product->variant_id"),
+            'route' => function (Product $product) {
+                $query = "admin/products/$product->id";
+
+                if ($product->variant_count > 1) {
+                    $query .= "/variants/$product->variant_id";
+                }
+
+                return static::getModule()->getShopUrl($query);
+            },
             'wrapperOptions' => [
                 'class' => 'badge',
                 'target' => '_blank',

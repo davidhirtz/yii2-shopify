@@ -1,6 +1,7 @@
 ## 2.1.11 (in development)
 
 - Changed Shopify credentials defaults from null-coalescing to ternary operator
+- Enhanced Shop URL for single variant products
 
 ## 2.1.10 (Jan 28, 2025)
 
