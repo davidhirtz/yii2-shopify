@@ -1,4 +1,4 @@
-## 2.1.11 (in development)
+## 2.1.11 (Mar 24, 2025)
 
 - Changed Shopify credentials defaults from null-coalescing to ternary operator
 - Enhanced Shop URL for single variant products
