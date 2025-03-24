@@ -76,15 +76,16 @@ class Module extends \yii\base\Module
             throw new InvalidConfigException('Shopify module does not support I18N database tables.');
         }
 
-        $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?: null;
+        $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
 
-        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?: "$this->shopifyShopName.myshopify.com";
-        $this->shopifyShopDomain = rtrim((string) preg_replace('(^https?://)', '', (string)$this->shopifyShopDomain), '/');
+        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? null;
+        $this->shopifyShopDomain ??= "$this->shopifyShopName.myshopify.com";
+        $this->shopifyShopDomain = rtrim((string) preg_replace('(^https??//)', '', (string)$this->shopifyShopDomain), '/');
 
-        $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?: null;
-        $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?: null;
-        $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'] ?: null;
-        $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'] ?: null;
+        $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;
+        $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?? null;
+        $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'] ?? null;
+        $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'] ?? null;
         $this->shopifyApiVersion ??= $this->latestShopifyApiVersion;
 
         parent::init();
