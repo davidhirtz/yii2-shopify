@@ -1,3 +1,7 @@
+## 2.1.12 (in development)
+
+- Fixed empty `Module::$shopifyShopDomain` default
+
 ## 2.1.11 (Mar 24, 2025)
 
 - Changed Shopify credentials defaults from null-coalescing to ternary operator
