@@ -1,5 +1,6 @@
 ## 2.1.12 (in development)
 
+- Added `ProductActiveDataProvider` default sort
 - Fixed empty `Module::$shopifyShopDomain` default
 
 ## 2.1.11 (Mar 24, 2025)

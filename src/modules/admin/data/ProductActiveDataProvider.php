@@ -13,14 +13,7 @@ use yii\data\ActiveDataProvider;
  */
 class ProductActiveDataProvider extends ActiveDataProvider
 {
-    /**
-     * @var int|null the product status
-     */
     public ?int $status = null;
-
-    /**
-     * @var string|null the text search
-     */
     public ?string $searchString = null;
 
     public function init(): void
@@ -42,5 +35,14 @@ class ProductActiveDataProvider extends ActiveDataProvider
         if ($this->searchString) {
             $this->query->matching($this->searchString);
         }
+    }
+
+    public function setSort($value): void
+    {
+        if (is_array($value)) {
+            $value['defaultOrder'] ??= ['updated_at' => SORT_DESC];
+        }
+
+        parent::setSort($value);
     }
 }
