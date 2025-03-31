@@ -1,6 +1,7 @@
-## 2.1.12 (in development)
+## 2.1.12 (Mar 31, 2025)
 
 - Added `ProductActiveDataProvider` default sort
+- Added `Webhook::$metafield_identifiers`
 - Fixed empty `Module::$shopifyShopDomain` default
 
 ## 2.1.11 (Mar 24, 2025)

@@ -22,6 +22,7 @@ class Webhook extends Model
     public array $fields = [];
     public array $metafield_namespaces = [];
     public array $private_metafield_namespaces = [];
+    public array $metafield_identifiers = [];
     public ?string $api_version = null;
     public ?string $updated_at = null;
     public ?string $created_at = null;
@@ -72,6 +73,7 @@ class Webhook extends Model
             'fields' => $this->fields,
             'metafield_namespaces' => $this->metafield_namespaces,
             'private_metafield_namespaces' => $this->private_metafield_namespaces,
+            'metafield_identifiers' => $this->metafield_identifiers,
         ]);
 
         $api = static::getModule()->getApi();
