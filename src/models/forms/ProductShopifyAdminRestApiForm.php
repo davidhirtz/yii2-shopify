@@ -150,7 +150,6 @@ class ProductShopifyAdminRestApiForm
 
                 $variantIds[] = $variant->id;
                 $variants[$variant->id] = $variant;
-
             } elseif ($errors = $variant->getErrors()) {
                 ActiveRecordErrorLogger::log($variant);
                 $product->addErrors($errors);
