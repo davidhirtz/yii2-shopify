@@ -181,7 +181,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
 
     protected function getShopifyAdminUrl(): string
     {
-        return static::getModule()->getShopUrl("admin/products/$this->id");
+        return Yii::$app->get('shopify')->getShopUrl("admin/products/$this->id");
     }
 
     public function attributeLabels(): array

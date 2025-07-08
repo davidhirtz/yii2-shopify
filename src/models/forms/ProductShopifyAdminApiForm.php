@@ -13,9 +13,9 @@ use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
 
-class ProductShopifyAdminRestApiForm
+class ProductShopifyAdminApiForm
 {
-    public static function createOrUpdateFromApiData(array $data): ?Product
+    public static function createOrUpdateFromApiData(array $data): Product
     {
         $product = Product::findOne($data['id']) ?? Product::create();
 
@@ -176,20 +176,19 @@ class ProductShopifyAdminRestApiForm
         $product->variant_count = count($data['variants']);
     }
 
-    public static function deleteProductsFromApiResult(array $results): int
+    public static function deleteProductsFromApiResult(array $productIds): int
     {
         $count = 0;
 
-        if ($productIds = ArrayHelper::getColumn($results, 'id')) {
-            $products = Product::find()
-                ->where(['not in', 'id', $productIds])
-                ->all();
+        $products = Product::find()
+            ->where(['not in', 'id', $productIds])
+            ->all();
 
-            foreach ($products as $product) {
-                if ($product->delete()) {
-                    $count++;
-                }
-            }
+        foreach ($products as $product) {
+            Yii::debug("Deleting product {$product->id} ({$product->}) from API result.");
+//            if ($product->delete()) {
+                $count++;
+//            }
         }
 
         return $count;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify;
 
+use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\controllers\WebhookController;
 use davidhirtz\yii2\skeleton\web\Application;
 use Yii;
@@ -35,6 +36,10 @@ class Bootstrap implements BootstrapInterface
             'shopify' => [
                 'class' => Module::class,
             ],
+        ]);
+
+        $app->extendComponent('shopify', [
+            'class' => ShopifyComponent::class,
         ]);
 
         /**

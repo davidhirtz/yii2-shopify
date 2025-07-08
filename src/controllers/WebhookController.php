@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\controllers;
 
-use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminRestApiForm;
+use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminApiForm;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\Module;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
@@ -49,7 +49,7 @@ class WebhookController extends Controller
     public function actionProductsCreate(): void
     {
         $data = Json::decode(file_get_contents('php://input'));
-        ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        ProductShopifyAdminApiForm::createOrUpdateFromApiData($data);
     }
 
     /**
@@ -58,7 +58,7 @@ class WebhookController extends Controller
     public function actionProductsUpdate(): void
     {
         $data = Json::decode(file_get_contents('php://input'));
-        ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        ProductShopifyAdminApiForm::createOrUpdateFromApiData($data);
     }
 
     /**

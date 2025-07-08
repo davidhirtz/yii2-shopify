@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
-use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminRestApiForm;
+use davidhirtz\yii2\shopify\models\collections\ShopifyApiProductCollection;
+use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminApiForm;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
@@ -63,7 +64,7 @@ class ProductController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $product = ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        $product = ProductShopifyAdminApiForm::createOrUpdateFromApiData($data);
 
         if (!$product->hasErrors()) {
             $this->success(Yii::t('shopify', 'The product was updated via Shopify.'));
@@ -76,20 +77,58 @@ class ProductController extends Controller
 
     public function actionUpdateAll(): Response
     {
-        $api = static::getModule()->getApi();
-        $products = $api->getProducts();
+        $api = Yii::$app->get('shopify')->getAdminApi();
 
-        foreach ($products as $data) {
-            $product = ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        foreach ($api->getProducts(2) as $result) {
+            // Update products from API data
+            dump($result['node']);
+        }
+
+//        dd('Done');
+
+        $this->error($api->getErrors());
+        return $this->redirect(['index']);
+    }
+
+    private function updateAllInternal(?string $cursor = null): array|false
+    {
+        $api = static::getModule()->getApi();
+        $limit = 20;
+
+        $results = $api->getProducts($limit, $cursor);
+
+        if ($errors = $api->getErrors()) {
+            $this->error($errors);
+            return false;
+        }
+
+        $productIds = [];
+
+        foreach ($results as $result) {
+            $product = ProductShopifyAdminApiForm::createOrUpdateFromApiData($result['node']);
 
             if ($product->hasErrors()) {
                 $this->error($product);
             }
+
+            if (!$product->getIsNewRecord()) {
+                $productIds[] = $product->id;
+            }
         }
 
-        ProductShopifyAdminRestApiForm::deleteProductsFromApiResult($products);
+        if (count($results) >= $limit) {
+            $nextCursor = end($results)['cursor'];
 
-        $this->error($api->getErrors());
-        return $this->redirect(['index']);
+            $productIds = [
+                ...$productIds,
+                $this->updateAllInternal($nextCursor),
+            ];
+        }
+
+        if ($cursor === null) {
+            ProductShopifyAdminApiForm::deleteProductsFromApiResult($productIds);
+        }
+
+        return $productIds;
     }
 }

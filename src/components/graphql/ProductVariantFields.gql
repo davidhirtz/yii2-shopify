@@ -1,0 +1,43 @@
+fragment ProductVariantFields on ProductVariant {
+    barcode
+    compareAtPrice
+    createdAt
+    id
+    inventoryItem {
+        measurement {
+            weight {
+                unit
+                value
+            }
+        }
+        tracked
+    }
+    inventoryQuantity
+    media (first: 1) {
+        nodes {
+            id
+        }
+    }
+    position
+    price
+    selectedOptions {
+        name
+        value
+    }
+    showUnitPrice
+    sku
+    taxable
+    title
+    unitPrice {
+        amount
+        currencyCode
+    }
+    unitPriceMeasurement {
+        measuredType
+        quantityUnit
+        quantityValue
+        referenceUnit
+        referenceValue
+    }
+    updatedAt
+}

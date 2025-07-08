@@ -1,0 +1,31 @@
+fragment ProductFields on Product {
+    descriptionHtml
+    handle
+    id
+    media (first: 250) {
+        nodes {
+            id
+            alt
+            mediaContentType
+            preview {
+                image {
+                    height
+                    width
+                    url
+                }
+            }
+        }
+    }
+    options {
+        name
+        position
+        values
+    }
+    productType
+    tags
+    title
+    variantsCount {
+        count
+    }
+    vendor
+}

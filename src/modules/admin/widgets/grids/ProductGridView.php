@@ -147,7 +147,7 @@ class ProductGridView extends GridView
                     $query .= "/variants/$product->variant_id";
                 }
 
-                return static::getModule()->getShopUrl($query);
+                return Yii::$app->get('shopify')->getShopUrl($query);
             },
             'wrapperOptions' => [
                 'class' => 'badge',
@@ -196,7 +196,7 @@ class ProductGridView extends GridView
 
     protected function getCreateProductButton(): string
     {
-        return Html::a((string)Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
+        return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), Yii::$app->get('shopify')->getShopUrl('admin/products/new'), [
             'class' => 'btn btn-primary',
             'target' => '_blank',
         ]);
