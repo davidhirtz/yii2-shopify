@@ -77,57 +77,17 @@ class ProductController extends Controller
     public function actionUpdateAll(): Response
     {
         $api = Yii::$app->get('shopify')->getAdminApi();
-
-        foreach ($api->getProducts(2) as $result) {
-            // Update products from API data
-            dump($result['node']);
-        }
-
-
-        $this->error($api->getErrors());
-        dd($api->getErrors());
-        return $this->redirect(['index']);
-    }
-
-    private function updateAllInternal(?string $cursor = null): array|false
-    {
-        $api = static::getModule()->getApi();
-        $limit = 20;
-
-        $results = $api->getProducts($limit, $cursor);
-
-        if ($errors = $api->getErrors()) {
-            $this->error($errors);
-            return false;
-        }
-
         $productIds = [];
 
-        foreach ($results as $result) {
-            $product = ProductShopifyAdminApiForm::createOrUpdateFromApiData($result['node']);
-
-            if ($product->hasErrors()) {
-                $this->error($product);
-            }
-
-            if (!$product->getIsNewRecord()) {
-                $productIds[] = $product->id;
-            }
+        foreach ($api->getProducts(2) as $result) {
+            $product = $api->updateOrCreateProduct($result['node']);
+            $productIds[] = $product->id;
         }
 
-        if (count($results) >= $limit) {
-            $nextCursor = end($results)['cursor'];
+        // Todo delete products that were not returned by the API.
+        Yii::debug($productIds);
 
-            $productIds = [
-                ...$productIds,
-                $this->updateAllInternal($nextCursor),
-            ];
-        }
-
-        if ($cursor === null) {
-            ProductShopifyAdminApiForm::deleteProductsFromApiResult($productIds);
-        }
-
-        return $productIds;
+        $this->error($api->getErrors());
+        return $this->redirect(['index']);
     }
 }

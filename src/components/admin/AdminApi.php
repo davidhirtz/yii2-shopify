@@ -3,6 +3,8 @@
 namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\components\ShopifyComponent;
+use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -59,6 +61,21 @@ class AdminApi
         ]);
 
         return $data['products']['edges'] ?? [];
+    }
+
+    public function updateOrCreateProduct(array $data): Product
+    {
+        $mapper = new AdminApiProductDataMapper($data);
+
+        if ($mapper->product->save()) {
+            // Todo media + variants
+        }
+
+        if ($mapper->product->getErrors()) {
+            ActiveRecordErrorLogger::log($mapper->product);
+        }
+
+        return $mapper->product;
     }
 
     protected function query(string $query, array $variables = []): array

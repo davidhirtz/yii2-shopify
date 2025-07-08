@@ -39,7 +39,6 @@ abstract class AbstractAdminApiIterator implements Iterator
         return isset($this->data[$this->position]);
     }
 
-
     public function key(): int
     {
         return $this->position;
