@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
-use davidhirtz\yii2\shopify\models\collections\ShopifyApiProductCollection;
 use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminApiForm;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
@@ -84,9 +83,9 @@ class ProductController extends Controller
             dump($result['node']);
         }
 
-//        dd('Done');
 
         $this->error($api->getErrors());
+        dd($api->getErrors());
         return $this->redirect(['index']);
     }
 

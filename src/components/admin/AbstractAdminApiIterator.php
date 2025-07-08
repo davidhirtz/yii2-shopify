@@ -1,22 +1,19 @@
 <?php
 
-declare(strict_types=1);
+namespace davidhirtz\yii2\shopify\components\admin;
 
-namespace davidhirtz\yii2\shopify\models\collections;
-
-use davidhirtz\yii2\shopify\components\apis\ShopifyAdminApi;
 use Iterator;
 use Yii;
 
-class ShopifyApiProductCollection implements Iterator
+abstract class AbstractAdminApiIterator implements Iterator
 {
-    private ?string $currentCursor = null;
+    protected ?string $currentCursor = null;
     private ?array $data = null;
     private int $position = 0;
 
     public function __construct(
-        protected ShopifyAdminApi $api,
-        protected int $batchSize = 20,
+        protected readonly AdminApi $api,
+        protected int $batchSize,
         protected ?string $cursor = null,
     )
     {
@@ -50,8 +47,6 @@ class ShopifyApiProductCollection implements Iterator
 
     public function rewind(): void
     {
-        Yii::debug("Rewind", __METHOD__);
-
         $this->currentCursor = $this->cursor;
         $this->data = $this->getData();
         $this->position = 0;
@@ -59,9 +54,13 @@ class ShopifyApiProductCollection implements Iterator
 
     protected function getData(): array
     {
-        $data = $this->api->fetchProducts($this->batchSize, $this->currentCursor);
+        Yii::debug('Fetching data from API', __METHOD__);
+
+        $data = $this->fetchData();
         $this->currentCursor = end($data)['cursor'] ?? null;
 
         return $data;
     }
+
+    abstract protected function fetchData(): array;
 }

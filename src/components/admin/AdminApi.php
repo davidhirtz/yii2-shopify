@@ -1,9 +1,8 @@
 <?php
 
-namespace davidhirtz\yii2\shopify\components\apis;
+namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\components\ShopifyComponent;
-use davidhirtz\yii2\shopify\models\collections\ShopifyApiProductCollection;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -11,20 +10,20 @@ use GuzzleHttp\TransferStats;
 use Yii;
 use yii\helpers\Json;
 
-class ShopifyAdminApi
+class AdminApi
 {
     private array $_errors = [];
 
-    public function __construct(private ShopifyComponent $shopify)
+    public function __construct(private readonly ShopifyComponent $shopify)
     {
     }
 
-    public function getProducts(int $batchSize = 20): ShopifyApiProductCollection
+    public function getProducts(int $batchSize = 20): AdminApiProductIterator
     {
-        return new ShopifyApiProductCollection($this, $batchSize);
+        return new AdminApiProductIterator($this, $batchSize);
     }
 
-    public function fetchProducts(int $limit = 20, ?string $cursor = null): array
+    public function fetchProducts(int $limit, ?string $cursor = null): array
     {
         $productFragment = file_get_contents(Yii::getAlias('@shopify/components/graphql/ProductFields.gql'));
         $variantFragment = file_get_contents(Yii::getAlias('@shopify/components/graphql/ProductVariantFields.gql'));

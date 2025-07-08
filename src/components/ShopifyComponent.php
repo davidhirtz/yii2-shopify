@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\components;
 
-use davidhirtz\yii2\shopify\components\apis\ShopifyAdminApi;
-use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\TransferStats;
+use davidhirtz\yii2\shopify\components\admin\AdminApi;
 use Yii;
 use yii\base\Component;
-use yii\base\InvalidConfigException;
-use yii\helpers\Json;
 
 class ShopifyComponent extends Component
 {
@@ -43,9 +37,9 @@ class ShopifyComponent extends Component
         parent::init();
     }
 
-    public function getAdminApi(): ShopifyAdminApi
+    public function getAdminApi(): AdminApi
     {
-        return new ShopifyAdminApi($this);
+        return new AdminApi($this);
     }
 
     public function getShopUrl(string $query = ''): string
