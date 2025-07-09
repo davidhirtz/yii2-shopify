@@ -13,7 +13,6 @@ abstract class AbstractIterator implements Iterator
     private int $position = 0;
 
     public function __construct(
-        protected readonly AdminApi $api,
         protected int $batchSize,
         protected ?string $cursor = null,
     ) {

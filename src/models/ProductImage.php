@@ -45,19 +45,11 @@ class ProductImage extends ActiveRecord
     {
         return $this->getI18nRules([
             [
-                ['id'],
-                'unique',
-            ],
-            [
                 ['id', 'product_id', 'position', 'width', 'height', 'src'],
                 'required',
             ],
             [
-                ['id', 'product_id'],
-                'string',
-            ],
-            [
-                ['position', 'width', 'height'],
+                ['width', 'height'],
                 'number',
                 'integerOnly' => true,
             ],
@@ -114,11 +106,6 @@ class ProductImage extends ActiveRecord
             'height' => Yii::t('shopify', 'Height'),
             'src' => Yii::t('shopify', 'URL'),
         ]);
-    }
-
-    public function formName(): string
-    {
-        return 'ProductImage';
     }
 
     public static function tableName(): string

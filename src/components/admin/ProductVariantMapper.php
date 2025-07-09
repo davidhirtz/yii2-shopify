@@ -20,7 +20,7 @@ readonly class ProductVariantMapper
         $this->variant = ProductVariant::findOne($id) ?? ProductVariant::create();
 
         $this->variant->id = $id;
-        $this->variant->populateProductRelation($this->product);
+        $this->variant->product_id ??= $this->product->id;
 
         $this->setAttributes();
     }

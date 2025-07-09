@@ -11,8 +11,6 @@ class ProductsBuilder
 {
     private readonly AdminApi $api;
     private array $productIds = [];
-    private int $createdCount = 0;
-    private int $deletedCount = 0;
 
     public function __construct()
     {
@@ -21,20 +19,20 @@ class ProductsBuilder
 
     public function save(): void
     {
-        foreach ($this->api->getProducts(2) as $result) {
+        foreach ($this->getProducts() as $result) {
             $repository = new ProductRepository($result['node']);
-            $isNewRecord = $repository->product->getIsNewRecord();
 
             if ($repository->save()) {
-                if ($isNewRecord) {
-                    $this->createdCount++;
-                }
-
                 $this->productIds[] = $repository->product->id;
             }
         }
 
         $this->deleteRemovedProducts();
+    }
+
+    protected function getProducts(): ProductIterator
+    {
+        return new ProductIterator(20);
     }
 
     protected function deleteRemovedProducts(): void
@@ -44,20 +42,8 @@ class ProductsBuilder
             ->all();
 
         foreach ($products as $product) {
-            if ($product->delete()) {
-                $this->deletedCount++;
-            }
+            $product->delete();
         }
-    }
-
-    public function getCreatedCount(): int
-    {
-        return $this->createdCount;
-    }
-
-    public function getDeletedCount(): int
-    {
-        return $this->deletedCount;
     }
 
     public function getErrors(): array

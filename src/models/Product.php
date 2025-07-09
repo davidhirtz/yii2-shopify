@@ -77,32 +77,25 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
 
     public function rules(): array
     {
-        return [
-            ...parent::rules(),
-            ...$this->getI18nRules([
-                [
-                    ['id'],
-                    'unique',
-                ],
-                [
-                    ['status'],
-                    DynamicRangeValidator::class,
-                    'skipOnEmpty' => false,
-                ],
-                [
-                    $this->getI18nAttributesNames(['name']),
-                    'required',
-                ],
-                array_merge(
-                    [$this->getI18nAttributesNames(['content'])],
-                    (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
-                ),
-                [
-                    ['id', 'image_id', 'variant_id'],
-                    'string',
-                ],
-            ]),
-        ];
+        return $this->getI18nRules([
+            [
+                ['status'],
+                DynamicRangeValidator::class,
+                'skipOnEmpty' => false,
+            ],
+            [
+                $this->getI18nAttributesNames(['name']),
+                'required',
+            ],
+            array_merge(
+                [$this->getI18nAttributesNames(['content'])],
+                (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
+            ),
+            [
+                ['id', 'image_id', 'variant_id'],
+                'string',
+            ],
+        ]);
     }
 
     public function getImage(): ActiveQuery

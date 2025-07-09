@@ -57,25 +57,16 @@ class ProductVariant extends ActiveRecord
     {
         return $this->getI18nRules([
             [
-                ['id'],
-                'unique',
-            ],
-            [
                 ['id', 'product_id', 'position'],
                 'required',
             ],
             [
-                ['id', 'product_id', 'image_id'],
+                ['weight'],
                 'string',
             ],
             [
                 ['is_taxable'],
                 'boolean',
-            ],
-            [
-                ['position', 'inventory_quantity'],
-                'number',
-                'integerOnly' => true,
             ],
         ]);
     }
@@ -137,11 +128,6 @@ class ProductVariant extends ActiveRecord
             'inventory_quantity' => Yii::t('shopify', 'Quantity'),
             'inventory_policy' => Yii::t('shopify', 'Inventory policy'),
         ]);
-    }
-
-    public function formName(): string
-    {
-        return 'ProductVariant';
     }
 
     public static function tableName(): string

@@ -19,7 +19,7 @@ readonly class ProductImageMapper
         $this->image = ProductImage::findOne($id) ?? ProductImage::create();
 
         $this->image->id = $id;
-        $this->image->populateProductRelation($this->product);
+        $this->image->product_id ??= $this->product->id;
 
         $this->setAttributes();
     }

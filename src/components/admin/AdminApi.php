@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\components\admin;
 
-use davidhirtz\yii2\shopify\components\GraphqlParser;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -23,26 +22,10 @@ class AdminApi
     ) {
     }
 
-    public function getProducts(int $batchSize = 20): ProductIterator
-    {
-        return new ProductIterator($this, $batchSize);
-    }
-
-    public function fetchProducts(int $limit, ?string $cursor = null): array
-    {
-        $query = $this->getGraphqlQueryByName('ProductsQuery');
-
-        $data = $this->query($query, [
-            'limit' => $limit,
-            'cursor' => $cursor,
-        ]);
-
-        return $data['products']['edges'] ?? [];
-    }
-
-    protected function query(string $query, array $variables = []): array
+    public function query(string $query, array $variables = []): array
     {
         $uri = "https://$this->shopifyShopName.myshopify.com/admin/api/$this->shopifyApiVersion/graphql.json";
+
         $body = array_filter([
             'query' => $query,
             'variables' => $variables,
@@ -57,9 +40,9 @@ class AdminApi
         ];
 
         if (YII_DEBUG) {
-            $options['on_stats'] = function (TransferStats $stats) {
+            $options['on_stats'] = function (TransferStats $stats) use ($body) {
                 Yii::debug("Requesting Shopify Admin GraphQL API: {$stats->getEffectiveUri()}");
-                Yii::debug($stats->getRequest()->getBody());
+                Yii::debug($body);
             };
         }
 
@@ -92,11 +75,6 @@ class AdminApi
         }
 
         return null;
-    }
-
-    protected function getGraphqlQueryByName(string $name): string
-    {
-        return (new GraphqlParser())->load($name);
     }
 
     public function getErrors(): array

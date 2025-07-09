@@ -21,6 +21,8 @@ class ShopifyComponent extends Component
     public ?string $shopifyStorefrontAccessToken = null;
     public string $shopifyApiVersion = self::API_VERSION;
 
+    private AdminApi $api;
+
     public function init(): void
     {
         $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
@@ -44,7 +46,7 @@ class ShopifyComponent extends Component
             throw new InvalidConfigException('Shopify shop name and access token must be set.');
         }
 
-        return new AdminApi(
+        return $this->api ??= new AdminApi(
             $this->shopifyShopName,
             $this->shopifyAccessToken,
             $this->shopifyApiVersion

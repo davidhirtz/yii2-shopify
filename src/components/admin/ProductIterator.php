@@ -4,10 +4,23 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\components\admin;
 
+use davidhirtz\yii2\shopify\components\GraphqlParser;
+use Yii;
+
 class ProductIterator extends AbstractIterator
 {
     protected function fetchData(): array
     {
-        return $this->api->fetchProducts($this->batchSize, $this->currentCursor);
+        $data = Yii::$app->get('shopify')->getAdminApi()->query($this->getQuery(), [
+            'limit' => $this->batchSize,
+            'cursor' => $this->currentCursor,
+        ]);
+
+        return $data['products']['edges'] ?? [];
+    }
+
+    protected function getQuery(): string
+    {
+        return (new GraphqlParser())->load('ProductsQuery');
     }
 }
