@@ -43,7 +43,7 @@ class ProductVariantsBuilder
         $variant->position = $this->getTotalCount() + 1;
 
         if ($variant->save()) {
-//            $this->totalInventoryQuantity += $variant->inventory_tracked ? $variant->inventory_quantity : 0;
+            //            $this->totalInventoryQuantity += $variant->inventory_tracked ? $variant->inventory_quantity : 0;
             $this->totalInventoryQuantity += $variant->inventory_quantity;
             $this->variantIds[] = $variant->id;
         }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\components\admin;
 
 use Iterator;
-use Yii;
 
 abstract class AbstractIterator implements Iterator
 {
@@ -17,8 +16,7 @@ abstract class AbstractIterator implements Iterator
         protected readonly AdminApi $api,
         protected int $batchSize,
         protected ?string $cursor = null,
-    )
-    {
+    ) {
     }
 
     public function current(): ?array

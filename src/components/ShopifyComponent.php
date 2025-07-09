@@ -40,7 +40,7 @@ class ShopifyComponent extends Component
 
     public function getAdminApi(): AdminApi
     {
-        if(!isset($this->shopifyShopName, $this->shopifyAccessToken)) {
+        if (!isset($this->shopifyShopName, $this->shopifyAccessToken)) {
             throw new InvalidConfigException('Shopify shop name and access token must be set.');
         }
 

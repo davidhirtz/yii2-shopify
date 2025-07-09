@@ -6,7 +6,6 @@ namespace davidhirtz\yii2\shopify;
 
 use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\skeleton\modules\ModuleTrait;
-use Yii;
 use yii\base\InvalidConfigException;
 
 class Module extends \yii\base\Module

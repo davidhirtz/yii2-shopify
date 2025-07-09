@@ -20,8 +20,7 @@ class AdminApi
         private readonly string $shopifyShopName,
         private readonly string $shopifyAccessToken,
         private readonly string $shopifyApiVersion,
-    )
-    {
+    ) {
     }
 
     public function getProducts(int $batchSize = 20): ProductIterator
