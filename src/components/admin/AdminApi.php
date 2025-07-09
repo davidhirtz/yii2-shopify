@@ -16,7 +16,11 @@ class AdminApi
 {
     private array $_errors = [];
 
-    public function __construct(private readonly ShopifyComponent $shopify)
+    public function __construct(
+        private readonly string $shopifyShopName,
+        private readonly string $shopifyAccessToken,
+        private readonly string $shopifyApiVersion,
+    )
     {
     }
 
@@ -80,7 +84,7 @@ class AdminApi
 
     protected function query(string $query, array $variables = []): array
     {
-        $uri = "https://{$this->shopify->shopifyShopName}.myshopify.com/admin/api/{$this->shopify->shopifyApiVersion}/graphql.json";
+        $uri = "https://{$this->shopifyShopName}.myshopify.com/admin/api/{$this->shopifyApiVersion}/graphql.json";
 
         $options = [
             'body' => json_encode(array_filter([
@@ -89,7 +93,7 @@ class AdminApi
             ])),
             'headers' => [
                 'Content-Type' => 'application/json',
-                'X-Shopify-Access-Token' => $this->shopify->shopifyAccessToken,
+                'X-Shopify-Access-Token' => $this->shopifyAccessToken,
             ],
         ];
 
