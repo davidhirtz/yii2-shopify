@@ -5,17 +5,10 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\models\Product;
-use Yii;
 
-class ProductsBuilder
+class ProductBatchRepository
 {
-    private readonly AdminApi $api;
     private array $productIds = [];
-
-    public function __construct()
-    {
-        $this->api = Yii::$app->get('shopify')->getAdminApi();
-    }
 
     public function save(): void
     {
@@ -44,10 +37,5 @@ class ProductsBuilder
         foreach ($products as $product) {
             $product->delete();
         }
-    }
-
-    public function getErrors(): array
-    {
-        return $this->api->getErrors();
     }
 }

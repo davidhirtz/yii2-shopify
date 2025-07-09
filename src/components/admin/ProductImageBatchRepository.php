@@ -8,7 +8,7 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
 
-class ProductImagesBuilder
+class ProductImageBatchRepository
 {
     private array $imageIds = [];
 

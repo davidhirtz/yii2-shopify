@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
-use davidhirtz\yii2\shopify\components\admin\ProductsBuilder;
+use davidhirtz\yii2\shopify\components\admin\ProductBatchRepository;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
@@ -76,8 +76,8 @@ class ProductController extends Controller
 
     public function actionUpdateAll(): Response
     {
-        $builder = new ProductsBuilder();
-        $builder->save();
+        $repository = new ProductBatchRepository();
+        $repository->save();
 
         $api = Yii::$app->get('shopify')->getAdminApi();
         $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'All products updated via Shopify.'));
