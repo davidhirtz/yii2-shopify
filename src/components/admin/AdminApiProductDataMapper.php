@@ -11,10 +11,8 @@ readonly class AdminApiProductDataMapper
 
     public function __construct(protected array $data)
     {
-        $id = (int)substr(strrchr($data['id'], '/'), 1);
-
-        $this->product = Product::findOne($id) ?? Product::create([
-            'id' => $id,
+        $this->product = Product::findOne($data['id']) ?? Product::create([
+            'id' => $data['id'],
         ]);
 
         $this->product->last_import_at = new DateTime();
@@ -29,12 +27,12 @@ readonly class AdminApiProductDataMapper
             default => $this->product::STATUS_ENABLED,
         };
 
-        $this->product->content = $this->data['descriptionHtml'] ?? '';
+        $this->product->content = $this->data['descriptionHtml'] ?: null;
         $this->product->name = $this->data['title'];
-        $this->product->product_type = $this->data['productType'] ?? '';
-        $this->product->slug = $this->data['handle'] ?? '';
-        $this->product->tags = $this->data['tags'] ?? '';
-        $this->product->vendor = $this->data['vendor'] ?? '';
+        $this->product->product_type = $this->data['productType'] ?: null;
+        $this->product->slug = $this->data['handle'];
+        $this->product->tags = $this->data['tags'] ?: null;
+        $this->product->vendor = $this->data['vendor'] ?: null;
 
         $options = [];
 

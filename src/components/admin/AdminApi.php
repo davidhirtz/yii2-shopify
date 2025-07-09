@@ -2,6 +2,7 @@
 
 namespace davidhirtz\yii2\shopify\components\admin;
 
+use davidhirtz\yii2\shopify\components\GraphqlParser;
 use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
@@ -31,33 +32,7 @@ class AdminApi
 
     public function fetchProducts(int $limit, ?string $cursor = null): array
     {
-        $productFragment = file_get_contents(Yii::getAlias('@shopify/components/graphql/ProductFields.gql'));
-        $variantFragment = file_get_contents(Yii::getAlias('@shopify/components/graphql/ProductVariantFields.gql'));
-
-        $query = <<<GRAPHQL
-                    query GetProducts (\$limit: Int! \$cursor: String) {
-                        products(first: \$limit, after: \$cursor) {
-                            edges {
-                                cursor
-                                node {
-                                    ...ProductFields
-                                    variants(first: 250) {
-                                        edges {
-                                            cursor
-                                            node {
-                                                ...ProductVariantFields
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    $productFragment
-                    $variantFragment
-                    
-                    GRAPHQL;
+        $query = $this->getGraphqlFile('ProductsQuery');
 
         $data = $this->query($query, [
             'limit' => $limit,
@@ -69,7 +44,9 @@ class AdminApi
 
     public function updateOrCreateProduct(array $data): Product
     {
+        $this->prepareApiData($data);
         $mapper = new AdminApiProductDataMapper($data);
+        dd($data);
 
         if ($mapper->product->save()) {
             // Todo media + variants
@@ -132,6 +109,16 @@ class AdminApi
         }
 
         return null;
+    }
+
+    protected function getGraphqlFile(string $name): string
+    {
+        return (new GraphqlParser())->load($name);
+    }
+
+    protected function prepareApiData(array &$data): void
+    {
+        $data['id'] = (int)substr(strrchr($data['id'], '/'), 1);
     }
 
     public function getErrors(): array
