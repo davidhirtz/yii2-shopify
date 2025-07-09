@@ -213,6 +213,9 @@ class ProductGridView extends GridView
         ]);
     }
 
+    /**
+     * @see ProductController::actionUpdate()
+     */
     protected function getUpdateButton($model, array $options = []): string
     {
         return parent::getUpdateButton($model, [

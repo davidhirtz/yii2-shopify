@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types=1);
-
 /**
  * Message translations.
  *
@@ -21,6 +18,7 @@ declare(strict_types=1);
  */
 return [
     'API Version' => '',
+    'All products updated via Shopify.' => '',
     'Alt text' => '',
     'Are you sure you want to remove this webhook?' => '',
     'Barcode (ISBN, UPC, GTIN, etc.)' => '',
@@ -55,6 +53,7 @@ return [
     'Shopify Admin API secret key must be set to use webhooks.' => '',
     'Shopify slug' => '',
     'Taxable' => '',
+    'The product was deleted because it was not found on Shopify anymore.' => '',
     'The product was updated via Shopify.' => '',
     'The webhook "{topic}" was created.' => '',
     'The webhook "{topic}" was skipped.' => '',
