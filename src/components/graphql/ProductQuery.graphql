@@ -1,16 +1,11 @@
-query GetProducts ($limit: Int! $cursor: String) {
-    products(first: $limit, after: $cursor) {
-        edges {
-            cursor
-            node {
-                ...ProductFields
-                variants(first: 250) {
-                    edges {
-                        cursor
-                        node {
-                            ...ProductVariantFields
-                        }
-                    }
+query GetProduct ($id: ID!) {
+    product(id: $id) {
+        ...ProductFields
+        variants(first: 2000) {
+            edges {
+                cursor
+                node {
+                    ...ProductVariantFields
                 }
             }
         }

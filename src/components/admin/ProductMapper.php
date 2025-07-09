@@ -17,7 +17,7 @@ readonly class ProductMapper
         $id = (new ShopifyId($data['id']))->toInt();
 
         $this->product = Product::findOne($id) ?? Product::create();
-        $this->product->id = $id;
+        $this->product->id ??= $id;
 
         $this->setAttributes();
     }

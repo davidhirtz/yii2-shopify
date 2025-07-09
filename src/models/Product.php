@@ -91,10 +91,6 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
                 [$this->getI18nAttributesNames(['content'])],
                 (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
             ),
-            [
-                ['id', 'image_id', 'variant_id'],
-                'string',
-            ],
         ]);
     }
 

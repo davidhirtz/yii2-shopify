@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
 use davidhirtz\yii2\shopify\components\admin\ProductBatchRepository;
+use davidhirtz\yii2\shopify\components\admin\ProductQuery;
+use davidhirtz\yii2\shopify\components\admin\ProductRepository;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
@@ -57,20 +59,30 @@ class ProductController extends Controller
 
     public function actionUpdate(int $id): Response|string
     {
-        $api = static::getModule()->getApi();
+        $data = (new ProductQuery($id))();
 
-        if (!$data = $api->getProduct($id)) {
+        if (!$data) {
+            $product = Product::findOne($id);
+
+            if ($product->delete()) {
+                $this->success(Yii::t('shopify', 'The product was deleted because it was not found on Shopify.'));
+                return $this->redirect(['index']);
+            }
+
             throw new NotFoundHttpException();
         }
 
-        $product = ProductShopifyAdminApiForm::createOrUpdateFromApiData($data);
+        $api = Yii::$app->get('shopify')->getAdminApi();
 
-        if (!$product->hasErrors()) {
-            $this->success(Yii::t('shopify', 'The product was updated via Shopify.'));
-        } else {
-            $this->error($product);
+        if ($api->getErrors()) {
+            $this->error($api->getErrors());
+            return $this->redirect(['index']);
         }
 
+        $repository = new ProductRepository($data);
+        $repository->save();
+
+        $this->errorOrSuccess($repository->product, Yii::t('shopify', 'The product was updated via Shopify.'));
         return $this->redirect(['index']);
     }
 
