@@ -50,9 +50,9 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     use DraftStatusAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const STATUS_ARCHIVED = self::STATUS_DISABLED;
+    public const int STATUS_ARCHIVED = self::STATUS_DISABLED;
 
-    public const AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
+    public const string AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
      * @var array|string used when `$contentType`is set to "html". use an array with the first value containing a

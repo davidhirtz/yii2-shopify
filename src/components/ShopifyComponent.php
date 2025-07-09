@@ -14,10 +14,10 @@ class ShopifyComponent extends Component
     private const string API_VERSION = '2025-07';
 
     public ?string $shopifyAccessToken = null;
-    public ?string $shopifyApiKey;
-    public ?string $shopifyApiSecret;
-    public ?string $shopifyShopDomain;
-    public ?string $shopifyShopName;
+    public ?string $shopifyApiKey = null;
+    public ?string $shopifyApiSecret = null;
+    public ?string $shopifyShopDomain = null;
+    public ?string $shopifyShopName = null;
     public ?string $shopifyStorefrontAccessToken = null;
     public string $shopifyApiVersion = self::API_VERSION;
 
