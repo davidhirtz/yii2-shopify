@@ -19,24 +19,25 @@ class WebhookSubscription extends Model
     public ?DateTime $updated_at = null;
     public ?int $id = null;
     public ?string $api_version = null;
-    public ?string $endpoint = null;
+    public ?string $callbackUrl = null;
     public ?string $format = null;
     public ?string $topic = null;
 
     public function getFormattedTopic(): string
     {
-        return static::getTopics()[$this->topic] ?? ucfirst(str_replace('/', ' ', $this->topic));
+        return $this->getTopics()[$this->topic] ?? ucfirst(str_replace('/', ' ', $this->topic));
     }
 
-    public static function getTopics(): array
+    protected function getTopics(): array
     {
         return [
-            'products/create' => Yii::t('shopify', 'Product created'),
+            'PRODUCTS_CREATE' => Yii::t('shopify', 'Product created'),
             'products/update' => Yii::t('shopify', 'Product updated'),
             'products/delete' => Yii::t('shopify', 'Product deleted'),
         ];
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
         return [

@@ -23,6 +23,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
     public ?string $name = null;
     public $defaultRoute = 'product';
 
+    #[\Override]
     public function init(): void
     {
         $this->name ??= Yii::t('shopify', 'Products');

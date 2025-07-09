@@ -11,6 +11,7 @@ use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
+use Override;
 use Yii;
 use yii\data\ArrayDataProvider;
 
@@ -23,6 +24,7 @@ class WebhookGridView extends GridView
      */
     public ?array $webhooks = [];
 
+    #[Override]
     public function init(): void
     {
         $this->dataProvider ??= new ArrayDataProvider([
@@ -53,7 +55,7 @@ class WebhookGridView extends GridView
         $this->footer ??= [
             [
                 [
-                    'content' => $this->getUpdateAllWebhooksButton(),
+                    'content' => $this->getCreateAllWebhooksButton(),
                     'options' => ['class' => 'col text-right'],
                 ],
             ],
@@ -66,7 +68,7 @@ class WebhookGridView extends GridView
             'attribute' => 'topic',
             'content' => function (WebhookSubscription $webhook): string {
                 $html = Html::tag('div', $webhook->getFormattedTopic(), ['class' => 'strong']);
-                $html .= Html::tag('div', $webhook->address, ['class' => 'small']);
+                $html .= Html::tag('div', $webhook->callbackUrl, ['class' => 'small']);
 
                 return $html;
             }
@@ -110,13 +112,13 @@ class WebhookGridView extends GridView
     }
 
     /**
-     * @see WebhookController::actionUpdateAll()
+     * @see WebhookController::actionCreate()
      */
-    protected function getUpdateAllWebhooksButton(): string
+    protected function getCreateAllWebhooksButton(): string
     {
         $content = $this->dataProvider->getModels() ? Yii::t('shopify', 'Reload Webhooks') : Yii::t('shopify', 'Install Webhooks');
 
-        return Html::a(Html::iconText('sync', $content), ['/admin/shopify-webhook/update-all'], [
+        return Html::a(Html::iconText('sync', $content), ['/admin/shopify-webhook/create'], [
             'class' => 'btn btn-secondary',
             'data-method' => 'post',
         ]);

@@ -31,6 +31,7 @@ class ProductImage extends ActiveRecord
     use ModuleTrait;
     use ProductRelationTrait;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -41,6 +42,7 @@ class ProductImage extends ActiveRecord
         ];
     }
 
+    #[\Override]
     public function rules(): array
     {
         return $this->getI18nRules([
@@ -96,6 +98,7 @@ class ProductImage extends ActiveRecord
         return ['/admin/product/update', 'id' => $this->product_id];
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
         return array_merge(parent::attributeLabels(), [
@@ -108,6 +111,7 @@ class ProductImage extends ActiveRecord
         ]);
     }
 
+    #[\Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('product_image');

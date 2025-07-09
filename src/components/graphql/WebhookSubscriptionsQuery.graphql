@@ -3,7 +3,11 @@ query($limit: Int! $cursor: String) {
         edges {
             node {
                 createdAt
-                endpoint
+                endpoint {
+                    ... on WebhookHttpEndpoint {
+                        callbackUrl
+                    }
+                }
                 id
                 topic
                 updatedAt

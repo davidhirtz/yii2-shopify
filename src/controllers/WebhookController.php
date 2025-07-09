@@ -16,12 +16,14 @@ class WebhookController extends Controller
 {
     use ModuleTrait;
 
+    #[\Override]
     public function init(): void
     {
         $this->enableCsrfValidation = false;
         parent::init();
     }
 
+    #[\Override]
     public function beforeAction($action): bool
     {
         $hmacHeader = $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] ?? '';

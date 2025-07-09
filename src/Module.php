@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify;
 
-use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\skeleton\modules\ModuleTrait;
 use yii\base\InvalidConfigException;
 
@@ -12,29 +11,22 @@ class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
-    /**
-     * @var string|null the Shopify API secret, defaults to params `shopifyApiSecret`.
-     */
-    public ?string $shopifyApiSecret = null;
-
-
     public array $webhooks = [
         [
-            'topic' => 'products/create',
+            'topic' => 'PRODUCTS_CREATE',
             'route' => ['/shopify/webhook/products-create'],
         ],
         [
-            'topic' => 'products/update',
+            'topic' => 'PRODUCTS_UPDATE',
             'route' => ['/shopify/webhook/products-update'],
         ],
         [
-            'topic' => 'products/delete',
+            'topic' => 'PRODUCTS_DELETE',
             'route' => ['/shopify/webhook/products-delete'],
         ],
     ];
 
-    private ?ShopifyComponent $_api = null;
-
+    #[\Override]
     public function init(): void
     {
         if ($this->enableI18nTables) {

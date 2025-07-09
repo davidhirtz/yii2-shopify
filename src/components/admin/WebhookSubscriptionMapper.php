@@ -21,12 +21,11 @@ readonly class WebhookSubscriptionMapper
 
     protected function setAttributes(): void
     {
-        $this->webhook->created_at = (new ShopifyDateTime($this->data['created_at']))->toDateTime();
-        $this->webhook->endpoint = $this->data['endpoint'];
-        $this->webhook->format = $this->data['format'];
+        $this->webhook->created_at = (new ShopifyDateTime($this->data['createdAt']))->toDateTime();
+        $this->webhook->callbackUrl = $this->data['endpoint']['callbackUrl'];
         $this->webhook->id = (new ShopifyId($this->data['id']))->toInt();
         $this->webhook->topic = $this->data['topic'];
-        $this->webhook->updated_at = (new ShopifyDateTime($this->data['updated_at']))->toDateTime();
+        $this->webhook->updated_at = (new ShopifyDateTime($this->data['updatedAt']))->toDateTime();
     }
 
     public function __invoke(): WebhookSubscription

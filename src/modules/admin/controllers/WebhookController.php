@@ -6,6 +6,7 @@ namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionIterator;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMapper;
+use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionCreateRequest;
 use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
@@ -19,6 +20,7 @@ class WebhookController extends Controller
 {
     use ModuleTrait;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -29,9 +31,9 @@ class WebhookController extends Controller
                     [
                         'allow' => true,
                         'actions' => [
+                            'create',
                             'delete',
                             'index',
-                            'update-all',
                         ],
                         'roles' => [WebhookSubscription::AUTH_WEBHOOK_UPDATE],
                     ],
@@ -40,8 +42,8 @@ class WebhookController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
+                    'create' => ['post'],
                     'delete' => ['post'],
-                    'update-all' => ['post'],
                 ],
             ],
         ];
@@ -67,40 +69,34 @@ class WebhookController extends Controller
         ]);
     }
 
-    public function actionUpdateAll(): Response|string
+    public function actionCreate(): Response|string
     {
-        foreach (static::getModule()->webhooks as $attributes) {
-            $webhook = Yii::createObject(WebhookSubscription::class);
-            $webhook->setAttributes($attributes);
+        $urlManager = Yii::$app->getUrlManager();
 
-            if ($webhook->create()) {
-                $this->success(Yii::t('shopify', "The webhook \"{topic}\" was created.", [
-                    'topic' => $webhook->getFormattedTopic(),
-                ]));
-            } elseif (!$webhook->getErrors()) {
-                $this->success(Yii::t('shopify', "The webhook \"{topic}\" was skipped.", [
-                    'topic' => $webhook->getFormattedTopic(),
-                ]));
-            } else {
-                $this->error($webhook);
+        foreach (static::getModule()->webhooks as $attributes) {
+            $url = 'https://www.davidhirtz.com/test'; //$urlManager->createAbsoluteUrl($attributes['route']);
+            $request = new WebhookSubscriptionCreateRequest($attributes['topic'], $url);
+            $request->execute();
+
+            $errors = $request->getErrors();
+
+            if (in_array('Address for this topic has already been taken', $errors)) {
+                continue;
             }
+
+            $this->errorOrSuccess($request->getErrors(), Yii::t('shopify', "The webhook \"{topic}\" was created.", [
+                'topic' => $attributes['topic'],
+            ]));
         }
+
+        $this->error(Yii::$app->get('shopify')->getAdminApi()->getErrors());
 
         return $this->redirect(['index']);
     }
 
     public function actionDelete(int $id): Response|string
     {
-        $api = static::getModule()->getApi();
-
-        if ($api->deleteWebhook($id)) {
-            $this->success(Yii::t('shopify', 'The webhook was deleted.'));
-        }
-
-        if ($api->getErrors()) {
-            $this->error($api->getErrors());
-        }
-
+        $this->error(Yii::$app->get('shopify')->getAdminApi()->getErrors());
         return $this->redirect(['index']);
     }
 }

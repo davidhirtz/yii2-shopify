@@ -66,6 +66,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
      */
     public string|false $contentType = 'html';
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -75,6 +76,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         ];
     }
 
+    #[\Override]
     public function rules(): array
     {
         return $this->getI18nRules([
@@ -122,6 +124,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
             ->inverseOf('product');
     }
 
+    #[\Override]
     public static function find(): ProductQuery
     {
         return Yii::createObject(ProductQuery::class, [static::class]);
@@ -178,6 +181,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         return Yii::$app->get('shopify')->getShopUrl("admin/products/$this->id");
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
         return [
@@ -194,11 +198,13 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         ];
     }
 
+    #[\Override]
     public function formName(): string
     {
         return 'Product';
     }
 
+    #[\Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('product');

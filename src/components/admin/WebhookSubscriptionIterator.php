@@ -16,7 +16,7 @@ class WebhookSubscriptionIterator extends AbstractIterator
             'cursor' => $this->currentCursor,
         ]);
 
-        return $data['webhooks']['edges'] ?? [];
+        return $data['webhookSubscriptions']['edges'] ?? [];
     }
 
     protected function getQuery(): string

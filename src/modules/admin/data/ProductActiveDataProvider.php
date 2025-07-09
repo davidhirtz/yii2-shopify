@@ -16,6 +16,7 @@ class ProductActiveDataProvider extends ActiveDataProvider
     public ?int $status = null;
     public ?string $searchString = null;
 
+    #[\Override]
     public function init(): void
     {
         $this->query = $this->query ?: Product::find();
@@ -37,6 +38,7 @@ class ProductActiveDataProvider extends ActiveDataProvider
         }
     }
 
+    #[\Override]
     public function setSort($value): void
     {
         if (is_array($value)) {

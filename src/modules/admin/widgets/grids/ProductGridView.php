@@ -29,6 +29,7 @@ class ProductGridView extends GridView
      */
     public bool $showUrl = false;
 
+    #[\Override]
     public function init(): void
     {
         $this->id = $this->getId(false) ?? 'products';
@@ -216,6 +217,7 @@ class ProductGridView extends GridView
     /**
      * @see ProductController::actionUpdate()
      */
+    #[\Override]
     protected function getUpdateButton($model, array $options = []): string
     {
         return parent::getUpdateButton($model, [
@@ -234,6 +236,7 @@ class ProductGridView extends GridView
         ]);
     }
 
+    #[\Override]
     public function getModel(): Product
     {
         return Product::instance();
