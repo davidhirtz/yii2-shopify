@@ -3,9 +3,6 @@
 namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\components\GraphqlParser;
-use davidhirtz\yii2\shopify\components\ShopifyComponent;
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -25,14 +22,14 @@ class AdminApi
     {
     }
 
-    public function getProducts(int $batchSize = 20): AdminApiProductIterator
+    public function getProducts(int $batchSize = 20): ProductIterator
     {
-        return new AdminApiProductIterator($this, $batchSize);
+        return new ProductIterator($this, $batchSize);
     }
 
     public function fetchProducts(int $limit, ?string $cursor = null): array
     {
-        $query = $this->getGraphqlFile('ProductsQuery');
+        $query = $this->getGraphqlQueryByName('ProductsQuery');
 
         $data = $this->query($query, [
             'limit' => $limit,
@@ -42,32 +39,16 @@ class AdminApi
         return $data['products']['edges'] ?? [];
     }
 
-    public function updateOrCreateProduct(array $data): Product
-    {
-        $this->prepareApiData($data);
-        $mapper = new AdminApiProductDataMapper($data);
-        dd($data);
-
-        if ($mapper->product->save()) {
-            // Todo media + variants
-        }
-
-        if ($mapper->product->getErrors()) {
-            ActiveRecordErrorLogger::log($mapper->product);
-        }
-
-        return $mapper->product;
-    }
-
     protected function query(string $query, array $variables = []): array
     {
-        $uri = "https://{$this->shopifyShopName}.myshopify.com/admin/api/{$this->shopifyApiVersion}/graphql.json";
+        $uri = "https://$this->shopifyShopName.myshopify.com/admin/api/$this->shopifyApiVersion/graphql.json";
+        $body = array_filter([
+            'query' => $query,
+            'variables' => $variables,
+        ]);
 
         $options = [
-            'body' => json_encode(array_filter([
-                'query' => $query,
-                'variables' => $variables,
-            ])),
+            'body' => json_encode($body),
             'headers' => [
                 'Content-Type' => 'application/json',
                 'X-Shopify-Access-Token' => $this->shopifyAccessToken,
@@ -77,6 +58,7 @@ class AdminApi
         if (YII_DEBUG) {
             $options['on_stats'] = function (TransferStats $stats) {
                 Yii::debug("Requesting Shopify Admin GraphQL API: {$stats->getEffectiveUri()}");
+                Yii::debug($stats->getRequest()->getBody());
             };
         }
 
@@ -111,14 +93,9 @@ class AdminApi
         return null;
     }
 
-    protected function getGraphqlFile(string $name): string
+    protected function getGraphqlQueryByName(string $name): string
     {
         return (new GraphqlParser())->load($name);
-    }
-
-    protected function prepareApiData(array &$data): void
-    {
-        $data['id'] = (int)substr(strrchr($data['id'], '/'), 1);
     }
 
     public function getErrors(): array

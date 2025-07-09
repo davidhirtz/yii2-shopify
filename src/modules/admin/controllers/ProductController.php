@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
+use davidhirtz\yii2\shopify\components\admin\ProductsBuilder;
 use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminApiForm;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
@@ -76,18 +77,10 @@ class ProductController extends Controller
 
     public function actionUpdateAll(): Response
     {
-        $api = Yii::$app->get('shopify')->getAdminApi();
-        $productIds = [];
+        $builder = new ProductsBuilder();
+        $builder->save();
 
-        foreach ($api->getProducts(2) as $result) {
-            $product = $api->updateOrCreateProduct($result['node']);
-            $productIds[] = $product->id;
-        }
-
-        // Todo delete products that were not returned by the API.
-        Yii::debug($productIds);
-
-        $this->error($api->getErrors());
+        $this->error($builder->getErrors());
         return $this->redirect(['index']);
     }
 }

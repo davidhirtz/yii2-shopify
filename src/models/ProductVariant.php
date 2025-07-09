@@ -33,6 +33,7 @@ use Yii;
  * @property string|null $weight_unit
  * @property string|null $inventory_management
  * @property int|null $inventory_quantity
+ * @property bool $inventory_tracked
  * @property string|null $inventory_policy
  * @property DateTime|null $updated_at
  * @property DateTime $created_at

@@ -5,7 +5,7 @@ namespace davidhirtz\yii2\shopify\components\admin;
 use Iterator;
 use Yii;
 
-abstract class AbstractAdminApiIterator implements Iterator
+abstract class AbstractIterator implements Iterator
 {
     protected ?string $currentCursor = null;
     private ?array $data = null;
@@ -53,8 +53,6 @@ abstract class AbstractAdminApiIterator implements Iterator
 
     protected function getData(): array
     {
-        Yii::debug('Fetching data from API', __METHOD__);
-
         $data = $this->fetchData();
         $this->currentCursor = end($data)['cursor'] ?? null;
 

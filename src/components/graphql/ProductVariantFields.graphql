@@ -12,6 +12,7 @@ fragment ProductVariantFields on ProductVariant {
         }
         tracked
     }
+    inventoryPolicy
     inventoryQuantity
     media (first: 1) {
         nodes {

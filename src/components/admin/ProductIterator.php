@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\components\admin;
 
-class AdminApiProductIterator extends AbstractAdminApiIterator
+class ProductIterator extends AbstractIterator
 {
     protected function fetchData(): array
     {

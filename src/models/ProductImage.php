@@ -8,6 +8,7 @@ use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use davidhirtz\yii2\shopify\models\traits\ProductRelationTrait;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
+use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
@@ -35,6 +36,7 @@ class ProductImage extends ActiveRecord
         return [
             ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
+            'TimestampBehavior' => TimestampBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }

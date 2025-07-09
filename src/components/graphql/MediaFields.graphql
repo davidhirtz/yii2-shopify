@@ -4,6 +4,7 @@ fragment MediaFields on Media {
     mediaContentType
     preview {
         image {
+            altText
             height
             width
             url

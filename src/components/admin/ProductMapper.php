@@ -2,24 +2,25 @@
 
 namespace davidhirtz\yii2\shopify\components\admin;
 
-use davidhirtz\yii2\datetime\DateTime;
+use davidhirtz\yii2\shopify\components\ShopifyDateTime;
+use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
 
-readonly class AdminApiProductDataMapper
+readonly class ProductMapper
 {
-    public Product $product;
+    protected Product $product;
 
     public function __construct(protected array $data)
     {
-        $this->product = Product::findOne($data['id']) ?? Product::create([
-            'id' => $data['id'],
-        ]);
+        $id = (new ShopifyId($data['id']))->toInt();
 
-        $this->product->last_import_at = new DateTime();
+        $this->product = Product::findOne($id) ?? Product::create();
+        $this->product->id = $id;
+
         $this->setAttributes();
     }
 
-    private function setAttributes(): void
+    protected function setAttributes(): void
     {
         $this->product->status = match ($this->data['status']) {
             'DRAFT' => $this->product::STATUS_DRAFT,
@@ -52,5 +53,13 @@ readonly class AdminApiProductDataMapper
 
         ksort($options);
         $this->product->options = $options ?: null;
+
+        $this->product->updated_at = (new ShopifyDateTime($this->data['updatedAt']))->toDateTime();
+        $this->product->created_at = (new ShopifyDateTime($this->data['createdAt']))->toDateTime();
+    }
+
+    public function __invoke(): Product
+    {
+        return $this->product;
     }
 }
