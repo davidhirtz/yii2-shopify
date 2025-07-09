@@ -50,7 +50,7 @@ return [
     'Reload Webhooks' => 'Webhooks neu laden',
     'SKU (Stock Keeping Unit)' => 'Artikelnummer (Stock Keeping Unit)',
     'Shopify' => 'Shopify',
-    'Shopify Admin API secret key must be set to use webhooks.' => 'Der geheimer API-Schlüssel (bei Shopify unter Apps > API-Anmeldedaten) muss gesetzt sein, um Webhooks zu nutzen.',
+    'Shopify Admin API secret key must be set to use webhooks.' => 'Der geheimer API-Schlüssel muss gesetzt sein, um Webhooks zu nutzen.',
     'Shopify slug' => 'Shopify slug',
     'Taxable' => 'Steuerpflichtig',
     'The product was deleted because it was not found on Shopify anymore.' => 'Das Produkt wurde gelöscht, da es nicht mehr bei Shopify gefunden wurde.',

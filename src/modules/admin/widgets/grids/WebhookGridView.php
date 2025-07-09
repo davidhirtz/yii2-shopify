@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\modules\admin\widgets\grids;
 
-use davidhirtz\yii2\shopify\models\Webhook;
+use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
@@ -19,7 +19,7 @@ class WebhookGridView extends GridView
     use ModuleTrait;
 
     /**
-     * @var Webhook[]
+     * @var WebhookSubscription[]
      */
     public ?array $webhooks = [];
 
@@ -30,7 +30,7 @@ class WebhookGridView extends GridView
         ]);
 
         if (!$this->rowOptions) {
-            $this->rowOptions = fn (Webhook $model) => ['id' => "#webhook-$model->id"];
+            $this->rowOptions = fn (WebhookSubscription $model) => ['id' => "#webhook-$model->id"];
         }
 
         if (!$this->columns) {
@@ -64,7 +64,7 @@ class WebhookGridView extends GridView
     {
         return [
             'attribute' => 'topic',
-            'content' => function (Webhook $webhook): string {
+            'content' => function (WebhookSubscription $webhook): string {
                 $html = Html::tag('div', $webhook->getFormattedTopic(), ['class' => 'strong']);
                 $html .= Html::tag('div', $webhook->address, ['class' => 'small']);
 
@@ -79,7 +79,7 @@ class WebhookGridView extends GridView
             'attribute' => 'api_version',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (Webhook $webhook): string => strtoupper((string) $webhook->api_version)
+            'content' => fn (WebhookSubscription $webhook): string => strtoupper((string) $webhook->api_version)
         ];
     }
 
@@ -89,7 +89,7 @@ class WebhookGridView extends GridView
             'attribute' => 'format',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (Webhook $webhook): string => strtoupper((string) $webhook->format)
+            'content' => fn (WebhookSubscription $webhook): string => strtoupper((string) $webhook->format)
         ];
     }
 
@@ -105,7 +105,7 @@ class WebhookGridView extends GridView
     {
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => fn (Webhook $webhook): string => Html::buttons($this->getRowButtons($webhook))
+            'content' => fn (WebhookSubscription $webhook): string => Html::buttons($this->getRowButtons($webhook))
         ];
     }
 
@@ -122,7 +122,7 @@ class WebhookGridView extends GridView
         ]);
     }
 
-    protected function getRowButtons(Webhook $webhook): array
+    protected function getRowButtons(WebhookSubscription $webhook): array
     {
         return [
             $this->getUnlinkButton($webhook),
@@ -132,7 +132,7 @@ class WebhookGridView extends GridView
     /**
      * @see WebhookController::actionDelete()
      */
-    protected function getUnlinkButton(Webhook $model): string
+    protected function getUnlinkButton(WebhookSubscription $model): string
     {
         return Html::a((string)Icon::tag('trash'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

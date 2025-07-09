@@ -7,7 +7,7 @@ namespace davidhirtz\yii2\shopify\migrations;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\shopify\models\ProductVariant;
-use davidhirtz\yii2\shopify\models\Webhook;
+use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
 use davidhirtz\yii2\skeleton\models\User;
@@ -123,7 +123,7 @@ class M190904193339Shopify extends Migration
         $productUpdate->description = Yii::t('shopify', 'Manage Shopify products', [], Yii::$app->sourceLanguage);
         $auth->add($productUpdate);
 
-        $shopifyWebhookUpdate = $auth->createPermission(Webhook::AUTH_WEBHOOK_UPDATE);
+        $shopifyWebhookUpdate = $auth->createPermission(WebhookSubscription::AUTH_WEBHOOK_UPDATE);
         $shopifyWebhookUpdate->description = Yii::t('shopify', 'Manage Shopify webhooks', [], Yii::$app->sourceLanguage);
         $auth->add($shopifyWebhookUpdate);
 
@@ -147,6 +147,6 @@ class M190904193339Shopify extends Migration
         $this->dropTable(Product::tableName());
 
         $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => Product::AUTH_PRODUCT_UPDATE]);
-        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => Webhook::AUTH_WEBHOOK_UPDATE]);
+        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => WebhookSubscription::AUTH_WEBHOOK_UPDATE]);
     }
 }

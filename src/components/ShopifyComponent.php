@@ -40,6 +40,16 @@ class ShopifyComponent extends Component
         parent::init();
     }
 
+    public function validateHmac(string $hmacHeader, string $data): bool
+    {
+        if (!$this->shopifyApiSecret) {
+            throw new InvalidConfigException('Shopify API secret must be set to validate HMAC.');
+        }
+
+        $calculatedHmac = base64_encode(hash_hmac('sha256', $data, $this->shopifyApiSecret, true));
+        return hash_equals($hmacHeader, $calculatedHmac);
+    }
+
     public function getAdminApi(): AdminApi
     {
         if (!isset($this->shopifyShopName, $this->shopifyAccessToken)) {

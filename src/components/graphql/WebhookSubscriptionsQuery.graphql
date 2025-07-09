@@ -1,0 +1,13 @@
+query($limit: Int! $cursor: String) {
+    webhookSubscriptions(first: $limit, after: $cursor) {
+        edges {
+            node {
+                createdAt
+                endpoint
+                id
+                topic
+                updatedAt
+            }
+        }
+    }
+}

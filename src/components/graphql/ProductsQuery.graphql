@@ -1,4 +1,4 @@
-query GetProducts ($limit: Int! $cursor: String) {
+query($limit: Int! $cursor: String) {
     products(first: $limit, after: $cursor) {
         edges {
             cursor

@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace davidhirtz\yii2\shopify\components\admin;
+
+use davidhirtz\yii2\shopify\components\GraphqlParser;
+use Yii;
+
+class WebhookSubscriptionIterator extends AbstractIterator
+{
+    protected function fetchData(): array
+    {
+        $data = Yii::$app->get('shopify')->getAdminApi()->query($this->getQuery(), [
+            'limit' => $this->batchSize,
+            'cursor' => $this->currentCursor,
+        ]);
+
+        return $data['webhooks']['edges'] ?? [];
+    }
+
+    protected function getQuery(): string
+    {
+        return (new GraphqlParser())->load('WebhookSubscriptionsQuery');
+    }
+}

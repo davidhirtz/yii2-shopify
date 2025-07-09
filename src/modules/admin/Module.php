@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\modules\admin;
 
 use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\Webhook;
+use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
 use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
@@ -61,7 +61,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
                         'label' => Yii::t('shopify', 'View Webhooks'),
                         'url' => ['/admin/shopify-webhook/index'],
                         'icon' => 'satellite-dish',
-                        'roles' => [Webhook::AUTH_WEBHOOK_UPDATE],
+                        'roles' => [WebhookSubscription::AUTH_WEBHOOK_UPDATE],
                     ],
                 ],
             ],
@@ -78,7 +78,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
                 'active' => ['admin/product', 'admin/shopify-webhook'],
                 'roles' => [
                     Product::AUTH_PRODUCT_UPDATE,
-                    Webhook::AUTH_WEBHOOK_UPDATE,
+                    WebhookSubscription::AUTH_WEBHOOK_UPDATE,
                 ],
             ],
         ];

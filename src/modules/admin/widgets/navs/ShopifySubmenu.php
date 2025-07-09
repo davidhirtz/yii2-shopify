@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\modules\admin\widgets\navs;
 
 use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\Webhook;
+use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Submenu;
 use Yii;
 
@@ -37,7 +37,7 @@ class ShopifySubmenu extends Submenu
                 'label' => Yii::t('shopify', 'Webhooks'),
                 'url' => ['/admin/shopify-webhook/index'],
                 'icon' => 'satellite-dish',
-                'roles' => [Webhook::AUTH_WEBHOOK_UPDATE],
+                'roles' => [WebhookSubscription::AUTH_WEBHOOK_UPDATE],
                 'labelOptions' => [
                     'class' => 'd-none d-md-inline'
                 ],
