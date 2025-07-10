@@ -19,9 +19,7 @@ class WebhookSubscriptionMutation
 
     public function create(string $topic, string $callbackUrl): bool
     {
-        $query = (new GraphqlParser())->load('WebhookSubscriptionCreateMutation');
-
-        $result = $this->api->query($query, [
+        $data = $this->query('WebhookSubscriptionCreate', [
             'topic' => $topic,
             'webhookSubscription' => [
                 'callbackUrl' => $callbackUrl,
@@ -29,29 +27,30 @@ class WebhookSubscriptionMutation
             ],
         ]);
 
-        $data = $result['webhookSubscriptionCreate'] ?? [];
-        return $this->parseResponse($data);
+        return isset($data['webhookSubscription']['id']);
     }
 
     public function delete(int $id): bool
     {
-        $query = (new GraphqlParser())->load('WebhookSubscriptionDeleteMutation');
-
-        $result = $this->api->query($query, [
-            'id' => "gid://shopify/WebhookSubscription/$id"
+        $data = $this->query('WebhookSubscriptionDelete', [
+            'id' => "gid://shopify/WebhookSubscription/$id",
         ]);
 
-        $data = $result['webhookSubscriptionDelete'] ?? [];
-        return $this->parseResponse($data);
+        return isset($data['deletedWebhookSubscriptionId']);
     }
 
-    protected function parseResponse(array $data): bool
+    protected function query(string $name, array $data): array
     {
+        $query = (new GraphqlParser())->load($name);
+
+        $result = $this->api->query($query, $data);
+        $data = $result[lcfirst($name)] ?? [];
+
         foreach ($data['userErrors'] ?? [] as $error) {
             $this->errors[] = $error['message'] ?? 'Unknown error';
         }
 
-        return !$this->getErrors();
+        return $data;
     }
 
     public function getErrors(): array

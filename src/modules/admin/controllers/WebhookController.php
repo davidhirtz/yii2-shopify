@@ -10,6 +10,7 @@ use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\admin\data\WebhookSubscriptionArrayDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
+use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -21,7 +22,7 @@ class WebhookController extends Controller
 
     protected ShopifyComponent $shopify;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -50,7 +51,7 @@ class WebhookController extends Controller
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->shopify = Yii::$app->get('shopify');
@@ -81,8 +82,7 @@ class WebhookController extends Controller
         $urlManager = Yii::$app->getUrlManager();
 
         foreach (static::getModule()->webhooks as $attributes) {
-            $url = 'https://www.davidhirtz.com/test'; //$urlManager->createAbsoluteUrl($attributes['route']);
-            $request->create($attributes['topic'], $url);
+            $request->create($attributes['topic'], $urlManager->createAbsoluteUrl($attributes['route']));
             $errors = $request->getErrors();
 
             if (in_array('Address for this topic has already been taken', $errors)) {
@@ -94,7 +94,8 @@ class WebhookController extends Controller
             ]));
         }
 
-        $this->error($this->shopify->getAdminApi()->getErrors());
+        $this->error($request->getErrors());
+
         return $this->redirect(['index']);
     }
 
@@ -106,7 +107,8 @@ class WebhookController extends Controller
             $this->success(Yii::t('shopify', 'The webhook was deleted.'));
         }
 
-        $this->error($this->shopify->getAdminApi()->getErrors());
+        $this->error($request->getErrors());
+
         return $this->redirect(['index']);
     }
 }
