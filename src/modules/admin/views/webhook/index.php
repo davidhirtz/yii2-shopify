@@ -5,10 +5,11 @@ declare(strict_types=1);
  * @see WebhookController::actionIndex()
  *
  * @var View $this
- * @var array $webhooks
+ * @var WebhookSubscriptionArrayDataProvider $provider
  */
 
 use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
+use davidhirtz\yii2\shopify\modules\admin\data\WebhookSubscriptionArrayDataProvider;
 use davidhirtz\yii2\shopify\modules\admin\widgets\grids\WebhookGridView;
 use davidhirtz\yii2\shopify\modules\admin\widgets\navs\ShopifySubmenu;
 use davidhirtz\yii2\skeleton\web\View;
@@ -22,6 +23,6 @@ $this->setBreadcrumb(Yii::t('shopify', 'Webhooks'), ['/admin/shopify-webhook/ind
 
 <?= Panel::widget([
     'content' => WebhookGridView::widget([
-        'webhooks' => $webhooks,
+        'dataProvider' => $provider,
     ]),
 ]); ?>

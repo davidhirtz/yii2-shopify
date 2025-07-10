@@ -2,6 +2,9 @@ query($limit: Int! $cursor: String) {
     webhookSubscriptions(first: $limit, after: $cursor) {
         edges {
             node {
+                apiVersion {
+                    handle
+                }
                 createdAt
                 endpoint {
                     ... on WebhookHttpEndpoint {

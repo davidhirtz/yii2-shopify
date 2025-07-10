@@ -7,7 +7,9 @@ namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionIterator;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMapper;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionCreateRequest;
+use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\models\WebhookSubscription;
+use davidhirtz\yii2\shopify\modules\admin\data\WebhookSubscriptionArrayDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
 use Yii;
@@ -19,6 +21,8 @@ use yii\web\Response;
 class WebhookController extends Controller
 {
     use ModuleTrait;
+
+    protected ShopifyComponent $shopify;
 
     #[\Override]
     public function behaviors(): array
@@ -49,23 +53,27 @@ class WebhookController extends Controller
         ];
     }
 
+    public function init(): void
+    {
+        $this->shopify = Yii::$app->get('shopify');
+        parent::init();
+    }
+
     public function actionIndex(): Response|string
     {
-        if (!Yii::$app->get('shopify')->shopifyApiSecret) {
+        if (!$this->shopify->shopifyApiSecret) {
             $this->error(Yii::t('shopify', 'Shopify Admin API secret key must be set to use webhooks.'));
-            return $this->redirect(['product/index']);
         }
 
-        $webhooks = [];
-
-        foreach ((new WebhookSubscriptionIterator(250)) as $data) {
-            $webhooks[] = (new WebhookSubscriptionMapper($data['node']))();
-        }
-
-        usort($webhooks, fn (WebhookSubscription $a, WebhookSubscription $b) => strcmp((string)$b->updated_at, (string)$a->updated_at));
+        $provider = new WebhookSubscriptionArrayDataProvider([
+            'sort' => [
+                'attributes' => ['formattedTopic', 'api_version', 'updated_at'],
+                'defaultOrder' => ['updated_at' => SORT_DESC],
+            ],
+        ]);
 
         return $this->render('index', [
-            'webhooks' => $webhooks,
+            'provider' => $provider,
         ]);
     }
 
@@ -89,14 +97,13 @@ class WebhookController extends Controller
             ]));
         }
 
-        $this->error(Yii::$app->get('shopify')->getAdminApi()->getErrors());
-
+        $this->error($this->shopify->getAdminApi()->getErrors());
         return $this->redirect(['index']);
     }
 
     public function actionDelete(int $id): Response|string
     {
-        $this->error(Yii::$app->get('shopify')->getAdminApi()->getErrors());
+        $this->error($this->shopify->getAdminApi()->getErrors());
         return $this->redirect(['index']);
     }
 }

@@ -6,31 +6,22 @@ namespace davidhirtz\yii2\shopify\modules\admin\widgets\grids;
 
 use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
-use davidhirtz\yii2\shopify\modules\ModuleTrait;
+use davidhirtz\yii2\shopify\modules\admin\data\WebhookSubscriptionArrayDataProvider;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
 use Override;
 use Yii;
-use yii\data\ArrayDataProvider;
 
+/**
+ * @property WebhookSubscriptionArrayDataProvider $dataProvider
+ */
 class WebhookGridView extends GridView
 {
-    use ModuleTrait;
-
-    /**
-     * @var WebhookSubscription[]
-     */
-    public ?array $webhooks = [];
-
     #[Override]
     public function init(): void
     {
-        $this->dataProvider ??= new ArrayDataProvider([
-            'allModels' => $this->webhooks,
-        ]);
-
         if (!$this->rowOptions) {
             $this->rowOptions = fn (WebhookSubscription $model) => ['id' => "#webhook-$model->id"];
         }
@@ -39,7 +30,6 @@ class WebhookGridView extends GridView
             $this->columns = [
                 $this->topicColumn(),
                 $this->apiVersionColumn(),
-                $this->formatColumn(),
                 $this->updatedAtColumn(),
                 $this->buttonsColumn(),
             ];
@@ -65,7 +55,7 @@ class WebhookGridView extends GridView
     public function topicColumn(): array
     {
         return [
-            'attribute' => 'topic',
+            'attribute' => 'formattedTopic',
             'content' => function (WebhookSubscription $webhook): string {
                 $html = Html::tag('div', $webhook->getFormattedTopic(), ['class' => 'strong']);
                 $html .= Html::tag('div', $webhook->callbackUrl, ['class' => 'small']);
@@ -81,17 +71,7 @@ class WebhookGridView extends GridView
             'attribute' => 'api_version',
             'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
             'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (WebhookSubscription $webhook): string => strtoupper((string) $webhook->api_version)
-        ];
-    }
-
-    public function formatColumn(): array
-    {
-        return [
-            'attribute' => 'format',
-            'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
-            'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (WebhookSubscription $webhook): string => strtoupper((string) $webhook->format)
+            'content' => fn (WebhookSubscription $webhook): string => $webhook->api_version
         ];
     }
 
