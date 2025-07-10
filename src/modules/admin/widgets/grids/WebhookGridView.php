@@ -55,9 +55,9 @@ class WebhookGridView extends GridView
     public function topicColumn(): array
     {
         return [
-            'attribute' => 'formattedTopic',
+            'attribute' => 'topic',
             'content' => function (WebhookSubscription $webhook): string {
-                $html = Html::tag('div', $webhook->getFormattedTopic(), ['class' => 'strong']);
+                $html = Html::tag('div', $webhook->topic, ['class' => 'strong']);
                 $html .= Html::tag('div', $webhook->callbackUrl, ['class' => 'small']);
 
                 return $html;
@@ -96,7 +96,7 @@ class WebhookGridView extends GridView
      */
     protected function getCreateAllWebhooksButton(): string
     {
-        $content = $this->dataProvider->getModels() ? Yii::t('shopify', 'Reload Webhooks') : Yii::t('shopify', 'Install Webhooks');
+        $content = Yii::t('shopify', 'Install Webhooks');
 
         return Html::a(Html::iconText('sync', $content), ['/admin/shopify-webhook/create'], [
             'class' => 'btn btn-secondary',

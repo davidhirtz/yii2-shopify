@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
+use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMutation;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionIterator;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMapper;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionCreateRequest;
@@ -67,7 +68,7 @@ class WebhookController extends Controller
 
         $provider = new WebhookSubscriptionArrayDataProvider([
             'sort' => [
-                'attributes' => ['formattedTopic', 'api_version', 'updated_at'],
+                'attributes' => ['topic', 'api_version', 'updated_at'],
                 'defaultOrder' => ['updated_at' => SORT_DESC],
             ],
         ]);
@@ -79,13 +80,12 @@ class WebhookController extends Controller
 
     public function actionCreate(): Response|string
     {
+        $request = new WebhookSubscriptionMutation();
         $urlManager = Yii::$app->getUrlManager();
 
         foreach (static::getModule()->webhooks as $attributes) {
             $url = 'https://www.davidhirtz.com/test'; //$urlManager->createAbsoluteUrl($attributes['route']);
-            $request = new WebhookSubscriptionCreateRequest($attributes['topic'], $url);
-            $request->execute();
-
+            $request->create($attributes['topic'], $url);
             $errors = $request->getErrors();
 
             if (in_array('Address for this topic has already been taken', $errors)) {
@@ -103,6 +103,12 @@ class WebhookController extends Controller
 
     public function actionDelete(int $id): Response|string
     {
+        $request = new WebhookSubscriptionMutation();
+
+        if ($request->delete($id)) {
+            $this->success(Yii::t('shopify', 'The webhook was deleted.'));
+        }
+
         $this->error($this->shopify->getAdminApi()->getErrors());
         return $this->redirect(['index']);
     }
