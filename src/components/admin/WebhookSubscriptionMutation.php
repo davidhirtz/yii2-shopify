@@ -9,8 +9,8 @@ use Yii;
 
 class WebhookSubscriptionMutation
 {
+    private readonly AdminApi $api;
     private array $errors = [];
-    private AdminApi $api;
 
     public function __construct()
     {

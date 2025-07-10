@@ -8,7 +8,7 @@ use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 
-readonly class ProductImageMapper
+readonly class ImageMapper
 {
     protected ProductImage $image;
 

@@ -23,9 +23,9 @@ class ProductBatchRepository
         $this->deleteRemovedProducts();
     }
 
-    protected function getProducts(): ProductIterator
+    protected function getProducts(): ProductBatchQuery
     {
-        return new ProductIterator(20);
+        return new ProductBatchQuery(20);
     }
 
     protected function deleteRemovedProducts(): void

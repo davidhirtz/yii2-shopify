@@ -37,11 +37,11 @@ readonly class ProductRepository
 
     protected function saveProductImages(): void
     {
-        (new ProductImageBatchRepository($this->product, $this->data))->save();
+        (new ImageBatchRepository($this->product, $this->data))->save();
     }
 
     protected function saveProductVariants(): void
     {
-        (new ProductVariantBatchRepository($this->product, $this->data))->save();
+        (new VariantBatchRepository($this->product, $this->data))->save();
     }
 }

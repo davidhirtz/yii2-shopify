@@ -8,7 +8,7 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
 
-class ProductImageBatchRepository
+class ImageBatchRepository
 {
     private array $imageIds = [];
 
@@ -37,7 +37,7 @@ class ProductImageBatchRepository
 
     protected function saveProductImageFromEdgeData(array $data): void
     {
-        $image = (new ProductImageMapper($this->product, $data['node']))();
+        $image = (new ImageMapper($this->product, $data['node']))();
         $image->position = $this->getTotalCount() + 1;
 
         if ($image->save()) {

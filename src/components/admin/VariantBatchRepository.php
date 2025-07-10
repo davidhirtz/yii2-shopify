@@ -8,7 +8,7 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
 
-class ProductVariantBatchRepository
+class VariantBatchRepository
 {
     private array $variantIds = [];
     private int $totalInventoryQuantity = 0;
@@ -39,7 +39,7 @@ class ProductVariantBatchRepository
 
     protected function saveProductVariantFromEdgeData(array $data): void
     {
-        $variant = (new ProductVariantMapper($this->product, $data['node']))();
+        $variant = (new VariantMapper($this->product, $data['node']))();
         $variant->position = $this->getTotalCount() + 1;
 
         if ($variant->save()) {

@@ -9,7 +9,7 @@ use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductVariant;
 
-readonly class ProductVariantMapper
+readonly class VariantMapper
 {
     protected ProductVariant $variant;
 

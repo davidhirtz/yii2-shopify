@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\components\admin;
 
 use Iterator;
+use Yii;
 
-abstract class AbstractIterator implements Iterator
+abstract class BatchQuery implements Iterator
 {
+    protected AdminApi $api;
     protected ?string $currentCursor = null;
     private ?array $data = null;
     private int $position = 0;
@@ -16,6 +18,7 @@ abstract class AbstractIterator implements Iterator
         protected int $batchSize,
         protected ?string $cursor = null,
     ) {
+        $this->api = Yii::$app->get('shopify')->getAdminApi();
     }
 
     public function current(): ?array

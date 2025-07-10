@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMutation;
-use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionIterator;
-use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMapper;
-use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionCreateRequest;
 use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\admin\data\WebhookSubscriptionArrayDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -54,6 +50,7 @@ class WebhookController extends Controller
         ];
     }
 
+    #[\Override]
     public function init(): void
     {
         $this->shopify = Yii::$app->get('shopify');
