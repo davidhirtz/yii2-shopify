@@ -9,7 +9,7 @@ use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductVariant;
 
-readonly class VariantMapper
+readonly class ProductVariantMapper
 {
     protected ProductVariant $variant;
 
@@ -20,7 +20,7 @@ readonly class VariantMapper
         $this->variant = ProductVariant::findOne($id) ?? ProductVariant::create();
 
         $this->variant->id = $id;
-        $this->variant->product_id ??= $this->product->id;
+        $this->variant->populateProductRelation($this->product);
 
         $this->setAttributes();
     }

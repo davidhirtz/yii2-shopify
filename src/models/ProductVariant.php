@@ -11,7 +11,10 @@ use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
+use davidhirtz\yii2\skeleton\validators\RelationValidator;
+use Override;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * @property int $id
@@ -37,6 +40,8 @@ use Yii;
  * @property string|null $inventory_policy
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
+ *
+ * @property ProductImage|null $image {@see static::getImage()}
  */
 class ProductVariant extends ActiveRecord
 {
@@ -44,7 +49,7 @@ class ProductVariant extends ActiveRecord
     use ModuleTrait;
     use ProductRelationTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -54,13 +59,17 @@ class ProductVariant extends ActiveRecord
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return $this->getI18nRules([
             [
                 ['id', 'product_id', 'position'],
                 'required',
+            ],
+            [
+                ['product_id', 'image_id'],
+                RelationValidator::class
             ],
             [
                 ['weight'],
@@ -73,9 +82,15 @@ class ProductVariant extends ActiveRecord
         ]);
     }
 
+    public function getImage(): ActiveQuery
+    {
+        return $this->hasOne(ProductImage::class, ['id' => 'image_id']);
+    }
+
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
+            'position',
             'updated_at',
             'created_at',
         ]);
@@ -108,7 +123,7 @@ class ProductVariant extends ActiveRecord
         return ['/admin/product/update', 'id' => $this->product_id];
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
         return array_merge(parent::attributeLabels(), [
@@ -133,7 +148,7 @@ class ProductVariant extends ActiveRecord
         ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('product_variant');

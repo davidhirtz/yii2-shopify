@@ -12,6 +12,8 @@ use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
+use davidhirtz\yii2\skeleton\validators\RelationValidator;
+use Override;
 use Yii;
 
 /**
@@ -31,7 +33,7 @@ class ProductImage extends ActiveRecord
     use ModuleTrait;
     use ProductRelationTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -42,13 +44,17 @@ class ProductImage extends ActiveRecord
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return $this->getI18nRules([
             [
                 ['id', 'product_id', 'position', 'width', 'height', 'src'],
                 'required',
+            ],
+            [
+                ['product_id'],
+                RelationValidator::class
             ],
             [
                 ['width', 'height'],
@@ -98,7 +104,7 @@ class ProductImage extends ActiveRecord
         return ['/admin/product/update', 'id' => $this->product_id];
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
         return array_merge(parent::attributeLabels(), [
@@ -111,7 +117,7 @@ class ProductImage extends ActiveRecord
         ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('product_image');

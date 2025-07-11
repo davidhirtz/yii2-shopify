@@ -8,7 +8,7 @@ use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 
-readonly class ImageMapper
+readonly class ProductMediaMapper
 {
     protected ProductImage $image;
 
@@ -19,7 +19,7 @@ readonly class ImageMapper
         $this->image = ProductImage::findOne($id) ?? ProductImage::create();
 
         $this->image->id = $id;
-        $this->image->product_id ??= $this->product->id;
+        $this->image->populateProductRelation($this->product);
 
         $this->setAttributes();
     }

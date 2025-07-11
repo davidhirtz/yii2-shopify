@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
 use Yii;
 
-class ImageBatchRepository
+class ProductMediaBatchRepository
 {
     private array $imageIds = [];
 
@@ -25,8 +26,11 @@ class ImageBatchRepository
         }
 
         if (count($edges) < $this->data['mediaCount']['count']) {
-            // Todo
-            Yii::debug('Query for missing images ...');
+            $cursor = end($edges)['cursor'] ?? null;
+
+            foreach (new ProductMediaBatchQuery($this->product->id, cursor: $cursor) as $data) {
+                $this->saveProductImageFromEdgeData($data);
+            }
         }
 
         $this->product->image_id = $this->imageIds[0] ?? null;
@@ -37,7 +41,7 @@ class ImageBatchRepository
 
     protected function saveProductImageFromEdgeData(array $data): void
     {
-        $image = (new ImageMapper($this->product, $data['node']))();
+        $image = (new ProductMediaMapper($this->product, $data['node']))();
         $image->position = $this->getTotalCount() + 1;
 
         if ($image->save()) {
@@ -51,12 +55,12 @@ class ImageBatchRepository
 
     protected function deleteUnusedImages(): void
     {
-        $images = $this->product->image_count ? $this->product->images : [];
+        $images = $this->product->getImages()
+            ->andWhere(['not in', 'id', $this->imageIds])
+            ->all();
 
         foreach ($images as $image) {
-            if (!in_array($image->id, $this->imageIds)) {
-                $image->delete();
-            }
+            $image->delete();
         }
     }
 

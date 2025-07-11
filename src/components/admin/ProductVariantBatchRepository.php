@@ -6,9 +6,8 @@ namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
-use Yii;
 
-class VariantBatchRepository
+class ProductVariantBatchRepository
 {
     private array $variantIds = [];
     private int $totalInventoryQuantity = 0;
@@ -26,8 +25,11 @@ class VariantBatchRepository
         }
 
         if (count($edges) < $this->data['variantsCount']['count']) {
-            // Todo
-            Yii::debug('Query for missing variants ...');
+            $cursor = end($edges)['cursor'] ?? null;
+
+            foreach (new ProductVariantBatchQuery($this->product->id, cursor: $cursor) as $data) {
+                $this->saveProductVariantFromEdgeData($data);
+            }
         }
 
         $this->product->variant_id = $this->variantIds[0] ?? null;
@@ -39,7 +41,7 @@ class VariantBatchRepository
 
     protected function saveProductVariantFromEdgeData(array $data): void
     {
-        $variant = (new VariantMapper($this->product, $data['node']))();
+        $variant = (new ProductVariantMapper($this->product, $data['node']))();
         $variant->position = $this->getTotalCount() + 1;
 
         if ($variant->save()) {
@@ -55,12 +57,12 @@ class VariantBatchRepository
 
     protected function deleteUnusedVariants(): void
     {
-        $variants = $this->product->variant_count ? $this->product->variants : [];
+        $variants = $this->product->getVariants()
+            ->andWhere(['not in', 'id', $this->variantIds])
+            ->all();
 
         foreach ($variants as $variant) {
-            if (!in_array($variant->id, $this->variantIds)) {
-                $variant->delete();
-            }
+            $variant->delete();
         }
     }
 

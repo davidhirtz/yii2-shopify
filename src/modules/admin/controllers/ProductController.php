@@ -11,6 +11,7 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
+use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -21,7 +22,7 @@ class ProductController extends Controller
 {
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -75,15 +76,12 @@ class ProductController extends Controller
 
         $api = Yii::$app->get('shopify')->getAdminApi();
 
-        if ($api->getErrors()) {
-            $this->error($api->getErrors());
-            return $this->redirect(['index']);
-        }
-
         $repository = new ProductRepository($data);
         $repository->save();
 
+        $this->error($api->getErrors());
         $this->errorOrSuccess($repository->product, Yii::t('shopify', 'The product was updated via Shopify.'));
+
         return $this->redirect(['index']);
     }
 
