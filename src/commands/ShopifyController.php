@@ -20,12 +20,14 @@ class ShopifyController extends Controller
 {
     private AdminApi $api;
 
+    #[\Override]
     public function init(): void
     {
         $this->api = Yii::$app->get('shopify')->getAdminApi();
         parent::init();
     }
 
+    #[\Override]
     public function afterAction($action, $result)
     {
         foreach ($this->api->getErrors() as $error) {

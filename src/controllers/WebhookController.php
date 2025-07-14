@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\controllers;
 
+use davidhirtz\yii2\shopify\components\admin\ProductQuery;
+use davidhirtz\yii2\shopify\components\admin\ProductRepository;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
+use Override;
 use Yii;
 use yii\helpers\Json;
-use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
 class WebhookController extends Controller
 {
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->enableCsrfValidation = false;
         parent::init();
     }
 
-    #[\Override]
+    #[Override]
     public function beforeAction($action): bool
     {
         $hmacHeader = $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] ?? '';
@@ -41,11 +43,7 @@ class WebhookController extends Controller
      */
     public function actionProductsCreate(): void
     {
-        // Todo
-        $data = Json::decode($this->getRequestBody());
-
-        Yii::warning("Webhook 'products/create' not implemented yet.");
-        Yii::warning($data);
+        $this->actionProductsUpdate();
     }
 
     /**
@@ -53,11 +51,17 @@ class WebhookController extends Controller
      */
     public function actionProductsUpdate(): void
     {
-        // Todo
-        $data = Json::decode($this->getRequestBody());
+        $id = $this->getProductId();
+        $data = (new ProductQuery($id))();
 
-        Yii::warning("Webhook 'products/create' not implemented yet.");
-        Yii::warning($data);
+        $api = Yii::$app->get('shopify')->getAdminApi();
+
+        $repository = new ProductRepository($data);
+        $repository->save();
+
+        if ($api->getErrors()) {
+            Yii::error($api->getErrors());
+        }
     }
 
     /**
@@ -65,15 +69,17 @@ class WebhookController extends Controller
      */
     public function actionProductsDelete(): void
     {
-        // Todo verify
-        $data = Json::decode(file_get_contents('php://input'));
-        $product = Product::findOne($data['id'] ?? null);
+        $id = $this->getProductId();
+        $product = Product::findOne($id);
+        $product?->delete();
+    }
 
-        if (!$product) {
-            throw new NotFoundHttpException();
-        }
+    private function getProductId(): ?int
+    {
+        $body = $this->getRequestBody();
+        $data = $body ? Json::decode($body) : [];
 
-        $product->delete();
+        return $data['id'] ?? null;
     }
 
     private function getRequestBody(): string|false

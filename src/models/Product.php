@@ -139,6 +139,8 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
+            'image_count',
+            'product_count',
             'total_inventory_quantity',
             'last_import_at',
             'updated_at',
