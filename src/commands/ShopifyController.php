@@ -9,25 +9,33 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\commands;
 
 use davidhirtz\yii2\shopify\components\admin\AdminApi;
+use davidhirtz\yii2\shopify\components\admin\ProductBatchRepository;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionBatchQuery;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMapper;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMutation;
+use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\skeleton\console\controllers\traits\ControllerTrait;
+use Override;
 use Yii;
+use yii\base\Event;
 use yii\console\Controller;
+use yii\db\AfterSaveEvent;
 use yii\helpers\Console;
 
 class ShopifyController extends Controller
 {
+    use ControllerTrait;
+
     private AdminApi $api;
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->api = Yii::$app->get('shopify')->getAdminApi();
         parent::init();
     }
 
-    #[\Override]
+    #[Override]
     public function afterAction($action, $result)
     {
         foreach ($this->api->getErrors() as $error) {
@@ -38,7 +46,51 @@ class ShopifyController extends Controller
     }
 
     /**
-     * Lists all webhook subscriptions.
+     * Updates all products in the store.
+     */
+    public function actionImport(): void
+    {
+        $this->interactiveStartStdout("Importing products...");
+
+        $insertedCount = 0;
+        $deletedCount = 0;
+        $updatedCount = 0;
+
+        Event::on(Product::class, Product::EVENT_AFTER_UPDATE, function (AfterSaveEvent $event) use (&$updatedCount) {
+            if (count($event->changedAttributes) > 2) {
+                $updatedCount++;
+            }
+        });
+
+        Event::on(Product::class, Product::EVENT_AFTER_INSERT, function () use (&$insertedCount) {
+            $insertedCount++;
+        });
+
+        Event::on(Product::class, Product::EVENT_AFTER_DELETE, function () use (&$deletedCount) {
+            $deletedCount++;
+        });
+
+        $repository = new ProductBatchRepository();
+        $repository->save();
+
+        $this->interactiveDoneStdout();
+
+        $formatter = Yii::$app->getFormatter();
+
+        if ($insertedCount || $updatedCount || $deletedCount) {
+            $inserted = $insertedCount > 0 ? $formatter->asInteger($insertedCount) : 'None';
+            $updated = $updatedCount > 0 ? $formatter->asInteger($updatedCount) : 'none';
+            $deleted = $deletedCount > 0 ? $formatter->asInteger($deletedCount) : 'none';
+            $text = "$inserted added, $updated updated, $deleted deleted.";
+        } else {
+            $text = 'No products were added, updated or deleted.';
+        }
+
+        $this->stdout($text . PHP_EOL, Console::FG_GREEN);
+    }
+
+    /**
+     * Lists all active webhook subscriptions.
      */
     public function actionWebhook(): void
     {

@@ -7,6 +7,8 @@ namespace davidhirtz\yii2\shopify\components\admin;
 use davidhirtz\yii2\shopify\components\ShopifyDateTime;
 use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
+use Yii;
 
 readonly class ProductMapper
 {
@@ -26,7 +28,7 @@ readonly class ProductMapper
     {
         $this->product->status = match ($this->data['status']) {
             'DRAFT' => $this->product::STATUS_DRAFT,
-            'ARCHIVED' => $this->product::STATUS_ARCHIVED,
+            'ARCHIVED' => $this->product::STATUS_DISABLED,
             default => $this->product::STATUS_ENABLED,
         };
 
@@ -37,6 +39,8 @@ readonly class ProductMapper
         $this->product->tags = $this->data['tags'] ?: null;
         $this->product->vendor = $this->data['vendor'] ?: null;
 
+
+        Yii::debug($this->data['options'], 'options');
         $options = [];
 
         if (
@@ -46,10 +50,7 @@ readonly class ProductMapper
             || $this->data['options'][0]['values'][0] !== 'Default Title'
         ) {
             foreach ($this->data['options'] as $option) {
-                $options[$option['position']] = [
-                    'name' => $option['name'],
-                    'values' => $option['values'],
-                ];
+                $options[$option['name']] = $option['values'];
             }
         }
 

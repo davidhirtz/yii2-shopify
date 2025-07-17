@@ -8,6 +8,7 @@ use davidhirtz\yii2\shopify\components\ShopifyDateTime;
 use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductVariant;
+use Yii;
 
 readonly class ProductVariantMapper
 {
@@ -50,24 +51,20 @@ readonly class ProductVariantMapper
             default => null,
         };
 
-        $availableOptions = [];
+        $keys = array_keys($this->product->options ?? []);
         $selectedValues = [];
 
-        foreach ($this->product->options ?? [] as $key => $option) {
-            $availableOptions[$option['name']] = $key;
-        }
-
         foreach ($this->data['selectedOptions'] as $option) {
-            $key = $availableOptions[$option['name']] ?? null;
+            $key = $keys[$option['name']] ?? null;
 
-            if ($key) {
+            if ($key !== null) {
                 $selectedValues[$key] = $option['value'];
             }
         }
 
-        $this->variant->option_1 = $selectedValues[1] ?? null;
-        $this->variant->option_2 = $selectedValues[2] ?? null;
-        $this->variant->option_3 = $selectedValues[3] ?? null;
+        $this->variant->option_1 = $selectedValues[0] ?? null;
+        $this->variant->option_2 = $selectedValues[1] ?? null;
+        $this->variant->option_3 = $selectedValues[2] ?? null;
 
         $this->variant->updated_at = (new ShopifyDateTime($this->data['updatedAt']))->toDateTime();
         $this->variant->created_at = (new ShopifyDateTime($this->data['createdAt']))->toDateTime();

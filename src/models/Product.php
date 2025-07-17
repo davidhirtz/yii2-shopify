@@ -51,12 +51,11 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     use DraftStatusAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const int STATUS_ARCHIVED = self::STATUS_DISABLED;
 
     public const string AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
-     * @var array|string used when `$contentType`is set to "html". use an array with the first value containing a
+     * @var array|string used when `$contentType`is set to "html". Use an array with the first value containing a
      * validator class, following keys can be used to configure the validator, string containing the class name or
      * false for disabling the validation.
      */
@@ -134,6 +133,29 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     public function insertOrValidate(): bool
     {
         return $this->getIsNewRecord() ? $this->insert() : $this->validate();
+    }
+
+    public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
+    {
+        if ($attribute === 'options' && is_array($value)) {
+            $options = [];
+
+            foreach ($value as $key => $values) {
+                // Until version 2.1.12 the options were stored as an associative array
+                if (array_key_exists('name', $values)) {
+                    $key = $values['name'];
+                    $values = $values['values'] ?? [];
+                }
+
+                $options[] = "$key: " . implode(', ', (array)$values);
+            }
+
+            return $options;
+        }
+
+        /** @var TrailBehavior $behavior */
+        $behavior = $this->getBehavior('TrailBehavior');
+        return $behavior->formatTrailAttributeValue($attribute, $value);
     }
 
     public function getTrailAttributes(): array
