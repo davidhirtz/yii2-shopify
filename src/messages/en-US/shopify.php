@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Message translations.
  *
@@ -31,8 +30,8 @@ return [
     'Image' => '',
     'Install Webhooks' => '',
     'Inventory' => '',
-    'Inventory management' => '',
     'Inventory policy' => '',
+    'Inventory tracking' => '',
     'Manage Shopify products' => '',
     'Manage Shopify webhooks' => '',
     'New Product' => '',

@@ -7,6 +7,7 @@ namespace davidhirtz\yii2\shopify\migrations;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\shopify\models\ProductVariant;
+use yii\db\Expression;
 use yii\db\Migration;
 
 /**
@@ -40,6 +41,24 @@ class M250717124737ShopifyGraphql extends Migration
             'id',
             'SET NULL'
         );
+
+        $schema = $this->getDb()->getSchema()->getTableSchema(ProductVariant::tableName());
+
+        if ($schema->getColumn('inventory_management')) {
+            $this->addColumn(ProductVariant::tableName(), 'inventory_tracked', (string)$this->boolean()
+                ->unsigned()
+                ->notNull()
+                ->defaultValue(false)
+                ->after('inventory_quantity'));
+
+            $this->update(
+                ProductVariant::tableName(),
+                ['inventory_tracked' => true],
+                '[[inventory_management]] IS NULL OR [[inventory_management]]="shopify"'
+            );
+
+            $this->dropColumn(ProductVariant::tableName(), 'inventory_management');
+        }
 
         parent::safeUp();
     }

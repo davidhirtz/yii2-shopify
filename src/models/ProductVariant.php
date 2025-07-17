@@ -34,7 +34,6 @@ use yii\db\ActiveQuery;
  * @property int|null $grams
  * @property int|null $weight
  * @property string|null $weight_unit
- * @property string|null $inventory_management
  * @property int|null $inventory_quantity
  * @property bool $inventory_tracked
  * @property string|null $inventory_policy
@@ -142,7 +141,7 @@ class ProductVariant extends ActiveRecord
             'grams' => Yii::t('shopify', 'Weight (grams)'),
             'weight' => Yii::t('shopify', 'Weight'),
             'weight_unit' => Yii::t('shopify', 'Weight unit'),
-            'inventory_management' => Yii::t('shopify', 'Inventory management'),
+            'inventory_tracked' => Yii::t('shopify', 'Inventory tracking'),
             'inventory_quantity' => Yii::t('shopify', 'Quantity'),
             'inventory_policy' => Yii::t('shopify', 'Inventory policy'),
         ]);

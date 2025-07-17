@@ -1,3 +1,8 @@
+## 2.2.0 (in development)
+
+- Changed the Shopify Admin API to use the GraphQL API
+- 
+
 ## 2.1.12 (Mar 31, 2025)
 
 - Added `ProductActiveDataProvider` default sort

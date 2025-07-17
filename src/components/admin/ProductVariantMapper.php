@@ -36,7 +36,7 @@ readonly class ProductVariantMapper
 
         $this->variant->inventory_policy = $this->data['inventoryPolicy'] ?? null;
         $this->variant->inventory_quantity = $this->data['inventoryQuantity'];
-        //        $this->variant->inventory_tracked = $this->data['inventoryItem']['tracked'];
+        $this->variant->inventory_tracked = $this->data['inventoryItem']['tracked'];
         $this->variant->is_taxable = $this->data['taxable'] ?? false;
         $this->variant->name = $this->data['title'];
         $this->variant->price = $this->data['price'];

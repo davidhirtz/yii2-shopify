@@ -76,7 +76,7 @@ class M190904193339Shopify extends Migration
             'grams' => $this->decimal(10, 2)->unsigned()->null(),
             'weight' => $this->string()->null(),
             'weight_unit' => $this->string(2)->null(),
-            'inventory_management' => $this->string()->null(),
+            'inventory_tracked' => $this->boolean()->unsigned()->notNull()->defaultValue(false),
             'inventory_quantity' => $this->integer()->unsigned()->notNull()->defaultValue(0),
             'inventory_policy' => $this->string()->null(),
             'updated_at' => $this->dateTime(),
