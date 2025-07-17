@@ -60,6 +60,10 @@ class M250717124737ShopifyGraphql extends Migration
             $this->dropColumn(ProductVariant::tableName(), 'inventory_management');
         }
 
+        if ($schema->getColumn('grams')) {
+            $this->dropColumn(ProductVariant::tableName(), 'grams');
+        }
+
         parent::safeUp();
     }
 }

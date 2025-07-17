@@ -63,6 +63,5 @@ return [
     'View Webhooks' => 'Webhooks anzeigen',
     'Webhooks' => 'Webhooks',
     'Weight' => 'Gewicht',
-    'Weight (grams)' => 'Gewicht (Gramm)',
     'Weight unit' => 'Gewichtseinheit',
 ];

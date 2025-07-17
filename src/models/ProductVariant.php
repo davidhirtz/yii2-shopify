@@ -31,7 +31,6 @@ use yii\db\ActiveQuery;
  * @property string|null $barcode
  * @property string|null $sku
  * @property bool $is_taxable
- * @property int|null $grams
  * @property int|null $weight
  * @property string|null $weight_unit
  * @property int|null $inventory_quantity
@@ -138,7 +137,6 @@ class ProductVariant extends ActiveRecord
             'barcode' => Yii::t('shopify', 'Barcode (ISBN, UPC, GTIN, etc.)'),
             'sku' => Yii::t('shopify', 'SKU (Stock Keeping Unit)'),
             'is_taxable' => Yii::t('shopify', 'Taxable'),
-            'grams' => Yii::t('shopify', 'Weight (grams)'),
             'weight' => Yii::t('shopify', 'Weight'),
             'weight_unit' => Yii::t('shopify', 'Weight unit'),
             'inventory_tracked' => Yii::t('shopify', 'Inventory tracking'),
