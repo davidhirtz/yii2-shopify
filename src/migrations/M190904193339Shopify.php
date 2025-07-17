@@ -103,16 +103,13 @@ class M190904193339Shopify extends Migration
         $this->addPrimaryKey('id', ProductVariant::tableName(), 'id');
         $this->createIndex('product_id', ProductVariant::tableName(), ['product_id', 'position']);
 
-        $tableName = $schema->getRawTableName(Product::tableName());
-        $this->addForeignKey($tableName . '_image_id_ibfk', Product::tableName(), 'image_id', ProductImage::tableName(), 'id', 'SET NULL');
-        $this->addForeignKey($tableName . '_variant_id_ibfk', Product::tableName(), 'variant_id', ProductVariant::tableName(), 'id', 'SET NULL');
+        $this->addForeignKey('product_image_id_ibfk', Product::tableName(), 'image_id', ProductImage::tableName(), 'id', 'SET NULL');
+        $this->addForeignKey('product_variant_id_ibfk', Product::tableName(), 'variant_id', ProductVariant::tableName(), 'id', 'SET NULL');
 
-        $tableName = $schema->getRawTableName(ProductImage::tableName());
-        $this->addForeignKey($tableName . '_product_id_ibfk', ProductImage::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
+        $this->addForeignKey('product_image_product_id_ibfk', ProductImage::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
 
-        $tableName = $schema->getRawTableName(ProductVariant::tableName());
-        $this->addForeignKey($tableName . '_image_id_ibfk', ProductVariant::tableName(), 'image_id', ProductImage::tableName(), 'id', 'SET NULL');
-        $this->addForeignKey($tableName . '_product_id_ibfk', ProductVariant::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
+        $this->addForeignKey('product_variant_image_id_ibfk', ProductVariant::tableName(), 'image_id', ProductImage::tableName(), 'id', 'SET NULL');
+        $this->addForeignKey('product_variant_product_id_ibfk', ProductVariant::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
 
         $this->addI18nColumns(Product::tableName(), Product::instance()->i18nAttributes);
 

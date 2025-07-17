@@ -7,7 +7,6 @@ namespace davidhirtz\yii2\shopify\components\admin;
 use davidhirtz\yii2\shopify\components\ShopifyDateTime;
 use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use Yii;
 
 readonly class ProductMapper

@@ -16,7 +16,10 @@ readonly class ProductMediaMapper
     {
         $id = (new ShopifyId($data['id']))->toInt();
 
-        $this->image = ProductImage::findOne($id) ?? ProductImage::create();
+        $this->image = ProductImage::findOne([
+            'id' => $id,
+            'product_id' => $this->product->id,
+        ]) ?? ProductImage::create();
 
         $this->image->id = $id;
         $this->image->populateProductRelation($this->product);
