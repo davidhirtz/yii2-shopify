@@ -34,7 +34,6 @@ fragment ProductVariantFields on ProductVariant {
         currencyCode
     }
     unitPriceMeasurement {
-        measuredType
         quantityUnit
         quantityValue
         referenceUnit

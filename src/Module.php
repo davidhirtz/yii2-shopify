@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify;
 
 use davidhirtz\yii2\skeleton\modules\ModuleTrait;
+use Override;
 use yii\base\InvalidConfigException;
 
 class Module extends \yii\base\Module
 {
     use ModuleTrait;
+
+    public string $defaultCurrency = 'EUR';
 
     public array $webhooks = [
         [
@@ -26,7 +29,7 @@ class Module extends \yii\base\Module
         ],
     ];
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         if ($this->enableI18nTables) {

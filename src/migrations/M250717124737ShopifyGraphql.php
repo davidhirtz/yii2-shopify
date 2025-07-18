@@ -7,7 +7,6 @@ namespace davidhirtz\yii2\shopify\migrations;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\shopify\models\ProductVariant;
-use yii\db\Expression;
 use yii\db\Migration;
 
 /**
@@ -64,6 +63,21 @@ class M250717124737ShopifyGraphql extends Migration
             $this->dropColumn(ProductVariant::tableName(), 'grams');
         }
 
+        $this->addColumn(ProductVariant::tableName(), 'unit_price', (string)$this->integer()
+            ->unsigned()
+            ->null()
+            ->after('inventory_policy'));
+
+        $this->addColumn(ProductVariant::tableName(), 'unit_price_measurement', (string)$this->string(10)
+            ->null()
+            ->after('unit_price'));
+
         parent::safeUp();
+    }
+
+    public function safeDown(): void
+    {
+        $this->dropColumn(ProductVariant::tableName(), 'unit_price_measurement');
+        $this->dropColumn(ProductVariant::tableName(), 'unit_price');
     }
 }

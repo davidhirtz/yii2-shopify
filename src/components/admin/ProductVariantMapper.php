@@ -6,9 +6,9 @@ namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\components\ShopifyDateTime;
 use davidhirtz\yii2\shopify\components\ShopifyId;
+use davidhirtz\yii2\shopify\components\ShopifyPrice;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductVariant;
-use Yii;
 
 readonly class ProductVariantMapper
 {
@@ -50,6 +50,12 @@ readonly class ProductVariantMapper
             'POUNDS' => 'LB',
             default => null,
         };
+
+        $pricePerUnit = $this->data['unitPrice']['amount'] ?? null;
+        $price = $pricePerUnit ? new ShopifyPrice($pricePerUnit, $this->data['unitPrice']['currencyCode']) : null;
+
+        $this->variant->unit_price = $price?->toInt();
+        $this->variant->unit_price_measurement = $this->data['unitPriceMeasurement']['referenceUnit'] ?? null;
 
         $keys = array_keys($this->product->options ?? []);
         $selectedValues = [];

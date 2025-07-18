@@ -36,6 +36,8 @@ use yii\db\ActiveQuery;
  * @property int|null $inventory_quantity
  * @property bool $inventory_tracked
  * @property string|null $inventory_policy
+ * @property int|null $unit_price
+ * @property int|null $unit_price_measurement
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  *
@@ -70,11 +72,11 @@ class ProductVariant extends ActiveRecord
                 RelationValidator::class
             ],
             [
-                ['weight'],
+                ['weight', 'unit_price_measurement'],
                 'string',
             ],
             [
-                ['is_taxable'],
+                ['is_taxable', 'inventory_tracked'],
                 'boolean',
             ],
         ]);
@@ -139,6 +141,8 @@ class ProductVariant extends ActiveRecord
             'is_taxable' => Yii::t('shopify', 'Taxable'),
             'weight' => Yii::t('shopify', 'Weight'),
             'weight_unit' => Yii::t('shopify', 'Weight unit'),
+            'unit_price' => Yii::t('shopify', 'Unit price'),
+            'unit_price_measurement' => Yii::t('shopify', 'Unit price measurement'),
             'inventory_tracked' => Yii::t('shopify', 'Inventory tracking'),
             'inventory_quantity' => Yii::t('shopify', 'Quantity'),
             'inventory_policy' => Yii::t('shopify', 'Inventory policy'),
