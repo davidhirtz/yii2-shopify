@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * @noinspection PhpUnused
  */
+
+declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\tests\functional;
 

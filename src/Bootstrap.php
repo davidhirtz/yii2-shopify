@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify;
 
-use davidhirtz\yii2\media\console\controllers\FileController;
-use davidhirtz\yii2\media\console\controllers\TransformationController;
 use davidhirtz\yii2\shopify\commands\ShopifyController;
 use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\controllers\WebhookController;

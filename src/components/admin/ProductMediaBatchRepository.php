@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\components\admin;
 
 use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
-use Yii;
 
 class ProductMediaBatchRepository
 {

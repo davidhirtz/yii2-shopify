@@ -87,6 +87,30 @@ class ProductVariant extends ActiveRecord
         return $this->hasOne(ProductImage::class, ['id' => 'image_id']);
     }
 
+    public function getFormattedPrice(): string
+    {
+        return $this->formatPrice($this->price);
+    }
+
+    public function getFormattedCompareAtPrice(): string
+    {
+        return $this->formatPrice($this->compare_at_price);
+    }
+
+    public function getFormattedUnitPrice(): string
+    {
+        return $this->unit_price
+            ? ($this->formatPrice($this->unit_price) . '/' . $this->unit_price_measurement)
+            : '';
+    }
+
+    protected function formatPrice(?int $value): string
+    {
+        return $value
+            ? Yii::$app->getFormatter()->asCurrency($value / 100, static::getModule()->defaultCurrency)
+            : '';
+    }
+
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [

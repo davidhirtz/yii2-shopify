@@ -1,10 +1,12 @@
 ## 2.2.0 (in development)
 
-- Changed the Shopify Admin API to use the GraphQL API
-- Changed the primary key for `ProductImage` to include the `product_id`
+- Added `Product::$unit_price` and `Product::$unit_price_measurement`
+- Changed the primary key for `ProductImage` to include the `product_id` (Issue #12)
+- Changed `Product::$price` and `Product::$compare_at_price` to integer (Issue #11)
 - Changed `Product::$options` to a flat array
 - Removed `Product::$grams`
-- Replaced `ProductVariant::$inventory_management` with `ProductVariant::$inventory_tracked`
+- Replaced Shopify Admin REST API with GraphQL API
+- Replaced `ProductVariant::$inventory_management` with `ProductVariant::$inventory_tracked` (Issue #9)
 
 ## 2.1.12 (Mar 31, 2025)
 
