@@ -4,6 +4,8 @@
 - Changed the primary key for `ProductImage` to include the `product_id` (Issue #12)
 - Changed `Product::$price` and `Product::$compare_at_price` to integer (Issue #11)
 - Changed `Product::$options` to a flat array
+- Changed `Product::$tags` from string to array
+- Changed `Product::$total_inventory_quantity` and `ProductVariant::$inventory_quantity` to allow negative values
 - Removed `Product::$grams`
 - Replaced Shopify Admin REST API with GraphQL API
 - Replaced `ProductVariant::$inventory_management` with `ProductVariant::$inventory_tracked` (Issue #9)

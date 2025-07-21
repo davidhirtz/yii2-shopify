@@ -28,7 +28,7 @@ use yii\db\ActiveQuery;
  * @property string $name
  * @property string|null $content
  * @property string $slug
- * @property string|null $tags
+ * @property array|null $tags
  * @property string|null $vendor
  * @property string|null $product_type
  * @property array|null $options

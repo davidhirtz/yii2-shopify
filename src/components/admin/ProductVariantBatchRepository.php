@@ -45,8 +45,7 @@ class ProductVariantBatchRepository
         $variant->position = $this->getTotalCount() + 1;
 
         if ($variant->save()) {
-            //            $this->totalInventoryQuantity += $variant->inventory_tracked ? $variant->inventory_quantity : 0;
-            $this->totalInventoryQuantity += $variant->inventory_quantity;
+            $this->totalInventoryQuantity += $variant->inventory_tracked ? (int)$variant->inventory_quantity : 0;
             $this->variantIds[] = $variant->id;
         }
 

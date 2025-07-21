@@ -86,12 +86,31 @@ class M250717124737ShopifyGraphql extends Migration
             ->unsigned()
             ->null());
 
+        $this->alterColumn(Product::tableName(), 'total_inventory_quantity', (string)$this->integer()
+            ->notNull()
+            ->defaultValue(0));
+
+        $this->alterColumn(ProductVariant::tableName(), 'inventory_quantity', (string)$this->integer()
+            ->null());
+
+        $products = Product::find()
+            ->where(['not', ['tags' => null]])
+            ->all();
+
+        foreach ($products as $product) {
+            $product->updateAttributes([
+                'tags' => json_encode(explode(',', $product->getAttribute('tags'))),
+            ]);
+        }
+
+        $this->alterColumn(Product::tableName(), 'tags', (string)$this->json()
+            ->null());
+
         parent::safeUp();
     }
 
-    public function safeDown(): void
+    public function safeDown(): false
     {
-        $this->dropColumn(ProductVariant::tableName(), 'unit_price_measurement');
-        $this->dropColumn(ProductVariant::tableName(), 'unit_price');
+        return false;
     }
 }
