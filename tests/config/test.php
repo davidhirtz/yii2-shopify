@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use davidhirtz\yii2\shopify\Bootstrap;
+use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use yii\web\Session;
 
 if (is_file(__DIR__ . '/db.php')) {
@@ -30,6 +31,10 @@ return [
         ],
         'session' => [
             'class' => Session::class,
+        ],
+        'shopify' => [
+            'class' => ShopifyComponent::class,
+            'shopifyShopName' => 'test',
         ],
     ],
     'params' => [

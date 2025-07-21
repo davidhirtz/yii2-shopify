@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\tests\support;
 
+use Codeception\Actor;
+use davidhirtz\yii2\shopify\models\Product;
+
 /**
  * Inherited Methods
  * @method void wantTo($text)
@@ -19,11 +22,12 @@ namespace davidhirtz\yii2\shopify\tests\support;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends \Codeception\Actor
+class UnitTester extends Actor
 {
     use _generated\UnitTesterActions;
 
-    /**
-     * Define custom actions here
-     */
+    public function getProductFixture(string $index = 'product-1'): Product
+    {
+        return $this->grabFixture('products', $index);
+    }
 }

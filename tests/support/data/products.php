@@ -14,7 +14,10 @@ return [
         'image_id' => null,
         'name' => 'Test Product',
         'slug' => 'test-product',
-        'variant_count' => 1,
+        'options' => [
+            'Size' => ['XS', 'SM', 'LG', 'XL'],
+        ],
+        'variant_count' => 2,
         'last_import_at' => new Expression('UTC_TIMESTAMP()'),
         'created_at' => new Expression('UTC_TIMESTAMP()'),
     ],

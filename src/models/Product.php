@@ -162,7 +162,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     {
         return array_diff($this->attributes(), [
             'image_count',
-            'product_count',
+            'variant_count',
             'total_inventory_quantity',
             'last_import_at',
             'updated_at',

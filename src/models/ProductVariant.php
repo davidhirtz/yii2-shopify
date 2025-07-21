@@ -137,14 +137,14 @@ class ProductVariant extends ActiveRecord
         return Yii::t('shopify', 'Variant');
     }
 
-    public function getTrailModelAdminRoute(): array|false
+    public function getTrailModelAdminRoute(): array|string|false
     {
         return $this->getAdminRoute();
     }
 
-    public function getAdminRoute(): array|false
+    public function getAdminRoute(): array|string|false
     {
-        return ['/admin/product/update', 'id' => $this->product_id];
+        return $this->product?->getAdminRoute() ?? false;
     }
 
     #[Override]
