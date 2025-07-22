@@ -41,7 +41,7 @@ class ProductGridView extends GridView
                 $this->nameColumn(),
                 $this->totalInventoryQuantityColumn(),
                 $this->variantCountColumn(),
-                $this->updatedAtColumn(),
+                $this->lastImportAtColumn(),
                 $this->buttonsColumn(),
             ];
         }
@@ -157,10 +157,10 @@ class ProductGridView extends GridView
         ];
     }
 
-    public function updatedAtColumn(): array
+    public function lastImportAtColumn(): array
     {
         return [
-            'attribute' => 'updated_at',
+            'attribute' => 'last_import_at',
             'class' => TimeagoColumn::class,
         ];
     }

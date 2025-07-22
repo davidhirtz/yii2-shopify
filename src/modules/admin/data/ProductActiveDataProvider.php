@@ -6,6 +6,7 @@ namespace davidhirtz\yii2\shopify\modules\admin\data;
 
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\queries\ProductQuery;
+use Override;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -16,7 +17,7 @@ class ProductActiveDataProvider extends ActiveDataProvider
     public ?int $status = null;
     public ?string $searchString = null;
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->query = $this->query ?: Product::find();
@@ -38,11 +39,11 @@ class ProductActiveDataProvider extends ActiveDataProvider
         }
     }
 
-    #[\Override]
+    #[Override]
     public function setSort($value): void
     {
         if (is_array($value)) {
-            $value['defaultOrder'] ??= ['updated_at' => SORT_DESC];
+            $value['defaultOrder'] ??= ['last_import_at' => SORT_DESC];
         }
 
         parent::setSort($value);
