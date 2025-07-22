@@ -9,6 +9,7 @@ use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\components\ShopifyPrice;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductVariant;
+use Yii;
 
 readonly class ProductVariantMapper
 {
@@ -59,13 +60,13 @@ readonly class ProductVariantMapper
         $this->variant->unit_price = $price?->toInt();
         $this->variant->unit_price_measurement = $this->data['unitPriceMeasurement']['referenceUnit'] ?? null;
 
-        $keys = array_keys($this->product->options ?? []);
+        $keys = array_column($this->product->options ?? [], 'name');
         $selectedValues = [];
 
         foreach ($this->data['selectedOptions'] as $option) {
-            $key = $keys[$option['name']] ?? null;
+            $key = array_search($option['name'], $keys);
 
-            if ($key !== null) {
+            if ($key !== false) {
                 $selectedValues[$key] = $option['value'];
             }
         }

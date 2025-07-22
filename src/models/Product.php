@@ -133,19 +133,10 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
     {
         if ($attribute === 'options' && is_array($value)) {
-            $options = [];
-
-            foreach ($value as $key => $values) {
-                // Until version 2.1.12 the options were stored as an associative array
-                if (array_key_exists('name', $values)) {
-                    $key = $values['name'];
-                    $values = $values['values'] ?? [];
-                }
-
-                $options[] = "$key: " . implode(', ', (array)$values);
-            }
-
-            return $options;
+            return array_map(
+                fn ($data) => "{$data['name']}: " . implode(', ', $data['values'] ?? []),
+                $value
+            );
         }
 
         /** @var TrailBehavior $behavior */

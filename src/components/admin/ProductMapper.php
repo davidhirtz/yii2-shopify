@@ -49,12 +49,15 @@ readonly class ProductMapper
             || $this->data['options'][0]['values'][0] !== 'Default Title'
         ) {
             foreach ($this->data['options'] as $option) {
-                $options[$option['name']] = $option['values'];
+                $options[$option['position']] = [
+                    'name' => $option['name'],
+                    'values' => $option['values'],
+                ];
             }
         }
 
         ksort($options);
-        $this->product->options = $options ?: null;
+        $this->product->options = $options ? array_values($options) : null;
 
         $this->product->updated_at = (new ShopifyDateTime($this->data['updatedAt']))->toDateTime();
         $this->product->created_at = (new ShopifyDateTime($this->data['createdAt']))->toDateTime();
