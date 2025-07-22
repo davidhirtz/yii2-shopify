@@ -130,11 +130,6 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         return Yii::createObject(ProductQuery::class, [static::class]);
     }
 
-    public function insertOrValidate(): bool
-    {
-        return $this->getIsNewRecord() ? $this->insert() : $this->validate();
-    }
-
     public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
     {
         if ($attribute === 'options' && is_array($value)) {

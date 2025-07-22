@@ -20,7 +20,7 @@ readonly class ProductRepository
     public function save(): bool
     {
         $this->product->last_import_at = new DateTime();
-        $this->product->insertOrValidate();
+        $this->product->save();
 
         if ($this->product->hasErrors()) {
             ActiveRecordErrorLogger::log($this->product);
