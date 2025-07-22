@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Message translations.
  *
@@ -33,6 +32,7 @@ return [
     'Inventory' => '',
     'Inventory policy' => '',
     'Inventory tracking' => '',
+    'Last import' => '',
     'Manage Shopify products' => '',
     'Manage Shopify webhooks' => '',
     'New Product' => '',
@@ -57,6 +57,8 @@ return [
     'Title' => '',
     'Type' => '',
     'URL' => '',
+    'Unit price' => '',
+    'Unit price measurement' => '',
     'Variant' => '',
     'Variants' => '',
     'Vendor' => '',

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Message translations.
  *
@@ -33,6 +32,7 @@ return [
     'Inventory' => 'Inventar',
     'Inventory policy' => 'Inventarregel',
     'Inventory tracking' => 'Inventarverfolgung',
+    'Last import' => 'Letzter Import',
     'Manage Shopify products' => 'Shopify Produkte verwalten',
     'Manage Shopify webhooks' => 'Shopify Webhooks verwalten',
     'New Product' => 'Neues Produkt',
@@ -57,6 +57,8 @@ return [
     'Title' => 'Titel',
     'Type' => 'Typ',
     'URL' => 'URL',
+    'Unit price' => 'Stückpreis',
+    'Unit price measurement' => 'Stückpreis-Basismaß',
     'Variant' => 'Variante',
     'Variants' => 'Varianten',
     'Vendor' => 'Anbieter',

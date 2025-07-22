@@ -220,7 +220,8 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
             'vendor' => Yii::t('shopify', 'Vendor'),
             'product_type' => Yii::t('shopify', 'Type'),
             'variant_count' => Yii::t('shopify', 'Variants'),
-            'total_inventory_quantity' => Yii::t('shopify', 'Inventory')
+            'total_inventory_quantity' => Yii::t('shopify', 'Inventory'),
+            'last_import_at' => Yii::t('shopify', 'Last import'),
         ];
     }
 
