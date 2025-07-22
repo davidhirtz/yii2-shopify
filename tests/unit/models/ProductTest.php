@@ -54,6 +54,5 @@ class ProductTest extends Unit
 
         self::assertEquals($attributes, array_values($product->getTrailAttributes()));
         self::assertEquals($product->name, $product->getTrailModelName());
-        self::assertEquals('https://test.myshopify.com/admin/products/1', $product->getTrailModelAdminRoute());
     }
 }
