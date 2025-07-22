@@ -84,7 +84,10 @@ class ProductVariant extends ActiveRecord
 
     public function getImage(): ActiveQuery
     {
-        return $this->hasOne(ProductImage::class, ['id' => 'image_id']);
+        return $this->hasOne(ProductImage::class, [
+            'id' => 'image_id',
+            'product_id' => 'product_id',
+        ]);
     }
 
     public function getFormattedPrice(): string
@@ -111,10 +114,22 @@ class ProductVariant extends ActiveRecord
             : '';
     }
 
+    public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
+    {
+        if ($attribute === 'image_id' && $value) {
+            $value .= "-$this->product_id";
+        }
+
+        /** @var TrailBehavior $behavior */
+        $behavior = $this->getBehavior('TrailBehavior');
+        return $behavior->formatTrailAttributeValue($attribute, $value);
+    }
+
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
             'position',
+            'inventory_quantity',
             'updated_at',
             'created_at',
         ]);
@@ -122,8 +137,8 @@ class ProductVariant extends ActiveRecord
 
     public function getTrailModelName(): string
     {
-        if ($this->product_id) {
-            return $this->product->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+        if ($this->id) {
+            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);

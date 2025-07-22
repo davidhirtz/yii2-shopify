@@ -97,7 +97,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
 
     public function getImage(): ActiveQuery
     {
-        return $this->hasOne(ProductImage::class, ['id' => 'image_id'])
+        return $this->hasOne(ProductImage::class, ['id' => 'image_id', 'product_id' => 'id'])
             ->inverseOf('product');
     }
 
@@ -136,6 +136,10 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
                 fn ($data) => "{$data['name']}: " . implode(', ', $data['values'] ?? []),
                 $value
             );
+        }
+
+        if ($attribute === 'image_id' && $value) {
+            $value .= "-$this->id";
         }
 
         /** @var TrailBehavior $behavior */

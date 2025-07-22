@@ -40,7 +40,6 @@ class ProductVariantTest extends Unit
             'is_taxable',
             'weight',
             'weight_unit',
-            'inventory_quantity',
             'inventory_tracked',
             'inventory_policy',
             'unit_price',
@@ -48,6 +47,6 @@ class ProductVariantTest extends Unit
         ];
 
         self::assertEquals($attributes, array_values($product->variant->getTrailAttributes()));
-        self::assertEquals($product->name, $product->variant->getTrailModelName());
+        self::assertEquals($product->variant->name, $product->variant->getTrailModelName());
     }
 }

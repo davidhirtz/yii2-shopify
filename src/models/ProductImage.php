@@ -79,8 +79,8 @@ class ProductImage extends ActiveRecord
 
     public function getTrailModelName(): string
     {
-        if ($this->product_id) {
-            return $this->product->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+        if ($this->id) {
+            return Yii::t('skeleton', '{model} #{id}', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
