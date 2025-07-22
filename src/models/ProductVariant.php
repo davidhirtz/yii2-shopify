@@ -107,7 +107,7 @@ class ProductVariant extends ActiveRecord
     protected function formatPrice(?int $value): string
     {
         return $value
-            ? Yii::$app->getFormatter()->asCurrency($value / 100, static::getModule()->defaultCurrency)
+            ? Yii::$app->getFormatter()->asCurrency($value / 100, Yii::$app->get('shopify')->defaultCurrency)
             : '';
     }
 

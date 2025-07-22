@@ -7,13 +7,13 @@ namespace davidhirtz\yii2\shopify\modules\admin\widgets\grids;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
-use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\columns\CounterColumn;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
+use Override;
 use Yii;
 
 /**
@@ -21,7 +21,6 @@ use Yii;
  */
 class ProductGridView extends GridView
 {
-    use ModuleTrait;
     use StatusGridViewTrait;
 
     /**
@@ -29,7 +28,7 @@ class ProductGridView extends GridView
      */
     public bool $showUrl = false;
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->id = $this->getId(false) ?? 'products';
@@ -208,7 +207,7 @@ class ProductGridView extends GridView
      */
     protected function getUpdateAllProductsButton(): string
     {
-        return Html::a((string)Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
+        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
             'class' => 'btn btn-secondary',
             'data-method' => 'post',
         ]);
@@ -217,7 +216,7 @@ class ProductGridView extends GridView
     /**
      * @see ProductController::actionUpdate()
      */
-    #[\Override]
+    #[Override]
     protected function getUpdateButton($model, array $options = []): string
     {
         return parent::getUpdateButton($model, [
@@ -236,7 +235,7 @@ class ProductGridView extends GridView
         ]);
     }
 
-    #[\Override]
+    #[Override]
     public function getModel(): Product
     {
         return Product::instance();

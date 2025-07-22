@@ -8,7 +8,6 @@ use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductImage;
 use davidhirtz\yii2\shopify\models\ProductVariant;
 use davidhirtz\yii2\shopify\models\WebhookSubscription;
-use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
 use davidhirtz\yii2\skeleton\models\User;
 use Yii;
@@ -20,12 +19,9 @@ use yii\db\Migration;
 class M190904193339Shopify extends Migration
 {
     use MigrationTrait;
-    use ModuleTrait;
 
     public function safeUp(): void
     {
-        $schema = $this->getDb()->getSchema();
-
         $this->createTable(Product::tableName(), [
             'id' => $this->bigInteger()->unsigned()->notNull(),
             'status' => $this->tinyInteger(1)->unsigned()->notNull()->defaultValue(Product::STATUS_ENABLED),

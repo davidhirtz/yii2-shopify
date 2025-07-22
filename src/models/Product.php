@@ -51,7 +51,6 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     use DraftStatusAttributeTrait;
     use UpdatedByUserTrait;
 
-
     public const string AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**

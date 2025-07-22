@@ -9,7 +9,6 @@ use davidhirtz\yii2\shopify\components\admin\ProductQuery;
 use davidhirtz\yii2\shopify\components\admin\ProductRepository;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
-use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
 use Override;
 use Yii;
@@ -20,8 +19,6 @@ use yii\web\Response;
 
 class ProductController extends Controller
 {
-    use ModuleTrait;
-
     #[Override]
     public function behaviors(): array
     {

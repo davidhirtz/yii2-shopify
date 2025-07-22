@@ -12,8 +12,6 @@ class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
-    public string $defaultCurrency = 'EUR';
-
     public array $webhooks = [
         [
             'topic' => 'PRODUCTS_CREATE',
