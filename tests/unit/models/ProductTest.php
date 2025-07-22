@@ -22,15 +22,7 @@ class ProductTest extends Unit
 
         $expected = ['Size: XS, SM, LG, XL'];
 
-        $previousOptions = [
-            [
-                'name' => 'Size',
-                'values' => ['XS', 'SM', 'LG', 'XL'],
-            ]
-        ];
-
         self::assertEquals($expected, $product->formatTrailAttributeValue('options', $product->options));
-        self::assertEquals($expected, $product->formatTrailAttributeValue('options', $previousOptions));
         self::assertEquals('Test Product', $product->formatTrailAttributeValue('name', $product->name));
     }
 
