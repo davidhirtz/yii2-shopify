@@ -101,7 +101,7 @@ class ProductGridView extends GridView
                     'class' => 'thumb',
                 ]);
 
-                return Html::a($html, $product->getAdminRoute(), [
+                return Html::a($html, $product->getShopifyAdminUrl(), [
                     'target' => '_blank',
                 ]);
             }
@@ -114,7 +114,7 @@ class ProductGridView extends GridView
             'attribute' => $this->getModel()->getI18nAttributeName('name'),
             'content' => function (Product $product) {
                 $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name') ?? ''), $this->search);
-                $html = Html::tag('strong', Html::a($html, $product->getAdminRoute(), [
+                $html = Html::tag('strong', Html::a($html, $product->getShopifyAdminUrl(), [
                     'target' => '_blank',
                 ]));
 
@@ -132,7 +132,7 @@ class ProductGridView extends GridView
         return [
             'attribute' => 'total_inventory_quantity',
             'class' => CounterColumn::class,
-            'route' => fn (Product $product) => $product->getAdminRoute(),
+            'route' => fn (Product $product) => $product->getShopifyAdminUrl(),
         ];
     }
 
@@ -230,7 +230,7 @@ class ProductGridView extends GridView
 
     protected function getShopifyAdminProductButton(Product $product): string
     {
-        return Html::a((string)Icon::tag('wrench'), $product->getAdminRoute(), [
+        return Html::a((string)Icon::tag('wrench'), $product->getShopifyAdminUrl(), [
             'class' => 'btn btn-primary d-none d-md-inline-block',
             'target' => '_blank'
         ]);

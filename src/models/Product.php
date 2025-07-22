@@ -173,11 +173,6 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         return Yii::t('shopify', 'Product');
     }
 
-    public function getAdminRoute(): array|string|false
-    {
-        return $this->getShopifyAdminUrl();
-    }
-
     public function getRoute(): array|false
     {
         return false;

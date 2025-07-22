@@ -15,7 +15,10 @@ return [
         'name' => 'Test Product',
         'slug' => 'test-product',
         'options' => [
-            'Size' => ['XS', 'SM', 'LG', 'XL'],
+            [
+                'name' => 'Size',
+                'values' => ['XS', 'SM', 'LG', 'XL'],
+            ],
         ],
         'variant_count' => 2,
         'last_import_at' => new Expression('UTC_TIMESTAMP()'),
