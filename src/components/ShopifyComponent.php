@@ -20,6 +20,7 @@ class ShopifyComponent extends Component
     public ?string $shopifyShopName = null;
     public ?string $shopifyStorefrontAccessToken = null;
     public string $shopifyApiVersion = self::API_VERSION;
+    public string $defaultCurrency = 'EUR';
 
     private AdminApi $api;
 

@@ -1,6 +1,7 @@
 ## 2.2.0 (in development)
 
 - Added `Product::$unit_price` and `Product::$unit_price_measurement`
+- Added `ShopifyComponent::$defaultCurrency` property
 - Changed the primary key for `ProductImage` to include the `product_id` (Issue #12)
 - Changed `Product::$price` and `Product::$compare_at_price` to integer (Issue #11)
 - Changed `Product::$options` to a flat array
