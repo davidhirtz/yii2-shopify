@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\shopify\commands;
 
-use davidhirtz\yii2\shopify\components\admin\AdminApi;
 use davidhirtz\yii2\shopify\components\admin\ProductBatchRepository;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionBatchQuery;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMapper;
@@ -26,19 +25,10 @@ class ShopifyController extends Controller
 {
     use ControllerTrait;
 
-    private AdminApi $api;
-
-    #[Override]
-    public function init(): void
-    {
-        $this->api = Yii::$app->get('shopify')->getAdminApi();
-        parent::init();
-    }
-
     #[Override]
     public function afterAction($action, $result)
     {
-        foreach ($this->api->getErrors() as $error) {
+        foreach (Yii::$app->get('shopify')->getAdminApi()->getErrors() as $error) {
             $this->stderr("$error\n", Console::FG_RED);
         }
 
