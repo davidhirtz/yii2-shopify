@@ -114,6 +114,9 @@ class ProductVariant extends ActiveRecord
             : '';
     }
 
+    /**
+     * @noinspection PhpUnused
+     */
     public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
     {
         if ($attribute === 'image_id' && $value) {

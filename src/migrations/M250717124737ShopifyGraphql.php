@@ -99,7 +99,7 @@ class M250717124737ShopifyGraphql extends Migration
 
         foreach ($products as $product) {
             $product->updateAttributes([
-                'tags' => json_encode(explode(',', $product->getAttribute('tags'))),
+                'tags' => json_encode(explode(',', (string) $product->getAttribute('tags'))),
             ]);
         }
 

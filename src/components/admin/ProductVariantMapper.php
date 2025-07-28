@@ -9,7 +9,6 @@ use davidhirtz\yii2\shopify\components\ShopifyId;
 use davidhirtz\yii2\shopify\components\ShopifyPrice;
 use davidhirtz\yii2\shopify\models\Product;
 use davidhirtz\yii2\shopify\models\ProductVariant;
-use Yii;
 
 readonly class ProductVariantMapper
 {

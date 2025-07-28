@@ -13,7 +13,6 @@ class ProductTest extends Unit
 
     public function test()
     {
-
     }
 
     public function testFormatTrailAttributeValue(): void

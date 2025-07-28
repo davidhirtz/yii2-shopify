@@ -6,7 +6,6 @@ namespace davidhirtz\yii2\shopify\tests\unit\models\queries;
 
 use Codeception\Test\Unit;
 use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\queries\ProductQuery;
 use davidhirtz\yii2\shopify\tests\support\ProductFixtureTrait;
 
 class ProductQueryTest extends Unit

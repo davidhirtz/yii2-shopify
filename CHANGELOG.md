@@ -1,4 +1,4 @@
-## 2.2.0 (in development)
+## 2.2.0 (Jul 28, 2025)
 
 - Added `Product::$unit_price` and `Product::$unit_price_measurement`
 - Added `ShopifyComponent::$defaultCurrency` property
