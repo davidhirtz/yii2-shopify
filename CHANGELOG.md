@@ -6,6 +6,7 @@
 - Changed `Product::$price` and `Product::$compare_at_price` to integer (Issue #11)
 - Changed `Product::$tags` from string to array
 - Changed `Product::$total_inventory_quantity` and `ProductVariant::$inventory_quantity` to allow negative values
+- Improved `ProductImage::beforeDelete()`
 - Removed `Product::$grams`
 - Replaced Shopify Admin REST API with GraphQL API
 - Replaced `ProductVariant::$inventory_management` with `ProductVariant::$inventory_tracked` (Issue #9)

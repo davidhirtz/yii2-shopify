@@ -19,7 +19,7 @@ use yii\db\ActiveQuery;
 /**
  * @property int $id
  * @property int $product_id
- * @property int $image_id
+ * @property int|null $image_id
  * @property string $name
  * @property int $position
  * @property int $price

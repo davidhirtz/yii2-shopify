@@ -64,9 +64,32 @@ class ProductImage extends ActiveRecord
         ]);
     }
 
+    public function beforeDelete(): bool
+    {
+        $product = $this->getProduct()
+            ->andWhere(['image_id' => $this->id])
+            ->one();
+
+        if ($product) {
+            $product->image_id = null;
+            $product->update();
+        }
+
+        $variants = ProductVariant::find()
+            ->where(['product_id' => $this->product_id, 'image_id' => $this->id])
+            ->all();
+
+        foreach ($variants as $variant) {
+            $variant->image_id = null;
+            $variant->update();
+        }
+
+        return parent::beforeDelete();
+    }
+
     public function getUrl(array $params = []): string
     {
-        return $this->src . ($params ? ((strpos((string) $this->src, '?') ? '&' : '?') . http_build_query($params)) : '');
+        return $this->src . ($params ? ((strpos((string)$this->src, '?') ? '&' : '?') . http_build_query($params)) : '');
     }
 
     public function getTrailAttributes(): array

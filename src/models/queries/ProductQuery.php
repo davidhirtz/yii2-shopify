@@ -9,7 +9,7 @@ use davidhirtz\yii2\skeleton\db\ActiveQuery;
 
 /**
  * @template T of Product
- * @extends ActiveQuery<T>
+ * @template-extends ActiveQuery<T>
  */
 class ProductQuery extends ActiveQuery
 {
