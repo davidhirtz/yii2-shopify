@@ -1,3 +1,8 @@
+## 2.2.1 (Nov 13, 2025)
+
+- Fixed `shopifyShopDomain` containing HTTP protocol
+- Added `Product::$slug` unique validation rule
+
 ## 2.2.0 (Jul 28, 2025)
 
 - Added `Product::$unit_price` and `Product::$unit_price_measurement`

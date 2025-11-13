@@ -30,7 +30,7 @@ class ShopifyComponent extends Component
         $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? null;
 
         $this->shopifyShopDomain = $this->shopifyShopDomain
-            ? rtrim((string)preg_replace('(^https??//)', '', (string)$this->shopifyShopDomain), '/')
+            ? rtrim((string)preg_replace('(^https?://)', '', (string)$this->shopifyShopDomain), '/')
             : "$this->shopifyShopName.myshopify.com";
 
         $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;

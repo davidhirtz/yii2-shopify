@@ -16,6 +16,7 @@ use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
 use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
 use davidhirtz\yii2\skeleton\validators\DynamicRangeValidator;
 use davidhirtz\yii2\skeleton\validators\HtmlValidator;
+use davidhirtz\yii2\skeleton\validators\UniqueValidator;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
@@ -85,13 +86,17 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
                 'skipOnEmpty' => false,
             ],
             [
-                $this->getI18nAttributesNames(['name']),
+                ['name', 'slug'],
                 'required',
             ],
-            array_merge(
-                [$this->getI18nAttributesNames(['content'])],
-                (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
-            ),
+            [
+                ['slug'],
+                UniqueValidator::class,
+            ],
+            [
+                ['content'],
+                $this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe',
+            ],
         ]);
     }
 
