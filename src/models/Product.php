@@ -137,10 +137,15 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
     {
         if ($attribute === 'options' && is_array($value)) {
-            return array_map(
-                fn ($data) => "{$data['name']}: " . implode(', ', $data['values'] ?? []),
-                $value
-            );
+            $optionsAsString = [];
+
+            foreach ($value as $key => $data) {
+                $name = is_string($key) ? $key : ($data['name'] ?? "Option " . ($key + 1));
+                $options = implode(', ', is_string($key) ? $data : ($data['values'] ?? [])) ?: '–';
+                $optionsAsString[] = "$name: $options";
+            }
+
+            return $optionsAsString;
         }
 
         if ($attribute === 'image_id' && $value) {
