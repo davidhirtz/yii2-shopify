@@ -73,7 +73,6 @@ class ProductGridView extends GridView
         ];
     }
 
-
     public function thumbnailColumn(): array
     {
         return [
