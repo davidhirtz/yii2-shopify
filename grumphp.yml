@@ -4,5 +4,5 @@ grumphp:
     tasks:
 #        phpstan:
 #            memory_limit: 1G
-        ecs:
-            config: 'ecs.php'
+#        ecs:
+#            config: 'ecs.php'
