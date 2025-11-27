@@ -15,7 +15,7 @@ use davidhirtz\yii2\shopify\modules\admin\widgets\navs\ShopifySubmenu;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
 
-$this->setTitle(Yii::t('shopify', 'Products'));
+$this->title(Yii::t('shopify', 'Products'));
 $this->setBreadcrumb(Yii::t('shopify', 'Products'), ['/admin/product/index']);
 ?>
 
