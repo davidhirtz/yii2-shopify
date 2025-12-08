@@ -20,7 +20,6 @@ use yii\helpers\ArrayHelper;
  */
 class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInterface
 {
-
     public $defaultRoute = 'product';
 
     public function init(): void
