@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\modules\admin\data;
+namespace Hirtz\Shopify\Modules\Admin\Data;
 
 use Hirtz\Shopify\models\Product;
 use Hirtz\Shopify\models\queries\ProductQuery;

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\modules\admin\widgets\grids;
+namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Shopify\models\Product;
-use Hirtz\Shopify\modules\admin\controllers\ProductController;
-use Hirtz\Shopify\modules\admin\data\ProductActiveDataProvider;
+use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
+use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\modules\ModuleTrait;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\html\Icon;
-use Hirtz\Skeleton\modules\admin\widgets\grids\columns\CounterColumn;
-use Hirtz\Skeleton\modules\admin\widgets\grids\GridView;
-use Hirtz\Skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Html\Icon;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
 use Hirtz\Timeago\TimeagoColumn;
 use Yii;
 

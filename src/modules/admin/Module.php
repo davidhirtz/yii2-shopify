@@ -6,19 +6,19 @@ namespace Hirtz\Shopify\modules\admin;
 
 use Hirtz\Shopify\models\Product;
 use Hirtz\Shopify\models\Webhook;
-use Hirtz\Shopify\modules\admin\controllers\ProductController;
-use Hirtz\Shopify\modules\admin\controllers\WebhookController;
-use Hirtz\Skeleton\modules\admin\config\DashboardItemConfig;
-use Hirtz\Skeleton\modules\admin\config\DashboardPanelConfig;
-use Hirtz\Skeleton\modules\admin\config\MainMenuItemConfig;
-use Hirtz\Skeleton\modules\admin\ModuleInterface;
+use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
+use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
+use Hirtz\Skeleton\Modules\Admin\Config\DashboardItemConfig;
+use Hirtz\Skeleton\Modules\Admin\Config\DashboardPanelConfig;
+use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
+use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * @property \Hirtz\Skeleton\modules\admin\Module $module
+ * @property \Hirtz\Skeleton\Modules\Admin\Module $module
  */
-class Module extends \Hirtz\Skeleton\base\Module implements ModuleInterface
+class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
     public $defaultRoute = 'product';
 

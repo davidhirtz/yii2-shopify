@@ -8,11 +8,11 @@ declare(strict_types=1);
  * @var array $webhooks
  */
 
-use Hirtz\Shopify\modules\admin\controllers\WebhookController;
-use Hirtz\Shopify\modules\admin\widgets\grids\WebhookGridView;
-use Hirtz\Shopify\modules\admin\widgets\navs\ShopifySubmenu;
-use Hirtz\Skeleton\web\View;
-use Hirtz\Skeleton\widgets\bootstrap\Panel;
+use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
+use Hirtz\Shopify\Modules\Admin\Widgets\Grids\WebhookGridView;
+use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifySubmenu;
+use Hirtz\Skeleton\Web\View;
+use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
 
 $this->title(Yii::t('shopify', 'Webhooks'));
 $this->setBreadcrumb(Yii::t('shopify', 'Webhooks'), ['/admin/shopify-webhook/index']);

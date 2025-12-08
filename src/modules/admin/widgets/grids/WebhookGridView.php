@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\modules\admin\widgets\grids;
+namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Shopify\models\Webhook;
-use Hirtz\Shopify\modules\admin\controllers\WebhookController;
+use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\modules\ModuleTrait;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\html\Icon;
-use Hirtz\Skeleton\modules\admin\widgets\grids\GridView;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Html\Icon;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
 use Hirtz\Timeago\TimeagoColumn;
 use Yii;
 use yii\data\ArrayDataProvider;

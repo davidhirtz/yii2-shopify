@@ -8,9 +8,9 @@ use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\models\traits\ProductRelationTrait;
 use Hirtz\Shopify\modules\ModuleTrait;
-use Hirtz\Skeleton\behaviors\TrailBehavior;
-use Hirtz\Skeleton\db\ActiveRecord;
-use Hirtz\Skeleton\models\traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Yii;
 
 /**

@@ -9,8 +9,8 @@ use davidhirtz\yii2\datetime\DateTime;
 use Hirtz\Shopify\models\Product;
 use Hirtz\Shopify\models\ProductImage;
 use Hirtz\Shopify\models\ProductVariant;
-use Hirtz\Skeleton\helpers\ArrayHelper;
-use Hirtz\Skeleton\log\ActiveRecordErrorLogger;
+use Hirtz\Skeleton\Helpers\ArrayHelper;
+use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 use Yii;
 
 class ProductShopifyAdminRestApiForm

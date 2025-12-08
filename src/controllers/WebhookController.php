@@ -8,7 +8,7 @@ use Hirtz\Shopify\models\forms\ProductShopifyAdminRestApiForm;
 use Hirtz\Shopify\models\Product;
 use Hirtz\Shopify\Module;
 use Hirtz\Shopify\modules\ModuleTrait;
-use Hirtz\Skeleton\web\Controller;
+use Hirtz\Skeleton\Web\Controller;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;

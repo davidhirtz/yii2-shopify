@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\components\rest;
 
-use Hirtz\Skeleton\helpers\ArrayHelper;
+use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;

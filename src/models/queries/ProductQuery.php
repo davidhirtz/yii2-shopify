@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\models\queries;
 
 use Hirtz\Shopify\models\Product;
-use Hirtz\Skeleton\db\ActiveQuery;
+use Hirtz\Skeleton\Db\ActiveQuery;
 
 /**
  * @template T of Product

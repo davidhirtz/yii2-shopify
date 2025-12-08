@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\modules\admin\controllers;
+namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
 use Hirtz\Shopify\models\forms\ProductShopifyAdminRestApiForm;
 use Hirtz\Shopify\models\Product;
-use Hirtz\Shopify\modules\admin\data\ProductActiveDataProvider;
+use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\modules\ModuleTrait;
-use Hirtz\Skeleton\web\Controller;
+use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

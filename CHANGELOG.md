@@ -34,7 +34,7 @@
 
 ## 2.1.4 (Apr 5, 2024)
 
-- Updated admin according to `Hirtz\Skeleton\modules\admin\ModuleInterface`
+- Updated admin according to `Hirtz\Skeleton\Modules\Admin\ModuleInterface`
 
 ## 2.1.3 (Apr 3, 2024)
 
@@ -57,7 +57,7 @@
 
 ## 2.0.2 (Dec 8, 2023)
 
-- Replaced `ActiveRecord::logErrors()` with `\Hirtz\Skeleton\log\ActiveRecordErrorLogger::log()
+- Replaced `ActiveRecord::logErrors()` with `\Hirtz\Skeleton\Log\ActiveRecordErrorLogger::log()
 
 ## 2.0.1 (Nov 6, 2023)
 
@@ -70,7 +70,7 @@
   container
 - Removed `FrontendAssetBundle`, use NPM package `shopify-buy-cart` instead.
 - Changed namespaces from `Hirtz\Shopify\admin\widgets\grid`
-  to `Hirtz\Shopify\admin\widgets\grids` and `Hirtz\Skeleton\shopify\widgets\nav`
+  to `Hirtz\Shopify\admin\widgets\grids` and `Hirtz\Skeleton\Shopify\widgets\nav`
   to `Hirtz\Shopify\admin\widgets\navs`
 
 ## 1.1.7 (Oct 31, 2023)

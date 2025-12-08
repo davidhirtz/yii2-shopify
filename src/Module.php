@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify;
 
 use Hirtz\Shopify\components\rest\ShopifyAdminRestApi;
-use Hirtz\Skeleton\modules\ModuleTrait;
+use Hirtz\Skeleton\Modules\ModuleTrait;
 use Yii;
 use yii\base\InvalidConfigException;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify;
 
 use Hirtz\Shopify\controllers\WebhookController;
-use Hirtz\Skeleton\web\Application;
+use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -21,7 +21,7 @@ class Bootstrap implements BootstrapInterface
 
         $app->getI18n()->translations['shopify'] ??= [
             'class' => PhpMessageSource::class,
-            'basePath' => '@shopify/messages',
+            'basePath' => '@shopify/../messages',
         ];
 
         $app->extendModules([
@@ -43,6 +43,6 @@ class Bootstrap implements BootstrapInterface
          * @see WebhookController::actionProductsUpdate()
          */
         $app->addUrlManagerRules(['shopify/webhook/<action>' => 'shopify/webhook/<action>']);
-        $app->setMigrationNamespace('Hirtz\Shopify\migrations');
+        $app->setMigrationNamespace('Hirtz\Shopify\Migrations');
     }
 }

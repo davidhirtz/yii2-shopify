@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\modules\admin\controllers;
+namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
 use Hirtz\Shopify\models\Webhook;
 use Hirtz\Shopify\modules\ModuleTrait;
-use Hirtz\Skeleton\web\Controller;
+use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
