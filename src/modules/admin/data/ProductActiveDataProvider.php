@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\modules\admin\data;
+namespace Hirtz\Shopify\modules\admin\data;
 
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\queries\ProductQuery;
+use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\models\queries\ProductQuery;
 use yii\data\ActiveDataProvider;
 
 /**

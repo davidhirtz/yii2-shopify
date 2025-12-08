@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\modules\admin;
+namespace Hirtz\Shopify\modules\admin;
 
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\Webhook;
-use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
-use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
-use davidhirtz\yii2\skeleton\modules\admin\config\DashboardItemConfig;
-use davidhirtz\yii2\skeleton\modules\admin\config\DashboardPanelConfig;
-use davidhirtz\yii2\skeleton\modules\admin\config\MainMenuItemConfig;
-use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
+use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\models\Webhook;
+use Hirtz\Shopify\modules\admin\controllers\ProductController;
+use Hirtz\Shopify\modules\admin\controllers\WebhookController;
+use Hirtz\Skeleton\modules\admin\config\DashboardItemConfig;
+use Hirtz\Skeleton\modules\admin\config\DashboardPanelConfig;
+use Hirtz\Skeleton\modules\admin\config\MainMenuItemConfig;
+use Hirtz\Skeleton\modules\admin\ModuleInterface;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
+ * @property \Hirtz\Skeleton\modules\admin\Module $module
  */
-class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInterface
+class Module extends \Hirtz\Skeleton\base\Module implements ModuleInterface
 {
     public $defaultRoute = 'product';
 

@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\models;
+namespace Hirtz\Shopify\models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
-use davidhirtz\yii2\shopify\models\queries\ProductQuery;
-use davidhirtz\yii2\shopify\modules\ModuleTrait;
-use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
-use davidhirtz\yii2\skeleton\db\ActiveRecord;
-use davidhirtz\yii2\skeleton\models\interfaces\DraftStatusAttributeInterface;
-use davidhirtz\yii2\skeleton\models\traits\DraftStatusAttributeTrait;
-use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
-use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
-use davidhirtz\yii2\skeleton\validators\DynamicRangeValidator;
-use davidhirtz\yii2\skeleton\validators\HtmlValidator;
+use Hirtz\Shopify\models\queries\ProductQuery;
+use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Skeleton\behaviors\TrailBehavior;
+use Hirtz\Skeleton\db\ActiveRecord;
+use Hirtz\Skeleton\models\interfaces\DraftStatusAttributeInterface;
+use Hirtz\Skeleton\models\traits\DraftStatusAttributeTrait;
+use Hirtz\Skeleton\models\traits\I18nAttributesTrait;
+use Hirtz\Skeleton\models\traits\UpdatedByUserTrait;
+use Hirtz\Skeleton\validators\DynamicRangeValidator;
+use Hirtz\Skeleton\validators\HtmlValidator;
 use Yii;
 use yii\db\ActiveQuery;
 

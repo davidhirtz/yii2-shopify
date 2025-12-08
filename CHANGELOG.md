@@ -34,7 +34,7 @@
 
 ## 2.1.4 (Apr 5, 2024)
 
-- Updated admin according to `davidhirtz\yii2\skeleton\modules\admin\ModuleInterface`
+- Updated admin according to `Hirtz\Skeleton\modules\admin\ModuleInterface`
 
 ## 2.1.3 (Apr 3, 2024)
 
@@ -57,7 +57,7 @@
 
 ## 2.0.2 (Dec 8, 2023)
 
-- Replaced `ActiveRecord::logErrors()` with `\davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger::log()
+- Replaced `ActiveRecord::logErrors()` with `\Hirtz\Skeleton\log\ActiveRecordErrorLogger::log()
 
 ## 2.0.1 (Nov 6, 2023)
 
@@ -69,9 +69,9 @@
 - Moved all models, data providers and widgets out of `base` folder, to override them use Yii's dependency injection
   container
 - Removed `FrontendAssetBundle`, use NPM package `shopify-buy-cart` instead.
-- Changed namespaces from `davidhirtz\yii2\shopify\admin\widgets\grid`
-  to `davidhirtz\yii2\shopify\admin\widgets\grids` and `davidhirtz\yii2\skeleton\shopify\widgets\nav`
-  to `davidhirtz\yii2\shopify\admin\widgets\navs`
+- Changed namespaces from `Hirtz\Shopify\admin\widgets\grid`
+  to `Hirtz\Shopify\admin\widgets\grids` and `Hirtz\Skeleton\shopify\widgets\nav`
+  to `Hirtz\Shopify\admin\widgets\navs`
 
 ## 1.1.7 (Oct 31, 2023)
 

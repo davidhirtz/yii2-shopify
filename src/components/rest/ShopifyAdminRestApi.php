@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\components\rest;
+namespace Hirtz\Shopify\components\rest;
 
-use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
+use Hirtz\Skeleton\helpers\ArrayHelper;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;

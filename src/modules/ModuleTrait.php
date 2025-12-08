@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\modules;
+namespace Hirtz\Shopify\modules;
 
-use davidhirtz\yii2\shopify\Module;
+use Hirtz\Shopify\Module;
 use Yii;
 
 trait ModuleTrait

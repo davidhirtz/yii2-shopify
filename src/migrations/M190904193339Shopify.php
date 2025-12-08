@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\migrations;
+namespace Hirtz\Shopify\migrations;
 
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\ProductImage;
-use davidhirtz\yii2\shopify\models\ProductVariant;
-use davidhirtz\yii2\shopify\models\Webhook;
-use davidhirtz\yii2\shopify\modules\ModuleTrait;
-use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
-use davidhirtz\yii2\skeleton\models\User;
+use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\models\ProductImage;
+use Hirtz\Shopify\models\ProductVariant;
+use Hirtz\Shopify\models\Webhook;
+use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Skeleton\db\traits\MigrationTrait;
+use Hirtz\Skeleton\models\User;
 use Yii;
 use yii\db\Migration;
 

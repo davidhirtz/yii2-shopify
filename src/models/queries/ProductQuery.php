@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\models\queries;
+namespace Hirtz\Shopify\models\queries;
 
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\skeleton\db\ActiveQuery;
+use Hirtz\Shopify\models\Product;
+use Hirtz\Skeleton\db\ActiveQuery;
 
 /**
  * @template T of Product

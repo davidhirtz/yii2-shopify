@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use davidhirtz\yii2\shopify\Bootstrap;
+use Hirtz\Shopify\Bootstrap;
 use yii\web\Session;
 
 if (is_file(__DIR__ . '/db.php')) {

@@ -20,7 +20,7 @@ To use the Storefront API (shopify.js), activate the Storefront API integration 
 ### Credentials
 
 Following Shopify credentials need to be either added to `config/params.php` or directly set as properties in
-`davidhirtz\yii2\shopify\Module`. They can be found under `API credentials` in your private app settings in the Shopify
+`Hirtz\Shopify\Module`. They can be found under `API credentials` in your private app settings in the Shopify
 admin.
 
     shopifyShopName                 The shopify name of your shop (https://NAME.myshopify.com/)

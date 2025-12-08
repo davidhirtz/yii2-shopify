@@ -8,12 +8,12 @@ declare(strict_types=1);
  * @var ProductActiveDataProvider $provider
  */
 
-use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
-use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
-use davidhirtz\yii2\shopify\modules\admin\widgets\grids\ProductGridView;
-use davidhirtz\yii2\shopify\modules\admin\widgets\navs\ShopifySubmenu;
-use davidhirtz\yii2\skeleton\web\View;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
+use Hirtz\Shopify\modules\admin\controllers\ProductController;
+use Hirtz\Shopify\modules\admin\data\ProductActiveDataProvider;
+use Hirtz\Shopify\modules\admin\widgets\grids\ProductGridView;
+use Hirtz\Shopify\modules\admin\widgets\navs\ShopifySubmenu;
+use Hirtz\Skeleton\web\View;
+use Hirtz\Skeleton\widgets\bootstrap\Panel;
 
 $this->title(Yii::t('shopify', 'Products'));
 $this->setBreadcrumb(Yii::t('shopify', 'Products'), ['/admin/product/index']);

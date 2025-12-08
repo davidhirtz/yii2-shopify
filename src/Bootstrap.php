@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify;
+namespace Hirtz\Shopify;
 
-use davidhirtz\yii2\shopify\controllers\WebhookController;
-use davidhirtz\yii2\skeleton\web\Application;
+use Hirtz\Shopify\controllers\WebhookController;
+use Hirtz\Skeleton\web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -43,6 +43,6 @@ class Bootstrap implements BootstrapInterface
          * @see WebhookController::actionProductsUpdate()
          */
         $app->addUrlManagerRules(['shopify/webhook/<action>' => 'shopify/webhook/<action>']);
-        $app->setMigrationNamespace('davidhirtz\yii2\shopify\migrations');
+        $app->setMigrationNamespace('Hirtz\Shopify\migrations');
     }
 }

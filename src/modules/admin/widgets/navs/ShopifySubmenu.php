@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\modules\admin\widgets\navs;
+namespace Hirtz\Shopify\modules\admin\widgets\navs;
 
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\Webhook;
-use davidhirtz\yii2\skeleton\widgets\fontawesome\Submenu;
+use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\models\Webhook;
+use Hirtz\Skeleton\widgets\fontawesome\Submenu;
 use Yii;
 
 class ShopifySubmenu extends Submenu

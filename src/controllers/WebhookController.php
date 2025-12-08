@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\controllers;
+namespace Hirtz\Shopify\controllers;
 
-use davidhirtz\yii2\shopify\models\forms\ProductShopifyAdminRestApiForm;
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\Module;
-use davidhirtz\yii2\shopify\modules\ModuleTrait;
-use davidhirtz\yii2\skeleton\web\Controller;
+use Hirtz\Shopify\models\forms\ProductShopifyAdminRestApiForm;
+use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\Module;
+use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Skeleton\web\Controller;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;

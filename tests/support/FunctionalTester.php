@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\tests\support;
+namespace Hirtz\Shopify\tests\support;
 
 /**
  * Inherited Methods

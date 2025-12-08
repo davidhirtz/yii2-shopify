@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify;
+namespace Hirtz\Shopify;
 
-use davidhirtz\yii2\shopify\components\rest\ShopifyAdminRestApi;
-use davidhirtz\yii2\skeleton\modules\ModuleTrait;
+use Hirtz\Shopify\components\rest\ShopifyAdminRestApi;
+use Hirtz\Skeleton\modules\ModuleTrait;
 use Yii;
 use yii\base\InvalidConfigException;
 

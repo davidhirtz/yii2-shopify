@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\shopify\migrations;
+namespace Hirtz\Shopify\migrations;
 
-use davidhirtz\yii2\shopify\models\Product;
-use davidhirtz\yii2\shopify\models\ProductVariant;
-use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
+use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\models\ProductVariant;
+use Hirtz\Skeleton\db\traits\MigrationTrait;
 use Yii;
 use yii\db\Migration;
 
