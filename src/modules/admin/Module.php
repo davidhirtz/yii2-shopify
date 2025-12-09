@@ -22,6 +22,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
     public $defaultRoute = 'product';
 
+    #[\Override]
     public function init(): void
     {
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);

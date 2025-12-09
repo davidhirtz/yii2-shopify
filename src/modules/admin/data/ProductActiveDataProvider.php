@@ -23,6 +23,7 @@ class ProductActiveDataProvider extends ActiveDataProvider
      */
     public ?string $searchString = null;
 
+    #[\Override]
     public function init(): void
     {
         $this->query = $this->query ?: Product::find();

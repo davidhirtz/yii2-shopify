@@ -17,6 +17,7 @@ class WebhookController extends Controller
 {
     use ModuleTrait;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -50,9 +51,7 @@ class WebhookController extends Controller
         $webhooks = [];
 
         foreach (static::getModule()->getApi()->getWebhooks() as $data) {
-            $webhooks[] = Yii::createObject(array_merge($data, [
-                'class' => Webhook::class,
-            ]));
+            $webhooks[] = Yii::createObject([...$data, 'class' => Webhook::class]);
         }
 
         usort($webhooks, fn (Webhook $a, Webhook $b) => strcmp((string) $b->updated_at, (string) $a->updated_at));

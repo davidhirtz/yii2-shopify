@@ -20,6 +20,7 @@ class WebhookController extends Controller
     /**
      * Disables CSRF validation for webhook endpoints
      */
+    #[\Override]
     public function init(): void
     {
         $this->enableCsrfValidation = false;
@@ -29,6 +30,7 @@ class WebhookController extends Controller
     /**
      * Validates webhooks from Shopify, this only works when is {@see Module::$shopifyApiSecret} set
      */
+    #[\Override]
     public function beforeAction($action): bool
     {
         $hmacHeader = $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] ?? '';

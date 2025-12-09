@@ -26,6 +26,7 @@ class Webhook extends Model
     public ?string $updated_at = null;
     public ?string $created_at = null;
 
+    #[\Override]
     public function rules(): array
     {
         return [
@@ -51,6 +52,7 @@ class Webhook extends Model
         ];
     }
 
+    #[\Override]
     public function beforeValidate(): bool
     {
         $this->address = $this->address ?: Yii::$app->getUrlManager()->createAbsoluteUrl($this->route);
@@ -106,6 +108,7 @@ class Webhook extends Model
         ];
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
         return [

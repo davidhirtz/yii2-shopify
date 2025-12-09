@@ -16,7 +16,7 @@ class ShopifySubmenu extends Submenu
     public function init(): void
     {
         $this->title = $this->title ?: Yii::t('shopify', 'Shopify');
-        $this->items = array_merge($this->items, $this->getDefaultItems());
+        $this->items = [...$this->items, ...$this->getDefaultItems()];
 
         parent::init();
     }

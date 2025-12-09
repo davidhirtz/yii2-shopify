@@ -70,6 +70,7 @@ class Module extends \yii\base\Module
 
     private ?ShopifyAdminRestApi $_api = null;
 
+    #[\Override]
     public function init(): void
     {
         if ($this->enableI18nTables) {

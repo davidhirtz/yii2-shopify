@@ -66,6 +66,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
      */
     public string|false $contentType = 'html';
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -75,6 +76,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         ];
     }
 
+    #[\Override]
     public function rules(): array
     {
         return [
@@ -93,10 +95,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
                     $this->getI18nAttributesNames(['name']),
                     'required',
                 ],
-                array_merge(
-                    [$this->getI18nAttributesNames(['content'])],
-                    (array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')
-                ),
+                [$this->getI18nAttributesNames(['content']), ...(array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')],
                 [
                     ['id', 'image_id', 'variant_id'],
                     'string',
@@ -133,6 +132,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
             ->inverseOf('product');
     }
 
+    #[\Override]
     public static function find(): ProductQuery
     {
         return Yii::createObject(ProductQuery::class, [static::class]);
@@ -184,6 +184,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         return static::getModule()->getShopUrl("admin/products/$this->id");
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
         return [
@@ -200,11 +201,13 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         ];
     }
 
+    #[\Override]
     public function formName(): string
     {
         return 'Product';
     }
 
+    #[\Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('product');
