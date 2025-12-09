@@ -106,7 +106,7 @@ class ShopifyAdminRestApi extends BaseObject
 
         $options['headers']['X-Shopify-Access-Token'] ??= $this->shopifyAccessToken;
 
-        $options['on_stats'] ??= function (TransferStats $stats) {
+        $options['on_stats'] ??= function (TransferStats $stats): void {
             Yii::debug("Requesting Shopify Admin REST API: {$stats->getEffectiveUri()}");
         };
 

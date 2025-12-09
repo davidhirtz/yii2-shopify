@@ -41,7 +41,7 @@ class Webhook extends Model
             ],
             [
                 ['route', 'fields', 'metafield_namespaces', 'private_metafield_namespaces'],
-                function ($attribute) {
+                function ($attribute): void {
                     if (!is_array($this->$attribute)) {
                         $this->addError($attribute, Yii::t('yii', 'The format of {attribute} is invalid.', [
                             'attribute' => $attribute,
