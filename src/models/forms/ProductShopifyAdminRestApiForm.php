@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\models\forms;
+namespace Hirtz\Shopify\Models\forms;
 
 use DateTimeZone;
 use davidhirtz\yii2\datetime\DateTime;
-use Hirtz\Shopify\models\Product;
-use Hirtz\Shopify\models\ProductImage;
-use Hirtz\Shopify\models\ProductVariant;
+use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Models\ProductImage;
+use Hirtz\Shopify\Models\ProductVariant;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 use Yii;

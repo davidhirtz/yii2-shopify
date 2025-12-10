@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\modules\admin;
 
-use Hirtz\Shopify\models\Product;
-use Hirtz\Shopify\models\Webhook;
+use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Skeleton\Modules\Admin\Config\DashboardItemConfig;

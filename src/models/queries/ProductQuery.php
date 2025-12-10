@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\models\queries;
+namespace Hirtz\Shopify\Models\Queries;
 
-use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\Models\Product;
 use Hirtz\Skeleton\Db\ActiveQuery;
 
 /**

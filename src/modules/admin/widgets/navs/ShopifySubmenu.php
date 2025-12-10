@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
-use Hirtz\Shopify\models\Product;
-use Hirtz\Shopify\models\Webhook;
+use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Skeleton\Widgets\Fontawesome\Submenu;
 use Yii;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
-use Hirtz\Shopify\models\Webhook;
+use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Yii;

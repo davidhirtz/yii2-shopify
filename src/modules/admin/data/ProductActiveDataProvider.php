@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Data;
 
-use Hirtz\Shopify\models\Product;
-use Hirtz\Shopify\models\queries\ProductQuery;
+use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Models\Queries\ProductQuery;
 use yii\data\ActiveDataProvider;
 
 /**

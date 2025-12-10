@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\tests\functional;
 
-use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\Admin\Widgets\Grids\ProductGridView;
 use Hirtz\Shopify\tests\support\FunctionalTester;

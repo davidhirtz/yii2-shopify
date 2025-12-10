@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\models;
+namespace Hirtz\Shopify\Models;
 
 use Hirtz\Shopify\modules\ModuleTrait;
 use Yii;

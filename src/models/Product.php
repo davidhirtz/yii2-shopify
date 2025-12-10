@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\models;
+namespace Hirtz\Shopify\Models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
-use Hirtz\Shopify\models\queries\ProductQuery;
+use Hirtz\Shopify\Models\Queries\ProductQuery;
 use Hirtz\Shopify\modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;

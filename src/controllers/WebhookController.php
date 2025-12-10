@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\controllers;
 
-use Hirtz\Shopify\models\forms\ProductShopifyAdminRestApiForm;
-use Hirtz\Shopify\models\Product;
+use Hirtz\Shopify\Models\forms\ProductShopifyAdminRestApiForm;
+use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Module;
 use Hirtz\Shopify\modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
