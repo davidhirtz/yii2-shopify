@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\modules\admin;
+namespace Hirtz\Shopify\Modules\Admin;
 
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Webhook;
