@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Hirtz\Shopify\Models\Queries;
+
+use Hirtz\Shopify\Models\Product;
+use Hirtz\Skeleton\Db\ActiveQuery;
+
+/**
+ * @template T of Product
+ * @extends ActiveQuery<T>
+ */
+class ProductQuery extends ActiveQuery
+{
+    public function matching(?string $search): static
+    {
+        if ($search = $this->sanitizeSearchString($search)) {
+            $model = $this->getModelInstance();
+            $tableName = $model::tableName();
+
+            if (is_numeric($search)) {
+                $this->andWhere("$tableName.[[id]] = :search OR $tableName.[[name]] LIKE :search", [
+                    ':search' => "%$search%"
+                ]);
+            } else {
+                $this->andWhere("$tableName.[[name]] LIKE :search", [
+                    ':search' => "%$search%"
+                ]);
+            }
+        }
+
+        return $this;
+    }
+}

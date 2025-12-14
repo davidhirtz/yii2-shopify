@@ -1,0 +1,225 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
+
+use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
+use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
+use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Html\Icon;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Timeago\TimeagoColumn;
+use Yii;
+
+/**
+ * @property ProductActiveDataProvider $dataProvider
+ */
+class ProductGridView extends GridView
+{
+    use ModuleTrait;
+    use StatusGridViewTrait;
+
+    /**
+     * @var bool whether product urls should be displayed in the name column
+     */
+    public bool $showUrl = false;
+
+    public function init(): void
+    {
+        $this->id = $this->getId(false) ?? 'products';
+
+        if (!$this->columns) {
+            $this->columns = [
+                $this->statusColumn(),
+                $this->thumbnailColumn(),
+                $this->nameColumn(),
+                $this->totalInventoryQuantityColumn(),
+                $this->variantCountColumn(),
+                $this->updatedAtColumn(),
+                $this->buttonsColumn(),
+            ];
+        }
+
+        $this->status = $this->dataProvider->status;
+
+        parent::init();
+    }
+
+    protected function initHeader(): void
+    {
+        $this->header ??= [
+            [
+                $this->statusDropdown(),
+                $this->search->getColumn(),
+            ],
+        ];
+    }
+
+    protected function initFooter(): void
+    {
+        $this->footer ??= [
+            [
+                $this->getCreateProductButton(),
+                [
+                    'content' => $this->getUpdateAllProductsButton(),
+                    'options' => ['class' => 'ms-auto'],
+                ],
+            ],
+        ];
+    }
+
+    public function thumbnailColumn(): array
+    {
+        return [
+            'headerOptions' => ['style' => 'width:150px'],
+            'content' => function (Product $product) {
+                if (!$product->image_id) {
+                    return '';
+                }
+
+                $html = Html::tag('div', '', [
+                    'style' => 'background-image:url(' . $product->image->getUrl(['width' => 300, 'height' => 300]) . ');',
+                    'class' => 'thumb',
+                ]);
+
+                return Html::a($html, $product->getAdminRoute(), [
+                    'target' => '_blank',
+                ]);
+            }
+        ];
+    }
+
+    public function nameColumn(): array
+    {
+        return [
+            'attribute' => $this->getModel()->getI18nAttributeName('name'),
+            'content' => function (Product $product) {
+                $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name') ?? ''), $this->search->getKeywords());
+                $html = Html::tag('strong', Html::a($html, $product->getAdminRoute(), [
+                    'target' => '_blank',
+                ]));
+
+                if ($this->showUrl) {
+                    $html .= $this->getUrl($product);
+                }
+
+                return $html;
+            }
+        ];
+    }
+
+    public function totalInventoryQuantityColumn(): array
+    {
+        return [
+            'attribute' => 'total_inventory_quantity',
+            'class' => CounterColumn::class,
+            'route' => fn (Product $product) => $product->getAdminRoute(),
+        ];
+    }
+
+    public function variantCountColumn(): array
+    {
+        return [
+            'attribute' => 'variant_count',
+            'class' => CounterColumn::class,
+            'route' => function (Product $product) {
+                $query = "admin/products/$product->id";
+
+                if ($product->variant_count > 1) {
+                    $query .= "/variants/$product->variant_id";
+                }
+
+                return static::getModule()->getShopUrl($query);
+            },
+            'wrapperOptions' => [
+                'class' => 'badge',
+                'target' => '_blank',
+            ]
+        ];
+    }
+
+    public function updatedAtColumn(): array
+    {
+        return [
+            'attribute' => 'updated_at',
+            'class' => TimeagoColumn::class,
+        ];
+    }
+
+    public function buttonsColumn(): array
+    {
+        return [
+            'contentOptions' => ['class' => 'text-end text-nowrap'],
+            'content' => fn (Product $product): string => Html::buttons($this->getRowButtons($product))
+        ];
+    }
+
+    protected function getRowButtons(Product $product): array
+    {
+        return [
+            $this->getUpdateButton($product),
+            $this->getShopifyAdminProductButton($product),
+        ];
+    }
+
+    protected function getUrl(Product $product): string
+    {
+        if ($route = $product->getRoute()) {
+            $urlManager = Yii::$app->getUrlManager();
+            $url = $product->isEnabled() ? $urlManager->createAbsoluteUrl($route) : $urlManager->createDraftUrl($route);
+
+            if ($url) {
+                return Html::tag('div', Html::a($url, $url, ['target' => '_blank']), ['class' => 'd-none d-md-block small']);
+            }
+        }
+
+        return '';
+    }
+
+    protected function getCreateProductButton(): string
+    {
+        return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
+            'class' => 'btn btn-primary',
+            'target' => '_blank',
+        ]);
+    }
+
+    /**
+     * @see ProductController::actionUpdateAll()
+     */
+    protected function getUpdateAllProductsButton(): string
+    {
+        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
+            'class' => 'btn btn-secondary',
+            'data-method' => 'post',
+        ]);
+    }
+
+    protected function getUpdateButton($model, array $options = []): string
+    {
+        return parent::getUpdateButton($model, [
+            'icon' => 'sync',
+            'class' => 'btn btn-secondary',
+            'data-method' => 'post',
+            ...$options,
+        ]);
+    }
+
+    protected function getShopifyAdminProductButton(Product $product): string
+    {
+        return Html::a(Icon::tag('wrench')->render(), $product->getAdminRoute(), [
+            'class' => 'btn btn-primary d-none d-md-inline-block',
+            'target' => '_blank'
+        ]);
+    }
+
+    public function getModel(): Product
+    {
+        return Product::instance();
+    }
+}
