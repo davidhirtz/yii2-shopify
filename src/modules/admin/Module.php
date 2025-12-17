@@ -34,11 +34,11 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return [
             'product' => [
                 'class' => ProductController::class,
-                'viewPath' => '@shopify/modules/admin/views/product',
+                'viewPath' => '@shopify/../resources/views/admin/product',
             ],
             'shopify-webhook' => [
                 'class' => WebhookController::class,
-                'viewPath' => '@shopify/modules/admin/views/webhook',
+                'viewPath' => '@shopify/../resources/views/admin/webhook',
             ],
         ];
     }
