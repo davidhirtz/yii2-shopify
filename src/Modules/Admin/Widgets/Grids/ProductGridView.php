@@ -7,7 +7,7 @@ namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
-use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\Icon;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;

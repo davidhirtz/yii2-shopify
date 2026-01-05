@@ -6,7 +6,7 @@ namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
-use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\Icon;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;

@@ -7,7 +7,7 @@ namespace Hirtz\Shopify\controllers;
 use Hirtz\Shopify\Models\forms\ProductShopifyAdminRestApiForm;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Module;
-use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;

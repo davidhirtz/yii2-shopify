@@ -7,7 +7,7 @@ namespace Hirtz\Shopify\Models;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
-use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;

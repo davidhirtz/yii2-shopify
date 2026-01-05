@@ -7,7 +7,7 @@ namespace Hirtz\Shopify\Modules\Admin\Controllers;
 use Hirtz\Shopify\Models\forms\ProductShopifyAdminRestApiForm;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
-use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\filters\AccessControl;

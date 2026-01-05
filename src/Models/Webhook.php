@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
-use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Shopify\Modules\ModuleTrait;
 use Yii;
 use yii\base\Model;
 

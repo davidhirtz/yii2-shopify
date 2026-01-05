@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
 use Hirtz\Shopify\Models\Webhook;
-use Hirtz\Shopify\modules\ModuleTrait;
+use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\base\InvalidConfigException;
