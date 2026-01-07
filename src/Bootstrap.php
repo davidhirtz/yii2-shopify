@@ -28,7 +28,7 @@ class Bootstrap implements BootstrapInterface
             'admin' => [
                 'modules' => [
                     'shopify' => [
-                        'class' => modules\admin\Module::class,
+                        'class' => Modules\Admin\Module::class,
                     ],
                 ],
             ],
