@@ -27,7 +27,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Hirtz\\Shopify\\tests\\": "tests"
+      "Hirtz\\Shopify\\Tests\\": "tests"
     }
   },
   "extra": {

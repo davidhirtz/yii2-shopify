@@ -14,7 +14,7 @@ use yii\db\Migration;
  * @noinspection PhpUnused
  */
 
-class M240624153300Json extends Migration
+final class M240624153300Json extends Migration
 {
     use MigrationTrait;
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -13,16 +14,13 @@ use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\Admin\Widgets\Grids\ProductGridView;
 use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifySubmenu;
 use Hirtz\Skeleton\Web\View;
-use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
+use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
 $this->title(Yii::t('shopify', 'Products'));
-$this->setBreadcrumb(Yii::t('shopify', 'Products'), ['/admin/product/index']);
-?>
+$this->addBreadcrumb(Yii::t('shopify', 'Products'), ['/admin/product/index']);
 
-<?= ShopifySubmenu::widget(); ?>
+echo ShopifySubmenu::make();
 
-<?= Panel::widget([
-    'content' => ProductGridView::widget([
-        'dataProvider' => $provider,
-    ]),
-]); ?>
+echo GridContainer::make()
+    ->grid(ProductGridView::make()
+        ->provider($provider));

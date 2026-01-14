@@ -10,7 +10,10 @@ use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Override;
 use Yii;
 
 /**
@@ -37,13 +40,14 @@ use Yii;
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  */
-class ProductVariant extends ActiveRecord
+class ProductVariant extends ActiveRecord implements TrailModelInterface
 {
     use I18nAttributesTrait;
     use ModuleTrait;
+    use TrailModelTrait;
     use ProductRelationTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -53,7 +57,7 @@ class ProductVariant extends ActiveRecord
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return $this->getI18nRules([
@@ -113,22 +117,42 @@ class ProductVariant extends ActiveRecord
 
     public function getAdminRoute(): array|false
     {
-        return ['/admin/product/update', 'id' => $this->product_id];
+        return false;
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
-        return [...parent::attributeLabels(), 'name' => Yii::t('shopify', 'Title'), 'product_id' => Yii::t('shopify', 'Product'), 'image_id' => Yii::t('shopify', 'Image'), 'position' => Yii::t('shopify', 'Position'), 'price' => Yii::t('shopify', 'Price'), 'compare_at_price' => Yii::t('shopify', 'Compare at price'), 'option_1' => Yii::t('shopify', 'Option 1'), 'option_2' => Yii::t('shopify', 'Option 2'), 'option_3' => Yii::t('shopify', 'Option 3'), 'barcode' => Yii::t('shopify', 'Barcode (ISBN, UPC, GTIN, etc.)'), 'sku' => Yii::t('shopify', 'SKU (Stock Keeping Unit)'), 'is_taxable' => Yii::t('shopify', 'Taxable'), 'grams' => Yii::t('shopify', 'Weight (grams)'), 'weight' => Yii::t('shopify', 'Weight'), 'weight_unit' => Yii::t('shopify', 'Weight unit'), 'inventory_management' => Yii::t('shopify', 'Inventory management'), 'inventory_quantity' => Yii::t('shopify', 'Quantity'), 'inventory_policy' => Yii::t('shopify', 'Inventory policy')];
+        return [
+            ...parent::attributeLabels(),
+            'name' => Yii::t('shopify', 'Title'),
+            'product_id' => Yii::t('shopify', 'Product'),
+            'image_id' => Yii::t('shopify', 'Image'),
+            'position' => Yii::t('shopify', 'Position'),
+            'price' => Yii::t('shopify', 'Price'),
+            'compare_at_price' => Yii::t('shopify', 'Compare at price'),
+            'option_1' => Yii::t('shopify', 'Option 1'),
+            'option_2' => Yii::t('shopify', 'Option 2'),
+            'option_3' => Yii::t('shopify', 'Option 3'),
+            'barcode' => Yii::t('shopify', 'Barcode (ISBN, UPC, GTIN, etc.)'),
+            'sku' => Yii::t('shopify', 'SKU (Stock Keeping Unit)'),
+            'is_taxable' => Yii::t('shopify', 'Taxable'),
+            'grams' => Yii::t('shopify', 'Weight (grams)'),
+            'weight' => Yii::t('shopify', 'Weight'),
+            'weight_unit' => Yii::t('shopify', 'Weight unit'),
+            'inventory_management' => Yii::t('shopify', 'Inventory management'),
+            'inventory_quantity' => Yii::t('shopify', 'Quantity'),
+            'inventory_policy' => Yii::t('shopify', 'Inventory policy'),
+        ];
     }
 
-    #[\Override]
+    #[Override]
     public function formName(): string
     {
         return 'ProductVariant';
     }
 
-    #[\Override]
+    #[Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('product_variant');

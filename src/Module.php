@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify;
 
-use Hirtz\Shopify\components\rest\ShopifyAdminRestApi;
+use Hirtz\Shopify\Components\Rest\ShopifyAdminRestApi;
 use Hirtz\Skeleton\Modules\ModuleTrait;
+use Override;
 use Yii;
 use yii\base\InvalidConfigException;
 
@@ -13,45 +14,14 @@ class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
-    /**
-     * @var string|null the Shopify shop name, defaults to params `shopifyShopDomain` domain name.
-     */
-    public ?string $shopifyShopName = null;
-
-    /**
-     * @var string|null the optional custom Shopify shop domain
-     */
-    public ?string $shopifyShopDomain = null;
-
-    /**
-     * @var string|null the Shopify API key, defaults to params `shopifyApiKey`.
-     */
-    public ?string $shopifyApiKey = null;
-
-    /**
-     * @var string|null the Shopify API secret, defaults to params `shopifyApiSecret`.
-     */
-    public ?string $shopifyApiSecret = null;
-
-    /**
-     * @var string|null the Shopify Admin REST API access token, defaults to params `shopifyAccessToken`.
-     */
-    public ?string $shopifyAccessToken = null;
-
-    /**
-     * @var string|null the Shopify Storefront API access token, defaults to params `shopifyStorefrontAccessToken`.
-     */
-    public ?string $shopifyStorefrontAccessToken = null;
-
-    /**
-     * @var string|null the Shopify Admin REST API version, defaults to the latest version.
-     */
-    public ?string $shopifyApiVersion = null;
-
-    /**
-     * @var string the latest Shopify Admin REST API version supported by this module.
-     */
-    protected string $latestShopifyApiVersion = '2024-01';
+    public string $shopifyShopName;
+    public string $shopifyShopDomain;
+    public string $shopifyApiKey;
+    public string $shopifyApiSecret;
+    public string $shopifyAccessToken;
+    public string $shopifyStorefrontAccessToken;
+    public string $shopifyApiVersion;
+    public string $latestShopifyApiVersion = '2026-01';
 
     public array $webhooks = [
         [
@@ -68,25 +38,24 @@ class Module extends \yii\base\Module
         ],
     ];
 
-    private ?ShopifyAdminRestApi $_api = null;
+    private ShopifyAdminRestApi $_api;
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         if ($this->enableI18nTables) {
             throw new InvalidConfigException('Shopify module does not support I18N database tables.');
         }
 
-        $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
+        $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'];
 
-        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? null;
-        $this->shopifyShopDomain ??= "$this->shopifyShopName.myshopify.com";
-        $this->shopifyShopDomain = rtrim((string) preg_replace('(^https??//)', '', (string)$this->shopifyShopDomain), '/');
+        $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "$this->shopifyShopName.myshopify.com";
+        $this->shopifyShopDomain = rtrim((string)preg_replace('(^https??//)', '', (string)$this->shopifyShopDomain), '/');
 
-        $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;
-        $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?? null;
-        $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'] ?? null;
-        $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'] ?? null;
+        $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'];
+        $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'];
+        $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'];
+        $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'];
         $this->shopifyApiVersion ??= $this->latestShopifyApiVersion;
 
         parent::init();

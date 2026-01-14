@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Models;
 
 use Hirtz\Shopify\Modules\ModuleTrait;
+use Override;
 use Yii;
 use yii\base\Model;
 
@@ -12,7 +13,7 @@ class Webhook extends Model
 {
     use ModuleTrait;
 
-    public const AUTH_WEBHOOK_UPDATE = 'shopifyWebhookUpdate';
+    public const string AUTH_WEBHOOK_UPDATE = 'shopifyWebhookUpdate';
 
     public ?int $id = null;
     public ?string $address = null;
@@ -26,7 +27,7 @@ class Webhook extends Model
     public ?string $updated_at = null;
     public ?string $created_at = null;
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return [
@@ -52,7 +53,7 @@ class Webhook extends Model
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function beforeValidate(): bool
     {
         $this->address = $this->address ?: Yii::$app->getUrlManager()->createAbsoluteUrl($this->route);
@@ -108,7 +109,7 @@ class Webhook extends Model
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
         return [

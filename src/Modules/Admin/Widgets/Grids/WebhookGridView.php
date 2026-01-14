@@ -6,123 +6,121 @@ namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
+use Hirtz\Shopify\Modules\Admin\Data\WebhookArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
-use Hirtz\Skeleton\Helpers\Html;
-use Hirtz\Skeleton\Html\Icon;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
-use Hirtz\Timeago\TimeagoColumn;
+use Hirtz\Skeleton\Html\Button;
+use Hirtz\Skeleton\Html\Div;
+use Hirtz\Skeleton\Html\Td;
+use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\DeleteGridButton;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
+use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Hirtz\Skeleton\Widgets\Grids\GridView;
+use Stringable;
 use Yii;
-use yii\data\ArrayDataProvider;
 
+/**
+ * @property WebhookArrayDataProvider $provider
+ */
 class WebhookGridView extends GridView
 {
     use ModuleTrait;
 
-    /**
-     * @var Webhook[]
-     */
-    public ?array $webhooks = [];
-
-    public function init(): void
+    protected function configure(): void
     {
-        $this->dataProvider ??= new ArrayDataProvider([
-            'allModels' => $this->webhooks,
-        ]);
+        $this->columns ??= [
+            $this->getTopicColumn(),
+            $this->getApiVersionColumn(),
+            $this->getFormatColumn(),
+            $this->getUpdatedAtColumn(),
+            $this->getButtonColumn(),
+        ];
 
-        if (!$this->rowOptions) {
-            $this->rowOptions = fn (Webhook $model) => ['id' => "#webhook-$model->id"];
-        }
-
-        if (!$this->columns) {
-            $this->columns = [
-                $this->topicColumn(),
-                $this->apiVersionColumn(),
-                $this->formatColumn(),
-                $this->updatedAtColumn(),
-                $this->buttonsColumn(),
-            ];
-        }
-
-        $this->initFooter();
-
-        parent::init();
-    }
-
-    protected function initFooter(): void
-    {
         $this->footer ??= [
-            [
-                [
-                    'content' => $this->getUpdateAllWebhooksButton(),
-                    'options' => ['class' => 'col text-right'],
-                ],
-            ],
+            $this->getUpdateAllWebhooksButton()
         ];
+
+        parent::configure();
     }
 
-    public function topicColumn(): array
+    protected function getTopicColumn(): ?Column
     {
-        return [
-            'attribute' => 'topic',
-            'content' => function (Webhook $webhook): string {
-                $html = Html::tag('div', $webhook->getFormattedTopic(), ['class' => 'strong']);
-                $html .= Html::tag('div', $webhook->address, ['class' => 'small']);
-
-                return $html;
-            }
-        ];
+        return DataColumn::make()
+            ->property('topic')
+            ->content($this->getTopicColumnContent(...));
     }
 
-    public function apiVersionColumn(): array
+    protected function getTopicColumnContent(Webhook $webhook): ?Stringable
     {
-        return [
-            'attribute' => 'api_version',
-            'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
-            'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (Webhook $webhook): string => strtoupper((string) $webhook->api_version)
-        ];
+        return Td::make()
+            ->content(
+                Div::make()
+                    ->content($webhook->getFormattedTopic())
+                    ->class('strong'),
+                Div::make()
+                    ->content($webhook->address)
+                    ->class('small')
+            );
     }
 
-    public function formatColumn(): array
+    protected function getApiVersionColumn(): ?Column
     {
-        return [
-            'attribute' => 'format',
-            'headerOptions' => ['class' => 'd-none d-lg-table-cell'],
-            'contentOptions' => ['class' => 'd-none d-lg-table-cell text-nowrap'],
-            'content' => fn (Webhook $webhook): string => strtoupper((string) $webhook->format)
-        ];
+        return DataColumn::make()
+            ->property('api_version')
+            ->content($this->getApiVersionColumnContent(...))
+            ->hiddenForSmallDevices();
     }
 
-    public function updatedAtColumn(): array
+    protected function getApiVersionColumnContent(Webhook $webhook): ?Stringable
     {
-        return [
-            'class' => TimeagoColumn::class,
-            'attribute' => 'updated_at',
-        ];
+        return Td::make()
+            ->content(strtoupper((string)$webhook->api_version))
+            ->class('text-nowrap');
     }
 
-    public function buttonsColumn(): array
+    protected function getFormatColumn(): ?Column
     {
-        return [
-            'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => fn (Webhook $webhook): string => Html::buttons($this->getRowButtons($webhook))
-        ];
+        return DataColumn::make()
+            ->property('api_version')
+            ->content($this->getFormatColumnContent(...))
+            ->hiddenForMediumDevices();
+    }
+
+    protected function getFormatColumnContent(Webhook $webhook): ?Stringable
+    {
+        return Td::make()
+            ->content(strtoupper((string)$webhook->format))
+            ->class('text-nowrap');
+    }
+
+    protected function getUpdatedAtColumn(): ?Column
+    {
+        return RelativeTimeColumn::make()
+            ->property('updated_at');
+    }
+
+    protected function getButtonColumn(): ?Column
+    {
+        return ButtonColumn::make()
+            ->content($this->getButtonColumnContent(...));
     }
 
     /**
      * @see WebhookController::actionUpdateAll()
      */
-    protected function getUpdateAllWebhooksButton(): string
+    protected function getUpdateAllWebhooksButton(): ?Stringable
     {
-        $content = $this->dataProvider->getModels() ? Yii::t('shopify', 'Reload Webhooks') : Yii::t('shopify', 'Install Webhooks');
-
-        return Html::a(Html::iconText('sync', $content), ['/admin/shopify-webhook/update-all'], [
-            'class' => 'btn btn-secondary',
-            'data-method' => 'post',
-        ]);
+        return Button::make()
+            ->primary()
+            ->content($this->provider->getModels()
+                ? Yii::t('shopify', 'Reload Webhooks')
+                : Yii::t('shopify', 'Install Webhooks'))
+            ->icon('sync')
+            ->post(['/admin/shopify-webhook/update-all']);
     }
 
-    protected function getRowButtons(Webhook $webhook): array
+    protected function getButtonColumnContent(Webhook $webhook): array
     {
         return [
             $this->getUnlinkButton($webhook),
@@ -132,13 +130,10 @@ class WebhookGridView extends GridView
     /**
      * @see WebhookController::actionDelete()
      */
-    protected function getUnlinkButton(Webhook $model): string
+    protected function getUnlinkButton(Webhook $model): ?Stringable
     {
-        return Html::a(Icon::tag('trash')->render(), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data-confirm' => Yii::t('shopify', 'Are you sure you want to remove this webhook?'),
-            'data-target' => "#webhook-$model->id",
-            'data-ajax' => 'remove',
-        ]);
+        return DeleteGridButton::make()
+            ->model($model)
+            ->title(Yii::t('shopify', 'Are you sure you want to remove this webhook?'));
     }
 }

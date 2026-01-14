@@ -6,24 +6,19 @@ namespace Hirtz\Shopify\Modules\Admin\Data;
 
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
+use Override;
 use yii\data\ActiveDataProvider;
 
 /**
  * @property ProductQuery|null $query
+ * @method Product[] getModels()
  */
 class ProductActiveDataProvider extends ActiveDataProvider
 {
-    /**
-     * @var int|null the product status
-     */
     public ?int $status = null;
-
-    /**
-     * @var string|null the text search
-     */
     public ?string $searchString = null;
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->query = $this->query ?: Product::find();

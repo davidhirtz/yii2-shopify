@@ -46,7 +46,7 @@ class ProductController extends Controller
 
     public function actionIndex(?int $status = null, ?string $q = null): Response|string
     {
-        $provider = Yii::$container->get(ProductActiveDataProvider::class, [], [
+        $provider = Yii::$container->get(ProductActiveDataProvider::class, config: [
             'status' => $status,
             'searchString' => $q,
         ]);

@@ -11,11 +11,15 @@ use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
 use Hirtz\Skeleton\Validators\HtmlValidator;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -43,16 +47,20 @@ use yii\db\ActiveQuery;
  * @property-read ProductVariant|null $variant {@see static::getVariant()}
  * @property-read ProductVariant[] $variants {@see static::getVariants()}
  */
-class Product extends ActiveRecord implements DraftStatusAttributeInterface
+class Product extends ActiveRecord implements
+    DraftStatusAttributeInterface,
+    I18nAttributeInterface,
+    TrailModelInterface
 {
     use I18nAttributesTrait;
     use ModuleTrait;
     use DraftStatusAttributeTrait;
+    use I18nAttributesTrait;
     use UpdatedByUserTrait;
+    use TrailModelTrait;
 
-    public const STATUS_ARCHIVED = self::STATUS_DISABLED;
-
-    public const AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
+    public const int STATUS_ARCHIVED = self::STATUS_DISABLED;
+    public const string AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
      * @var array|string used when `$contentType`is set to "html". use an array with the first value containing a
@@ -62,11 +70,11 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
     public array|string $htmlValidator = HtmlValidator::class;
 
     /**
-     * @var string|false the content type, "html" enables html validators and WYSIWYG editor
+     * @var string|false the content type, "html" enables HTML validators and WYSIWYG editor
      */
     public string|false $contentType = 'html';
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -76,7 +84,7 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return [
@@ -132,7 +140,10 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
             ->inverseOf('product');
     }
 
-    #[\Override]
+    /**
+     * @return ProductQuery<self>
+     */
+    #[Override]
     public static function find(): ProductQuery
     {
         return Yii::createObject(ProductQuery::class, [static::class]);
@@ -164,14 +175,14 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         return Yii::t('shopify', 'Product');
     }
 
-    public function getTrailModelAdminRoute(): array|string|false
+    public function getTrailModelAdminRoute(): array|false
     {
         return $this->getAdminRoute();
     }
 
-    public function getAdminRoute(): array|string|false
+    public function getAdminRoute(): array|false
     {
-        return $this->getShopifyAdminUrl();
+        return false;
     }
 
     public function getRoute(): array|false
@@ -179,12 +190,12 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         return false;
     }
 
-    protected function getShopifyAdminUrl(): string
+    public function getShopifyAdminUrl(): string
     {
         return static::getModule()->getShopUrl("admin/products/$this->id");
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -201,13 +212,13 @@ class Product extends ActiveRecord implements DraftStatusAttributeInterface
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function formName(): string
     {
         return 'Product';
     }
 
-    #[\Override]
+    #[Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('product');

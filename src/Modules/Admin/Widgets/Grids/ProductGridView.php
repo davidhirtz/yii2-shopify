@@ -9,125 +9,106 @@ use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
-use Hirtz\Skeleton\Html\Icon;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
-use Hirtz\Timeago\TimeagoColumn;
+use Hirtz\Skeleton\Html\A;
+use Hirtz\Skeleton\Html\Button;
+use Hirtz\Skeleton\Html\Img;
+use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
+use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Hirtz\Skeleton\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\CreateButton;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridToolbarItem;
+use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
+use Iterator;
+use Stringable;
 use Yii;
 
 /**
- * @property ProductActiveDataProvider $dataProvider
+ * @property ProductActiveDataProvider $provider
  */
 class ProductGridView extends GridView
 {
     use ModuleTrait;
     use StatusGridViewTrait;
 
-    /**
-     * @var bool whether product urls should be displayed in the name column
-     */
-    public bool $showUrl = false;
-
-    public function init(): void
+    protected function configure(): void
     {
-        $this->id = $this->getId(false) ?? 'products';
+        $this->model ??= Product::instance();
 
-        if (!$this->columns) {
-            $this->columns = [
-                $this->statusColumn(),
-                $this->thumbnailColumn(),
-                $this->nameColumn(),
-                $this->totalInventoryQuantityColumn(),
-                $this->variantCountColumn(),
-                $this->updatedAtColumn(),
-                $this->buttonsColumn(),
-            ];
-        }
-
-        $this->status = $this->dataProvider->status;
-
-        parent::init();
-    }
-
-    protected function initHeader(): void
-    {
         $this->header ??= [
-            [
-                $this->statusDropdown(),
-                $this->search->getColumn(),
-            ],
+            $this->getStatusDropdown(),
+            $this->search->getToolbarItem(),
         ];
-    }
 
-    protected function initFooter(): void
-    {
+        $this->columns ??= [
+            $this->getStatusColumn(),
+            $this->getThumbnailColumn(),
+            $this->getNameColumn(),
+            $this->getTotalInventoryQuantityColumn(),
+            $this->getVariantCountColumn(),
+            $this->getUpdatedAtColumn(),
+            $this->getButtonColumn(),
+        ];
+
         $this->footer ??= [
-            [
-                $this->getCreateProductButton(),
-                [
-                    'content' => $this->getUpdateAllProductsButton(),
-                    'options' => ['class' => 'ms-auto'],
-                ],
-            ],
+            $this->getCreateProductButton(),
+            GridToolbarItem::make()
+                ->class('ms-auto')
+                ->content($this->getUpdateAllProductsButton()),
         ];
+
+        parent::configure();
     }
 
-    public function thumbnailColumn(): array
+    protected function getThumbnailColumn(): ?Column
     {
-        return [
-            'headerOptions' => ['style' => 'width:150px'],
-            'content' => function (Product $product) {
-                if (!$product->image_id) {
-                    return '';
-                }
-
-                $html = Html::tag('div', '', [
-                    'style' => 'background-image:url(' . $product->image->getUrl(['width' => 300, 'height' => 300]) . ');',
-                    'class' => 'thumb',
-                ]);
-
-                return Html::a($html, $product->getAdminRoute(), [
-                    'target' => '_blank',
-                ]);
-            }
-        ];
+        return Column::make()
+            ->headerAttributes(['class' => 'grid-col-thumbnail'])
+            ->content($this->getThumbnailColumnContent(...));
     }
 
-    public function nameColumn(): array
+    protected function getThumbnailColumnContent(Product $product): ?Stringable
     {
-        return [
-            'attribute' => $this->getModel()->getI18nAttributeName('name'),
-            'content' => function (Product $product) {
-                $html = Html::markKeywords(Html::encode($product->getI18nAttribute('name') ?? ''), $this->search->getKeywords());
-                $html = Html::tag('strong', Html::a($html, $product->getAdminRoute(), [
-                    'target' => '_blank',
-                ]));
-
-                if ($this->showUrl) {
-                    $html .= $this->getUrl($product);
-                }
-
-                return $html;
-            }
-        ];
+        return $product->image
+            ? Img::make()
+                ->src($product->image->getUrl(['width' => 320, 'height' => 320]))
+                ->class('img-thumbnail')
+                ->loading('lazy')
+            : null;
     }
 
-    public function totalInventoryQuantityColumn(): array
+    protected function getNameColumn(): ?Column
     {
-        return [
-            'attribute' => 'total_inventory_quantity',
-            'class' => CounterColumn::class,
-            'route' => fn (Product $product) => $product->getAdminRoute(),
-        ];
+        return DataColumn::make()
+            ->property(Product::instance()->getI18nAttributeName('name'))
+            ->content($this->getNameColumnContent(...));
     }
 
-    public function variantCountColumn(): array
+    protected function getNameColumnContent(Product $product): ?Stringable
     {
-        return [
-            'attribute' => 'variant_count',
-            'class' => CounterColumn::class,
-            'route' => function (Product $product) {
+        $name = $product->getI18nAttribute('name') ?? '';
+
+        return A::make()
+            ->class('strong')
+            ->content(Html::markKeywords(Html::encode($name), $this->search->getKeywords()))
+            ->href($product->getShopifyAdminUrl())
+            ->target('_blank');
+    }
+
+    protected function getTotalInventoryQuantityColumn(): ?Column
+    {
+        return BadgeColumn::make()
+            ->property('inventory_quantity')
+            ->url(fn (Product $product) => $product->getShopifyAdminUrl());
+    }
+
+    public function getVariantCountColumn(): ?Column
+    {
+        return BadgeColumn::make()
+            ->property('variant_count')
+            ->url(function (Product $product) {
                 $query = "admin/products/$product->id";
 
                 if ($product->variant_count > 1) {
@@ -135,91 +116,63 @@ class ProductGridView extends GridView
                 }
 
                 return static::getModule()->getShopUrl($query);
-            },
-            'wrapperOptions' => [
-                'class' => 'badge',
-                'target' => '_blank',
-            ]
-        ];
+            })
+            ->linkAttributes(['target' => '_blank']);
     }
 
-    public function updatedAtColumn(): array
+    protected function getUpdatedAtColumn(): ?Column
     {
-        return [
-            'attribute' => 'updated_at',
-            'class' => TimeagoColumn::class,
-        ];
+        return RelativeTimeColumn::make()
+            ->property('updated_at')
+            ->hiddenForMediumDevices();
     }
 
-    public function buttonsColumn(): array
+    protected function getButtonColumn(): ?Column
     {
-        return [
-            'contentOptions' => ['class' => 'text-end text-nowrap'],
-            'content' => fn (Product $product): string => Html::buttons($this->getRowButtons($product))
-        ];
+        return ButtonColumn::make()
+            ->content($this->getButtonColumnContent(...));
     }
 
-    protected function getRowButtons(Product $product): array
+    protected function getButtonColumnContent(Product $product): Iterator
     {
-        return [
-            $this->getUpdateButton($product),
-            $this->getShopifyAdminProductButton($product),
-        ];
+        yield $this->getShopifyAdminProductButton($product);
+        yield $this->getUpdateButton($product);
     }
 
-    protected function getUrl(Product $product): string
+    protected function getCreateProductButton(): ?Stringable
     {
-        if ($route = $product->getRoute()) {
-            $urlManager = Yii::$app->getUrlManager();
-            $url = $product->isEnabled() ? $urlManager->createAbsoluteUrl($route) : $urlManager->createDraftUrl($route);
-
-            if ($url) {
-                return Html::tag('div', Html::a($url, $url, ['target' => '_blank']), ['class' => 'd-none d-md-block small']);
-            }
-        }
-
-        return '';
-    }
-
-    protected function getCreateProductButton(): string
-    {
-        return Html::a(Html::iconText('plus', Yii::t('shopify', 'New Product')), static::getModule()->getShopUrl('admin/products/new'), [
-            'class' => 'btn btn-primary',
-            'target' => '_blank',
-        ]);
+        return CreateButton::make()
+            ->text(Yii::t('shopify', 'New Product'))
+            ->href(static::getModule()->getShopUrl('admin/products/new'))
+            ->target('_blank');
     }
 
     /**
      * @see ProductController::actionUpdateAll()
      */
-    protected function getUpdateAllProductsButton(): string
+    protected function getUpdateAllProductsButton(): ?Stringable
     {
-        return Html::a(Html::iconText('sync', Yii::t('shopify', 'Reload Products')), ['/admin/product/update-all'], [
-            'class' => 'btn btn-secondary',
-            'data-method' => 'post',
-        ]);
+        return Button::make()
+            ->primary()
+            ->text(Yii::t('shopify', 'Reload Products'))
+            ->icon('sync')
+            ->post(['/admin/product/update-all']);
     }
 
-    protected function getUpdateButton($model, array $options = []): string
+    protected function getUpdateButton(Product $product): ?Stringable
     {
-        return parent::getUpdateButton($model, [
-            'icon' => 'sync',
-            'class' => 'btn btn-secondary',
-            'data-method' => 'post',
-            ...$options,
-        ]);
+        return Button::make()
+            ->primary()
+            ->icon('sync')
+            ->post(['/admin/product/update', 'id' => $product->id]);
     }
 
-    protected function getShopifyAdminProductButton(Product $product): string
+    protected function getShopifyAdminProductButton(Product $product): ?Stringable
     {
-        return Html::a(Icon::tag('wrench')->render(), $product->getAdminRoute(), [
-            'class' => 'btn btn-primary d-none d-md-inline-block',
-            'target' => '_blank'
-        ]);
-    }
-
-    public function getModel(): Product
-    {
-        return Product::instance();
+        return Button::make()
+            ->secondary()
+            ->icon('wrench')
+            ->href($product->getShopifyAdminUrl())
+            ->target('_blank');
     }
 }

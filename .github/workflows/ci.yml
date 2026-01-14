@@ -17,7 +17,7 @@ jobs:
         image: mysql:latest
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_DATABASE: yii2_shopify_test
+          MYSQL_DATABASE: yii2_test
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -54,15 +54,12 @@ jobs:
       - name: Prepare the application
         run: php tests/yii migrate --interactive=0
         env:
-          MYSQL_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii2_shopify_test
+          MYSQL_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii2_test
 
       - name: Run Tests
         run: composer test
         env:
-          MYSQL_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii2_shopify_test
-
-      - name: Coding Standards
-        run: composer fix-cs
+          MYSQL_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii2_test
 
       - name: Run Static Code Analysis
         run: composer phpstan

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\components\rest;
+namespace Hirtz\Shopify\Components\Rest;
 
 use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Exception;
@@ -16,7 +16,7 @@ use yii\helpers\Json;
 
 class ShopifyAdminRestApi extends BaseObject
 {
-    public const SHOPIFY_MAX_PRODUCT_LIMIT = 250;
+    public const int SHOPIFY_MAX_PRODUCT_LIMIT = 250;
 
     public ?string $shopifyShopName = null;
     public ?string $shopifyAccessToken = null;

@@ -17,7 +17,7 @@ use yii\db\Migration;
 /**
  * @noinspection PhpUnused
  */
-class M190904193339Shopify extends Migration
+final class M190904193339Shopify extends Migration
 {
     use MigrationTrait;
     use ModuleTrait;

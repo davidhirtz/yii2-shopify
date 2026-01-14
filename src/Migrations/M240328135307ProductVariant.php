@@ -12,7 +12,7 @@ use yii\db\Migration;
  * @noinspection PhpUnused
  */
 
-class M240328135307ProductVariant extends Migration
+final class M240328135307ProductVariant extends Migration
 {
     use MigrationTrait;
 

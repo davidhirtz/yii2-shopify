@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
 use Hirtz\Shopify\Models\Webhook;
+use Hirtz\Shopify\Modules\Admin\Data\WebhookArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Override;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
@@ -17,7 +19,7 @@ class WebhookController extends Controller
 {
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -48,16 +50,10 @@ class WebhookController extends Controller
             $this->error(Yii::t('shopify', 'Shopify Admin API secret key must be set to use webhooks.'));
         }
 
-        $webhooks = [];
-
-        foreach (static::getModule()->getApi()->getWebhooks() as $data) {
-            $webhooks[] = Yii::createObject([...$data, 'class' => Webhook::class]);
-        }
-
-        usort($webhooks, fn (Webhook $a, Webhook $b) => strcmp((string) $b->updated_at, (string) $a->updated_at));
+        $provider = Yii::createObject(WebhookArrayDataProvider::class);
 
         return $this->render('index', [
-            'webhooks' => $webhooks,
+            'provider' => $provider,
         ]);
     }
 
