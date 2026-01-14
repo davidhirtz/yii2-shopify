@@ -8,7 +8,6 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\ProductImage;
 use Hirtz\Shopify\Models\ProductVariant;
 use Hirtz\Shopify\Models\Webhook;
-use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Db\Traits\MigrationTrait;
 use Hirtz\Skeleton\Models\User;
 use Yii;
@@ -20,7 +19,6 @@ use yii\db\Migration;
 final class M190904193339Shopify extends Migration
 {
     use MigrationTrait;
-    use ModuleTrait;
 
     public function safeUp(): void
     {

@@ -33,6 +33,7 @@ class ProductGridView extends GridView
     use ModuleTrait;
     use StatusGridViewTrait;
 
+    #[\Override]
     protected function configure(): void
     {
         $this->model ??= Product::instance();

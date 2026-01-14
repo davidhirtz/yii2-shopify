@@ -14,6 +14,7 @@ class ShopifySubmenu extends Submenu
 {
     protected ?Product $product = null;
 
+    #[\Override]
     protected function configure(): void
     {
         $this->title ??= Yii::t('shopify', 'Shopify');

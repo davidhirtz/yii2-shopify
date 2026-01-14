@@ -14,13 +14,13 @@ class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
-    public string $shopifyShopName;
-    public string $shopifyShopDomain;
-    public string $shopifyApiKey;
-    public string $shopifyApiSecret;
-    public string $shopifyAccessToken;
-    public string $shopifyStorefrontAccessToken;
-    public string $shopifyApiVersion;
+    public ?string $shopifyShopName;
+    public ?string $shopifyShopDomain;
+    public ?string $shopifyApiKey;
+    public ?string $shopifyApiSecret;
+    public ?string $shopifyAccessToken;
+    public ?string $shopifyStorefrontAccessToken;
+    public ?string $shopifyApiVersion;
     public string $latestShopifyApiVersion = '2026-01';
 
     public array $webhooks = [
@@ -47,15 +47,15 @@ class Module extends \yii\base\Module
             throw new InvalidConfigException('Shopify module does not support I18N database tables.');
         }
 
-        $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'];
+        $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
 
         $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "$this->shopifyShopName.myshopify.com";
         $this->shopifyShopDomain = rtrim((string)preg_replace('(^https??//)', '', (string)$this->shopifyShopDomain), '/');
 
-        $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'];
-        $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'];
-        $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'];
-        $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'];
+        $this->shopifyApiKey ??= Yii::$app->params['shopifyApiKey'] ?? null;
+        $this->shopifyApiSecret ??= Yii::$app->params['shopifyApiSecret'] ?? null;
+        $this->shopifyAccessToken ??= Yii::$app->params['shopifyAccessToken'] ?? null;
+        $this->shopifyStorefrontAccessToken ??= Yii::$app->params['shopifyStorefrontAccessToken'] ?? null;
         $this->shopifyApiVersion ??= $this->latestShopifyApiVersion;
 
         parent::init();

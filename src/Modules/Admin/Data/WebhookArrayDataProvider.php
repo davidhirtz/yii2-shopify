@@ -16,6 +16,7 @@ class WebhookArrayDataProvider extends ArrayDataProvider
 {
     use ModuleTrait;
 
+    #[\Override]
     public function init(): void
     {
         $this->allModels = [];

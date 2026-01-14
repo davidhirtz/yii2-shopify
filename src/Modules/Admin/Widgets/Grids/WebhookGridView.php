@@ -27,6 +27,7 @@ class WebhookGridView extends GridView
 {
     use ModuleTrait;
 
+    #[\Override]
     protected function configure(): void
     {
         $this->columns ??= [
