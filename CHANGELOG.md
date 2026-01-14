@@ -1,3 +1,27 @@
+## 2.2.1 (Nov 13, 2025)
+
+- Fixed `shopifyShopDomain` containing HTTP protocol
+- Added `Product::$slug` unique validation rule
+
+## 2.2.0 (Jul 28, 2025)
+
+- Added `Product::$unit_price` and `Product::$unit_price_measurement`
+- Added `ShopifyComponent::$defaultCurrency` property
+- Changed the primary key for `ProductImage` to include the `product_id` (Issue #12)
+- Changed `Product::$price` and `Product::$compare_at_price` to integer (Issue #11)
+- Changed `Product::$tags` from string to array
+- Changed `Product::$total_inventory_quantity` and `ProductVariant::$inventory_quantity` to allow negative values
+- Improved `ProductImage::beforeDelete()`
+- Removed `Product::$grams`
+- Replaced Shopify Admin REST API with GraphQL API
+- Replaced `ProductVariant::$inventory_management` with `ProductVariant::$inventory_tracked` (Issue #9)
+
+## 2.1.12 (Mar 31, 2025)
+
+- Added `ProductActiveDataProvider` default sort
+- Added `Webhook::$metafield_identifiers`
+- Fixed empty `Module::$shopifyShopDomain` default
+
 ## 2.1.11 (Mar 24, 2025)
 
 - Changed Shopify credentials defaults from null-coalescing to ternary operator

@@ -31,7 +31,7 @@ use yii\db\ActiveQuery;
  * @property string $name
  * @property string|null $content
  * @property string $slug
- * @property string|null $tags
+ * @property array|null $tags
  * @property string|null $vendor
  * @property string|null $product_type
  * @property array|null $options
@@ -63,7 +63,7 @@ class Product extends ActiveRecord implements
     public const string AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
-     * @var array|string used when `$contentType`is set to "html". use an array with the first value containing a
+     * @var array|string used when `$contentType`is set to "html". Use an array with the first value containing a
      * validator class, following keys can be used to configure the validator, string containing the class name or
      * false for disabling the validation.
      */
@@ -87,34 +87,30 @@ class Product extends ActiveRecord implements
     #[Override]
     public function rules(): array
     {
-        return [
-            ...parent::rules(),
-            ...$this->getI18nRules([
-                [
-                    ['id'],
-                    'unique',
-                ],
-                [
-                    ['status'],
-                    DynamicRangeValidator::class,
-                    'skipOnEmpty' => false,
-                ],
-                [
-                    $this->getI18nAttributesNames(['name']),
-                    'required',
-                ],
-                [$this->getI18nAttributesNames(['content']), ...(array)($this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe')],
-                [
-                    ['id', 'image_id', 'variant_id'],
-                    'string',
-                ],
-            ]),
-        ];
+        return $this->getI18nRules([
+            [
+                ['status'],
+                DynamicRangeValidator::class,
+                'skipOnEmpty' => false,
+            ],
+            [
+                ['name', 'slug'],
+                'required',
+            ],
+            [
+                ['slug'],
+                UniqueValidator::class,
+            ],
+            [
+                ['content'],
+                $this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe',
+            ],
+        ]);
     }
 
     public function getImage(): ActiveQuery
     {
-        return $this->hasOne(ProductImage::class, ['id' => 'image_id'])
+        return $this->hasOne(ProductImage::class, ['id' => 'image_id', 'product_id' => 'id'])
             ->inverseOf('product');
     }
 
@@ -149,9 +145,30 @@ class Product extends ActiveRecord implements
         return Yii::createObject(ProductQuery::class, [static::class]);
     }
 
+    public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
+    {
+        if ($attribute === 'options' && is_array($value)) {
+            return array_map(
+                fn ($data) => "{$data['name']}: " . implode(', ', $data['values'] ?? []),
+                $value
+            );
+        }
+
+        if ($attribute === 'image_id' && $value) {
+            $value .= "-$this->id";
+        }
+
+        /** @var TrailBehavior $behavior */
+        $behavior = $this->getBehavior('TrailBehavior');
+        return $behavior->formatTrailAttributeValue($attribute, $value);
+    }
+
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
+            'image_count',
+            'variant_count',
+            'total_inventory_quantity',
             'last_import_at',
             'updated_at',
             'created_at',
@@ -192,7 +209,7 @@ class Product extends ActiveRecord implements
 
     public function getShopifyAdminUrl(): string
     {
-        return static::getModule()->getShopUrl("admin/products/$this->id");
+        return Yii::$app->get('shopify')->getShopUrl("admin/products/$this->id");
     }
 
     #[Override]
@@ -208,7 +225,8 @@ class Product extends ActiveRecord implements
             'vendor' => Yii::t('shopify', 'Vendor'),
             'product_type' => Yii::t('shopify', 'Type'),
             'variant_count' => Yii::t('shopify', 'Variants'),
-            'total_inventory_quantity' => Yii::t('shopify', 'Inventory')
+            'total_inventory_quantity' => Yii::t('shopify', 'Inventory'),
+            'last_import_at' => Yii::t('shopify', 'Last import'),
         ];
     }
 

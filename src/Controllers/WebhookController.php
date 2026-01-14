@@ -9,8 +9,8 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Module;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Override;
 use yii\helpers\Json;
-use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
 class WebhookController extends Controller
@@ -27,18 +27,13 @@ class WebhookController extends Controller
         parent::init();
     }
 
-    /**
-     * Validates webhooks from Shopify, this only works when is {@see Module::$shopifyApiSecret} set
-     */
-    #[\Override]
+    #[Override]
     public function beforeAction($action): bool
     {
         $hmacHeader = $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] ?? '';
-        $data = file_get_contents('php://input');
+        $data = $this->getRequestBody();
 
-        $calculatedHmac = base64_encode(hash_hmac('sha256', $data, (string) static::getModule()->shopifyApiSecret, true));
-
-        if (!hash_equals($hmacHeader, $calculatedHmac)) {
+        if (!Yii::$app->get('shopify')->validateHmac($hmacHeader, $data)) {
             throw new UnauthorizedHttpException();
         }
 
@@ -50,8 +45,7 @@ class WebhookController extends Controller
      */
     public function actionProductsCreate(): void
     {
-        $data = Json::decode(file_get_contents('php://input'));
-        ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        $this->actionProductsUpdate();
     }
 
     /**
@@ -59,8 +53,17 @@ class WebhookController extends Controller
      */
     public function actionProductsUpdate(): void
     {
-        $data = Json::decode(file_get_contents('php://input'));
-        ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        $id = $this->getProductId();
+        $data = (new ProductQuery($id))();
+
+        $api = Yii::$app->get('shopify')->getAdminApi();
+
+        $repository = new ProductRepository($data);
+        $repository->save();
+
+        if ($api->getErrors()) {
+            Yii::error($api->getErrors());
+        }
     }
 
     /**
@@ -68,13 +71,21 @@ class WebhookController extends Controller
      */
     public function actionProductsDelete(): void
     {
-        $data = Json::decode(file_get_contents('php://input'));
-        $product = Product::findOne($data['id'] ?? null);
+        $id = $this->getProductId();
+        $product = Product::findOne($id);
+        $product?->delete();
+    }
 
-        if (!$product) {
-            throw new NotFoundHttpException();
-        }
+    private function getProductId(): ?int
+    {
+        $body = $this->getRequestBody();
+        $data = $body ? Json::decode($body) : [];
 
-        $product->delete();
+        return $data['id'] ?? null;
+    }
+
+    private function getRequestBody(): string|false
+    {
+        return file_get_contents('php://input');
     }
 }

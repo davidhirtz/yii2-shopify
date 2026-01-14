@@ -1,0 +1,12 @@
+query($id: ID!, $limit: Int!, $cursor: String) {
+    product(id: $id) {
+        variants(first: $limit, after: $cursor) {
+            edges {
+                cursor
+                node {
+                    ...ProductVariantFields
+                }
+            }
+        }
+    }
+}

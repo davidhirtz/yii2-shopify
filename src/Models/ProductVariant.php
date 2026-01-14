@@ -15,11 +15,12 @@ use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Override;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * @property int $id
  * @property int $product_id
- * @property int $image_id
+ * @property int|null $image_id
  * @property string $name
  * @property int $position
  * @property int $price
@@ -31,14 +32,17 @@ use Yii;
  * @property string|null $barcode
  * @property string|null $sku
  * @property bool $is_taxable
- * @property int|null $grams
  * @property int|null $weight
  * @property string|null $weight_unit
- * @property string|null $inventory_management
  * @property int|null $inventory_quantity
+ * @property bool $inventory_tracked
  * @property string|null $inventory_policy
+ * @property int|null $unit_price
+ * @property int|null $unit_price_measurement
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
+ *
+ * @property ProductImage|null $image {@see static::getImage()}
  */
 class ProductVariant extends ActiveRecord implements TrailModelInterface
 {
@@ -62,32 +66,75 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
     {
         return $this->getI18nRules([
             [
-                ['id'],
-                'unique',
-            ],
-            [
                 ['id', 'product_id', 'position'],
                 'required',
             ],
             [
-                ['id', 'product_id', 'image_id'],
+                ['product_id', 'image_id'],
+                RelationValidator::class
+            ],
+            [
+                ['weight', 'unit_price_measurement'],
                 'string',
             ],
             [
-                ['is_taxable'],
+                ['is_taxable', 'inventory_tracked'],
                 'boolean',
             ],
-            [
-                ['position', 'inventory_quantity'],
-                'number',
-                'integerOnly' => true,
-            ],
         ]);
+    }
+
+    public function getImage(): ActiveQuery
+    {
+        return $this->hasOne(ProductImage::class, [
+            'id' => 'image_id',
+            'product_id' => 'product_id',
+        ]);
+    }
+
+    public function getFormattedPrice(): string
+    {
+        return $this->formatPrice($this->price);
+    }
+
+    public function getFormattedCompareAtPrice(): string
+    {
+        return $this->formatPrice($this->compare_at_price);
+    }
+
+    public function getFormattedUnitPrice(): string
+    {
+        return $this->unit_price
+            ? ($this->formatPrice($this->unit_price) . '/' . $this->unit_price_measurement)
+            : '';
+    }
+
+    protected function formatPrice(?int $value): string
+    {
+        return $value
+            ? Yii::$app->getFormatter()->asCurrency($value / 100, Yii::$app->get('shopify')->defaultCurrency)
+            : '';
+    }
+
+    /**
+     * @noinspection PhpUnused
+     */
+    public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
+    {
+        if ($attribute === 'image_id' && $value) {
+            $value .= "-$this->product_id";
+        }
+
+        /** @var TrailBehavior $behavior */
+        $behavior = $this->getBehavior('TrailBehavior');
+        return $behavior->formatTrailAttributeValue($attribute, $value);
     }
 
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
+            'position',
+            'inventory_quantity',
             'updated_at',
             'created_at',
         ]);
@@ -95,8 +142,8 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
 
     public function getTrailModelName(): string
     {
-        if ($this->product_id) {
-            return $this->product->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+        if ($this->id) {
+            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -137,10 +184,11 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
             'barcode' => Yii::t('shopify', 'Barcode (ISBN, UPC, GTIN, etc.)'),
             'sku' => Yii::t('shopify', 'SKU (Stock Keeping Unit)'),
             'is_taxable' => Yii::t('shopify', 'Taxable'),
-            'grams' => Yii::t('shopify', 'Weight (grams)'),
             'weight' => Yii::t('shopify', 'Weight'),
             'weight_unit' => Yii::t('shopify', 'Weight unit'),
-            'inventory_management' => Yii::t('shopify', 'Inventory management'),
+            'unit_price' => Yii::t('shopify', 'Unit price'),
+            'unit_price_measurement' => Yii::t('shopify', 'Unit price measurement'),
+            'inventory_tracked' => Yii::t('shopify', 'Inventory tracking'),
             'inventory_quantity' => Yii::t('shopify', 'Quantity'),
             'inventory_policy' => Yii::t('shopify', 'Inventory policy'),
         ];

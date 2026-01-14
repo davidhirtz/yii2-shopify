@@ -25,15 +25,15 @@ class Module extends \yii\base\Module
 
     public array $webhooks = [
         [
-            'topic' => 'products/create',
+            'topic' => 'PRODUCTS_CREATE',
             'route' => ['/shopify/webhook/products-create'],
         ],
         [
-            'topic' => 'products/update',
+            'topic' => 'PRODUCTS_UPDATE',
             'route' => ['/shopify/webhook/products-update'],
         ],
         [
-            'topic' => 'products/delete',
+            'topic' => 'PRODUCTS_DELETE',
             'route' => ['/shopify/webhook/products-delete'],
         ],
     ];
@@ -59,21 +59,5 @@ class Module extends \yii\base\Module
         $this->shopifyApiVersion ??= $this->latestShopifyApiVersion;
 
         parent::init();
-    }
-
-    public function getShopUrl(string $query = ''): string
-    {
-        return "https://$this->shopifyShopDomain/$query";
-    }
-
-    public function getApi(): ShopifyAdminRestApi
-    {
-        $this->_api ??= new ShopifyAdminRestApi([
-            'shopifyAccessToken' => $this->shopifyAccessToken,
-            'shopifyApiVersion' => $this->shopifyApiVersion,
-            'shopifyShopName' => $this->shopifyShopName,
-        ]);
-
-        return $this->_api;
     }
 }

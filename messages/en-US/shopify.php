@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Message translations.
  *
@@ -21,6 +19,7 @@ declare(strict_types=1);
  */
 return [
     'API Version' => '',
+    'All products updated via Shopify.' => '',
     'Alt text' => '',
     'Are you sure you want to remove this webhook?' => '',
     'Barcode (ISBN, UPC, GTIN, etc.)' => '',
@@ -32,8 +31,9 @@ return [
     'Image' => '',
     'Install Webhooks' => '',
     'Inventory' => '',
-    'Inventory management' => '',
     'Inventory policy' => '',
+    'Inventory tracking' => '',
+    'Last import' => '',
     'Manage Shopify products' => '',
     'Manage Shopify webhooks' => '',
     'New Product' => '',
@@ -43,25 +43,23 @@ return [
     'Position' => '',
     'Price' => '',
     'Product' => '',
-    'Product created' => '',
-    'Product deleted' => '',
-    'Product updated' => '',
     'Products' => '',
     'Quantity' => '',
     'Reload Products' => '',
-    'Reload Webhooks' => '',
     'SKU (Stock Keeping Unit)' => '',
     'Shopify' => '',
     'Shopify Admin API secret key must be set to use webhooks.' => '',
     'Shopify slug' => '',
     'Taxable' => '',
+    'The product was deleted because it was not found on Shopify anymore.' => '',
     'The product was updated via Shopify.' => '',
     'The webhook "{topic}" was created.' => '',
-    'The webhook "{topic}" was skipped.' => '',
     'The webhook was deleted.' => '',
     'Title' => '',
     'Type' => '',
     'URL' => '',
+    'Unit price' => '',
+    'Unit price measurement' => '',
     'Variant' => '',
     'Variants' => '',
     'Vendor' => '',
@@ -69,6 +67,5 @@ return [
     'View Webhooks' => '',
     'Webhooks' => '',
     'Weight' => '',
-    'Weight (grams)' => '',
     'Weight unit' => '',
 ];

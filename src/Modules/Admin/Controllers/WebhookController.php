@@ -20,6 +20,9 @@ class WebhookController extends Controller
     use ModuleTrait;
 
     #[Override]
+    protected ShopifyComponent $shopify;
+
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -29,71 +32,82 @@ class WebhookController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['delete', 'index', 'update-all'],
-                        'roles' => [Webhook::AUTH_WEBHOOK_UPDATE],
+                        'actions' => [
+                            'create',
+                            'delete',
+                            'index',
+                        ],
+                        'roles' => [WebhookSubscription::AUTH_WEBHOOK_UPDATE],
                     ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
+                    'create' => ['post'],
                     'delete' => ['post'],
-                    'update-all' => ['post'],
                 ],
             ],
         ];
     }
 
+    #[Override]
+    public function init(): void
+    {
+        $this->shopify = Yii::$app->get('shopify');
+        parent::init();
+    }
+
     public function actionIndex(): Response|string
     {
-        if (!static::getModule()->shopifyApiSecret) {
+        if (!$this->shopify->shopifyApiSecret) {
             $this->error(Yii::t('shopify', 'Shopify Admin API secret key must be set to use webhooks.'));
         }
 
-        $provider = Yii::createObject(WebhookArrayDataProvider::class);
+        $provider = new WebhookSubscriptionArrayDataProvider([
+            'sort' => [
+                'attributes' => ['topic', 'api_version', 'updated_at'],
+                'defaultOrder' => ['updated_at' => SORT_DESC],
+            ],
+        ]);
 
         return $this->render('index', [
             'provider' => $provider,
         ]);
     }
 
-    public function actionUpdateAll(): Response|string
+    public function actionCreate(): Response|string
     {
-        if (!static::getModule()->shopifyApiSecret) {
-            throw new InvalidConfigException('Shopify Admin API secret key must be set to use webhooks. Either via "Module::$shopifyApiSecret" or via "shopifyApiSecret" param.');
-        }
+        $request = new WebhookSubscriptionMutation();
+        $urlManager = Yii::$app->getUrlManager();
 
         foreach (static::getModule()->webhooks as $attributes) {
-            $webhook = Yii::createObject(Webhook::class);
-            $webhook->setAttributes($attributes);
+            $request->create($attributes['topic'], $urlManager->createAbsoluteUrl($attributes['route']));
+            $errors = $request->getErrors();
 
-            if ($webhook->create()) {
-                $this->success(Yii::t('shopify', "The webhook \"{topic}\" was created.", [
-                    'topic' => $webhook->getFormattedTopic(),
-                ]));
-            } elseif (!$webhook->getErrors()) {
-                $this->success(Yii::t('shopify', "The webhook \"{topic}\" was skipped.", [
-                    'topic' => $webhook->getFormattedTopic(),
-                ]));
-            } else {
-                $this->error($webhook);
+            if (in_array('Address for this topic has already been taken', $errors)) {
+                continue;
             }
+
+            $this->errorOrSuccess($request->getErrors(), Yii::t('shopify', "The webhook \"{topic}\" was created.", [
+                'topic' => $attributes['topic'],
+            ]));
         }
+
+        $this->error($request->getErrors());
 
         return $this->redirect(['index']);
     }
 
     public function actionDelete(int $id): Response|string
     {
-        $api = static::getModule()->getApi();
+        $request = new WebhookSubscriptionMutation();
 
-        if ($api->deleteWebhook($id)) {
+        if ($request->delete($id)) {
             $this->success(Yii::t('shopify', 'The webhook was deleted.'));
         }
 
-        if ($api->getErrors()) {
-            $this->error($api->getErrors());
-        }
+        $this->error($request->getErrors());
 
         return $this->redirect(['index']);
     }

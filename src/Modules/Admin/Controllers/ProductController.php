@@ -9,6 +9,7 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -19,7 +20,7 @@ class ProductController extends Controller
 {
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -58,39 +59,38 @@ class ProductController extends Controller
 
     public function actionUpdate(int $id): Response|string
     {
-        $api = static::getModule()->getApi();
+        $data = (new ProductQuery($id))();
 
-        if (!$data = $api->getProduct($id)) {
+        if (!$data) {
+            $product = Product::findOne($id);
+
+            if ($product->delete()) {
+                $this->success(Yii::t('shopify', 'The product was deleted because it was not found on Shopify anymore.'));
+                return $this->redirect(['index']);
+            }
+
             throw new NotFoundHttpException();
         }
 
-        $product = ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        $api = Yii::$app->get('shopify')->getAdminApi();
 
-        if (!$product->hasErrors()) {
-            $this->success(Yii::t('shopify', 'The product was updated via Shopify.'));
-        } else {
-            $this->error($product);
-        }
+        $repository = new ProductRepository($data);
+        $repository->save();
+
+        $this->error($api->getErrors());
+        $this->errorOrSuccess($repository->product, Yii::t('shopify', 'The product was updated via Shopify.'));
 
         return $this->redirect(['index']);
     }
 
     public function actionUpdateAll(): Response
     {
-        $api = static::getModule()->getApi();
-        $products = $api->getProducts();
+        $repository = new ProductBatchRepository();
+        $repository->save();
 
-        foreach ($products as $data) {
-            $product = ProductShopifyAdminRestApiForm::createOrUpdateFromApiData($data);
+        $api = Yii::$app->get('shopify')->getAdminApi();
+        $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'All products updated via Shopify.'));
 
-            if ($product->hasErrors()) {
-                $this->error($product);
-            }
-        }
-
-        ProductShopifyAdminRestApiForm::deleteProductsFromApiResult($products);
-
-        $this->error($api->getErrors());
         return $this->redirect(['index']);
     }
 }

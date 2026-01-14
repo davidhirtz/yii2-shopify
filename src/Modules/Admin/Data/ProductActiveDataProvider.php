@@ -39,4 +39,14 @@ class ProductActiveDataProvider extends ActiveDataProvider
             $this->query->matching($this->searchString);
         }
     }
+
+    #[Override]
+    public function setSort($value): void
+    {
+        if (is_array($value)) {
+            $value['defaultOrder'] ??= ['last_import_at' => SORT_DESC];
+        }
+
+        parent::setSort($value);
+    }
 }

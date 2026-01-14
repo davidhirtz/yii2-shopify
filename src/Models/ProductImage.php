@@ -8,11 +8,13 @@ use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
 use Hirtz\Shopify\Modules\ModuleTrait;
+use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Hirtz\Skeleton\Validators\RelationValidator;
 use Override;
 use Yii;
 
@@ -40,6 +42,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
         return [
             ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
+            'TimestampBehavior' => TimestampBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }
@@ -49,28 +52,47 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
     {
         return $this->getI18nRules([
             [
-                ['id'],
-                'unique',
-            ],
-            [
                 ['id', 'product_id', 'position', 'width', 'height', 'src'],
                 'required',
             ],
             [
-                ['id', 'product_id'],
-                'string',
+                ['product_id'],
+                RelationValidator::class
             ],
             [
-                ['position', 'width', 'height'],
+                ['width', 'height'],
                 'number',
                 'integerOnly' => true,
             ],
         ]);
     }
 
+    public function beforeDelete(): bool
+    {
+        $product = $this->getProduct()
+            ->andWhere(['image_id' => $this->id])
+            ->one();
+
+        if ($product) {
+            $product->image_id = null;
+            $product->update();
+        }
+
+        $variants = ProductVariant::find()
+            ->where(['product_id' => $this->product_id, 'image_id' => $this->id])
+            ->all();
+
+        foreach ($variants as $variant) {
+            $variant->image_id = null;
+            $variant->update();
+        }
+
+        return parent::beforeDelete();
+    }
+
     public function getUrl(array $params = []): string
     {
-        return $this->src . ($params ? ((strpos((string) $this->src, '?') ? '&' : '?') . http_build_query($params)) : '');
+        return $this->src . ($params ? ((strpos((string)$this->src, '?') ? '&' : '?') . http_build_query($params)) : '');
     }
 
     public function getTrailAttributes(): array
@@ -83,8 +105,8 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
 
     public function getTrailModelName(): string
     {
-        if ($this->product_id) {
-            return $this->product->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+        if ($this->id) {
+            return Yii::t('skeleton', '{model} #{id}', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -111,7 +133,14 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
     #[Override]
     public function attributeLabels(): array
     {
-        return [...parent::attributeLabels(), 'position' => Yii::t('shopify', 'Position'), 'product_id' => Yii::t('shopify', 'Product'), 'alt_text' => Yii::t('shopify', 'Alt text'), 'weight' => Yii::t('shopify', 'Weight'), 'height' => Yii::t('shopify', 'Height'), 'src' => Yii::t('shopify', 'URL')];
+        return array_merge(parent::attributeLabels(), [
+            'position' => Yii::t('shopify', 'Position'),
+            'product_id' => Yii::t('shopify', 'Product'),
+            'alt_text' => Yii::t('shopify', 'Alt text'),
+            'weight' => Yii::t('shopify', 'Weight'),
+            'height' => Yii::t('shopify', 'Height'),
+            'src' => Yii::t('shopify', 'URL'),
+        ]);
     }
 
     #[Override]

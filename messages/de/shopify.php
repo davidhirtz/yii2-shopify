@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Message translations.
  *
@@ -21,6 +19,7 @@ declare(strict_types=1);
  */
 return [
     'API Version' => 'API Version',
+    'All products updated via Shopify.' => 'Alle Produkte über Shopify aktualisiert.',
     'Alt text' => 'Alt text',
     'Are you sure you want to remove this webhook?' => 'Sind Sie sicher, dass Sie diesen Webhook löschen wollen?',
     'Barcode (ISBN, UPC, GTIN, etc.)' => 'Barcode (ISBN, UPC, GTIN, etc.)',
@@ -32,8 +31,9 @@ return [
     'Image' => 'Bild',
     'Install Webhooks' => 'Webhooks installieren',
     'Inventory' => 'Inventar',
-    'Inventory management' => 'Inventarverwaltung',
     'Inventory policy' => 'Inventarregel',
+    'Inventory tracking' => 'Inventarverfolgung',
+    'Last import' => 'Letzter Import',
     'Manage Shopify products' => 'Shopify Produkte verwalten',
     'Manage Shopify webhooks' => 'Shopify Webhooks verwalten',
     'New Product' => 'Neues Produkt',
@@ -43,25 +43,23 @@ return [
     'Position' => 'Position',
     'Price' => 'Preis',
     'Product' => 'Produkt',
-    'Product created' => 'Produkt erstellt',
-    'Product deleted' => 'Produkt gelöscht',
-    'Product updated' => 'Produkt aktualisiert',
     'Products' => 'Produkte',
     'Quantity' => 'Anzahl',
     'Reload Products' => 'Produkte neu laden',
-    'Reload Webhooks' => 'Webhooks neu laden',
     'SKU (Stock Keeping Unit)' => 'Artikelnummer (Stock Keeping Unit)',
     'Shopify' => 'Shopify',
-    'Shopify Admin API secret key must be set to use webhooks.' => 'Der geheimer API-Schlüssel (bei Shopify unter Apps > API-Anmeldedaten) muss gesetzt sein, um Webhooks zu nutzen.',
+    'Shopify Admin API secret key must be set to use webhooks.' => 'Der geheime API-Schlüssel muss gesetzt sein, um Webhooks zu nutzen.',
     'Shopify slug' => 'Shopify slug',
     'Taxable' => 'Steuerpflichtig',
+    'The product was deleted because it was not found on Shopify anymore.' => 'Das Produkt wurde gelöscht, da es nicht mehr bei Shopify gefunden wurde.',
     'The product was updated via Shopify.' => 'Das Produkt wurde über Shopify aktualisiert.',
     'The webhook "{topic}" was created.' => 'Der Webhook "{topic}" wurde erstellt.',
-    'The webhook "{topic}" was skipped.' => 'Der Webhook "{topic}" wurde übersprungen.',
     'The webhook was deleted.' => 'Der Webhook wurde gelöscht.',
     'Title' => 'Titel',
     'Type' => 'Typ',
     'URL' => 'URL',
+    'Unit price' => 'Stückpreis',
+    'Unit price measurement' => 'Stückpreis-Basismaß',
     'Variant' => 'Variante',
     'Variants' => 'Varianten',
     'Vendor' => 'Anbieter',
@@ -69,6 +67,5 @@ return [
     'View Webhooks' => 'Webhooks anzeigen',
     'Webhooks' => 'Webhooks',
     'Weight' => 'Gewicht',
-    'Weight (grams)' => 'Gewicht (Gramm)',
     'Weight unit' => 'Gewichtseinheit',
 ];

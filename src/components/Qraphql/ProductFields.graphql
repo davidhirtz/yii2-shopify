@@ -1,0 +1,31 @@
+fragment ProductFields on Product {
+    createdAt
+    descriptionHtml
+    handle
+    id
+    mediaCount {
+        count
+    }
+    media (first: 250) {
+        edges {
+           cursor
+            node {
+                ...MediaFields
+            }
+        }
+    }
+    options {
+        name
+        position
+        values
+    }
+    productType
+    status
+    tags
+    title
+    updatedAt
+    variantsCount {
+        count
+    }
+    vendor
+}

@@ -12,6 +12,7 @@ use Hirtz\Skeleton\Modules\Admin\Config\DashboardItemConfig;
 use Hirtz\Skeleton\Modules\Admin\Config\DashboardPanelConfig;
 use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
+use Override;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -22,7 +23,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
     public $defaultRoute = 'product';
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);

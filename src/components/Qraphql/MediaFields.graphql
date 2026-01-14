@@ -1,0 +1,13 @@
+fragment MediaFields on Media {
+    id
+    alt
+    mediaContentType
+    preview {
+        image {
+            altText
+            height
+            width
+            url
+        }
+    }
+}

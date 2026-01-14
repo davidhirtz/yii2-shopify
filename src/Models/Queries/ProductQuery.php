@@ -9,7 +9,7 @@ use Hirtz\Skeleton\Db\ActiveQuery;
 
 /**
  * @template T of Product
- * @extends ActiveQuery<T>
+ * @template-extends ActiveQuery<T>
  */
 class ProductQuery extends ActiveQuery
 {
@@ -20,7 +20,8 @@ class ProductQuery extends ActiveQuery
             $tableName = $model::tableName();
 
             if (is_numeric($search)) {
-                $this->andWhere("$tableName.[[id]] = :search OR $tableName.[[name]] LIKE :search", [
+                $this->andWhere("$tableName.[[id]] = :id OR $tableName.[[name]] LIKE :search", [
+                    ':id' => (int)$search,
                     ':search' => "%$search%"
                 ]);
             } else {
