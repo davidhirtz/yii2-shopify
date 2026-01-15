@@ -19,6 +19,7 @@ use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
 use Hirtz\Skeleton\Validators\HtmlValidator;
+use Hirtz\Skeleton\Validators\UniqueValidator;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
@@ -57,9 +58,10 @@ class Product extends ActiveRecord implements
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
     use UpdatedByUserTrait;
-    use TrailModelTrait;
+    use TrailModelTrait {
+        TrailModelTrait::formatTrailAttributeValue as parentFormatTrailAttributeValue;
+    }
 
-    public const int STATUS_ARCHIVED = self::STATUS_DISABLED;
     public const string AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
 
     /**
@@ -158,9 +160,7 @@ class Product extends ActiveRecord implements
             $value .= "-$this->id";
         }
 
-        /** @var TrailBehavior $behavior */
-        $behavior = $this->getBehavior('TrailBehavior');
-        return $behavior->formatTrailAttributeValue($attribute, $value);
+        return $this->parentFormatTrailAttributeValue($attribute, $value);
     }
 
     public function getTrailAttributes(): array

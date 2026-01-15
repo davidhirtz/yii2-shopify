@@ -22,6 +22,7 @@ use Hirtz\Skeleton\Widgets\Grids\Toolbars\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridToolbarItem;
 use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
 use Iterator;
+use Override;
 use Stringable;
 use Yii;
 
@@ -33,7 +34,7 @@ class ProductGridView extends GridView
     use ModuleTrait;
     use StatusGridViewTrait;
 
-    #[\Override]
+    #[Override]
     protected function configure(): void
     {
         $this->model ??= Product::instance();
@@ -116,7 +117,7 @@ class ProductGridView extends GridView
                     $query .= "/variants/$product->variant_id";
                 }
 
-                return static::getModule()->getShopUrl($query);
+                return Yii::$app->get('shopify')->getShopUrl($query);
             })
             ->linkAttributes(['target' => '_blank']);
     }
@@ -144,7 +145,7 @@ class ProductGridView extends GridView
     {
         return CreateButton::make()
             ->text(Yii::t('shopify', 'New Product'))
-            ->href(static::getModule()->getShopUrl('admin/products/new'))
+            ->href(Yii::$app->get('shopify')->getShopUrl('admin/products/new'))
             ->target('_blank');
     }
 

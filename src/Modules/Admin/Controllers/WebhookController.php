@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
-use Hirtz\Shopify\Models\Webhook;
-use Hirtz\Shopify\Modules\Admin\Data\WebhookArrayDataProvider;
+use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
+use Hirtz\Shopify\Components\ShopifyComponent;
+use Hirtz\Shopify\Models\WebhookSubscription;
+use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -19,7 +20,6 @@ class WebhookController extends Controller
 {
     use ModuleTrait;
 
-    #[Override]
     protected ShopifyComponent $shopify;
 
     #[Override]

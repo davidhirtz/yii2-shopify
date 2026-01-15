@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify;
 
+use Hirtz\Shopify\Commands\ShopifyController;
+use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\controllers\WebhookController;
 use Hirtz\Skeleton\Web\Application;
 use Yii;
@@ -36,6 +38,14 @@ class Bootstrap implements BootstrapInterface
                 'class' => Module::class,
             ],
         ]);
+
+        $app->extendComponent('shopify', [
+            'class' => ShopifyComponent::class,
+        ]);
+
+        if ($app->getRequest()->getIsConsoleRequest()) {
+            $app->controllerMap['shopify'] ??= ShopifyController::class;
+        }
 
         /**
          * @see WebhookController::actionProductsCreate()

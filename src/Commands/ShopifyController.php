@@ -13,7 +13,7 @@ use Hirtz\Shopify\Components\Admin\WebhookSubscriptionBatchQuery;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMapper;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
 use Hirtz\Shopify\Models\Product;
-use davidhirtz\yii2\skeleton\console\controllers\traits\ControllerTrait;
+use Hirtz\Skeleton\Console\Controllers\Traits\ControllerTrait;
 use Override;
 use Yii;
 use yii\base\Event;
@@ -46,17 +46,17 @@ class ShopifyController extends Controller
         $deletedCount = 0;
         $updatedCount = 0;
 
-        Event::on(Product::class, Product::EVENT_AFTER_UPDATE, function (AfterSaveEvent $event) use (&$updatedCount) {
+        Event::on(Product::class, Product::EVENT_AFTER_UPDATE, function (AfterSaveEvent $event) use (&$updatedCount): void {
             if (count($event->changedAttributes) > 2) {
                 $updatedCount++;
             }
         });
 
-        Event::on(Product::class, Product::EVENT_AFTER_INSERT, function () use (&$insertedCount) {
+        Event::on(Product::class, Product::EVENT_AFTER_INSERT, function () use (&$insertedCount): void {
             $insertedCount++;
         });
 
-        Event::on(Product::class, Product::EVENT_AFTER_DELETE, function () use (&$deletedCount) {
+        Event::on(Product::class, Product::EVENT_AFTER_DELETE, function () use (&$deletedCount): void {
             $deletedCount++;
         });
 

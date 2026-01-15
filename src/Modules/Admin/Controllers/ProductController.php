@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
-use Hirtz\Shopify\Models\forms\ProductShopifyAdminRestApiForm;
+use Hirtz\Shopify\Components\Admin\ProductBatchRepository;
+use Hirtz\Shopify\Components\Admin\ProductQuery;
+use Hirtz\Shopify\Components\Admin\ProductRepository;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;

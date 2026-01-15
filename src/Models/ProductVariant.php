@@ -13,6 +13,7 @@ use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Hirtz\Skeleton\Validators\RelationValidator;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
@@ -48,8 +49,10 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
 {
     use I18nAttributesTrait;
     use ModuleTrait;
-    use TrailModelTrait;
     use ProductRelationTrait;
+    use TrailModelTrait {
+        TrailModelTrait::formatTrailAttributeValue as parentFormatTrailAttributeValue;
+    }
 
     #[Override]
     public function behaviors(): array
@@ -116,18 +119,13 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
             : '';
     }
 
-    /**
-     * @noinspection PhpUnused
-     */
     public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
     {
         if ($attribute === 'image_id' && $value) {
             $value .= "-$this->product_id";
         }
 
-        /** @var TrailBehavior $behavior */
-        $behavior = $this->getBehavior('TrailBehavior');
-        return $behavior->formatTrailAttributeValue($attribute, $value);
+        return $this->parentFormatTrailAttributeValue($attribute, $value);
     }
 
     public function getTrailAttributes(): array

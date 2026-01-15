@@ -133,14 +133,15 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
     #[Override]
     public function attributeLabels(): array
     {
-        return array_merge(parent::attributeLabels(), [
+        return [
+            ...parent::attributeLabels(),
             'position' => Yii::t('shopify', 'Position'),
             'product_id' => Yii::t('shopify', 'Product'),
             'alt_text' => Yii::t('shopify', 'Alt text'),
             'weight' => Yii::t('shopify', 'Weight'),
             'height' => Yii::t('shopify', 'Height'),
             'src' => Yii::t('shopify', 'URL'),
-        ]);
+        ];
     }
 
     #[Override]

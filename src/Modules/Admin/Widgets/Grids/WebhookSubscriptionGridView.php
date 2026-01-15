@@ -6,7 +6,7 @@ namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
-use Hirtz\Shopify\Modules\Admin\Data\WebhookArrayDataProvider;
+use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Html\Button;
 use Hirtz\Skeleton\Html\Div;
@@ -17,17 +17,18 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
+use Override;
 use Stringable;
 use Yii;
 
 /**
- * @property WebhookArrayDataProvider $provider
+ * @property WebhookSubscriptionArrayDataProvider $provider
  */
-class WebhookGridView extends GridView
+class WebhookSubscriptionGridView extends GridView
 {
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     protected function configure(): void
     {
         $this->columns ??= [
@@ -118,7 +119,7 @@ class WebhookGridView extends GridView
                 ? Yii::t('shopify', 'Reload Webhooks')
                 : Yii::t('shopify', 'Install Webhooks'))
             ->icon('sync')
-            ->post(['/admin/shopify-webhook/update-all']);
+            ->post(['/admin/shopify-webhook/create']);
     }
 
     protected function getButtonColumnContent(Webhook $webhook): array

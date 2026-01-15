@@ -13,6 +13,9 @@ use Hirtz\Shopify\Models\Queries\ProductQuery;
  */
 trait ProductRelationTrait
 {
+    /**
+     * @return ProductQuery<Product>
+     */
     public function getProduct(): ProductQuery
     {
         /** @var ProductQuery $relation */

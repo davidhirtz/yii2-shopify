@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Models;
 
 use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\skeleton\base\traits\ModelTrait;
+use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Override;
 use Yii;
 use yii\base\Model;

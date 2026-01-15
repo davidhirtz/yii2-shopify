@@ -12,7 +12,7 @@ class GraphqlParser
 
     public function load(string $name): string
     {
-        $file = Yii::getAlias("@shopify/components/graphql/$name.graphql");
+        $file = Yii::getAlias("@shopify/../resources/graphql/$name.graphql");
         $content = file_get_contents($file);
 
         return $this->parse($content);

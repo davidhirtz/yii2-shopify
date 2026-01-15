@@ -7,6 +7,7 @@ namespace Hirtz\Shopify\Modules\Admin\Data;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionBatchQuery;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMapper;
 use Hirtz\Shopify\Models\WebhookSubscription;
+use Override;
 use yii\data\ArrayDataProvider;
 
 /**
@@ -14,7 +15,7 @@ use yii\data\ArrayDataProvider;
  */
 class WebhookSubscriptionArrayDataProvider extends ArrayDataProvider
 {
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         if (!$this->allModels) {
@@ -33,11 +34,5 @@ class WebhookSubscriptionArrayDataProvider extends ArrayDataProvider
         }
 
         return $models;
-    }
-
-    #[\Override]
-    public function getSort()
-    {
-        return parent::getSort();
     }
 }
