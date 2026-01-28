@@ -7,15 +7,17 @@ namespace Hirtz\Shopify\Migrations;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\ProductImage;
 use Hirtz\Shopify\Models\ProductVariant;
+use Hirtz\Skeleton\Db\Traits\MigrationTrait;
 use yii\db\Expression;
 use yii\db\Migration;
 
 /**
  * @noinspection PhpUnused
  */
-
 class M250717124737ShopifyGraphql extends Migration
 {
+    use MigrationTrait;
+
     public function safeUp(): void
     {
         $this->dropForeignKey('product_image_id_ibfk', Product::tableName());
@@ -42,9 +44,7 @@ class M250717124737ShopifyGraphql extends Migration
             $this->dropColumn(ProductVariant::tableName(), 'inventory_management');
         }
 
-        if ($schema->getColumn('grams')) {
-            $this->dropColumn(ProductVariant::tableName(), 'grams');
-        }
+        $this->dropColumnIfExists(ProductVariant::tableName(), 'grams');
 
         $this->addColumn(ProductVariant::tableName(), 'unit_price', (string)$this->integer()
             ->unsigned()
@@ -81,7 +81,7 @@ class M250717124737ShopifyGraphql extends Migration
 
         foreach ($products as $product) {
             $product->updateAttributes([
-                'tags' => json_encode(explode(',', (string) $product->getAttribute('tags'))),
+                'tags' => json_encode(explode(',', (string)$product->getAttribute('tags'))),
             ]);
         }
 
