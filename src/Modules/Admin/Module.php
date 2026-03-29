@@ -8,10 +8,10 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
-use Hirtz\Skeleton\Modules\Admin\Config\DashboardItemConfig;
-use Hirtz\Skeleton\Modules\Admin\Config\DashboardPanelConfig;
+use Hirtz\Skeleton\Modules\Admin\Config\DashboardItem;
 use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Panels\DashboardPanel;
 use Override;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -47,16 +47,16 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     public function getDashboardPanels(): array
     {
         return [
-            'shopify' => new DashboardPanelConfig(
+            'shopify' => new DashboardPanel(
                 name: $this->getName(),
                 items: [
-                    'products' => new DashboardItemConfig(
+                    'products' => new DashboardItem(
                         label: Yii::t('shopify', 'View Products'),
                         url: ['/admin/product/index'],
                         icon: 'tags',
                         roles: [Product::AUTH_PRODUCT_UPDATE],
                     ),
-                    'webhooks' => new DashboardItemConfig(
+                    'webhooks' => new DashboardItem(
                         label: Yii::t('shopify', 'View Webhooks'),
                         url: ['/admin/shopify-webhook/index'],
                         icon: 'satellite-dish',
