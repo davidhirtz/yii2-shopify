@@ -40,7 +40,7 @@ class AdminApi
         ];
 
         if (YII_DEBUG) {
-            $options['on_stats'] = function (TransferStats $stats) use ($body) {
+            $options['on_stats'] = function (TransferStats $stats) use ($body): void {
                 Yii::debug("Requesting Shopify Admin GraphQL API: {$stats->getEffectiveUri()}");
                 Yii::debug($body);
             };
