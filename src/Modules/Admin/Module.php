@@ -9,9 +9,10 @@ use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Skeleton\Modules\Admin\Config\DashboardItem;
-use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Panels\DashboardPanel;
+use Hirtz\Skeleton\Widgets\Navs\Nav;
+use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Override;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -72,22 +73,14 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return Yii::t('shopify', 'Products');
     }
 
-    public function getMainMenuItems(): array
+    public function aside(Nav $nav): Nav
     {
-        return [
-            'shopify' => new MainMenuItemConfig(
-                label: $this->getName(),
-                url: ['/admin/product/index'],
-                icon: 'tags',
-                roles: [
-                    Product::AUTH_PRODUCT_UPDATE,
-                    Webhook::AUTH_WEBHOOK_UPDATE,
-                ],
-                routes: [
-                    'admin/product',
-                    'admin/shopify-webhook',
-                ],
-            ),
-        ];
+        return $nav->addItem(NavItem::make()
+            ->label($this->getName())
+            ->url(['/admin/product/index'])
+            ->icon('tags')
+            ->order(40)
+            ->roles([Product::AUTH_PRODUCT_UPDATE, Webhook::AUTH_WEBHOOK_UPDATE])
+            ->routes(['admin/product', 'admin/shopify-webhook']));
     }
 }
