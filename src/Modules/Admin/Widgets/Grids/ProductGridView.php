@@ -143,7 +143,8 @@ class ProductGridView extends GridView
 
     protected function getCreateProductButton(): string|Stringable
     {
-        return CreateButton::make()
+        return Button::make()
+            ->primary()
             ->text(Yii::t('shopify', 'New Product'))
             ->href(Yii::$app->get('shopify')->getShopUrl('admin/products/new'))
             ->target('_blank');

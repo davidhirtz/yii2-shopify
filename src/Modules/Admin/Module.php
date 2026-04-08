@@ -8,6 +8,7 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
+use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifyNavItem;
 use Hirtz\Skeleton\Modules\Admin\Config\DashboardItem;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Panels\DashboardPanel;
@@ -75,12 +76,6 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 
     public function aside(Nav $nav): Nav
     {
-        return $nav->addItem(NavItem::make()
-            ->label($this->getName())
-            ->url(['/admin/product/index'])
-            ->icon('tags')
-            ->order(40)
-            ->roles([Product::AUTH_PRODUCT_UPDATE, Webhook::AUTH_WEBHOOK_UPDATE])
-            ->routes(['admin/product', 'admin/shopify-webhook']));
+        return $nav->addItem(ShopifyNavItem::make());
     }
 }

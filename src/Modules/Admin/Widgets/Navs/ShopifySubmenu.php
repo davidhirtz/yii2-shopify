@@ -8,13 +8,14 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Hirtz\Skeleton\Widgets\Navs\Submenu;
+use Override;
 use Yii;
 
 class ShopifySubmenu extends Submenu
 {
     protected ?Product $product = null;
 
-    #[\Override]
+    #[Override]
     protected function configure(): void
     {
         $this->title ??= Yii::t('shopify', 'Shopify');
