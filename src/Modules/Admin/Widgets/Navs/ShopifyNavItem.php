@@ -17,8 +17,7 @@ class ShopifyNavItem extends NavItem
         $this->label ??= Yii::t('shopify', 'Shopify');
         $this->icon ??= 'brand:shopify';
         $this->order ??= 50;
-        $this->url ??= ['/admin/product/index'];
-        $this->roles ??= [Product::AUTH_PRODUCT_UPDATE, Webhook::AUTH_WEBHOOK_UPDATE];
+        $this->url ??= ['/admin/shopify/product/index'];
 
         parent::__construct($config);
     }
@@ -40,9 +39,9 @@ class ShopifyNavItem extends NavItem
         return NavItem::make()
             ->label(Yii::t('shopify', 'Products'))
             ->order(10)
-            ->url(['/admin/product/index'])
+            ->url(['/admin/shopify/product/index'])
             ->roles([Product::AUTH_PRODUCT_UPDATE])
-            ->routes(['admin/product']);
+            ->routes(['shopify/product']);
     }
 
     protected function getWebhooksItem(): NavItem
@@ -50,8 +49,8 @@ class ShopifyNavItem extends NavItem
         return NavItem::make()
             ->label(Yii::t('shopify', 'Webhooks'))
             ->order(20)
-            ->url(['/admin/shopify-webhook/index'])
+            ->url(['/admin/shopify/webhook/index'])
             ->roles([Webhook::AUTH_WEBHOOK_UPDATE])
-            ->routes(['admin/shopify-webhook']);
+            ->routes(['shopify/webhook']);
     }
 }

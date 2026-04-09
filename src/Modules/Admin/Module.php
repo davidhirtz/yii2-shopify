@@ -6,17 +6,12 @@ namespace Hirtz\Shopify\Modules\Admin;
 
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Webhook;
-use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
-use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifyNavItem;
 use Hirtz\Skeleton\Modules\Admin\Config\DashboardItem;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Panels\DashboardPanel;
 use Hirtz\Skeleton\Widgets\Navs\Nav;
-use Hirtz\Skeleton\Widgets\Navs\NavItem;
-use Override;
 use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
  * @property \Hirtz\Skeleton\Modules\Admin\Module $module
@@ -25,32 +20,11 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
     public $defaultRoute = 'product';
 
-    #[Override]
-    public function init(): void
-    {
-        $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);
-        parent::init();
-    }
-
-    protected function getCoreControllerMap(): array
-    {
-        return [
-            'product' => [
-                'class' => ProductController::class,
-                'viewPath' => '@shopify/../resources/views/admin/product',
-            ],
-            'shopify-webhook' => [
-                'class' => WebhookController::class,
-                'viewPath' => '@shopify/../resources/views/admin/webhook',
-            ],
-        ];
-    }
-
     public function getDashboardPanels(): array
     {
         return [
             'shopify' => new DashboardPanel(
-                name: $this->getName(),
+                name: Yii::t('shopify', 'Shopify'),
                 items: [
                     'products' => new DashboardItem(
                         label: Yii::t('shopify', 'View Products'),
