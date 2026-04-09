@@ -119,7 +119,7 @@ class WebhookSubscriptionGridView extends GridView
                 ? Yii::t('shopify', 'Reload Webhooks')
                 : Yii::t('shopify', 'Install Webhooks'))
             ->icon('sync')
-            ->post(['/admin/shopify-webhook/create']);
+            ->post(['/admin/shopify/webhook/create']);
     }
 
     protected function getButtonColumnContent(Webhook $webhook): array

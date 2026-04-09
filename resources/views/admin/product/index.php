@@ -17,7 +17,7 @@ use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
 $this->title(Yii::t('shopify', 'Products'));
-$this->addBreadcrumb(Yii::t('shopify', 'Products'), ['/admin/product/index']);
+$this->addBreadcrumb(Yii::t('shopify', 'Products'), ['/admin/shopify/product/index']);
 
 echo ShopifySubmenu::make();
 

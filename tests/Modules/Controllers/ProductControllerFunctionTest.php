@@ -16,7 +16,7 @@ class ProductControllerFunctionTest extends TestCase
 
     public function testIndexAsGuest(): void
     {
-        $this->open('/admin/product/index');
+        $this->open('/admin/shopify/product/index');
         self::assertCurrentUrlEquals('https://www.test.localhost/admin/account/login');
     }
 
@@ -25,7 +25,7 @@ class ProductControllerFunctionTest extends TestCase
         $user = $this->getUserFromFixture('admin');
         Yii::$app->getUser()->login($user);
 
-        $this->open('/admin/product/index');
+        $this->open('/admin/shopify/product/index');
         self::assertResponseStatusCodeSame(403);
     }
 
@@ -36,7 +36,7 @@ class ProductControllerFunctionTest extends TestCase
 
         Yii::$app->getUser()->login($user);
 
-        $this->open('/admin/product/index');
+        $this->open('/admin/shopify/product/index');
         self::assertResponseIsSuccessful();
     }
 }

@@ -28,13 +28,13 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
                 items: [
                     'products' => new DashboardItem(
                         label: Yii::t('shopify', 'View Products'),
-                        url: ['/admin/product/index'],
+                        url: ['/admin/shopify/product/index'],
                         icon: 'tags',
                         roles: [Product::AUTH_PRODUCT_UPDATE],
                     ),
                     'webhooks' => new DashboardItem(
                         label: Yii::t('shopify', 'View Webhooks'),
-                        url: ['/admin/shopify-webhook/index'],
+                        url: ['/admin/shopify/webhook/index'],
                         icon: 'satellite-dish',
                         roles: [Webhook::AUTH_WEBHOOK_UPDATE],
                     ),

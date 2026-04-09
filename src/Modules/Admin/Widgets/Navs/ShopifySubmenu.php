@@ -29,14 +29,14 @@ class ShopifySubmenu extends Submenu
         return [
             NavItem::make()
                 ->label(Yii::t('shopify', 'Products'))
-                ->url(['/admin/product/index'])
-                ->routes(['admin/product/'])
+                ->url(['/admin/shopify/product/index'])
+                ->routes(['admin/shopify/product/'])
                 ->icon('tags')
                 ->roles([Product::AUTH_PRODUCT_UPDATE]),
             NavItem::make()
                 ->label(Yii::t('shopify', 'Webhooks'))
-                ->url(['/admin/shopify-webhook/index'])
-                ->routes(['admin/shopify-webhook/'])
+                ->url(['/admin/shopify/webhook/index'])
+                ->routes(['admin/shopify/webhook/'])
                 ->icon('satellite-dish')
                 ->roles([Webhook::AUTH_WEBHOOK_UPDATE]),
         ];

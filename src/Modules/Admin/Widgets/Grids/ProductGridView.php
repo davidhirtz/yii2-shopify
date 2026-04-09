@@ -159,7 +159,7 @@ class ProductGridView extends GridView
             ->primary()
             ->text(Yii::t('shopify', 'Reload Products'))
             ->icon('sync')
-            ->post(['/admin/product/update-all']);
+            ->post(['/admin/shopify/product/update-all']);
     }
 
     protected function getUpdateButton(Product $product): ?Stringable
@@ -167,7 +167,7 @@ class ProductGridView extends GridView
         return Button::make()
             ->primary()
             ->icon('sync')
-            ->post(['/admin/product/update', 'id' => $product->id]);
+            ->post(['/admin/shopify/product/update', 'id' => $product->id]);
     }
 
     protected function getShopifyAdminProductButton(Product $product): ?Stringable

@@ -17,7 +17,7 @@ use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
 $this->title(Yii::t('shopify', 'Webhooks'));
-$this->addBreadcrumb(Yii::t('shopify', 'Webhooks'), ['/admin/shopify-webhook/index']);
+$this->addBreadcrumb(Yii::t('shopify', 'Webhooks'), ['/admin/shopify/webhook/index']);
 
 echo ShopifySubmenu::make();
 
