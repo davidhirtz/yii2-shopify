@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify;
 
-use Hirtz\Shopify\Components\Rest\ShopifyAdminRestApi;
 use Hirtz\Skeleton\Modules\ModuleTrait;
 use Override;
 use Yii;
@@ -37,8 +36,6 @@ class Module extends \yii\base\Module
             'route' => ['/shopify/webhook/products-delete'],
         ],
     ];
-
-    private ShopifyAdminRestApi $_api;
 
     #[Override]
     public function init(): void
