@@ -31,7 +31,7 @@ class ShopifyNavItem extends NavItem
 
     protected function addSubnavItems(): void
     {
-        $this->addItems($this->getProductsItem(), $this->getWebhooksItem());
+        $this->addItem($this->getProductsItem(), $this->getWebhooksItem());
     }
 
     protected function getProductsItem(): NavItem
