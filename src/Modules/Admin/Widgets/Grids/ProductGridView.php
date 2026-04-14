@@ -8,17 +8,16 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
-use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Html\Img;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
-use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridToolbarItem;
 use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
 use Iterator;
@@ -41,7 +40,7 @@ class ProductGridView extends GridView
 
         $this->header ??= [
             $this->getStatusDropdown(),
-            $this->search->getToolbarItem(),
+            GridSearchForm::make()->grid($this),
         ];
 
         $this->columns ??= [
@@ -94,7 +93,7 @@ class ProductGridView extends GridView
 
         return A::make()
             ->class('strong')
-            ->content(Html::markKeywords(Html::encode($name), $this->search->getKeywords()))
+            ->content($this->search->markKeywords($name))
             ->href($product->getShopifyAdminUrl())
             ->target('_blank');
     }
