@@ -209,7 +209,8 @@ class Product extends ActiveRecord implements
 
     public function getShopifyAdminUrl(): string
     {
-        return Yii::$app->get('shopify')->getShopUrl("admin/products/$this->id");
+        $query = "admin/products/$this->id" . ($this->variant_count > 1 ? "/variants/$this->variant_id" : '');
+        return Yii::$app->get('shopify')->getShopUrl($query);
     }
 
     #[Override]

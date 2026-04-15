@@ -14,7 +14,7 @@ use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
-use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\PropertyColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
@@ -80,7 +80,7 @@ class ProductGridView extends GridView
 
     protected function getNameColumn(): ?Column
     {
-        return DataColumn::make()
+        return PropertyColumn::make()
             ->property(Product::instance()->getI18nAttributeName('name'))
             ->content($this->getNameColumnContent(...));
     }
@@ -103,20 +103,17 @@ class ProductGridView extends GridView
             ->url(fn (Product $product) => $product->getShopifyAdminUrl());
     }
 
-    public function getVariantCountColumn(): ?Column
+    protected function getVariantCountColumn(): ?Column
     {
         return BadgeColumn::make()
             ->property('variant_count')
-            ->url(function (Product $product) {
-                $query = "admin/products/$product->id";
+            ->blank()
+            ->url($this->getProductShopUrl(...));
+    }
 
-                if ($product->variant_count > 1) {
-                    $query .= "/variants/$product->variant_id";
-                }
-
-                return Yii::$app->get('shopify')->getShopUrl($query);
-            })
-            ->linkAttributes(['target' => '_blank']);
+    protected function getProductShopUrl(Product $product): string
+    {
+        return $product->getShopifyAdminUrl();
     }
 
     protected function getUpdatedAtColumn(): ?Column
