@@ -36,8 +36,6 @@ class ProductGridView extends GridView
     #[Override]
     protected function configure(): void
     {
-        $this->model ??= Product::instance();
-
         $this->header ??= [
             $this->getStatusDropdown(),
             GridSearchForm::make()->grid($this),
