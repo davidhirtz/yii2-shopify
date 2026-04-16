@@ -12,14 +12,12 @@ declare(strict_types=1);
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Shopify\Modules\Admin\Widgets\Grids\WebhookSubscriptionGridView;
-use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifySubmenu;
+use Hirtz\Shopify\Modules\Admin\Widgets\Navs\WebhookHeader;
 use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
-$this->title(Yii::t('shopify', 'Webhooks'));
-$this->addBreadcrumb(Yii::t('shopify', 'Webhooks'), ['/admin/shopify/webhook/index']);
-
-echo ShopifySubmenu::make();
+echo WebhookHeader::make()
+    ->provider($provider);
 
 echo GridContainer::make()
     ->grid(WebhookSubscriptionGridView::make()

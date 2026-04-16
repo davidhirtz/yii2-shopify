@@ -39,10 +39,6 @@ class WebhookSubscriptionGridView extends GridView
             $this->getButtonColumn(),
         ];
 
-        $this->footer ??= [
-            $this->getUpdateAllWebhooksButton()
-        ];
-
         parent::configure();
     }
 
@@ -106,20 +102,6 @@ class WebhookSubscriptionGridView extends GridView
     {
         return ButtonColumn::make()
             ->content($this->getButtonColumnContent(...));
-    }
-
-    /**
-     * @see WebhookController::actionUpdateAll()
-     */
-    protected function getUpdateAllWebhooksButton(): ?Stringable
-    {
-        return Button::make()
-            ->primary()
-            ->content($this->provider->getModels()
-                ? Yii::t('shopify', 'Reload Webhooks')
-                : Yii::t('shopify', 'Install Webhooks'))
-            ->icon('sync')
-            ->post(['/admin/shopify/webhook/create']);
     }
 
     protected function getButtonColumnContent(Webhook $webhook): array

@@ -12,14 +12,12 @@ declare(strict_types=1);
 use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\Admin\Widgets\Grids\ProductGridView;
-use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifySubmenu;
+use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ProductHeader;
 use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
-$this->title(Yii::t('shopify', 'Products'));
-$this->addBreadcrumb(Yii::t('shopify', 'Products'), ['/admin/shopify/product/index']);
-
-echo ShopifySubmenu::make();
+echo ProductHeader::make()
+    ->provider($provider);
 
 echo GridContainer::make()
     ->grid(ProductGridView::make()

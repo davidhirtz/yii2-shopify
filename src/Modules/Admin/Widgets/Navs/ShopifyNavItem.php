@@ -38,6 +38,7 @@ class ShopifyNavItem extends NavItem
     {
         return NavItem::make()
             ->label(Yii::t('shopify', 'Products'))
+            ->icon('tags')
             ->order(10)
             ->url(['/admin/shopify/product/index'])
             ->roles([Product::AUTH_PRODUCT_UPDATE])
@@ -48,6 +49,7 @@ class ShopifyNavItem extends NavItem
     {
         return NavItem::make()
             ->label(Yii::t('shopify', 'Webhooks'))
+            ->icon('satellite-dish')
             ->order(20)
             ->url(['/admin/shopify/webhook/index'])
             ->roles([Webhook::AUTH_WEBHOOK_UPDATE])

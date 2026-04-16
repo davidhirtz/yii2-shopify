@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Shopify\Models\Product;
-use Hirtz\Shopify\Modules\Admin\Controllers\ProductController;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Html\Img;
+use Hirtz\Skeleton\Html\Th;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
@@ -18,12 +18,10 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\PropertyColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
-use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridToolbarItem;
 use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
 use Iterator;
 use Override;
 use Stringable;
-use Yii;
 
 /**
  * @property ProductActiveDataProvider $provider
@@ -47,15 +45,8 @@ class ProductGridView extends GridView
             $this->getNameColumn(),
             $this->getTotalInventoryQuantityColumn(),
             $this->getVariantCountColumn(),
-            $this->getUpdatedAtColumn(),
+            $this->getImportAtColumn(),
             $this->getButtonColumn(),
-        ];
-
-        $this->footer ??= [
-            $this->getCreateProductButton(),
-            GridToolbarItem::make()
-                ->class('ms-auto')
-                ->content($this->getUpdateAllProductsButton()),
         ];
 
         parent::configure();
@@ -64,7 +55,7 @@ class ProductGridView extends GridView
     protected function getThumbnailColumn(): ?Column
     {
         return Column::make()
-            ->headerAttributes(['class' => 'grid-col-thumbnail'])
+            ->header(fn (Th $th) => $th->addClass('grid-col-thumbnail'))
             ->content($this->getThumbnailColumnContent(...));
     }
 
@@ -99,7 +90,7 @@ class ProductGridView extends GridView
     protected function getTotalInventoryQuantityColumn(): ?Column
     {
         return BadgeColumn::make()
-            ->property('inventory_quantity')
+            ->property('total_inventory_quantity')
             ->url(fn (Product $product) => $product->getShopifyAdminUrl());
     }
 
@@ -116,10 +107,10 @@ class ProductGridView extends GridView
         return $product->getShopifyAdminUrl();
     }
 
-    protected function getUpdatedAtColumn(): ?Column
+    protected function getImportAtColumn(): ?Column
     {
         return RelativeTimeColumn::make()
-            ->property('updated_at')
+            ->property('last_import_at')
             ->hiddenForMediumDevices();
     }
 
@@ -133,27 +124,6 @@ class ProductGridView extends GridView
     {
         yield $this->getShopifyAdminProductButton($product);
         yield $this->getUpdateButton($product);
-    }
-
-    protected function getCreateProductButton(): string|Stringable
-    {
-        return Button::make()
-            ->primary()
-            ->text(Yii::t('shopify', 'New Product'))
-            ->href(Yii::$app->get('shopify')->getShopUrl('admin/products/new'))
-            ->target('_blank');
-    }
-
-    /**
-     * @see ProductController::actionUpdateAll()
-     */
-    protected function getUpdateAllProductsButton(): ?Stringable
-    {
-        return Button::make()
-            ->primary()
-            ->text(Yii::t('shopify', 'Reload Products'))
-            ->icon('sync')
-            ->post(['/admin/shopify/product/update-all']);
     }
 
     protected function getUpdateButton(Product $product): ?Stringable
