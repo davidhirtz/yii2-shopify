@@ -14,7 +14,7 @@ use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\DeleteGridButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
-use Hirtz\Skeleton\Widgets\Grids\Columns\PropertyColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Override;
@@ -44,7 +44,7 @@ class WebhookSubscriptionGridView extends GridView
 
     protected function getTopicColumn(): ?Column
     {
-        return PropertyColumn::make()
+        return DataColumn::make()
             ->property('topic')
             ->content($this->getTopicColumnContent(...));
     }
@@ -64,7 +64,7 @@ class WebhookSubscriptionGridView extends GridView
 
     protected function getApiVersionColumn(): ?Column
     {
-        return PropertyColumn::make()
+        return DataColumn::make()
             ->property('api_version')
             ->content($this->getApiVersionColumnContent(...))
             ->hiddenForSmallDevices();
@@ -79,7 +79,7 @@ class WebhookSubscriptionGridView extends GridView
 
     protected function getFormatColumn(): ?Column
     {
-        return PropertyColumn::make()
+        return DataColumn::make()
             ->property('api_version')
             ->content($this->getFormatColumnContent(...))
             ->hiddenForMediumDevices();

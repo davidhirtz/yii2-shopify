@@ -14,7 +14,7 @@ use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
-use Hirtz\Skeleton\Widgets\Grids\Columns\PropertyColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
@@ -52,6 +52,11 @@ class ProductGridView extends GridView
         parent::configure();
     }
 
+    protected function getStatusDropdownItems(): array
+    {
+        return Product::instance()::getStatuses();
+    }
+
     protected function getThumbnailColumn(): ?Column
     {
         return Column::make()
@@ -71,7 +76,7 @@ class ProductGridView extends GridView
 
     protected function getNameColumn(): ?Column
     {
-        return PropertyColumn::make()
+        return DataColumn::make()
             ->property(Product::instance()->getI18nAttributeName('name'))
             ->content($this->getNameColumnContent(...));
     }
