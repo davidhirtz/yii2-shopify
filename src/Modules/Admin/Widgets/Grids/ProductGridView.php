@@ -36,7 +36,7 @@ class ProductGridView extends GridView
     {
         $this->header ??= [
             $this->getStatusDropdown(),
-            GridSearchForm::make()->grid($this),
+            $this->getSearchInput(),
         ];
 
         $this->columns ??= [
