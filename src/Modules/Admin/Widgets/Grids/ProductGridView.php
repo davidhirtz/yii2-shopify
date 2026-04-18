@@ -16,9 +16,9 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\StatusIconColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
-use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
-use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\StatusFilterDropdown;
 use Iterator;
 use Override;
 use Stringable;
@@ -29,7 +29,6 @@ use Stringable;
 class ProductGridView extends GridView
 {
     use ModuleTrait;
-    use StatusGridViewTrait;
 
     #[Override]
     protected function configure(): void
@@ -52,9 +51,15 @@ class ProductGridView extends GridView
         parent::configure();
     }
 
-    protected function getStatusDropdownItems(): array
+    protected function getStatusDropdown(): ?Stringable
     {
-        return Product::instance()::getStatuses();
+        return StatusFilterDropdown::make()
+            ->model(Product::instance());
+    }
+
+    protected function getStatusColumn(): ?Column
+    {
+        return StatusIconColumn::make();
     }
 
     protected function getThumbnailColumn(): ?Column
