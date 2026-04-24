@@ -35,7 +35,7 @@ class WebhookActionDropdown extends ActionDropdown
     {
         return Button::make()
             ->primary()
-            ->href(Yii::$app->get('shopify')->getShopUrl('admin/settings/notifications/webhooks'))
+            ->url(Yii::$app->get('shopify')->getShopUrl('admin/settings/notifications/webhooks'))
             ->icon('external-link')
             ->text(Yii::t('shopify', 'View Webhooks'))
             ->target('_blank');

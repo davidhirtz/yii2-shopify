@@ -149,7 +149,7 @@ class ProductGridView extends GridView
         return Button::make()
             ->secondary()
             ->icon('wrench')
-            ->href($product->getShopifyAdminUrl())
+            ->url($product->getShopifyAdminUrl())
             ->target('_blank');
     }
 }

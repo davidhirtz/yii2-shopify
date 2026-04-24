@@ -26,7 +26,7 @@ class ProductActionDropdown extends ActionDropdown
     {
         return Button::make()
             ->primary()
-            ->href(Yii::$app->get('shopify')->getShopUrl('admin/products/new'))
+            ->url(Yii::$app->get('shopify')->getShopUrl('admin/products/new'))
             ->icon('external-link')
             ->text(Yii::t('shopify', 'New Product'))
             ->target('_blank');
