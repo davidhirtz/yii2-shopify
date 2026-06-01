@@ -9,10 +9,13 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\commands;
 
 use davidhirtz\yii2\shopify\components\admin\ProductBatchRepository;
+use davidhirtz\yii2\shopify\components\admin\StorefrontAccessTokenCreate;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionBatchQuery;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMapper;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMutation;
+use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\skeleton\console\controllers\traits\ConfigTrait;
 use davidhirtz\yii2\skeleton\console\controllers\traits\ControllerTrait;
 use Override;
 use Yii;
@@ -23,12 +26,22 @@ use yii\helpers\Console;
 
 class ShopifyController extends Controller
 {
+    use ConfigTrait;
     use ControllerTrait;
+
+    protected string $configFile = '@root/config/params.php';
+    protected ShopifyComponent $shopify;
+
+    public function init(): void
+    {
+        $this->shopify = Yii::$app->get('shopify');
+        parent::init();
+    }
 
     #[Override]
     public function afterAction($action, $result)
     {
-        foreach (Yii::$app->get('shopify')->getAdminApi()->getErrors() as $error) {
+        foreach ($this->shopify->getAdminApi()->getErrors() as $error) {
             $this->stderr("$error\n", Console::FG_RED);
         }
 
@@ -40,7 +53,7 @@ class ShopifyController extends Controller
      */
     public function actionImport(): void
     {
-        $this->interactiveStartStdout("Importing products...");
+        $this->interactiveStartStdout('Importing products...');
 
         $insertedCount = 0;
         $deletedCount = 0;
@@ -120,5 +133,29 @@ class ShopifyController extends Controller
         foreach ($request->getErrors() as $error) {
             $this->stderr("$error\n", Console::FG_RED);
         }
+    }
+
+    public function actionStorefrontAccessToken(): void
+    {
+        if (
+            $this->shopify->shopifyStorefrontAccessToken
+            && !$this->confirm('Do you want to overwrite the existing storefront access token?')
+        ) {
+            return;
+        }
+
+        $token = (new StorefrontAccessTokenCreate(Yii::$app->name))();
+
+        if (!$token) {
+            $this->stderr("Failed to create storefront access token.\n", Console::FG_RED);
+            return;
+        }
+
+        $config = [
+            ...$this->getConfig($this->configFile),
+            'shopifyStorefrontAccessToken' => $token,
+        ];
+
+        $this->setConfig($this->configFile, $config, 'Shopify storefront access token saved.');
     }
 }

@@ -1,3 +1,10 @@
+## 2.3.0 (Jun 1, 2026)
+
+- Added `shopifyStorefrontAccessToken` configuration via the command line for new shops, since it can be generated via
+  the GraphQL API
+- Added automatic generation of `shopifyAccessToken` for new shops via the GraphQL API
+- Bumped API version to `2026-04`
+
 ## 2.2.1 (Nov 13, 2025)
 
 - Fixed `shopifyShopDomain` containing HTTP protocol

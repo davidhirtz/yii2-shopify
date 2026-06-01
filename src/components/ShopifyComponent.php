@@ -11,7 +11,7 @@ use yii\base\InvalidConfigException;
 
 class ShopifyComponent extends Component
 {
-    private const string API_VERSION = '2025-07';
+    private const string API_VERSION = '2026-04';
 
     public ?string $shopifyAccessToken = null;
     public ?string $shopifyApiKey = null;

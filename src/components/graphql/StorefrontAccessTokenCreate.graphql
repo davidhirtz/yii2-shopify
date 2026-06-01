@@ -1,0 +1,12 @@
+mutation CreateStorefrontToken($input: StorefrontAccessTokenInput!) {
+    storefrontAccessTokenCreate(input: $input) {
+        storefrontAccessToken {
+            accessToken
+            title
+        }
+        userErrors {
+            field
+            message
+        }
+    }
+}

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMutation;
-use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\admin\controllers\traits\ShopifyControllerTrait;
 use davidhirtz\yii2\shopify\modules\admin\data\WebhookSubscriptionArrayDataProvider;
