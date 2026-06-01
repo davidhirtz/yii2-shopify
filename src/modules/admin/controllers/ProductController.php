@@ -8,6 +8,7 @@ use davidhirtz\yii2\shopify\components\admin\ProductBatchRepository;
 use davidhirtz\yii2\shopify\components\admin\ProductQuery;
 use davidhirtz\yii2\shopify\components\admin\ProductRepository;
 use davidhirtz\yii2\shopify\models\Product;
+use davidhirtz\yii2\shopify\modules\admin\controllers\traits\ShopifyControllerTrait;
 use davidhirtz\yii2\shopify\modules\admin\data\ProductActiveDataProvider;
 use davidhirtz\yii2\skeleton\web\Controller;
 use Override;
@@ -19,6 +20,8 @@ use yii\web\Response;
 
 class ProductController extends Controller
 {
+    use ShopifyControllerTrait;
+
     #[Override]
     public function behaviors(): array
     {
@@ -71,7 +74,7 @@ class ProductController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $api = Yii::$app->get('shopify')->getAdminApi();
+        $api = $this->shopify->getAdminApi();
 
         $repository = new ProductRepository($data);
         $repository->save();
@@ -87,7 +90,7 @@ class ProductController extends Controller
         $repository = new ProductBatchRepository();
         $repository->save();
 
-        $api = Yii::$app->get('shopify')->getAdminApi();
+        $api = $this->shopify->getAdminApi();
         $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'All products updated via Shopify.'));
 
         return $this->redirect(['index']);

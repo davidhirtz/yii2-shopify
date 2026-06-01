@@ -7,6 +7,7 @@ namespace davidhirtz\yii2\shopify\modules\admin\controllers;
 use davidhirtz\yii2\shopify\components\admin\WebhookSubscriptionMutation;
 use davidhirtz\yii2\shopify\components\ShopifyComponent;
 use davidhirtz\yii2\shopify\models\WebhookSubscription;
+use davidhirtz\yii2\shopify\modules\admin\controllers\traits\ShopifyControllerTrait;
 use davidhirtz\yii2\shopify\modules\admin\data\WebhookSubscriptionArrayDataProvider;
 use davidhirtz\yii2\shopify\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
@@ -19,8 +20,7 @@ use yii\web\Response;
 class WebhookController extends Controller
 {
     use ModuleTrait;
-
-    protected ShopifyComponent $shopify;
+    use ShopifyControllerTrait;
 
     #[Override]
     public function behaviors(): array
@@ -49,13 +49,6 @@ class WebhookController extends Controller
                 ],
             ],
         ];
-    }
-
-    #[Override]
-    public function init(): void
-    {
-        $this->shopify = Yii::$app->get('shopify');
-        parent::init();
     }
 
     public function actionIndex(): Response|string

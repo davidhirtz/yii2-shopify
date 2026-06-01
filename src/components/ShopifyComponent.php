@@ -51,15 +51,22 @@ class ShopifyComponent extends Component
         return hash_equals($hmacHeader, $calculatedHmac);
     }
 
+    protected function getTemporaryAccessToken(): string
+    {
+        return (new ShopifyAccessToken($this->shopifyShopName, $this->shopifyApiKey, $this->shopifyApiSecret))();
+    }
+
     public function getAdminApi(): AdminApi
     {
-        if (!isset($this->shopifyShopName, $this->shopifyAccessToken)) {
+        if (!isset($this->shopifyShopName)) {
             throw new InvalidConfigException('Shopify shop name and access token must be set.');
         }
 
+        $accessToken = $this->shopifyAccessToken ?? $this->getTemporaryAccessToken();
+
         return $this->api ??= new AdminApi(
             $this->shopifyShopName,
-            $this->shopifyAccessToken,
+            $accessToken,
             $this->shopifyApiVersion
         );
     }

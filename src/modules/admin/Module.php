@@ -9,6 +9,7 @@ use davidhirtz\yii2\shopify\models\WebhookSubscription;
 use davidhirtz\yii2\shopify\modules\admin\controllers\ProductController;
 use davidhirtz\yii2\shopify\modules\admin\controllers\WebhookController;
 use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
+use Override;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -23,7 +24,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
     public ?string $name = null;
     public $defaultRoute = 'product';
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->name ??= Yii::t('shopify', 'Products');
@@ -46,6 +47,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
         ];
     }
 
+    #[Override]
     public function getDashboardPanels(): array
     {
         return [
@@ -69,6 +71,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
         ];
     }
 
+    #[Override]
     public function getNavBarItems(): array
     {
         return [
