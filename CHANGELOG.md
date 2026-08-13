@@ -1,3 +1,7 @@
+## 2.3.1 (Jun 1, 2026)
+
+- Fixed `ShopifyPrice` rounding error 
+
 ## 2.3.0 (Jun 1, 2026)
 
 - Added `shopifyStorefrontAccessToken` configuration via the command line for new shops, since it can be generated via
