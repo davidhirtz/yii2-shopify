@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Skeleton\Widgets\Navs\NavItem;
@@ -14,7 +15,7 @@ class ShopifyNavItem extends NavItem
 {
     public function __construct(array $config = [])
     {
-        $this->label ??= Yii::t('shopify', 'Shopify');
+        $this->label ??= Lang::t('shopify', 'COMMON_SHOPIFY');
         $this->icon ??= 'brand:shopify';
         $this->order ??= 50;
         $this->url ??= ['/admin/shopify/product/index'];
@@ -37,7 +38,7 @@ class ShopifyNavItem extends NavItem
     protected function getProductsItem(): NavItem
     {
         return NavItem::make()
-            ->label(Yii::t('shopify', 'Products'))
+            ->label(Lang::t('shopify', 'COMMON_PRODUCTS'))
             ->icon('tags')
             ->order(10)
             ->url(['/admin/shopify/product/index'])
@@ -48,7 +49,7 @@ class ShopifyNavItem extends NavItem
     protected function getWebhooksItem(): NavItem
     {
         return NavItem::make()
-            ->label(Yii::t('shopify', 'Webhooks'))
+            ->label(Lang::t('shopify', 'COMMON_WEBHOOKS'))
             ->icon('satellite-dish')
             ->order(20)
             ->url(['/admin/shopify/webhook/index'])

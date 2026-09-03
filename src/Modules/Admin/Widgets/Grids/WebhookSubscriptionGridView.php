@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
@@ -118,6 +119,6 @@ class WebhookSubscriptionGridView extends GridView
     {
         return DeleteGridButton::make()
             ->model($model)
-            ->title(Yii::t('shopify', 'Are you sure you want to remove this webhook?'));
+            ->title(Lang::t('shopify', 'WEBHOOK_SUBSCRIPTION_CONFIRM_ARE_YOU_SURE_YOU_WANT_TO'));
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
+use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
@@ -141,7 +142,7 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+            return $this->getI18nAttribute('name') ?: Lang::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -152,7 +153,7 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
 
     public function getTrailModelType(): string
     {
-        return Yii::t('shopify', 'Variant');
+        return Lang::t('shopify', 'COMMON_VARIANT');
     }
 
     public function getTrailModelAdminRoute(): array|false
@@ -170,25 +171,25 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
     {
         return [
             ...parent::attributeLabels(),
-            'name' => Yii::t('shopify', 'Title'),
-            'product_id' => Yii::t('shopify', 'Product'),
-            'image_id' => Yii::t('shopify', 'Image'),
-            'position' => Yii::t('shopify', 'Position'),
-            'price' => Yii::t('shopify', 'Price'),
-            'compare_at_price' => Yii::t('shopify', 'Compare at price'),
-            'option_1' => Yii::t('shopify', 'Option 1'),
-            'option_2' => Yii::t('shopify', 'Option 2'),
-            'option_3' => Yii::t('shopify', 'Option 3'),
-            'barcode' => Yii::t('shopify', 'Barcode (ISBN, UPC, GTIN, etc.)'),
-            'sku' => Yii::t('shopify', 'SKU (Stock Keeping Unit)'),
-            'is_taxable' => Yii::t('shopify', 'Taxable'),
-            'weight' => Yii::t('shopify', 'Weight'),
-            'weight_unit' => Yii::t('shopify', 'Weight unit'),
-            'unit_price' => Yii::t('shopify', 'Unit price'),
-            'unit_price_measurement' => Yii::t('shopify', 'Unit price measurement'),
-            'inventory_tracked' => Yii::t('shopify', 'Inventory tracking'),
-            'inventory_quantity' => Yii::t('shopify', 'Quantity'),
-            'inventory_policy' => Yii::t('shopify', 'Inventory policy'),
+            'name' => Lang::t('shopify', 'PRODUCT_VARIANT_NAME_LABEL'),
+            'product_id' => Lang::t('shopify', 'PRODUCT_VARIANT_PRODUCT_ID_LABEL'),
+            'image_id' => Lang::t('shopify', 'PRODUCT_VARIANT_IMAGE_ID_LABEL'),
+            'position' => Lang::t('shopify', 'PRODUCT_VARIANT_POSITION_LABEL'),
+            'price' => Lang::t('shopify', 'PRODUCT_VARIANT_PRICE_LABEL'),
+            'compare_at_price' => Lang::t('shopify', 'PRODUCT_VARIANT_COMPARE_AT_PRICE_LABEL'),
+            'option_1' => Lang::t('shopify', 'PRODUCT_VARIANT_OPTION_1_LABEL'),
+            'option_2' => Lang::t('shopify', 'PRODUCT_VARIANT_OPTION_2_LABEL'),
+            'option_3' => Lang::t('shopify', 'PRODUCT_VARIANT_OPTION_3_LABEL'),
+            'barcode' => Lang::t('shopify', 'PRODUCT_VARIANT_BARCODE_LABEL'),
+            'sku' => Lang::t('shopify', 'PRODUCT_VARIANT_SKU_LABEL'),
+            'is_taxable' => Lang::t('shopify', 'PRODUCT_VARIANT_IS_TAXABLE_LABEL'),
+            'weight' => Lang::t('shopify', 'PRODUCT_VARIANT_WEIGHT_LABEL'),
+            'weight_unit' => Lang::t('shopify', 'PRODUCT_VARIANT_WEIGHT_UNIT_LABEL'),
+            'unit_price' => Lang::t('shopify', 'PRODUCT_VARIANT_UNIT_PRICE_LABEL'),
+            'unit_price_measurement' => Lang::t('shopify', 'PRODUCT_VARIANT_UNIT_PRICE_MEASUREMENT_LABEL'),
+            'inventory_tracked' => Lang::t('shopify', 'PRODUCT_VARIANT_INVENTORY_TRACKED_LABEL'),
+            'inventory_quantity' => Lang::t('shopify', 'PRODUCT_VARIANT_INVENTORY_QUANTITY_LABEL'),
+            'inventory_policy' => Lang::t('shopify', 'PRODUCT_VARIANT_INVENTORY_POLICY_LABEL'),
         ];
     }
 

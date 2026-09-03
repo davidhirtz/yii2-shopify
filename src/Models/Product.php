@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
+use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
@@ -178,7 +179,7 @@ class Product extends ActiveRecord implements
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+            return $this->getI18nAttribute('name') ?: Lang::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -189,7 +190,7 @@ class Product extends ActiveRecord implements
 
     public function getTrailModelType(): string
     {
-        return Yii::t('shopify', 'Product');
+        return Lang::t('shopify', 'COMMON_PRODUCT');
     }
 
     public function getTrailModelAdminRoute(): array|false
@@ -218,16 +219,16 @@ class Product extends ActiveRecord implements
     {
         return [
             ...parent::attributeLabels(),
-            'image_id' => Yii::t('shopify', 'Image'),
-            'variant_id' => Yii::t('shopify', 'Variant'),
-            'name' => Yii::t('shopify', 'Title'),
-            'content' => Yii::t('shopify', 'Description'),
-            'slug' => Yii::t('shopify', 'Shopify slug'),
-            'vendor' => Yii::t('shopify', 'Vendor'),
-            'product_type' => Yii::t('shopify', 'Type'),
-            'variant_count' => Yii::t('shopify', 'Variants'),
-            'total_inventory_quantity' => Yii::t('shopify', 'Inventory'),
-            'last_import_at' => Yii::t('shopify', 'Last import'),
+            'image_id' => Lang::t('shopify', 'PRODUCT_IMAGE_ID_LABEL'),
+            'variant_id' => Lang::t('shopify', 'PRODUCT_VARIANT_ID_LABEL'),
+            'name' => Lang::t('shopify', 'PRODUCT_NAME_LABEL'),
+            'content' => Lang::t('shopify', 'PRODUCT_CONTENT_LABEL'),
+            'slug' => Lang::t('shopify', 'PRODUCT_SLUG_LABEL'),
+            'vendor' => Lang::t('shopify', 'PRODUCT_VENDOR_LABEL'),
+            'product_type' => Lang::t('shopify', 'PRODUCT_PRODUCT_TYPE_LABEL'),
+            'variant_count' => Lang::t('shopify', 'PRODUCT_VARIANT_COUNT_LABEL'),
+            'total_inventory_quantity' => Lang::t('shopify', 'PRODUCT_TOTAL_INVENTORY_QUANTITY_LABEL'),
+            'last_import_at' => Lang::t('shopify', 'PRODUCT_LAST_IMPORT_AT_LABEL'),
         ];
     }
 

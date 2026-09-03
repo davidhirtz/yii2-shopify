@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Navs\ActionDropdown;
 use Stringable;
@@ -28,7 +29,7 @@ class ProductActionDropdown extends ActionDropdown
             ->primary()
             ->url(Yii::$app->get('shopify')->getShopUrl('admin/products/new'))
             ->icon('external-link')
-            ->text(Yii::t('shopify', 'New Product'))
+            ->text(Lang::t('shopify', 'PRODUCT_ACTION_DROPDOWN_NEW_PRODUCT'))
             ->target('_blank');
     }
 
@@ -40,7 +41,7 @@ class ProductActionDropdown extends ActionDropdown
         return Button::make()
             ->primary()
             ->icon('sync')
-            ->text(Yii::t('shopify', 'Reload Products'))
+            ->text(Lang::t('shopify', 'PRODUCT_ACTION_DROPDOWN_RELOAD_PRODUCTS'))
             ->post(['/admin/shopify/product/update-all']);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
+use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
@@ -106,7 +107,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return Yii::t('skeleton', '{model} #{id}', [
+            return Lang::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -117,7 +118,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
 
     public function getTrailModelType(): string
     {
-        return Yii::t('shopify', 'Image');
+        return Lang::t('shopify', 'COMMON_IMAGE');
     }
 
     public function getTrailModelAdminRoute(): array|false
@@ -135,12 +136,12 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
     {
         return [
             ...parent::attributeLabels(),
-            'position' => Yii::t('shopify', 'Position'),
-            'product_id' => Yii::t('shopify', 'Product'),
-            'alt_text' => Yii::t('shopify', 'Alt text'),
-            'weight' => Yii::t('shopify', 'Weight'),
-            'height' => Yii::t('shopify', 'Height'),
-            'src' => Yii::t('shopify', 'URL'),
+            'position' => Lang::t('shopify', 'PRODUCT_IMAGE_POSITION_LABEL'),
+            'product_id' => Lang::t('shopify', 'PRODUCT_IMAGE_PRODUCT_ID_LABEL'),
+            'alt_text' => Lang::t('shopify', 'PRODUCT_IMAGE_ALT_TEXT_LABEL'),
+            'weight' => Lang::t('shopify', 'PRODUCT_IMAGE_WEIGHT_LABEL'),
+            'height' => Lang::t('shopify', 'PRODUCT_IMAGE_HEIGHT_LABEL'),
+            'src' => Lang::t('shopify', 'PRODUCT_IMAGE_SRC_LABEL'),
         ];
     }
 

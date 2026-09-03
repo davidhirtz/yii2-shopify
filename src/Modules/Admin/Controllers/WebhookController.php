@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Models\WebhookSubscription;
@@ -61,7 +62,7 @@ class WebhookController extends Controller
     public function actionIndex(): Response|string
     {
         if (!$this->shopify->shopifyApiSecret) {
-            $this->error(Yii::t('shopify', 'Shopify Admin API secret key must be set to use webhooks.'));
+            $this->error(Lang::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API_SECRET_KEY_MUST'));
         }
 
         $provider = new WebhookSubscriptionArrayDataProvider([
@@ -89,7 +90,7 @@ class WebhookController extends Controller
                 continue;
             }
 
-            $this->errorOrSuccess($request->getErrors(), Yii::t('shopify', "The webhook \"{topic}\" was created.", [
+            $this->errorOrSuccess($request->getErrors(), Lang::t('shopify', 'WEBHOOK_FLASH_THE_WEBHOOK_WAS_CREATED', [
                 'topic' => $attributes['topic'],
             ]));
         }
@@ -104,7 +105,7 @@ class WebhookController extends Controller
         $request = new WebhookSubscriptionMutation();
 
         if ($request->delete($id)) {
-            $this->success(Yii::t('shopify', 'The webhook was deleted.'));
+            $this->success(Lang::t('shopify', 'WEBHOOK_FLASH_THE_WEBHOOK_WAS_DELETED'));
         }
 
         $this->error($request->getErrors());

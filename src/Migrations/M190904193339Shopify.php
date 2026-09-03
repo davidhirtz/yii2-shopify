@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Migrations;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\ProductImage;
 use Hirtz\Shopify\Models\ProductVariant;
@@ -116,11 +117,11 @@ final class M190904193339Shopify extends Migration
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
         $productUpdate = $auth->createPermission(Product::AUTH_PRODUCT_UPDATE);
-        $productUpdate->description = Yii::t('shopify', 'Manage Shopify products', [], Yii::$app->sourceLanguage);
+        $productUpdate->description = Lang::t('shopify', 'AUTH_PRODUCT_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($productUpdate);
 
         $shopifyWebhookUpdate = $auth->createPermission(Webhook::AUTH_WEBHOOK_UPDATE);
-        $shopifyWebhookUpdate->description = Yii::t('shopify', 'Manage Shopify webhooks', [], Yii::$app->sourceLanguage);
+        $shopifyWebhookUpdate->description = Lang::t('shopify', 'AUTH_SHOPIFY_WEBHOOK_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($shopifyWebhookUpdate);
 
         $auth->addChild($admin, $productUpdate);

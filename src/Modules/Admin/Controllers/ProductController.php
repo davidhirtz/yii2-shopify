@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Components\Admin\ProductBatchRepository;
 use Hirtz\Shopify\Components\Admin\ProductQuery;
 use Hirtz\Shopify\Components\Admin\ProductRepository;
@@ -67,7 +68,7 @@ class ProductController extends Controller
             $product = Product::findOne($id);
 
             if ($product->delete()) {
-                $this->success(Yii::t('shopify', 'The product was deleted because it was not found on Shopify anymore.'));
+                $this->success(Lang::t('shopify', 'PRODUCT_FLASH_THE_PRODUCT_WAS_DELETED_BECAUSE_IT'));
                 return $this->redirect(['index']);
             }
 
@@ -80,7 +81,7 @@ class ProductController extends Controller
         $repository->save();
 
         $this->error($api->getErrors());
-        $this->errorOrSuccess($repository->product, Yii::t('shopify', 'The product was updated via Shopify.'));
+        $this->errorOrSuccess($repository->product, Lang::t('shopify', 'PRODUCT_FLASH_THE_PRODUCT_WAS_UPDATED_VIA_SHOPIFY'));
 
         return $this->redirect(['index']);
     }
@@ -91,7 +92,7 @@ class ProductController extends Controller
         $repository->save();
 
         $api = Yii::$app->get('shopify')->getAdminApi();
-        $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'All products updated via Shopify.'));
+        $this->errorOrSuccess($api->getErrors(), Lang::t('shopify', 'PRODUCT_FLASH_ALL_PRODUCTS_UPDATED_VIA_SHOPIFY'));
 
         return $this->redirect(['index']);
     }
