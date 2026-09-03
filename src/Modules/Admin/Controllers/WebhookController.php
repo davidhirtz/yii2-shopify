@@ -62,7 +62,7 @@ class WebhookController extends Controller
     public function actionIndex(): Response|string
     {
         if (!$this->shopify->shopifyApiSecret) {
-            $this->error(Lang::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API_SECRET_KEY_MUST'));
+            $this->error(Lang::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API'));
         }
 
         $provider = new WebhookSubscriptionArrayDataProvider([
@@ -90,7 +90,7 @@ class WebhookController extends Controller
                 continue;
             }
 
-            $this->errorOrSuccess($request->getErrors(), Lang::t('shopify', 'WEBHOOK_FLASH_THE_WEBHOOK_WAS_CREATED', [
+            $this->errorOrSuccess($request->getErrors(), Lang::t('shopify', 'WEBHOOK_SUCCESS_CREATED', [
                 'topic' => $attributes['topic'],
             ]));
         }
@@ -105,7 +105,7 @@ class WebhookController extends Controller
         $request = new WebhookSubscriptionMutation();
 
         if ($request->delete($id)) {
-            $this->success(Lang::t('shopify', 'WEBHOOK_FLASH_THE_WEBHOOK_WAS_DELETED'));
+            $this->success(Lang::t('shopify', 'WEBHOOK_SUCCESS_DELETED'));
         }
 
         $this->error($request->getErrors());

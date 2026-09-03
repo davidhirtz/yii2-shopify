@@ -68,7 +68,7 @@ class ProductController extends Controller
             $product = Product::findOne($id);
 
             if ($product->delete()) {
-                $this->success(Lang::t('shopify', 'PRODUCT_FLASH_THE_PRODUCT_WAS_DELETED_BECAUSE_IT'));
+                $this->success(Lang::t('shopify', 'PRODUCT_SUCCESS_DELETED'));
                 return $this->redirect(['index']);
             }
 
@@ -81,7 +81,7 @@ class ProductController extends Controller
         $repository->save();
 
         $this->error($api->getErrors());
-        $this->errorOrSuccess($repository->product, Lang::t('shopify', 'PRODUCT_FLASH_THE_PRODUCT_WAS_UPDATED_VIA_SHOPIFY'));
+        $this->errorOrSuccess($repository->product, Lang::t('shopify', 'PRODUCT_SUCCESS_UPDATED_SHOPIFY'));
 
         return $this->redirect(['index']);
     }
@@ -92,7 +92,7 @@ class ProductController extends Controller
         $repository->save();
 
         $api = Yii::$app->get('shopify')->getAdminApi();
-        $this->errorOrSuccess($api->getErrors(), Lang::t('shopify', 'PRODUCT_FLASH_ALL_PRODUCTS_UPDATED_VIA_SHOPIFY'));
+        $this->errorOrSuccess($api->getErrors(), Lang::t('shopify', 'PRODUCT_SUCCESS_UPDATED_PRODUCTS'));
 
         return $this->redirect(['index']);
     }

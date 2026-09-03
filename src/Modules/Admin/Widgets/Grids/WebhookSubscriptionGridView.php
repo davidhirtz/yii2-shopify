@@ -119,6 +119,6 @@ class WebhookSubscriptionGridView extends GridView
     {
         return DeleteGridButton::make()
             ->model($model)
-            ->title(Lang::t('shopify', 'WEBHOOK_SUBSCRIPTION_CONFIRM_ARE_YOU_SURE_YOU_WANT_TO'));
+            ->title(Lang::t('shopify', 'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE'));
     }
 }
