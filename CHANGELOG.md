@@ -1,3 +1,7 @@
+## 3.0.0 (in development)
+
+- Changed the webhook URL rule to a `Route` registered via `Application::addRoutes()`
+
 ## 2.2.1 (Nov 13, 2025)
 
 - Fixed `shopifyShopDomain` containing HTTP protocol
