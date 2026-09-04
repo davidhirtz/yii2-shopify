@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Shopify\controllers;
+namespace Hirtz\Shopify\Controllers;
 
-use Hirtz\Shopify\Models\forms\ProductShopifyAdminRestApiForm;
+use Hirtz\Shopify\Components\Admin\ProductQuery;
+use Hirtz\Shopify\Components\Admin\ProductRepository;
 use Hirtz\Shopify\Models\Product;
-use Hirtz\Shopify\Module;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
+use Yii;
 use yii\helpers\Json;
 use yii\web\UnauthorizedHttpException;
 

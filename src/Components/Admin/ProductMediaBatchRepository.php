@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Components\Admin;
 
 use Hirtz\Shopify\Models\Product;
-use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
+use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 
 class ProductMediaBatchRepository
 {

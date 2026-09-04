@@ -6,7 +6,7 @@ namespace Hirtz\Shopify\Components\Admin;
 
 use davidhirtz\yii2\datetime\DateTime;
 use Hirtz\Shopify\Models\Product;
-use davidhirtz\yii2\skeleton\log\ActiveRecordErrorLogger;
+use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 
 readonly class ProductRepository
 {

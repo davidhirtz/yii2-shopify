@@ -63,39 +63,6 @@ class Webhook extends Model
         return parent::beforeValidate();
     }
 
-    public function create(): bool
-    {
-        if (!$this->validate()) {
-            return false;
-        }
-
-        $params = array_filter([
-            'topic' => $this->topic,
-            'address' => $this->address,
-            'format' => $this->format,
-            'fields' => $this->fields,
-            'metafield_namespaces' => $this->metafield_namespaces,
-            'private_metafield_namespaces' => $this->private_metafield_namespaces,
-        ]);
-
-        $api = static::getModule()->getApi();
-
-        if ($result = $api->setWebhook($params)) {
-            $this->setAttributes($result, false);
-            return true;
-        }
-
-        foreach ($api->getErrors() as $attribute => $errors) {
-            if ($attribute !== 'address' && $errors !== ['for this topic has already been taken']) {
-                foreach ($errors as $error) {
-                    $this->addError($attribute, $error);
-                }
-            }
-        }
-
-        return false;
-    }
-
     public function getFormattedTopic(): string
     {
         return static::getTopics()[$this->topic] ?? ucfirst(str_replace('/', ' ', $this->topic));

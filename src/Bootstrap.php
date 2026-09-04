@@ -6,7 +6,7 @@ namespace Hirtz\Shopify;
 
 use Hirtz\Shopify\Commands\ShopifyController;
 use Hirtz\Shopify\Components\ShopifyComponent;
-use Hirtz\Shopify\controllers\WebhookController;
+use Hirtz\Shopify\Controllers\WebhookController;
 use Hirtz\Skeleton\Web\Application;
 use Hirtz\Skeleton\Routing\Route;
 use Yii;
