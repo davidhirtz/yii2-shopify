@@ -88,6 +88,9 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
         ]);
     }
 
+    /**
+     * @return ActiveQuery<ProductImage>
+     */
     public function getImage(): ActiveQuery
     {
         return $this->hasOne(ProductImage::class, [

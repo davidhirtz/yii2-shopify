@@ -111,12 +111,18 @@ class Product extends ActiveRecord implements
         ]);
     }
 
+    /**
+     * @return ActiveQuery<ProductImage>
+     */
     public function getImage(): ActiveQuery
     {
         return $this->hasOne(ProductImage::class, ['id' => 'image_id', 'product_id' => 'id'])
             ->inverseOf('product');
     }
 
+    /**
+     * @return ActiveQuery<ProductImage>
+     */
     public function getImages(): ActiveQuery
     {
         return $this->hasMany(ProductImage::class, ['product_id' => 'id'])
@@ -125,12 +131,18 @@ class Product extends ActiveRecord implements
             ->inverseOf('product');
     }
 
+    /**
+     * @return ActiveQuery<ProductVariant>
+     */
     public function getVariant(): ActiveQuery
     {
         return $this->hasOne(ProductVariant::class, ['id' => 'variant_id'])
             ->inverseOf('product');
     }
 
+    /**
+     * @return ActiveQuery<ProductVariant>
+     */
     public function getVariants(): ActiveQuery
     {
         return $this->hasMany(ProductVariant::class, ['product_id' => 'id'])
