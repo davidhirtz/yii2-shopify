@@ -15,10 +15,13 @@ class ShopifyNavItem extends NavItem
 {
     public function __construct(array $config = [])
     {
-        $this->label ??= Lang::t('shopify', 'COMMON_SHOPIFY');
+        $this->label ??= Lang::t('shopify', 'COMMON_PRODUCTS');
         $this->icon ??= 'brand:shopify';
         $this->order ??= 50;
+        $this->roles ??= [Product::AUTH_PRODUCT_UPDATE];
         $this->url ??= ['/admin/shopify/product/index'];
+
+        $this->routes(['shopify/product']);
 
         parent::__construct($config);
     }
@@ -32,27 +35,16 @@ class ShopifyNavItem extends NavItem
 
     protected function addSubnavItems(): void
     {
-        $this->addItem($this->getProductsItem(), $this->getWebhooksItem());
-    }
-
-    protected function getProductsItem(): NavItem
-    {
-        return NavItem::make()
-            ->label(Lang::t('shopify', 'COMMON_PRODUCTS'))
-            ->icon('tags')
-            ->order(10)
-            ->url(['/admin/shopify/product/index'])
-            ->roles([Product::AUTH_PRODUCT_UPDATE])
-            ->routes(['shopify/product']);
+        $this->addItem($this->getWebhooksItem());
     }
 
     protected function getWebhooksItem(): NavItem
     {
         return NavItem::make()
             ->label(Lang::t('shopify', 'COMMON_WEBHOOKS'))
-            ->icon('satellite-dish')
-            ->order(20)
+            //->icon('satellite-dish')
             ->url(['/admin/shopify/webhook/index'])
+            ->order(20)
             ->roles([Webhook::AUTH_WEBHOOK_UPDATE])
             ->routes(['shopify/webhook']);
     }
