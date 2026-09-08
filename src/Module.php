@@ -13,13 +13,13 @@ class Module extends \yii\base\Module
 {
     use ModuleTrait;
 
-    public ?string $shopifyShopName;
-    public ?string $shopifyShopDomain;
-    public ?string $shopifyApiKey;
-    public ?string $shopifyApiSecret;
-    public ?string $shopifyAccessToken;
-    public ?string $shopifyStorefrontAccessToken;
-    public ?string $shopifyApiVersion;
+    public ?string $shopifyShopName = null;
+    public ?string $shopifyShopDomain = null;
+    public ?string $shopifyApiKey = null;
+    public ?string $shopifyApiSecret = null;
+    public ?string $shopifyAccessToken = null;
+    public ?string $shopifyStorefrontAccessToken = null;
+    public ?string $shopifyApiVersion = null;
     public string $latestShopifyApiVersion = '2026-01';
 
     public array $webhooks = [

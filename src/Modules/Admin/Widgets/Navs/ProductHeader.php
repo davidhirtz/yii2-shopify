@@ -19,6 +19,7 @@ class ProductHeader extends Header
      */
     use ProviderTrait;
 
+    #[\Override]
     protected function configure(): void
     {
         $this->breadcrumbs ??= [

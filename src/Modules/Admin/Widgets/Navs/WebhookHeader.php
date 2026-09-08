@@ -18,6 +18,7 @@ class WebhookHeader extends Header
      */
     use ProviderTrait;
 
+    #[\Override]
     protected function configure(): void
     {
         $this->breadcrumbs ??= [Lang::t('shopify', 'COMMON_SHOPIFY') => ['/admin/shopify/product/index']];

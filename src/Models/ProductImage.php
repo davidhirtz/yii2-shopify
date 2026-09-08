@@ -68,6 +68,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
         ]);
     }
 
+    #[\Override]
     public function beforeDelete(): bool
     {
         $product = $this->getProduct()
