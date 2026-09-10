@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Models\Queries;
 
 use Hirtz\Shopify\Models\Product;
-use Hirtz\Skeleton\Db\ActiveQuery;
+use Hirtz\Skeleton\Db\I18nActiveQuery;
 
 /**
  * @template T of Product
- * @template-extends ActiveQuery<T>
+ * @template-extends I18nActiveQuery<T>
  */
-class ProductQuery extends ActiveQuery
+class ProductQuery extends I18nActiveQuery
 {
     public function matching(?string $search): static
     {

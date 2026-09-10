@@ -10,13 +10,16 @@ use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Behaviors\TranslationBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
+use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Hirtz\Skeleton\Models\Traits\TranslationTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
 use Hirtz\Skeleton\Validators\HtmlValidator;
@@ -52,9 +55,11 @@ use yii\db\ActiveQuery;
 class Product extends ActiveRecord implements
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
-    TrailModelInterface
+    TrailModelInterface,
+    TranslationInterface
 {
     use I18nAttributesTrait;
+    use TranslationTrait;
     use ModuleTrait;
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
@@ -83,6 +88,7 @@ class Product extends ActiveRecord implements
         return [
             ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
+            'TranslationBehavior' => TranslationBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }
@@ -248,6 +254,11 @@ class Product extends ActiveRecord implements
     public function formName(): string
     {
         return 'Product';
+    }
+
+    public function getTranslationModelClass(): string
+    {
+        return self::class;
     }
 
     #[Override]

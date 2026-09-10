@@ -11,10 +11,14 @@ use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Behaviors\TranslationBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Db\I18nActiveQuery;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
+use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Hirtz\Skeleton\Models\Traits\TranslationTrait;
 use Hirtz\Skeleton\Validators\RelationValidator;
 use Override;
 use Yii;
@@ -30,9 +34,10 @@ use Yii;
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  */
-class ProductImage extends ActiveRecord implements TrailModelInterface
+class ProductImage extends ActiveRecord implements TrailModelInterface, TranslationInterface
 {
     use I18nAttributesTrait;
+    use TranslationTrait;
     use ModuleTrait;
     use TrailModelTrait;
     use ProductRelationTrait;
@@ -44,6 +49,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
             ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
             'TimestampBehavior' => TimestampBehavior::class,
+            'TranslationBehavior' => TranslationBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }
@@ -150,6 +156,20 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
     public function formName(): string
     {
         return 'ProductImage';
+    }
+
+    /**
+     * @return I18nActiveQuery<static>
+     */
+    #[Override]
+    public static function find(): I18nActiveQuery
+    {
+        return Yii::createObject(I18nActiveQuery::class, [static::class]);
+    }
+
+    public function getTranslationModelClass(): string
+    {
+        return self::class;
     }
 
     #[Override]
