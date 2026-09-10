@@ -8,7 +8,6 @@ use Hirtz\Shopify\Commands\ShopifyController;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Controllers\WebhookController;
 use Hirtz\Skeleton\Web\Application;
-use Hirtz\Skeleton\Routing\Route;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -54,7 +53,7 @@ class Bootstrap implements BootstrapInterface
          * @see WebhookController::actionProductsDelete()
          * @see WebhookController::actionProductsUpdate()
          */
-        $app->addRoutes(Route::to('shopify/webhook/{action}', 'shopify/webhook/{action}'));
+        $app->addUrlManagerRules(['shopify/webhook/<action>' => 'shopify/webhook/<action>']);
         $app->setMigrationNamespace('Hirtz\Shopify\Migrations');
     }
 }
