@@ -253,6 +253,6 @@ class Product extends ActiveRecord implements
     #[Override]
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('product');
+        return '{{%product}}';
     }
 }

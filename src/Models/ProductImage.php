@@ -155,6 +155,6 @@ class ProductImage extends ActiveRecord implements TrailModelInterface
     #[Override]
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('product_image');
+        return '{{%product_image}}';
     }
 }

@@ -205,6 +205,6 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface
     #[Override]
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('product_variant');
+        return '{{%product_variant}}';
     }
 }

@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify;
 
-use Hirtz\Skeleton\Modules\ModuleTrait;
 use Override;
 use Yii;
-use yii\base\InvalidConfigException;
 
 class Module extends \yii\base\Module
 {
-    use ModuleTrait;
-
     public ?string $shopifyShopName = null;
     public ?string $shopifyShopDomain = null;
     public ?string $shopifyApiKey = null;
@@ -40,10 +36,6 @@ class Module extends \yii\base\Module
     #[Override]
     public function init(): void
     {
-        if ($this->enableI18nTables) {
-            throw new InvalidConfigException('Shopify module does not support I18N database tables.');
-        }
-
         $this->shopifyShopName ??= Yii::$app->params['shopifyShopName'] ?? null;
 
         $this->shopifyShopDomain ??= Yii::$app->params['shopifyShopDomain'] ?? "$this->shopifyShopName.myshopify.com";
