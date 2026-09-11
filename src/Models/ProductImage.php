@@ -11,7 +11,6 @@ use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
-use Hirtz\Skeleton\Behaviors\TranslationBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Db\I18nActiveQuery;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
@@ -49,7 +48,6 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
             ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
             'TimestampBehavior' => TimestampBehavior::class,
-            'TranslationBehavior' => TranslationBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }

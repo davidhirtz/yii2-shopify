@@ -10,7 +10,6 @@ use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
-use Hirtz\Skeleton\Behaviors\TranslationBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
@@ -88,7 +87,6 @@ class Product extends ActiveRecord implements
         return [
             ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
-            'TranslationBehavior' => TranslationBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }
