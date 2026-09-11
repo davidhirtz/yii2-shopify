@@ -3,6 +3,8 @@
 - Translated attributes of `Product`, `ProductImage` and `ProductVariant` moved from their `_xx` columns into
   the skeleton's `translation` table (`M260910150000Translations`); `ProductQuery` extends `I18nActiveQuery`
 - Changed the webhook URL rule to a `Route` registered via `Application::addRoutes()`
+- Fixed `ProductVariant::$inventory_tracked` missing on a fresh install: `M250717124737ShopifyGraphql` only added
+  the column when the v2 `inventory_management` column was present
 
 ## 2.2.1 (Nov 13, 2025)
 
