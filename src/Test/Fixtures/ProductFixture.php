@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Test\Fixtures;
 
 use Hirtz\Shopify\Models\Product;
-use yii\test\ActiveFixture;
+use Hirtz\Skeleton\Test\Fixtures\ActiveFixture;
 use yii\test\InitDbFixture;
 
 class ProductFixture extends ActiveFixture
