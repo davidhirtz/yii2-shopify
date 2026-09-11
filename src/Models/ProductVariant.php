@@ -12,6 +12,7 @@ use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Db\I18nActiveQuery;
+use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
@@ -49,7 +50,7 @@ use yii\db\ActiveQuery;
  *
  * @property ProductImage|null $image {@see static::getImage()}
  */
-class ProductVariant extends ActiveRecord implements TrailModelInterface, TranslationInterface
+class ProductVariant extends ActiveRecord implements AdminRouteInterface, TrailModelInterface, TranslationInterface
 {
     use I18nAttributesTrait;
     use TranslationTrait;
@@ -161,11 +162,6 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
     public function getTrailModelType(): string
     {
         return Lang::t('shopify', 'COMMON_VARIANT');
-    }
-
-    public function getTrailModelAdminRoute(): array|false
-    {
-        return $this->getAdminRoute();
     }
 
     public function getAdminRoute(): array|false

@@ -11,6 +11,7 @@ use Hirtz\Shopify\Models\Queries\ProductQuery;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
@@ -52,6 +53,7 @@ use yii\db\ActiveQuery;
  * @property-read ProductVariant[] $variants {@see static::getVariants()}
  */
 class Product extends ActiveRecord implements
+    AdminRouteInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
     TrailModelInterface,
@@ -207,11 +209,6 @@ class Product extends ActiveRecord implements
     public function getTrailModelType(): string
     {
         return Lang::t('shopify', 'COMMON_PRODUCT');
-    }
-
-    public function getTrailModelAdminRoute(): array|false
-    {
-        return $this->getAdminRoute();
     }
 
     public function getAdminRoute(): array|false

@@ -13,6 +13,7 @@ use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Db\I18nActiveQuery;
+use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
@@ -33,7 +34,7 @@ use Yii;
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  */
-class ProductImage extends ActiveRecord implements TrailModelInterface, TranslationInterface
+class ProductImage extends ActiveRecord implements AdminRouteInterface, TrailModelInterface, TranslationInterface
 {
     use I18nAttributesTrait;
     use TranslationTrait;
@@ -124,11 +125,6 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
     public function getTrailModelType(): string
     {
         return Lang::t('shopify', 'COMMON_IMAGE');
-    }
-
-    public function getTrailModelAdminRoute(): array|false
-    {
-        return $this->getAdminRoute();
     }
 
     public function getAdminRoute(): array|false
