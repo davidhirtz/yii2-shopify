@@ -80,19 +80,10 @@ final class M190904193339Shopify extends Migration
             'created_at' => $this->dateTime()->notNull(),
         ], $this->getTableOptions());
 
-        $this->addI18nColumns(Product::tableName(), Product::instance()->i18nAttributes);
-        $this->addI18nColumns(ProductImage::tableName(), ProductImage::instance()->i18nAttributes);
-        $this->addI18nColumns(ProductVariant::tableName(), ProductVariant::instance()->i18nAttributes);
-
         $this->addPrimaryKey('id', Product::tableName(), 'id');
 
-        foreach (Product::instance()->getI18nAttributesNames('slug') as $attributesName) {
-            $this->createIndex($attributesName, Product::tableName(), $attributesName, true);
-        }
-
-        foreach (Product::instance()->getI18nAttributesNames('name') as $attributesName) {
-            $this->createIndex($attributesName, Product::tableName(), $attributesName);
-        }
+        $this->createIndex('slug', Product::tableName(), 'slug', true);
+        $this->createIndex('name', Product::tableName(), 'name');
 
         $this->addPrimaryKey('id', ProductImage::tableName(), 'id');
         $this->createIndex('product_id', ProductImage::tableName(), ['product_id', 'position']);
@@ -110,8 +101,6 @@ final class M190904193339Shopify extends Migration
         $tableName = $schema->getRawTableName(ProductVariant::tableName());
         $this->addForeignKey($tableName . '_image_id_ibfk', ProductVariant::tableName(), 'image_id', ProductImage::tableName(), 'id', 'SET NULL');
         $this->addForeignKey($tableName . '_product_id_ibfk', ProductVariant::tableName(), 'product_id', Product::tableName(), 'id', 'CASCADE');
-
-        $this->addI18nColumns(Product::tableName(), Product::instance()->i18nAttributes);
 
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);

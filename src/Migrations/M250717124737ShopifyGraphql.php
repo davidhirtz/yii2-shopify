@@ -28,13 +28,14 @@ class M250717124737ShopifyGraphql extends Migration
 
         $schema = $this->getDb()->getSchema()->getTableSchema(ProductVariant::tableName());
 
-        if ($schema->getColumn('inventory_management')) {
-            $this->addColumn(ProductVariant::tableName(), 'inventory_tracked', (string)$this->boolean()
-                ->unsigned()
-                ->notNull()
-                ->defaultValue(false)
-                ->after('inventory_quantity'));
+        $this->addColumn(ProductVariant::tableName(), 'inventory_tracked', (string)$this->boolean()
+            ->unsigned()
+            ->notNull()
+            ->defaultValue(false)
+            ->after('inventory_quantity'));
 
+        // `inventory_management` only exists in databases created before this migration, never on a fresh install.
+        if ($schema->getColumn('inventory_management')) {
             $this->update(
                 ProductVariant::tableName(),
                 ['inventory_tracked' => true],
