@@ -13,7 +13,7 @@ use yii\helpers\Json;
 
 class AdminApi
 {
-    private array $_errors = [];
+    private array $errors = [];
 
     public function __construct(
         private readonly string $shopifyShopName,
@@ -49,7 +49,7 @@ class AdminApi
         $results = $this->request($uri, $options);
 
         foreach ($results['errors'] ?? [] as $error) {
-            $this->_errors[] = $error['message'];
+            $this->errors[] = $error['message'];
             Yii::error($error['message']);
         }
 
@@ -68,7 +68,7 @@ class AdminApi
                 // Todo handle strings
                 $contents = Json::decode($exception->getResponse()->getBody()->getContents());
                 $errors = $contents['errors'] ?? $exception->getMessage() ?: 'Unknown API Error';
-                $this->_errors = (array)$errors;
+                $this->errors = (array)$errors;
             }
 
             Yii::error($exception->getMessage());
@@ -79,6 +79,6 @@ class AdminApi
 
     public function getErrors(): array
     {
-        return $this->_errors;
+        return $this->errors;
     }
 }
