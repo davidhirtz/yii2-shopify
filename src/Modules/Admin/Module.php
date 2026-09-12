@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifyNavItem;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
@@ -32,7 +31,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     {
         return $dashboard->addItem(DashboardItem::make()
             ->icon('brand:shopify')
-            ->label(Lang::t('shopify', 'MODULE_SHOPIFY_DASHBOARD'))
+            ->label(Yii::t('shopify', 'MODULE_SHOPIFY_DASHBOARD'))
             ->link(fn (A $link) => $link->target('_blank'))
             ->order(60)
             ->url(Yii::$app->get('shopify')->getShopUrl('admin')));

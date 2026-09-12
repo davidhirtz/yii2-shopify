@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
-use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
@@ -197,7 +196,7 @@ class Product extends ActiveRecord implements
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Lang::t('skeleton', 'COMMON_MODEL_ID', [
+            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -208,7 +207,7 @@ class Product extends ActiveRecord implements
 
     public function getTrailModelType(): string
     {
-        return Lang::t('shopify', 'COMMON_PRODUCT');
+        return Yii::t('shopify', 'COMMON_PRODUCT');
     }
 
     public function getAdminRoute(): array|false
@@ -232,16 +231,16 @@ class Product extends ActiveRecord implements
     {
         return [
             ...parent::attributeLabels(),
-            'image_id' => Lang::t('shopify', 'PRODUCT_IMAGE_ID_LABEL'),
-            'variant_id' => Lang::t('shopify', 'PRODUCT_VARIANT_ID_LABEL'),
-            'name' => Lang::t('shopify', 'PRODUCT_NAME_LABEL'),
-            'content' => Lang::t('shopify', 'PRODUCT_CONTENT_LABEL'),
-            'slug' => Lang::t('shopify', 'PRODUCT_SLUG_LABEL'),
-            'vendor' => Lang::t('shopify', 'PRODUCT_VENDOR_LABEL'),
-            'product_type' => Lang::t('shopify', 'PRODUCT_PRODUCT_TYPE_LABEL'),
-            'variant_count' => Lang::t('shopify', 'PRODUCT_VARIANT_COUNT_LABEL'),
-            'total_inventory_quantity' => Lang::t('shopify', 'PRODUCT_TOTAL_INVENTORY_QUANTITY_LABEL'),
-            'last_import_at' => Lang::t('shopify', 'PRODUCT_LAST_IMPORT_AT_LABEL'),
+            'image_id' => Yii::t('shopify', 'PRODUCT_IMAGE_ID_LABEL'),
+            'variant_id' => Yii::t('shopify', 'PRODUCT_VARIANT_ID_LABEL'),
+            'name' => Yii::t('shopify', 'PRODUCT_NAME_LABEL'),
+            'content' => Yii::t('shopify', 'PRODUCT_CONTENT_LABEL'),
+            'slug' => Yii::t('shopify', 'PRODUCT_SLUG_LABEL'),
+            'vendor' => Yii::t('shopify', 'PRODUCT_VENDOR_LABEL'),
+            'product_type' => Yii::t('shopify', 'PRODUCT_PRODUCT_TYPE_LABEL'),
+            'variant_count' => Yii::t('shopify', 'PRODUCT_VARIANT_COUNT_LABEL'),
+            'total_inventory_quantity' => Yii::t('shopify', 'PRODUCT_TOTAL_INVENTORY_QUANTITY_LABEL'),
+            'last_import_at' => Yii::t('shopify', 'PRODUCT_LAST_IMPORT_AT_LABEL'),
         ];
     }
 

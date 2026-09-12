@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Navs\ActionDropdown;
@@ -38,7 +37,7 @@ class WebhookActionDropdown extends ActionDropdown
             ->primary()
             ->url(Yii::$app->get('shopify')->getShopUrl('admin/settings/notifications/webhooks'))
             ->icon('external-link')
-            ->text(Lang::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_VIEW_WEBHOOKS'))
+            ->text(Yii::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_VIEW_WEBHOOKS'))
             ->target('_blank');
     }
 
@@ -50,8 +49,8 @@ class WebhookActionDropdown extends ActionDropdown
         return Button::make()
             ->primary()
             ->content($this->provider->getModels()
-                ? Lang::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_RELOAD_WEBHOOKS')
-                : Lang::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_INSTALL_WEBHOOKS'))
+                ? Yii::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_RELOAD_WEBHOOKS')
+                : Yii::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_INSTALL_WEBHOOKS'))
             ->icon('sync')
             ->post(['/admin/shopify/webhook/create']);
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Skeleton\Models\Breadcrumb;
 use Hirtz\Skeleton\Widgets\Navs\Header;
@@ -23,10 +22,10 @@ class ProductHeader extends Header
     protected function configure(): void
     {
         $this->breadcrumbs ??= [
-            new Breadcrumb(Lang::t('shopify', 'COMMON_SHOPIFY'), ['/admin/shopify/product/index']),
+            new Breadcrumb(Yii::t('shopify', 'COMMON_SHOPIFY'), ['/admin/shopify/product/index']),
         ];
 
-        $this->title ??= Lang::t('shopify', 'COMMON_PRODUCTS');
+        $this->title ??= Yii::t('shopify', 'COMMON_PRODUCTS');
         $this->subtitle ??= $this->getPaginationSubtitle($this->provider);
 
         $this->addContent($this->getProductActionDropdown());

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Components\Admin\ProductBatchRepository;
 use Hirtz\Shopify\Components\Admin\ProductQuery;
 use Hirtz\Shopify\Components\Admin\ProductRepository;
@@ -68,7 +67,7 @@ class ProductController extends Controller
             $product = Product::findOne($id);
 
             if ($product->delete()) {
-                $this->success(Lang::t('shopify', 'PRODUCT_SUCCESS_DELETED'));
+                $this->success(Yii::t('shopify', 'PRODUCT_SUCCESS_DELETED'));
                 return $this->redirect(['index']);
             }
 
@@ -81,7 +80,7 @@ class ProductController extends Controller
         $repository->save();
 
         $this->error($api->getErrors());
-        $this->errorOrSuccess($repository->product, Lang::t('shopify', 'PRODUCT_SUCCESS_UPDATED_SHOPIFY'));
+        $this->errorOrSuccess($repository->product, Yii::t('shopify', 'PRODUCT_SUCCESS_UPDATED_SHOPIFY'));
 
         return $this->redirect(['index']);
     }
@@ -92,7 +91,7 @@ class ProductController extends Controller
         $repository->save();
 
         $api = Yii::$app->get('shopify')->getAdminApi();
-        $this->errorOrSuccess($api->getErrors(), Lang::t('shopify', 'PRODUCT_SUCCESS_UPDATED_PRODUCTS'));
+        $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'PRODUCT_SUCCESS_UPDATED_PRODUCTS'));
 
         return $this->redirect(['index']);
     }

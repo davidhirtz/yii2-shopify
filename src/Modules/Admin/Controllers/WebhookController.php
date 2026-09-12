@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Models\WebhookSubscription;
@@ -62,7 +61,7 @@ class WebhookController extends Controller
     public function actionIndex(): Response|string
     {
         if (!$this->shopify->shopifyApiSecret) {
-            $this->error(Lang::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API'));
+            $this->error(Yii::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API'));
         }
 
         $provider = new WebhookSubscriptionArrayDataProvider([
@@ -90,7 +89,7 @@ class WebhookController extends Controller
                 continue;
             }
 
-            $this->errorOrSuccess($request->getErrors(), Lang::t('shopify', 'WEBHOOK_SUCCESS_CREATED', [
+            $this->errorOrSuccess($request->getErrors(), Yii::t('shopify', 'WEBHOOK_SUCCESS_CREATED', [
                 'topic' => $attributes['topic'],
             ]));
         }
@@ -105,7 +104,7 @@ class WebhookController extends Controller
         $request = new WebhookSubscriptionMutation();
 
         if ($request->delete($id)) {
-            $this->success(Lang::t('shopify', 'WEBHOOK_SUCCESS_DELETED'));
+            $this->success(Yii::t('shopify', 'WEBHOOK_SUCCESS_DELETED'));
         }
 
         $this->error($request->getErrors());

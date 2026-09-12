@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
@@ -119,6 +118,6 @@ class WebhookSubscriptionGridView extends GridView
     {
         return DeleteGridButton::make()
             ->model($model)
-            ->title(Lang::t('shopify', 'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE'));
+            ->title(Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE'));
     }
 }

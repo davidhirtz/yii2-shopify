@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
-use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
@@ -150,7 +149,7 @@ class ProductVariant extends ActiveRecord implements AdminRouteInterface, TrailM
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Lang::t('skeleton', 'COMMON_MODEL_ID', [
+            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -161,7 +160,7 @@ class ProductVariant extends ActiveRecord implements AdminRouteInterface, TrailM
 
     public function getTrailModelType(): string
     {
-        return Lang::t('shopify', 'COMMON_VARIANT');
+        return Yii::t('shopify', 'COMMON_VARIANT');
     }
 
     public function getAdminRoute(): array|false
@@ -174,25 +173,25 @@ class ProductVariant extends ActiveRecord implements AdminRouteInterface, TrailM
     {
         return [
             ...parent::attributeLabels(),
-            'name' => Lang::t('shopify', 'PRODUCT_VARIANT_NAME_LABEL'),
-            'product_id' => Lang::t('shopify', 'PRODUCT_VARIANT_PRODUCT_ID_LABEL'),
-            'image_id' => Lang::t('shopify', 'PRODUCT_VARIANT_IMAGE_ID_LABEL'),
-            'position' => Lang::t('shopify', 'PRODUCT_VARIANT_POSITION_LABEL'),
-            'price' => Lang::t('shopify', 'PRODUCT_VARIANT_PRICE_LABEL'),
-            'compare_at_price' => Lang::t('shopify', 'PRODUCT_VARIANT_COMPARE_AT_PRICE_LABEL'),
-            'option_1' => Lang::t('shopify', 'PRODUCT_VARIANT_OPTION_1_LABEL'),
-            'option_2' => Lang::t('shopify', 'PRODUCT_VARIANT_OPTION_2_LABEL'),
-            'option_3' => Lang::t('shopify', 'PRODUCT_VARIANT_OPTION_3_LABEL'),
-            'barcode' => Lang::t('shopify', 'PRODUCT_VARIANT_BARCODE_LABEL'),
-            'sku' => Lang::t('shopify', 'PRODUCT_VARIANT_SKU_LABEL'),
-            'is_taxable' => Lang::t('shopify', 'PRODUCT_VARIANT_IS_TAXABLE_LABEL'),
-            'weight' => Lang::t('shopify', 'PRODUCT_VARIANT_WEIGHT_LABEL'),
-            'weight_unit' => Lang::t('shopify', 'PRODUCT_VARIANT_WEIGHT_UNIT_LABEL'),
-            'unit_price' => Lang::t('shopify', 'PRODUCT_VARIANT_UNIT_PRICE_LABEL'),
-            'unit_price_measurement' => Lang::t('shopify', 'PRODUCT_VARIANT_UNIT_PRICE_MEASUREMENT_LABEL'),
-            'inventory_tracked' => Lang::t('shopify', 'PRODUCT_VARIANT_INVENTORY_TRACKED_LABEL'),
-            'inventory_quantity' => Lang::t('shopify', 'PRODUCT_VARIANT_INVENTORY_QUANTITY_LABEL'),
-            'inventory_policy' => Lang::t('shopify', 'PRODUCT_VARIANT_INVENTORY_POLICY_LABEL'),
+            'name' => Yii::t('shopify', 'PRODUCT_VARIANT_NAME_LABEL'),
+            'product_id' => Yii::t('shopify', 'PRODUCT_VARIANT_PRODUCT_ID_LABEL'),
+            'image_id' => Yii::t('shopify', 'PRODUCT_VARIANT_IMAGE_ID_LABEL'),
+            'position' => Yii::t('shopify', 'PRODUCT_VARIANT_POSITION_LABEL'),
+            'price' => Yii::t('shopify', 'PRODUCT_VARIANT_PRICE_LABEL'),
+            'compare_at_price' => Yii::t('shopify', 'PRODUCT_VARIANT_COMPARE_AT_PRICE_LABEL'),
+            'option_1' => Yii::t('shopify', 'PRODUCT_VARIANT_OPTION_1_LABEL'),
+            'option_2' => Yii::t('shopify', 'PRODUCT_VARIANT_OPTION_2_LABEL'),
+            'option_3' => Yii::t('shopify', 'PRODUCT_VARIANT_OPTION_3_LABEL'),
+            'barcode' => Yii::t('shopify', 'PRODUCT_VARIANT_BARCODE_LABEL'),
+            'sku' => Yii::t('shopify', 'PRODUCT_VARIANT_SKU_LABEL'),
+            'is_taxable' => Yii::t('shopify', 'PRODUCT_VARIANT_IS_TAXABLE_LABEL'),
+            'weight' => Yii::t('shopify', 'PRODUCT_VARIANT_WEIGHT_LABEL'),
+            'weight_unit' => Yii::t('shopify', 'PRODUCT_VARIANT_WEIGHT_UNIT_LABEL'),
+            'unit_price' => Yii::t('shopify', 'PRODUCT_VARIANT_UNIT_PRICE_LABEL'),
+            'unit_price_measurement' => Yii::t('shopify', 'PRODUCT_VARIANT_UNIT_PRICE_MEASUREMENT_LABEL'),
+            'inventory_tracked' => Yii::t('shopify', 'PRODUCT_VARIANT_INVENTORY_TRACKED_LABEL'),
+            'inventory_quantity' => Yii::t('shopify', 'PRODUCT_VARIANT_INVENTORY_QUANTITY_LABEL'),
+            'inventory_policy' => Yii::t('shopify', 'PRODUCT_VARIANT_INVENTORY_POLICY_LABEL'),
         ];
     }
 

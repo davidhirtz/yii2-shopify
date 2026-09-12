@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
-use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
@@ -113,7 +112,7 @@ class ProductImage extends ActiveRecord implements AdminRouteInterface, TrailMod
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return Lang::t('skeleton', 'COMMON_MODEL_ID', [
+            return Yii::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -124,7 +123,7 @@ class ProductImage extends ActiveRecord implements AdminRouteInterface, TrailMod
 
     public function getTrailModelType(): string
     {
-        return Lang::t('shopify', 'COMMON_IMAGE');
+        return Yii::t('shopify', 'COMMON_IMAGE');
     }
 
     public function getAdminRoute(): array|false
@@ -137,12 +136,12 @@ class ProductImage extends ActiveRecord implements AdminRouteInterface, TrailMod
     {
         return [
             ...parent::attributeLabels(),
-            'position' => Lang::t('shopify', 'PRODUCT_IMAGE_POSITION_LABEL'),
-            'product_id' => Lang::t('shopify', 'PRODUCT_IMAGE_PRODUCT_ID_LABEL'),
-            'alt_text' => Lang::t('shopify', 'PRODUCT_IMAGE_ALT_TEXT_LABEL'),
-            'weight' => Lang::t('shopify', 'PRODUCT_IMAGE_WEIGHT_LABEL'),
-            'height' => Lang::t('shopify', 'PRODUCT_IMAGE_HEIGHT_LABEL'),
-            'src' => Lang::t('shopify', 'PRODUCT_IMAGE_SRC_LABEL'),
+            'position' => Yii::t('shopify', 'PRODUCT_IMAGE_POSITION_LABEL'),
+            'product_id' => Yii::t('shopify', 'PRODUCT_IMAGE_PRODUCT_ID_LABEL'),
+            'alt_text' => Yii::t('shopify', 'PRODUCT_IMAGE_ALT_TEXT_LABEL'),
+            'weight' => Yii::t('shopify', 'PRODUCT_IMAGE_WEIGHT_LABEL'),
+            'height' => Yii::t('shopify', 'PRODUCT_IMAGE_HEIGHT_LABEL'),
+            'src' => Yii::t('shopify', 'PRODUCT_IMAGE_SRC_LABEL'),
         ];
     }
 
