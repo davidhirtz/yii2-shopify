@@ -1,5 +1,11 @@
 ## 3.0.0 (in development)
 
+- **One permission per admin-managed model.** `Models\Product::AUTH_SHOPIFY_PRODUCT` (`shopifyProduct`) replaces
+  `AUTH_PRODUCT_UPDATE` and `Models\Webhook::AUTH_SHOPIFY_WEBHOOK` (`shopifyWebhook`) replaces
+  `AUTH_WEBHOOK_UPDATE`, so the constant and its value agree on the prefix again;
+  `Models\WebhookSubscription`'s duplicate of the webhook constant is gone. Their descriptions are
+  `AUTH_SHOPIFY_PRODUCT_DESCRIPTION` and `AUTH_SHOPIFY_WEBHOOK_DESCRIPTION`.
+  `Migrations\M260914160000AuthItems` grants each new item to every parent and assignee of the old one
 - `Models\Product`, `Models\ProductImage` and `Models\ProductVariant` implement the skeleton's
   `Models\Interfaces\AdminModelInterface` in place of `AdminRouteInterface`: `getTrailModelName()` and
   `getTrailModelType()` are `getAdminName()` and `getAdminType()`, and the boilerplate name is

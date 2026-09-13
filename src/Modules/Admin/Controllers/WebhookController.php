@@ -6,7 +6,7 @@ namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
 use Hirtz\Shopify\Components\ShopifyComponent;
-use Hirtz\Shopify\Models\WebhookSubscription;
+use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
@@ -37,7 +37,7 @@ class WebhookController extends Controller
                             'delete',
                             'index',
                         ],
-                        'roles' => [WebhookSubscription::AUTH_WEBHOOK_UPDATE],
+                        'roles' => [Webhook::AUTH_SHOPIFY_WEBHOOK],
                     ],
                 ],
             ],

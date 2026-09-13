@@ -5,8 +5,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'AUTH_PRODUCT_UPDATE_DESCRIPTION' => 'Manage Shopify products',
-    'AUTH_SHOPIFY_WEBHOOK_UPDATE_DESCRIPTION' => 'Manage Shopify webhooks',
+    'AUTH_SHOPIFY_PRODUCT_DESCRIPTION' => 'Manage Shopify products',
+    'AUTH_SHOPIFY_WEBHOOK_DESCRIPTION' => 'Manage Shopify webhooks',
     'COMMON_IMAGE' => 'Image',
     'COMMON_PRODUCT' => 'Product',
     'COMMON_PRODUCTS' => 'Products',

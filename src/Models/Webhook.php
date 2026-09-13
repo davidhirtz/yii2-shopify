@@ -13,7 +13,7 @@ class Webhook extends Model
 {
     use ModuleTrait;
 
-    public const string AUTH_WEBHOOK_UPDATE = 'shopifyWebhookUpdate';
+    public const string AUTH_SHOPIFY_WEBHOOK = 'shopifyWebhook';
 
     public ?int $id = null;
     public ?string $address = null;

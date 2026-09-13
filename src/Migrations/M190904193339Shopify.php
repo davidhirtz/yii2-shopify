@@ -7,13 +7,15 @@ namespace Hirtz\Shopify\Migrations;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\ProductImage;
 use Hirtz\Shopify\Models\ProductVariant;
-use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Skeleton\Db\Traits\MigrationTrait;
 use Hirtz\Skeleton\Models\User;
 use Yii;
 use yii\db\Migration;
 
 /**
+ * The permission names and descriptions this creates are hardcoded: `M2609141[0-6]0000AuthItems` collapses them
+ * into one permission per model, so neither the constants nor the message keys exist any more.
+ *
  * @noinspection PhpUnused
  */
 final class M190904193339Shopify extends Migration
@@ -104,12 +106,12 @@ final class M190904193339Shopify extends Migration
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
-        $productUpdate = $auth->createPermission(Product::AUTH_PRODUCT_UPDATE);
-        $productUpdate->description = Yii::t('shopify', 'AUTH_PRODUCT_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $productUpdate = $auth->createPermission('shopifyProductUpdate');
+        $productUpdate->description = 'Manage Shopify products';
         $auth->add($productUpdate);
 
-        $shopifyWebhookUpdate = $auth->createPermission(Webhook::AUTH_WEBHOOK_UPDATE);
-        $shopifyWebhookUpdate->description = Yii::t('shopify', 'AUTH_SHOPIFY_WEBHOOK_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $shopifyWebhookUpdate = $auth->createPermission('shopifyWebhookUpdate');
+        $shopifyWebhookUpdate->description = 'Manage Shopify webhooks';
         $auth->add($shopifyWebhookUpdate);
 
         $auth->addChild($admin, $productUpdate);
@@ -131,7 +133,7 @@ final class M190904193339Shopify extends Migration
         $this->dropTable(ProductVariant::tableName());
         $this->dropTable(Product::tableName());
 
-        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => Product::AUTH_PRODUCT_UPDATE]);
-        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => Webhook::AUTH_WEBHOOK_UPDATE]);
+        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => 'shopifyProductUpdate']);
+        $this->delete(Yii::$app->getAuthManager()->itemTable, ['name' => 'shopifyWebhookUpdate']);
     }
 }

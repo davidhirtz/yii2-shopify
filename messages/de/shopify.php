@@ -5,8 +5,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'AUTH_PRODUCT_UPDATE_DESCRIPTION' => 'Shopify Produkte verwalten',
-    'AUTH_SHOPIFY_WEBHOOK_UPDATE_DESCRIPTION' => 'Shopify Webhooks verwalten',
+    'AUTH_SHOPIFY_PRODUCT_DESCRIPTION' => 'Shopify-Produkte verwalten',
+    'AUTH_SHOPIFY_WEBHOOK_DESCRIPTION' => 'Shopify-Webhooks verwalten',
     'COMMON_IMAGE' => 'Bild',
     'COMMON_PRODUCT' => 'Produkt',
     'COMMON_PRODUCTS' => 'Produkte',

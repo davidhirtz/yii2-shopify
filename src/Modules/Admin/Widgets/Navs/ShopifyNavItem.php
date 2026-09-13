@@ -17,7 +17,7 @@ class ShopifyNavItem extends NavItem
         $this->label ??= Yii::t('shopify', 'COMMON_PRODUCTS');
         $this->icon ??= 'brand:shopify';
         $this->order ??= 50;
-        $this->roles ??= [Product::AUTH_PRODUCT_UPDATE];
+        $this->roles ??= [Product::AUTH_SHOPIFY_PRODUCT];
         $this->url ??= ['/admin/shopify/product/index'];
 
         $this->routes(['shopify/product']);
@@ -44,7 +44,7 @@ class ShopifyNavItem extends NavItem
             //->icon('satellite-dish')
             ->url(['/admin/shopify/webhook/index'])
             ->order(20)
-            ->roles([Webhook::AUTH_WEBHOOK_UPDATE])
+            ->roles([Webhook::AUTH_SHOPIFY_WEBHOOK])
             ->routes(['shopify/webhook']);
     }
 }

@@ -14,8 +14,6 @@ class WebhookSubscription extends Model
 {
     use ModelTrait;
 
-    public const string AUTH_WEBHOOK_UPDATE = 'shopifyWebhookUpdate';
-
     public int $id;
     public string $api_version;
     public string $callbackUrl;

@@ -68,7 +68,7 @@ class Product extends ActiveRecord implements
         TrailModelTrait::formatTrailAttributeValue as parentFormatTrailAttributeValue;
     }
 
-    public const string AUTH_PRODUCT_UPDATE = 'shopifyProductUpdate';
+    public const string AUTH_SHOPIFY_PRODUCT = 'shopifyProduct';
 
     /**
      * @var array|string used when `$contentType`is set to "html". Use an array with the first value containing a

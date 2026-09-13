@@ -33,7 +33,7 @@ class ProductController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'update', 'update-all'],
-                        'roles' => [Product::AUTH_PRODUCT_UPDATE],
+                        'roles' => [Product::AUTH_SHOPIFY_PRODUCT],
                     ],
                 ],
             ],
