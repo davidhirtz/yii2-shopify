@@ -66,12 +66,19 @@ class ShopifyValueTest extends TestCase
 
     public function testTheDateTimeIsConvertedToTheApplicationTimeZone(): void
     {
-        Yii::$app->setTimeZone('Europe/Berlin');
+        $previous = Yii::$app->getTimeZone();
 
-        $dateTime = (new ShopifyDateTime('2026-09-13T10:00:00Z'))->toDateTime();
+        try {
+            Yii::$app->setTimeZone('Europe/Berlin');
 
-        self::assertSame('Europe/Berlin', $dateTime->getTimezone()->getName());
-        self::assertSame('2026-09-13 12:00:00', $dateTime->format('Y-m-d H:i:s'));
+            $dateTime = (new ShopifyDateTime('2026-09-13T10:00:00Z'))->toDateTime();
+
+            self::assertSame('Europe/Berlin', $dateTime->getTimezone()->getName());
+            self::assertSame('2026-09-13 12:00:00', $dateTime->format('Y-m-d H:i:s'));
+        } finally {
+            // Process wide, so it would outlive this application and move every later test's timestamps.
+            Yii::$app->setTimeZone($previous);
+        }
     }
 
     public function testValidatingAWebhookNeedsTheApiSecret(): void

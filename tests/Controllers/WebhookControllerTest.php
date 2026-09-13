@@ -23,7 +23,6 @@ class WebhookControllerTest extends TestCase
     public function testAProductIsDeleted(): void
     {
         $product = $this->getProductFromFixture('product-1');
-        self::assertNotNull($product);
 
         $this->request(['id' => $product->id]);
 

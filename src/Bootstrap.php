@@ -16,7 +16,7 @@ use yii\i18n\PhpMessageSource;
 class Bootstrap implements BootstrapInterface
 {
     /**
-     * @param Application $app
+     * @param Application|ConsoleApplication $app
      */
     public function bootstrap($app): void
     {
