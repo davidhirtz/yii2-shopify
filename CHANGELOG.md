@@ -1,5 +1,9 @@
 ## 3.0.0 (in development)
 
+- `Models\Product`, `Models\ProductImage` and `Models\ProductVariant` implement the skeleton's
+  `Models\Interfaces\AdminModelInterface` in place of `AdminRouteInterface`: `getTrailModelName()` and
+  `getTrailModelType()` are `getAdminName()` and `getAdminType()`, and the boilerplate name is
+  `Models\Traits\AdminModelTrait`'s
 - `Models\Product`, `Models\ProductImage` and `Models\ProductVariant` implement the skeleton
   `Models\Interfaces\AdminRouteInterface` and dropped their `getTrailModelAdminRoute()`
 - Translated attributes of `Product`, `ProductImage` and `ProductVariant` moved from their `_xx` columns into

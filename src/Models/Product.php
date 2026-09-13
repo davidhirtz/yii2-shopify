@@ -10,11 +10,11 @@ use Hirtz\Shopify\Models\Queries\ProductQuery;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
-use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
+use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
@@ -52,12 +52,12 @@ use yii\db\ActiveQuery;
  * @property-read ProductVariant[] $variants {@see static::getVariants()}
  */
 class Product extends ActiveRecord implements
-    AdminRouteInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
     TrailModelInterface,
     TranslationInterface
 {
+    use AdminModelTrait;
     use I18nAttributesTrait;
     use TranslationTrait;
     use ModuleTrait;
@@ -193,19 +193,7 @@ class Product extends ActiveRecord implements
         ]);
     }
 
-    public function getTrailModelName(): string
-    {
-        if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', 'COMMON_MODEL_ID', [
-                'model' => $this->getTrailModelType(),
-                'id' => $this->id,
-            ]);
-        }
-
-        return $this->getTrailModelType();
-    }
-
-    public function getTrailModelType(): string
+    public function getAdminType(): string
     {
         return Yii::t('shopify', 'COMMON_PRODUCT');
     }

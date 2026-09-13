@@ -12,9 +12,9 @@ use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Db\I18nActiveQuery;
-use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
+use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\TranslationTrait;
@@ -33,8 +33,9 @@ use Yii;
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  */
-class ProductImage extends ActiveRecord implements AdminRouteInterface, TrailModelInterface, TranslationInterface
+class ProductImage extends ActiveRecord implements TrailModelInterface, TranslationInterface
 {
+    use AdminModelTrait;
     use I18nAttributesTrait;
     use TranslationTrait;
     use ModuleTrait;
@@ -109,19 +110,7 @@ class ProductImage extends ActiveRecord implements AdminRouteInterface, TrailMod
         ]);
     }
 
-    public function getTrailModelName(): string
-    {
-        if ($this->id) {
-            return Yii::t('skeleton', 'COMMON_MODEL_ID', [
-                'model' => $this->getTrailModelType(),
-                'id' => $this->id,
-            ]);
-        }
-
-        return $this->getTrailModelType();
-    }
-
-    public function getTrailModelType(): string
+    public function getAdminType(): string
     {
         return Yii::t('shopify', 'COMMON_IMAGE');
     }
