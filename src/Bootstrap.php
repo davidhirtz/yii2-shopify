@@ -7,6 +7,7 @@ namespace Hirtz\Shopify;
 use Hirtz\Shopify\Commands\ShopifyController;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Controllers\WebhookController;
+use Hirtz\Skeleton\Console\Application as ConsoleApplication;
 use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
@@ -44,7 +45,9 @@ class Bootstrap implements BootstrapInterface
             'class' => ShopifyComponent::class,
         ]);
 
-        if ($app->getRequest()->getIsConsoleRequest()) {
+        // Not `getIsConsoleRequest()`: it falls back to `PHP_SAPI`, so a web application under the CLI SAPI —
+        // every test run — would map the console controller over the `shopify` module and hide its routes.
+        if ($app instanceof ConsoleApplication) {
             $app->controllerMap['shopify'] ??= ShopifyController::class;
         }
 

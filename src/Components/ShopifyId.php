@@ -10,8 +10,13 @@ readonly class ShopifyId
     {
     }
 
+    /**
+     * A GraphQL id is a `gid://shopify/Product/1` path, a webhook payload carries the bare number — and
+     * `strrchr()` returns `false` for the latter, which `substr()` refuses.
+     */
     public function toInt(): int
     {
-        return (int)substr(strrchr($this->id, '/'), 1);
+        $position = strrpos($this->id, '/');
+        return (int)($position === false ? $this->id : substr($this->id, $position + 1));
     }
 }

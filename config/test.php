@@ -9,13 +9,14 @@ $config = require("$basePath/vendor/davidhirtz/yii2-skeleton/config/test.php");
 // so naming one here would run it a second time and register its event handlers twice.
 return [
     ...$config,
-    'modules' => [
-        'shopify' => [
-            'shopifyShopName' => 'shop-name',
-            'shopifyApiKey' => 'api-key',
-            'shopifyApiSecret' => 'api-secret',
-            'shopifyAccessToken' => 'access-token',
-            'shopifyStorefrontAccessToken' => 'storefront-access-token',
-        ],
+    // The credentials are params, which is how a project configures them: `components.shopify` is only given its
+    // class by `Bootstrap`, and a component config that names no class is refused before the bootstrap runs.
+    'params' => [
+        ...$config['params'],
+        'shopifyShopName' => 'shop-name',
+        'shopifyApiKey' => 'api-key',
+        'shopifyApiSecret' => 'api-secret',
+        'shopifyAccessToken' => 'access-token',
+        'shopifyStorefrontAccessToken' => 'storefront-access-token',
     ],
 ];

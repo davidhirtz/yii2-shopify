@@ -16,7 +16,10 @@ readonly class ShopifyPrice
     public function __construct(int|float|string $value, ?string $currency = null)
     {
         $this->currency = $currency ?? Yii::$app->get('shopify')->defaultCurrency;
-        $this->value = (int)((float)$value * 100);
+
+        // Truncating the product of a float loses a cent on most prices: `(int)(19.99 * 100)` is 1998. The subunit
+        // is fixed at two digits, which every currency the shop sells in has to have.
+        $this->value = (int)round((float)$value * 100);
     }
 
     public function toInt(): int

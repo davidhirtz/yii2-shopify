@@ -1,5 +1,25 @@
 ## 3.0.0 (in development)
 
+- `Components\ShopifyPrice` rounds to the cent instead of truncating the product of a float: `(int)(19.99 * 100)`
+  is 1998, so a variant priced `19.99`, `0.29` or `1.15` was stored one cent short
+- `Components\ShopifyId` reads the last path segment without `strrchr()`, which returns `false` — and so is a
+  `TypeError` under `substr()` — for the bare numeric id a webhook payload carries
+- `Module` extends `Skeleton\Base\Module`, so its `controllerNamespace` is `Hirtz\Shopify\Controllers` rather
+  than Yii's lowercase default, which PSR-4 never resolves on a case-sensitive filesystem. The public
+  `shopify/webhook/*` endpoints only ever answered on a case-insensitive one
+- `Models\Webhook` reads the API version off the `shopify` component rather than the module, which defaulted to a
+  different one than `Components\Admin\AdminApi` calls the API with. The module's own credential properties are
+  read by nothing — **configure `params`, not `modules.shopify`**
+- `Bootstrap` maps the console controller for a console *application* rather than for the CLI SAPI, which a web
+  application under PHPUnit also reports, hiding the `shopify` module's own routes behind it
+- `Modules\Admin\Controllers\WebhookController::actionCreate()` reports only the errors each topic's own call
+  added. `WebhookSubscriptionMutation` accumulates them, so one address already taken silenced the success of
+  every topic after it
+- `Modules\Admin\Controllers\ProductController::actionUpdate()` no longer calls `delete()` on `null` for a
+  product that is in neither Shopify nor the database
+- `Components\GraphqlParser` marks a fragment before following it, so two fragments spreading each other
+  terminate, and reports a document that is not there instead of passing `false` to `preg_match_all()`
+- `Models\Webhook` uses `Base\Traits\ModelTrait`, as `WebhookSubscription` already did
 - **One permission per admin-managed model.** `Models\Product::AUTH_SHOPIFY_PRODUCT` (`shopifyProduct`) replaces
   `AUTH_PRODUCT_UPDATE` and `Models\Webhook::AUTH_SHOPIFY_WEBHOOK` (`shopifyWebhook`) replaces
   `AUTH_WEBHOOK_UPDATE`, so the constant and its value agree on the prefix again;

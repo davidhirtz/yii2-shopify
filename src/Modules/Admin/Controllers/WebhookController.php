@@ -82,19 +82,21 @@ class WebhookController extends Controller
         $urlManager = Yii::$app->getUrlManager();
 
         foreach (static::getModule()->webhooks as $attributes) {
-            $request->create($attributes['topic'], $urlManager->createAbsoluteUrl($attributes['route']));
-            $errors = $request->getErrors();
+            // The mutation accumulates its errors, so only the ones this call added speak for this topic — the
+            // whole list would report the first taken address against every topic after it.
+            $previousCount = count($request->getErrors());
 
-            if (in_array('Address for this topic has already been taken', $errors)) {
+            $request->create($attributes['topic'], $urlManager->createAbsoluteUrl($attributes['route']));
+            $errors = array_slice($request->getErrors(), $previousCount);
+
+            if (in_array('Address for this topic has already been taken', $errors, true)) {
                 continue;
             }
 
-            $this->errorOrSuccess($request->getErrors(), Yii::t('shopify', 'WEBHOOK_SUCCESS_CREATED', [
+            $this->errorOrSuccess($errors, Yii::t('shopify', 'WEBHOOK_SUCCESS_CREATED', [
                 'topic' => $attributes['topic'],
             ]));
         }
-
-        $this->error($request->getErrors());
 
         return $this->redirect(['index']);
     }

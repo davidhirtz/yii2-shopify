@@ -31,10 +31,9 @@ class WebhookController extends Controller
     #[Override]
     public function beforeAction($action): bool
     {
-        $hmacHeader = $_SERVER['HTTP_X_SHOPIFY_HMAC_SHA256'] ?? '';
-        $data = $this->getRequestBody();
+        $hmacHeader = (string)$this->request->getHeaders()->get('X-Shopify-Hmac-Sha256');
 
-        if (!Yii::$app->get('shopify')->validateHmac($hmacHeader, $data)) {
+        if (!Yii::$app->get('shopify')->validateHmac($hmacHeader, $this->getRequestBody())) {
             throw new UnauthorizedHttpException();
         }
 
@@ -85,8 +84,8 @@ class WebhookController extends Controller
         return $data['id'] ?? null;
     }
 
-    private function getRequestBody(): string|false
+    private function getRequestBody(): string
     {
-        return file_get_contents('php://input');
+        return $this->request->getRawBody();
     }
 }

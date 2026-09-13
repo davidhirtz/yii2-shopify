@@ -66,7 +66,7 @@ class ProductController extends Controller
         if (!$data) {
             $product = Product::findOne($id);
 
-            if ($product->delete()) {
+            if ($product?->delete()) {
                 $this->success(Yii::t('shopify', 'PRODUCT_SUCCESS_DELETED'));
                 return $this->redirect(['index']);
             }

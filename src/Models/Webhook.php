@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Models;
 
 use Hirtz\Shopify\Modules\ModuleTrait;
+use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Override;
 use Yii;
 use yii\base\Model;
 
 class Webhook extends Model
 {
+    use ModelTrait;
     use ModuleTrait;
 
     public const string AUTH_SHOPIFY_WEBHOOK = 'shopifyWebhook';
@@ -57,7 +59,7 @@ class Webhook extends Model
     public function beforeValidate(): bool
     {
         $this->address = $this->address ?: Yii::$app->getUrlManager()->createAbsoluteUrl($this->route);
-        $this->api_version = $this->api_version ?: static::getModule()->shopifyApiVersion;
+        $this->api_version = $this->api_version ?: Yii::$app->get('shopify')->shopifyApiVersion;
 
         return parent::beforeValidate();
     }
