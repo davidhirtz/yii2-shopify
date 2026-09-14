@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
-use Hirtz\Skeleton\Models\Breadcrumb;
 use Hirtz\Skeleton\Widgets\Navs\Header;
 use Hirtz\Skeleton\Widgets\Traits\ProviderTrait;
+use Override;
 use Stringable;
 use Yii;
 
@@ -18,13 +18,9 @@ class ProductHeader extends Header
      */
     use ProviderTrait;
 
-    #[\Override]
+    #[Override]
     protected function configure(): void
     {
-        $this->breadcrumbs ??= [
-            new Breadcrumb(Yii::t('shopify', 'COMMON_SHOPIFY'), ['/admin/shopify/product/index']),
-        ];
-
         $this->title ??= Yii::t('shopify', 'COMMON_PRODUCTS');
         $this->subtitle ??= $this->getPaginationSubtitle($this->provider);
 
