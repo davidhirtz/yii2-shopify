@@ -71,16 +71,9 @@ class Product extends ActiveRecord implements
     public const string AUTH_SHOPIFY_PRODUCT = 'shopifyProduct';
 
     /**
-     * @var array|string used when `$contentType`is set to "html". Use an array with the first value containing a
-     * validator class, following keys can be used to configure the validator, string containing the class name or
-     * false for disabling the validation.
+     * @var array|string|null the validator for the product description, `null` disables the validation
      */
-    public array|string $htmlValidator = HtmlValidator::class;
-
-    /**
-     * @var string|false the content type, "html" enables HTML validators and WYSIWYG editor
-     */
-    public string|false $contentType = 'html';
+    public array|string|null $htmlValidator = HtmlValidator::class;
 
     #[Override]
     public function behaviors(): array
@@ -111,7 +104,7 @@ class Product extends ActiveRecord implements
             ],
             [
                 ['content'],
-                $this->contentType == 'html' && $this->htmlValidator ? $this->htmlValidator : 'safe',
+                ...(array)($this->htmlValidator ?? 'safe'),
             ],
         ]);
     }

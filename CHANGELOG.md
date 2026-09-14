@@ -1,5 +1,8 @@
 ## 3.0.0 (in development)
 
+- `Models\Product::$contentType` is gone — it was always `html` and read by nothing but the model's own rule.
+  `$htmlValidator` is nullable now and disables the validation when set to `null`
+
 - `Components\ShopifyPrice` rounds to the cent instead of truncating the product of a float: `(int)(19.99 * 100)`
   is 1998, so a variant priced `19.99`, `0.29` or `1.15` was stored one cent short
 - `Components\ShopifyId` reads the last path segment without `strrchr()`, which returns `false` — and so is a
