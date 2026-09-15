@@ -22,41 +22,33 @@ class M260910150000Translations extends Migration
 
     public function safeUp(): void
     {
-        foreach ($this->getModels() as $model) {
-            $this->moveI18nColumnsToTranslations($model);
+        foreach ($this->getTables() as $table => $modelClass) {
+            $this->moveI18nColumnsToTranslations($table, $modelClass);
         }
     }
 
     public function safeDown(): void
     {
-        foreach ($this->getModels() as $model) {
-            $this->restoreI18nColumnsFromTranslations($model);
+        foreach ($this->getTables() as $table => $modelClass) {
+            $this->restoreI18nColumnsFromTranslations($table, $modelClass);
         }
 
-        $product = Product::create();
-
-        foreach ($product->getI18nAttributeNames('slug') as $attributeName) {
-            if ($attributeName !== 'slug') {
-                $this->createIndex($attributeName, $product::tableName(), $attributeName, true);
-            }
-        }
-
-        foreach ($product->getI18nAttributeNames('name') as $attributeName) {
-            if ($attributeName !== 'name') {
-                $this->createIndex($attributeName, $product::tableName(), $attributeName);
+        foreach ($this->getI18nColumns(Product::tableName()) as $column => [$attribute]) {
+            if ($attribute === 'slug' || $attribute === 'name') {
+                $this->createIndex($column, Product::tableName(), $column, $attribute === 'slug');
             }
         }
     }
 
     /**
-     * @return list<Product|ProductImage|ProductVariant>
+     * @return array<string, class-string>
      */
-    protected function getModels(): array
+    protected function getTables(): array
     {
         return [
-            Product::create(),
-            ProductImage::create(),
-            ProductVariant::create(),
+            Product::tableName() => Product::class,
+            ProductImage::tableName() => ProductImage::class,
+            ProductVariant::tableName() => ProductVariant::class,
         ];
     }
 }
