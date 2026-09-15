@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Components\Admin;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Iterator;
 use Yii;
 
@@ -12,6 +13,7 @@ use Yii;
  */
 abstract class BatchQuery implements Iterator
 {
+    use ComponentTrait;
     protected AdminApi $api;
     protected ?string $currentCursor = null;
     /**
@@ -24,7 +26,7 @@ abstract class BatchQuery implements Iterator
         protected int $batchSize,
         protected ?string $cursor = null,
     ) {
-        $this->api = Yii::$app->get('shopify')->getAdminApi();
+        $this->api = static::getShopify()->getAdminApi();
     }
 
     /**

@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+
+- **`Components\ComponentTrait::getShopify()` replaces `Yii::$app->get('shopify')`** at all nineteen call sites
+  and throws when the id holds something else — which a project's own `components.shopify` entry produces
+  whenever it omits `class`, since `Application` validates the definitions before `Bootstrap` can supply one
+
 - `Models\Product::$contentType` is gone — it was always `html` and read by nothing but the model's own rule.
   `$htmlValidator` is nullable now and disables the validation when set to `null`
 

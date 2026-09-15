@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Tests\Modules\Admin;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Test\Fixtures\ProductFixture;
@@ -21,6 +22,7 @@ use yii\web\ForbiddenHttpException;
  */
 class ShopifyAdminTest extends TestCase
 {
+    use ComponentTrait;
     /**
      * @return array<string, mixed>
      */
@@ -81,7 +83,7 @@ class ShopifyAdminTest extends TestCase
     public function testTheWebhookIndexSaysWhenTheApiSecretIsMissing(): void
     {
         $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
-        Yii::$app->get('shopify')->shopifyApiSecret = null;
+        static::getShopify()->shopifyApiSecret = null;
 
         Yii::$app->runAction('admin/shopify/webhook/index');
 

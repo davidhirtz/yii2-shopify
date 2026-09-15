@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Tests\Components;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Components\ShopifyDateTime;
 use Hirtz\Shopify\Components\ShopifyId;
 use Hirtz\Shopify\Components\ShopifyPrice;
@@ -14,6 +15,7 @@ use yii\base\InvalidConfigException;
 
 class ShopifyValueTest extends TestCase
 {
+    use ComponentTrait;
     /**
      * A GraphQL id is a path, a webhook payload carries the bare number.
      */
@@ -89,7 +91,7 @@ class ShopifyValueTest extends TestCase
 
     public function testValidatingAWebhookNeedsTheApiSecret(): void
     {
-        $shopify = Yii::$app->get('shopify');
+        $shopify = static::getShopify();
         $data = '{"id":1}';
 
         $hmac = base64_encode(hash_hmac('sha256', $data, 'api-secret', true));

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Navs\ActionDropdown;
@@ -14,6 +15,7 @@ use Yii;
 
 class WebhookActionDropdown extends ActionDropdown
 {
+    use ComponentTrait;
     /**
      * @use ProviderTrait<WebhookSubscriptionArrayDataProvider>
      */
@@ -35,7 +37,7 @@ class WebhookActionDropdown extends ActionDropdown
     {
         return Button::make()
             ->primary()
-            ->url(Yii::$app->get('shopify')->getShopUrl('admin/settings/notifications/webhooks'))
+            ->url(static::getShopify()->getShopUrl('admin/settings/notifications/webhooks'))
             ->icon('external-link')
             ->text(Yii::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_VIEW_WEBHOOKS'))
             ->target('_blank');

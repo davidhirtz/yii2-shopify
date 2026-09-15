@@ -6,6 +6,7 @@ namespace Hirtz\Shopify\Controllers;
 
 use Hirtz\Shopify\Components\Admin\ProductQuery;
 use Hirtz\Shopify\Components\Admin\ProductRepository;
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Module;
 use Hirtz\Shopify\Modules\ModuleTrait;
@@ -23,6 +24,7 @@ use yii\web\UnauthorizedHttpException;
  */
 class WebhookController extends Controller
 {
+    use ComponentTrait;
     use ModuleTrait;
 
     /**
@@ -40,7 +42,7 @@ class WebhookController extends Controller
     {
         $hmacHeader = (string)$this->request->getHeaders()->get('X-Shopify-Hmac-Sha256');
 
-        if (!Yii::$app->get('shopify')->validateHmac($hmacHeader, $this->getRequestBody())) {
+        if (!static::getShopify()->validateHmac($hmacHeader, $this->getRequestBody())) {
             throw new UnauthorizedHttpException();
         }
 
@@ -63,7 +65,7 @@ class WebhookController extends Controller
         $id = $this->getProductId();
         $data = (new ProductQuery($id))();
 
-        $api = Yii::$app->get('shopify')->getAdminApi();
+        $api = static::getShopify()->getAdminApi();
 
         $repository = new ProductRepository($data);
         $repository->save();

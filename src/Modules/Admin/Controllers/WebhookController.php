@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Modules\Admin\Controllers;
 
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
@@ -25,6 +26,7 @@ use yii\web\Response;
  */
 class WebhookController extends Controller
 {
+    use ComponentTrait;
     use ModuleTrait;
 
     protected ShopifyComponent $shopify;
@@ -61,7 +63,7 @@ class WebhookController extends Controller
     #[Override]
     public function init(): void
     {
-        $this->shopify = Yii::$app->get('shopify');
+        $this->shopify = static::getShopify();
         parent::init();
     }
 

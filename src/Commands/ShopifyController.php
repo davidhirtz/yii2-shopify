@@ -12,6 +12,7 @@ use Hirtz\Shopify\Components\Admin\ProductBatchRepository;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionBatchQuery;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMapper;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Skeleton\Console\Controllers\Traits\ControllerTrait;
 use Override;
@@ -23,12 +24,13 @@ use yii\helpers\Console;
 
 class ShopifyController extends Controller
 {
+    use ComponentTrait;
     use ControllerTrait;
 
     #[Override]
     public function afterAction($action, $result)
     {
-        foreach (Yii::$app->get('shopify')->getAdminApi()->getErrors() as $error) {
+        foreach (static::getShopify()->getAdminApi()->getErrors() as $error) {
             $this->stderr("$error\n", Console::FG_RED);
         }
 

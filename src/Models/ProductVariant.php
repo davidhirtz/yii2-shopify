@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
-use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\datetime\DateTimeBehavior;
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
@@ -20,6 +19,8 @@ use Hirtz\Skeleton\Models\Traits\TranslationTrait;
 use Hirtz\Skeleton\Validators\RelationValidator;
 use Override;
 use Yii;
+use davidhirtz\yii2\datetime\DateTime;
+use davidhirtz\yii2\datetime\DateTimeBehavior;
 use yii\db\ActiveQuery;
 
 /**
@@ -51,6 +52,7 @@ use yii\db\ActiveQuery;
  */
 class ProductVariant extends ActiveRecord implements TrailModelInterface, TranslationInterface
 {
+    use ComponentTrait;
     use AdminModelTrait;
     use I18nAttributesTrait;
     use TranslationTrait;
@@ -124,7 +126,7 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
     protected function formatPrice(?int $value): string
     {
         return $value
-            ? Yii::$app->getFormatter()->asCurrency($value / 100, Yii::$app->get('shopify')->defaultCurrency)
+            ? Yii::$app->getFormatter()->asCurrency($value / 100, static::getShopify()->defaultCurrency)
             : '';
     }
 

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Components\Admin;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Components\GraphqlParser;
 use Yii;
 
 class WebhookSubscriptionMutation
 {
+    use ComponentTrait;
     private readonly AdminApi $api;
     /**
      * @var list<string>
@@ -17,7 +19,7 @@ class WebhookSubscriptionMutation
 
     public function __construct()
     {
-        $this->api = Yii::$app->get('shopify')->getAdminApi();
+        $this->api = static::getShopify()->getAdminApi();
     }
 
     public function create(string $topic, string $callbackUrl): bool

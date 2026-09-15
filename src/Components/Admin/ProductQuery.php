@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Components\Admin;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Components\GraphqlParser;
 use Yii;
 
 readonly class ProductQuery
 {
+    use ComponentTrait;
     public function __construct(private int $id)
     {
     }
@@ -20,7 +22,7 @@ readonly class ProductQuery
     {
         $query = (new GraphqlParser())->load('ProductQuery');
 
-        $data = Yii::$app->get('shopify')->getAdminApi()->query($query, [
+        $data = static::getShopify()->getAdminApi()->query($query, [
             'id' => "gid://shopify/Product/$this->id",
         ]);
 

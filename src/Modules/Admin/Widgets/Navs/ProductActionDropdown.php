@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Navs\ActionDropdown;
 use Stringable;
@@ -11,6 +12,7 @@ use Yii;
 
 class ProductActionDropdown extends ActionDropdown
 {
+    use ComponentTrait;
     /**
      * @param array<string, mixed> $config
      */
@@ -29,7 +31,7 @@ class ProductActionDropdown extends ActionDropdown
     {
         return Button::make()
             ->primary()
-            ->url(Yii::$app->get('shopify')->getShopUrl('admin/products/new'))
+            ->url(static::getShopify()->getShopUrl('admin/products/new'))
             ->icon('external-link')
             ->text(Yii::t('shopify', 'PRODUCT_ACTION_DROPDOWN_NEW_PRODUCT'))
             ->target('_blank');

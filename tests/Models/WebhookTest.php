@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Tests\Models;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Test\TestCase;
 use Yii;
@@ -14,6 +15,7 @@ use Yii;
  */
 class WebhookTest extends TestCase
 {
+    use ComponentTrait;
     public function testTheAddressIsBuiltFromTheRouteAndTheVersionFromTheComponent(): void
     {
         $webhook = Webhook::create();
@@ -25,7 +27,7 @@ class WebhookTest extends TestCase
         self::assertStringEndsWith('/shopify/webhook/products-update', $webhook->address);
 
         // The component is what `AdminApi` calls the API with, so the subscription must name the same version.
-        self::assertSame(Yii::$app->get('shopify')->shopifyApiVersion, $webhook->api_version);
+        self::assertSame(static::getShopify()->shopifyApiVersion, $webhook->api_version);
     }
 
     public function testAnAddressAndAVersionThatAreGivenAreKept(): void

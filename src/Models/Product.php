@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
-use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\datetime\DateTimeBehavior;
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
@@ -25,6 +24,8 @@ use Hirtz\Skeleton\Validators\HtmlValidator;
 use Hirtz\Skeleton\Validators\UniqueValidator;
 use Override;
 use Yii;
+use davidhirtz\yii2\datetime\DateTime;
+use davidhirtz\yii2\datetime\DateTimeBehavior;
 use yii\db\ActiveQuery;
 
 /**
@@ -57,6 +58,7 @@ class Product extends ActiveRecord implements
     TrailModelInterface,
     TranslationInterface
 {
+    use ComponentTrait;
     use AdminModelTrait;
     use I18nAttributesTrait;
     use TranslationTrait;
@@ -210,7 +212,7 @@ class Product extends ActiveRecord implements
     public function getShopifyAdminUrl(): string
     {
         $query = "admin/products/$this->id" . ($this->variant_count > 1 ? "/variants/$this->variant_id" : '');
-        return Yii::$app->get('shopify')->getShopUrl($query);
+        return static::getShopify()->getShopUrl($query);
     }
 
     #[Override]

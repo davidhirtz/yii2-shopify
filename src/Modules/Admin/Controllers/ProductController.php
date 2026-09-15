@@ -7,6 +7,7 @@ namespace Hirtz\Shopify\Modules\Admin\Controllers;
 use Hirtz\Shopify\Components\Admin\ProductBatchRepository;
 use Hirtz\Shopify\Components\Admin\ProductQuery;
 use Hirtz\Shopify\Components\Admin\ProductRepository;
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
 use Hirtz\Shopify\Modules\Admin\Module;
@@ -27,6 +28,7 @@ use yii\web\Response;
  */
 class ProductController extends Controller
 {
+    use ComponentTrait;
     use ModuleTrait;
 
     #[Override]
@@ -81,7 +83,7 @@ class ProductController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $api = Yii::$app->get('shopify')->getAdminApi();
+        $api = static::getShopify()->getAdminApi();
 
         $repository = new ProductRepository($data);
         $repository->save();
@@ -97,7 +99,7 @@ class ProductController extends Controller
         $repository = new ProductBatchRepository();
         $repository->save();
 
-        $api = Yii::$app->get('shopify')->getAdminApi();
+        $api = static::getShopify()->getAdminApi();
         $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'PRODUCT_SUCCESS_UPDATED_PRODUCTS'));
 
         return $this->redirect(['index']);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Modules\Admin\Widgets\Navs\ShopifyNavItem;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
@@ -18,6 +19,7 @@ use Yii;
  */
 class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
+    use ComponentTrait;
     public $defaultRoute = 'product';
 
     #[Override]
@@ -34,6 +36,6 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
             ->label(Yii::t('shopify', 'MODULE_SHOPIFY_DASHBOARD'))
             ->link(fn (A $link) => $link->target('_blank'))
             ->order(60)
-            ->url(Yii::$app->get('shopify')->getShopUrl('admin')));
+            ->url(static::getShopify()->getShopUrl('admin')));
     }
 }
