@@ -110,10 +110,10 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
      */
     public function getTrailAttributes(): array
     {
-        return array_diff($this->attributes(), [
+        return array_values(array_diff($this->attributes(), [
             'updated_at',
             'created_at',
-        ]);
+        ]));
     }
 
     public function getAdminType(): string

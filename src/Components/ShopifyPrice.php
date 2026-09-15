@@ -11,6 +11,9 @@ use Yii;
 readonly class ShopifyPrice
 {
     use ComponentTrait;
+    /**
+     * @var non-empty-string
+     */
     private string $currency;
     private int $value;
 

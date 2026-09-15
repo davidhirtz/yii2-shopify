@@ -144,12 +144,12 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
      */
     public function getTrailAttributes(): array
     {
-        return array_diff($this->attributes(), [
+        return array_values(array_diff($this->attributes(), [
             'position',
             'inventory_quantity',
             'updated_at',
             'created_at',
-        ]);
+        ]));
     }
 
     public function getAdminType(): string

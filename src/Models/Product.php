@@ -181,14 +181,14 @@ class Product extends ActiveRecord implements
      */
     public function getTrailAttributes(): array
     {
-        return array_diff($this->attributes(), [
+        return array_values(array_diff($this->attributes(), [
             'image_count',
             'variant_count',
             'total_inventory_quantity',
             'last_import_at',
             'updated_at',
             'created_at',
-        ]);
+        ]));
     }
 
     public function getAdminType(): string

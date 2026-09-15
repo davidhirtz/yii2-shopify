@@ -79,7 +79,7 @@ class AdminApi
                 // Todo handle strings
                 $contents = Json::decode($exception->getResponse()->getBody()->getContents());
                 $errors = $contents['errors'] ?? $exception->getMessage() ?: 'Unknown API Error';
-                $this->errors = (array)$errors;
+                $this->errors = array_values(array_map(strval(...), (array)$errors));
             }
 
             Yii::error($exception->getMessage());
