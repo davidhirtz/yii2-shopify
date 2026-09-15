@@ -63,7 +63,7 @@ class ShopifyAdminTest extends TestCase
 
     public function testTheProductIndexIsForbiddenWithoutThePermission(): void
     {
-        Yii::$app->getUser()->setIdentity($this->getUserFromFixture('admin'));
+        $this->getWebUser()->setIdentity($this->getUserFromFixture('admin'));
 
         $this->expectException(ForbiddenHttpException::class);
         Yii::$app->runAction('admin/shopify/product/index');
@@ -71,7 +71,7 @@ class ShopifyAdminTest extends TestCase
 
     public function testTheWebhookIndexIsForbiddenWithoutThePermission(): void
     {
-        Yii::$app->getUser()->setIdentity($this->getUserFromFixture('admin'));
+        $this->getWebUser()->setIdentity($this->getUserFromFixture('admin'));
 
         $this->expectException(ForbiddenHttpException::class);
         Yii::$app->runAction('admin/shopify/webhook/index');
@@ -87,7 +87,7 @@ class ShopifyAdminTest extends TestCase
 
         Yii::$app->runAction('admin/shopify/webhook/index');
 
-        self::assertNotEmpty(Yii::$app->getSession()->getFlash('danger'));
+        self::assertNotEmpty($this->getWebSession()->getFlash('danger'));
     }
 
     private function login(string $permission): User
@@ -97,7 +97,7 @@ class ShopifyAdminTest extends TestCase
         $auth = Yii::$app->getAuthManager();
         $auth->assign($auth->getPermission($permission), $user->id);
 
-        Yii::$app->getUser()->setIdentity($user);
+        $this->getWebUser()->setIdentity($user);
 
         return $user;
     }

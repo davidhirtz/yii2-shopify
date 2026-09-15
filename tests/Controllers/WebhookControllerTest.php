@@ -107,7 +107,7 @@ class WebhookControllerTest extends TestCase
         $body = json_encode($payload);
         $signature ??= base64_encode(hash_hmac('sha256', $body, self::SECRET, true));
 
-        $request = Yii::$app->getRequest();
+        $request = $this->getWebRequest();
         $request->setRawBody($body);
         $request->getHeaders()->set('X-Shopify-Hmac-Sha256', $signature);
 

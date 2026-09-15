@@ -7,7 +7,6 @@ namespace Hirtz\Shopify\Tests\Modules\Controllers;
 use Hirtz\Shopify\Test\TestCase;
 use Hirtz\Skeleton\Test\Traits\FunctionalTestTrait;
 use Hirtz\Skeleton\Test\Traits\UserFixtureTrait;
-use Yii;
 
 class ProductControllerFunctionTest extends TestCase
 {
@@ -23,7 +22,7 @@ class ProductControllerFunctionTest extends TestCase
     public function testIndexWithoutPermission(): void
     {
         $user = $this->getUserFromFixture('admin');
-        Yii::$app->getUser()->login($user);
+        $this->getWebUser()->login($user);
 
         $this->open('/admin/shopify/product/index');
         self::assertResponseStatusCodeSame(403);
@@ -34,7 +33,7 @@ class ProductControllerFunctionTest extends TestCase
         $user = $this->getUserFromFixture('admin');
         $this->assignAdminRole($user->id);
 
-        Yii::$app->getUser()->login($user);
+        $this->getWebUser()->login($user);
 
         $this->open('/admin/shopify/product/index');
         self::assertResponseIsSuccessful();
