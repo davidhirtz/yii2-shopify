@@ -11,6 +11,9 @@ use Yii;
 
 class ProductActionDropdown extends ActionDropdown
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function __construct(array $config = [])
     {
         $this->addDefaultItems();

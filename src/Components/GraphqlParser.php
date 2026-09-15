@@ -9,6 +9,9 @@ use yii\base\InvalidConfigException;
 
 class GraphqlParser
 {
+    /**
+     * @var list<string>
+     */
     private array $includes = [];
 
     public function load(string $name): string

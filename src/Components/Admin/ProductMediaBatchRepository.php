@@ -9,8 +9,14 @@ use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 
 class ProductMediaBatchRepository
 {
+    /**
+     * @var list<int>
+     */
     private array $imageIds = [];
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(protected readonly Product $product, protected readonly array $data)
     {
     }
@@ -37,6 +43,9 @@ class ProductMediaBatchRepository
         $this->deleteUnusedImages();
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function saveProductImageFromEdgeData(array $data): void
     {
         $image = (new ProductMediaMapper($this->product, $data['node']))();

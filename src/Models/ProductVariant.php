@@ -30,7 +30,7 @@ use yii\db\ActiveQuery;
  * @property int $position
  * @property int $price
  * @property int|null $compare_at_price
- * @property array|null $presentment_prices
+ * @property array<string, mixed>|null $presentment_prices
  * @property string|null $option_1
  * @property string|null $option_2
  * @property string|null $option_3
@@ -137,6 +137,9 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
         return $this->parentFormatTrailAttributeValue($attribute, $value);
     }
 
+    /**
+     * @return list<string>
+     */
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [

@@ -10,6 +10,9 @@ use Yii;
 class WebhookSubscriptionMutation
 {
     private readonly AdminApi $api;
+    /**
+     * @var list<string>
+     */
     private array $errors = [];
 
     public function __construct()
@@ -39,6 +42,10 @@ class WebhookSubscriptionMutation
         return isset($data['deletedWebhookSubscriptionId']);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
     protected function query(string $name, array $data): array
     {
         $query = (new GraphqlParser())->load($name);
@@ -53,6 +60,9 @@ class WebhookSubscriptionMutation
         return $data;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getErrors(): array
     {
         return $this->errors;

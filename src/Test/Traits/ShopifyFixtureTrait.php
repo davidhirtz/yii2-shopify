@@ -11,6 +11,9 @@ use Hirtz\Shopify\Test\Fixtures\ProductVariantFixture;
 
 trait ShopifyFixtureTrait
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function fixtures(): array
     {
         return [
@@ -27,6 +30,9 @@ trait ShopifyFixtureTrait
         return $fixture;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getProductFixtureData(string $key): array
     {
         $fixture = $this->getProductFixture();

@@ -13,6 +13,9 @@ class ProductVariantBatchQuery extends BatchQuery
         parent::__construct($batchSize, $cursor);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function fetchData(): array
     {
         $data = $this->api->query($this->getQuery(), [

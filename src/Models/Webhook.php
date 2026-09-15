@@ -19,11 +19,23 @@ class Webhook extends Model
 
     public ?int $id = null;
     public ?string $address = null;
+    /**
+     * @var array<int|string, mixed>
+     */
     public array $route = [];
     public ?string $topic = null;
     public ?string $format = null;
+    /**
+     * @var list<string>
+     */
     public array $fields = [];
+    /**
+     * @var list<string>
+     */
     public array $metafield_namespaces = [];
+    /**
+     * @var list<string>
+     */
     public array $private_metafield_namespaces = [];
     public ?string $api_version = null;
     public ?string $updated_at = null;
@@ -69,6 +81,9 @@ class Webhook extends Model
         return static::getTopics()[$this->topic] ?? ucfirst(str_replace('/', ' ', $this->topic));
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getTopics(): array
     {
         return [

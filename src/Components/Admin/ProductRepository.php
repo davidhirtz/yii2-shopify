@@ -12,6 +12,9 @@ readonly class ProductRepository
 {
     public Product $product;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(protected array $data)
     {
         $this->product = (new ProductMapper($data))();

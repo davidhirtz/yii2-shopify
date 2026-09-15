@@ -13,6 +13,9 @@ readonly class ProductMapper
 {
     protected Product $product;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(protected array $data)
     {
         $id = (new ShopifyId($data['id']))->toInt();

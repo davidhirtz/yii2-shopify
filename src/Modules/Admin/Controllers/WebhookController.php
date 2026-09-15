@@ -8,6 +8,7 @@ use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
+use Hirtz\Shopify\Modules\Admin\Module;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
@@ -16,6 +17,12 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
+/**
+ * @extends Controller<Module>
+ */
+/**
+ * @extends Controller<Module>
+ */
 class WebhookController extends Controller
 {
     use ModuleTrait;

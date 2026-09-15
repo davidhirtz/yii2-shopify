@@ -12,6 +12,9 @@ readonly class ProductMediaMapper
 {
     protected ProductImage $image;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(protected Product $product, protected array $data)
     {
         $id = (new ShopifyId($data['id']))->toInt();

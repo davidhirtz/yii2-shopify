@@ -18,6 +18,9 @@ class Module extends \Hirtz\Skeleton\Base\Module
     public ?string $shopifyApiVersion = null;
     public string $latestShopifyApiVersion = '2026-01';
 
+    /**
+     * @var list<array{topic: string, route: array<int|string, mixed>}>
+     */
     public array $webhooks = [
         [
             'topic' => 'PRODUCTS_CREATE',

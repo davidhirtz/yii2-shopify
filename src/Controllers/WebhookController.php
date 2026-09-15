@@ -7,6 +7,7 @@ namespace Hirtz\Shopify\Controllers;
 use Hirtz\Shopify\Components\Admin\ProductQuery;
 use Hirtz\Shopify\Components\Admin\ProductRepository;
 use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Module;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
@@ -14,6 +15,12 @@ use Yii;
 use yii\helpers\Json;
 use yii\web\UnauthorizedHttpException;
 
+/**
+ * @extends Controller<Module>
+ */
+/**
+ * @extends Controller<Module>
+ */
 class WebhookController extends Controller
 {
     use ModuleTrait;

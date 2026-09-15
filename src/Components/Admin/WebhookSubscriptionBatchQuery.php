@@ -8,6 +8,9 @@ use Hirtz\Shopify\Components\GraphqlParser;
 
 class WebhookSubscriptionBatchQuery extends BatchQuery
 {
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function fetchData(): array
     {
         $data = $this->api->query($this->getQuery(), [

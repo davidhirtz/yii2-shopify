@@ -8,6 +8,9 @@ use Hirtz\Shopify\Models\Product;
 
 class ProductBatchRepository
 {
+    /**
+     * @var list<int>
+     */
     private array $productIds = [];
 
     public function save(): void

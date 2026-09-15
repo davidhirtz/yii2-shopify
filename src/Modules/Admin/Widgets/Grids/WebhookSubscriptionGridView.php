@@ -22,6 +22,7 @@ use Stringable;
 use Yii;
 
 /**
+ * @extends GridView<Webhook>
  * @property WebhookSubscriptionArrayDataProvider $provider
  */
 class WebhookSubscriptionGridView extends GridView
@@ -104,6 +105,9 @@ class WebhookSubscriptionGridView extends GridView
             ->content($this->getButtonColumnContent(...));
     }
 
+    /**
+     * @return list<Stringable>
+     */
     protected function getButtonColumnContent(Webhook $webhook): array
     {
         return [

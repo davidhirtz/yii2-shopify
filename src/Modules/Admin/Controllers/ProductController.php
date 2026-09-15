@@ -9,6 +9,7 @@ use Hirtz\Shopify\Components\Admin\ProductQuery;
 use Hirtz\Shopify\Components\Admin\ProductRepository;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Modules\Admin\Data\ProductActiveDataProvider;
+use Hirtz\Shopify\Modules\Admin\Module;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
@@ -18,6 +19,12 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
+/**
+ * @extends Controller<Module>
+ */
+/**
+ * @extends Controller<Module>
+ */
 class ProductController extends Controller
 {
     use ModuleTrait;

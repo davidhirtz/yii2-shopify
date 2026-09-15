@@ -97,11 +97,17 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
         return parent::beforeDelete();
     }
 
+    /**
+     * @param array<string, mixed> $params
+     */
     public function getUrl(array $params = []): string
     {
         return $this->src . ($params ? ((strpos((string)$this->src, '?') ? '&' : '?') . http_build_query($params)) : '');
     }
 
+    /**
+     * @return list<string>
+     */
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [

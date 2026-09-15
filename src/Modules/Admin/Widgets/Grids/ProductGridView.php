@@ -24,6 +24,7 @@ use Override;
 use Stringable;
 
 /**
+ * @extends GridView<Product>
  * @property ProductActiveDataProvider $provider
  */
 class ProductGridView extends GridView

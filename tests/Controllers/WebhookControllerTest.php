@@ -99,6 +99,9 @@ class WebhookControllerTest extends TestCase
         self::assertSame($countBefore, (int)Product::find()->count());
     }
 
+    /**
+     * @param array<string, mixed> $payload
+     */
     private function request(array $payload, string $action = 'products-delete', ?string $signature = null): void
     {
         $body = json_encode($payload);

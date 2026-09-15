@@ -188,6 +188,10 @@ class MapperTest extends TestCase
         self::assertStringEndsWith('products-update', $subscription->callbackUrl);
     }
 
+    /**
+     * @param array<string, mixed> $overrides
+     * @return array<string, mixed>
+     */
     private function getProductData(array $overrides = []): array
     {
         return [
@@ -208,6 +212,10 @@ class MapperTest extends TestCase
         ];
     }
 
+    /**
+     * @param array<string, mixed> $overrides
+     * @return array<string, mixed>
+     */
     private function getVariantData(array $overrides = []): array
     {
         return [

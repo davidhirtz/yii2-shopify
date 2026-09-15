@@ -7,10 +7,11 @@ namespace Hirtz\Shopify\Modules\Admin\Data;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Models\Queries\ProductQuery;
 use Override;
+use yii\data\Sort;
 use yii\data\ActiveDataProvider;
 
 /**
- * @property ProductQuery|null $query
+ * @property ProductQuery<Product>|null $query
  * @method Product[] getModels()
  */
 class ProductActiveDataProvider extends ActiveDataProvider
@@ -40,6 +41,9 @@ class ProductActiveDataProvider extends ActiveDataProvider
         }
     }
 
+    /**
+     * @param array<string, mixed>|Sort|bool $value
+     */
     #[Override]
     public function setSort($value): void
     {

@@ -13,6 +13,9 @@ readonly class ProductQuery
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $query = (new GraphqlParser())->load('ProductQuery');

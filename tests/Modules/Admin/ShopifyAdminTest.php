@@ -21,6 +21,9 @@ use yii\web\ForbiddenHttpException;
  */
 class ShopifyAdminTest extends TestCase
 {
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function fixtures(): array
     {

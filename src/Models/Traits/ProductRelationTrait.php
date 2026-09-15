@@ -18,7 +18,7 @@ trait ProductRelationTrait
      */
     public function getProduct(): ProductQuery
     {
-        /** @var ProductQuery $relation */
+        /** @var ProductQuery<Product> $relation */
         $relation = $this->hasOne(Product::class, ['id' => 'product_id']);
         return $relation;
     }

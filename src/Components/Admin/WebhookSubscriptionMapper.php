@@ -12,6 +12,9 @@ readonly class WebhookSubscriptionMapper
 {
     protected WebhookSubscription $webhook;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(protected array $data)
     {
         $this->webhook = WebhookSubscription::create();

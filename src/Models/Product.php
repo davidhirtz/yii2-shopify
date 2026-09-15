@@ -35,10 +35,10 @@ use yii\db\ActiveQuery;
  * @property string $name
  * @property string|null $content
  * @property string $slug
- * @property array|null $tags
+ * @property list<string>|null $tags
  * @property string|null $vendor
  * @property string|null $product_type
- * @property array|null $options
+ * @property list<array{name: string, values: list<string>}>|null $options
  * @property int $image_count
  * @property int $variant_count
  * @property int $total_inventory_quantity
@@ -71,7 +71,7 @@ class Product extends ActiveRecord implements
     public const string AUTH_SHOPIFY_PRODUCT = 'shopifyProduct';
 
     /**
-     * @var array|string|null the validator for the product description, `null` disables the validation
+     * @var array<string, mixed>|string|null the validator for the product description, `null` disables the validation
      */
     public array|string|null $htmlValidator = HtmlValidator::class;
 
@@ -174,6 +174,9 @@ class Product extends ActiveRecord implements
         return $this->parentFormatTrailAttributeValue($attribute, $value);
     }
 
+    /**
+     * @return list<string>
+     */
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
@@ -196,6 +199,9 @@ class Product extends ActiveRecord implements
         return false;
     }
 
+    /**
+     * @return array<int|string, mixed>|false
+     */
     public function getRoute(): array|false
     {
         return false;

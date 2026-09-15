@@ -8,6 +8,7 @@ use Hirtz\Shopify\Commands\ShopifyController;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Controllers\WebhookController;
 use Hirtz\Skeleton\Console\Application as ConsoleApplication;
+use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
@@ -16,7 +17,7 @@ use yii\i18n\PhpMessageSource;
 class Bootstrap implements BootstrapInterface
 {
     /**
-     * @param Application|ConsoleApplication $app
+     * @param Application<User>|ConsoleApplication $app
      */
     public function bootstrap($app): void
     {

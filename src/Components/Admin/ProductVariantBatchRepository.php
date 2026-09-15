@@ -9,9 +9,15 @@ use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 
 class ProductVariantBatchRepository
 {
+    /**
+     * @var list<int>
+     */
     private array $variantIds = [];
     private int $totalInventoryQuantity = 0;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(protected readonly Product $product, protected readonly array $data)
     {
     }
@@ -39,6 +45,9 @@ class ProductVariantBatchRepository
         $this->deleteUnusedVariants();
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function saveProductVariantFromEdgeData(array $data): void
     {
         $variant = (new ProductVariantMapper($this->product, $data['node']))();

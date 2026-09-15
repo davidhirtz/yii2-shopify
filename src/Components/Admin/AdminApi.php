@@ -13,6 +13,9 @@ use yii\helpers\Json;
 
 class AdminApi
 {
+    /**
+     * @var list<string>
+     */
     private array $errors = [];
 
     public function __construct(
@@ -22,6 +25,10 @@ class AdminApi
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $variables
+     * @return array<string, mixed>
+     */
     public function query(string $query, array $variables = []): array
     {
         $uri = "https://$this->shopifyShopName.myshopify.com/admin/api/$this->shopifyApiVersion/graphql.json";
@@ -56,6 +63,10 @@ class AdminApi
         return $results['data'] ?? [];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>|null
+     */
     protected function request(string $uri, array $options = []): ?array
     {
         try {
@@ -77,6 +88,9 @@ class AdminApi
         return null;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getErrors(): array
     {
         return $this->errors;

@@ -25,6 +25,9 @@ class WebhookSubscriptionArrayDataProvider extends ArrayDataProvider
         parent::init();
     }
 
+    /**
+     * @return list<WebhookSubscription>
+     */
     protected function getModelsFromApi(): array
     {
         $models = [];

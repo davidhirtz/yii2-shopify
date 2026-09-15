@@ -7,10 +7,16 @@ namespace Hirtz\Shopify\Components\Admin;
 use Iterator;
 use Yii;
 
+/**
+ * @implements Iterator<int, array<string, mixed>|null>
+ */
 abstract class BatchQuery implements Iterator
 {
     protected AdminApi $api;
     protected ?string $currentCursor = null;
+    /**
+     * @var list<array<string, mixed>>|null
+     */
     private ?array $data = null;
     private int $position = 0;
 
@@ -21,6 +27,9 @@ abstract class BatchQuery implements Iterator
         $this->api = Yii::$app->get('shopify')->getAdminApi();
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function current(): ?array
     {
         return $this->data[$this->position] ?? null;
@@ -53,6 +62,9 @@ abstract class BatchQuery implements Iterator
         $this->position = 0;
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function getData(): array
     {
         $data = $this->fetchData();
@@ -61,5 +73,8 @@ abstract class BatchQuery implements Iterator
         return $data;
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     abstract protected function fetchData(): array;
 }

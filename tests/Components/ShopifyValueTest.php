@@ -23,6 +23,9 @@ class ShopifyValueTest extends TestCase
         self::assertSame($expected, (new ShopifyId($id))->toInt());
     }
 
+    /**
+     * @return list<array{mixed, mixed}>
+     */
     public static function idDataProvider(): array
     {
         return [
@@ -44,6 +47,9 @@ class ShopifyValueTest extends TestCase
         self::assertSame($expected, (new ShopifyPrice($value))->toInt());
     }
 
+    /**
+     * @return list<array{mixed, mixed}>
+     */
     public static function priceDataProvider(): array
     {
         return [
