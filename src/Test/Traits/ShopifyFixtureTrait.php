@@ -8,6 +8,7 @@ use Hirtz\Shopify\Models\Product;
 use Hirtz\Shopify\Test\Fixtures\ProductFixture;
 use Hirtz\Shopify\Test\Fixtures\ProductImageFixture;
 use Hirtz\Shopify\Test\Fixtures\ProductVariantFixture;
+use RuntimeException;
 
 trait ShopifyFixtureTrait
 {
@@ -41,6 +42,7 @@ trait ShopifyFixtureTrait
 
     protected function getProductFromFixture(string $key): Product
     {
-        return Product::findOne($this->getProductFixtureData($key)['id']);
+        return Product::findOne($this->getProductFixtureData($key)['id'])
+            ?? throw new RuntimeException("Product fixture \"$key\" was not loaded.");
     }
 }
