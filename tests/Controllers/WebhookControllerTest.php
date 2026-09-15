@@ -46,6 +46,7 @@ class WebhookControllerTest extends TestCase
     {
         $product = $this->getProductFromFixture('product-1');
         $body = json_encode(['id' => $product->id]);
+        self::assertNotFalse($body);
 
         try {
             $this->request(
@@ -67,6 +68,7 @@ class WebhookControllerTest extends TestCase
     {
         $product = $this->getProductFromFixture('product-1');
         $signed = json_encode(['id' => 99999]);
+        self::assertNotFalse($signed);
 
         try {
             $this->request(
@@ -105,6 +107,7 @@ class WebhookControllerTest extends TestCase
     private function request(array $payload, string $action = 'products-delete', ?string $signature = null): void
     {
         $body = json_encode($payload);
+        self::assertNotFalse($body);
         $signature ??= base64_encode(hash_hmac('sha256', $body, self::SECRET, true));
 
         $request = $this->getWebRequest();
