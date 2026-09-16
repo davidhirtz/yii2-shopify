@@ -30,7 +30,6 @@ use yii\db\ActiveQuery;
 
 /**
  * @property int $id
- * @property int $status
  * @property int|null $variant_id
  * @property int|null $image_id
  * @property string $name
