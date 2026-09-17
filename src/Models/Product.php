@@ -200,6 +200,11 @@ class Product extends ActiveRecord implements
         return false;
     }
 
+    public function getPermissionName(): string
+    {
+        return self::AUTH_SHOPIFY_PRODUCT;
+    }
+
     /**
      * @return array<int|string, mixed>|false
      */

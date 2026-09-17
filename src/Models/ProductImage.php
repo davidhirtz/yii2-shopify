@@ -126,6 +126,11 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
         return false;
     }
 
+    public function getPermissionName(): string
+    {
+        return Product::AUTH_SHOPIFY_PRODUCT;
+    }
+
     #[Override]
     public function attributeLabels(): array
     {

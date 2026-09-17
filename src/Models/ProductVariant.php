@@ -162,6 +162,11 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
         return false;
     }
 
+    public function getPermissionName(): string
+    {
+        return Product::AUTH_SHOPIFY_PRODUCT;
+    }
+
     #[Override]
     public function attributeLabels(): array
     {
