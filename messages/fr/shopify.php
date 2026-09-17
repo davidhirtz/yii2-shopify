@@ -10,7 +10,6 @@ return [
     'COMMON_IMAGE' => 'Image',
     'COMMON_PRODUCT' => 'Produit',
     'COMMON_PRODUCTS' => 'Produits',
-    'COMMON_SHOPIFY' => 'Shopify',
     'COMMON_VARIANT' => 'Variante',
     'COMMON_WEBHOOKS' => 'Webhooks',
     'MODULE_SHOPIFY_DASHBOARD' => 'Tableau de bord Shopify',
