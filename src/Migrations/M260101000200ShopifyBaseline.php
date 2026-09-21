@@ -110,6 +110,20 @@ class M260101000200ShopifyBaseline extends Migration
         $this->execute(<<<'SQL'
             ALTER TABLE `product_image` ADD CONSTRAINT `product_image_product_id_ibfk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
             SQL);
+
+        $this->execute(<<<'SQL'
+            INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `updated_at`, `created_at`) VALUES
+              ('shopifyProduct', '2', '{\"category\":\"shopify\",\"key\":\"AUTH_SHOPIFY_PRODUCT_DESCRIPTION\"}', NULL, NULL, '1789985581', '1789985581'),
+              ('shopifyWebhook', '2', '{\"category\":\"shopify\",\"key\":\"AUTH_SHOPIFY_WEBHOOK_DESCRIPTION\"}', NULL, NULL, '1789985581', '1789985581')
+            SQL);
+
+        $this->execute(<<<'SQL'
+            INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+              ('admin', 'shopifyProduct'),
+              ('manager', 'shopifyProduct'),
+              ('admin', 'shopifyWebhook'),
+              ('manager', 'shopifyWebhook')
+            SQL);
     }
 
     public function safeDown(): bool
