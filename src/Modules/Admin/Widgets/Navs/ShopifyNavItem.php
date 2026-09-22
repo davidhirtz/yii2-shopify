@@ -18,7 +18,7 @@ class ShopifyNavItem extends NavItem
     public function __construct(array $config = [])
     {
         $this->label ??= Yii::t('shopify', 'COMMON_PRODUCTS');
-        $this->icon ??= 'brand:shopify';
+        $this->icon ??= 'shopping-cart';
         $this->order ??= 50;
         $this->roles ??= [Product::AUTH_SHOPIFY_PRODUCT];
         $this->url ??= ['/admin/shopify/product/index'];
