@@ -65,6 +65,7 @@ return [
     'WEBHOOK_SHOPIFY_ADMIN_API' => 'A chave secreta da API Admin do Shopify tem de estar definida para utilizar webhooks.',
     'WEBHOOK_SUBSCRIPTION_ADDRESS_LABEL' => 'URL',
     'WEBHOOK_SUBSCRIPTION_API_VERSION_LABEL' => 'Versão da API',
+    'WEBHOOK_SUBSCRIPTION_BUTTON_REMOVE' => 'Remover webhook',
     'WEBHOOK_SUBSCRIPTION_FORMAT_LABEL' => 'Formato',
     'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE' => 'Tem a certeza de que pretende remover este webhook?',
     'WEBHOOK_SUBSCRIPTION_TOPIC_LABEL' => 'Evento',

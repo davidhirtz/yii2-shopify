@@ -65,6 +65,7 @@ return [
     'WEBHOOK_SHOPIFY_ADMIN_API' => 'Der geheime API-Schlüssel muss gesetzt sein, um Webhooks zu nutzen.',
     'WEBHOOK_SUBSCRIPTION_ADDRESS_LABEL' => 'URL',
     'WEBHOOK_SUBSCRIPTION_API_VERSION_LABEL' => 'API Version',
+    'WEBHOOK_SUBSCRIPTION_BUTTON_REMOVE' => 'Webhook löschen',
     'WEBHOOK_SUBSCRIPTION_FORMAT_LABEL' => 'Format',
     'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE' => 'Sind Sie sicher, dass Sie diesen Webhook löschen wollen?',
     'WEBHOOK_SUBSCRIPTION_TOPIC_LABEL' => 'Event',
