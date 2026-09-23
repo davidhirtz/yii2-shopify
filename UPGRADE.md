@@ -159,8 +159,8 @@ renames it; a project calling `Yii::t('shopify', …)` with the English text get
 
 **The credentials stay in `config/params.php`** under the same names (`shopifyShopName`, `shopifyShopDomain`,
 `shopifyApiKey`, `shopifyApiSecret`, `shopifyAccessToken`, `shopifyStorefrontAccessToken`), read by the
-`shopify` component. Nothing on `modules.shopify` is read except `webhooks`; a credential placed there is
-ignored.
+`shopify` component. `modules.shopify` takes only `webhooks`; a credential placed there fails as an unknown
+property.
 
 **A project that declares `components.shopify` itself must name the class.** The application validates the
 component definitions before the bundle's `Bootstrap` can supply it, and `ComponentTrait::getShopify()` throws

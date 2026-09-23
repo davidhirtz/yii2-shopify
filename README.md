@@ -28,9 +28,6 @@ to `admin` and `manager`.
 |------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
 | `webhooks` | `PRODUCTS_CREATE`, `PRODUCTS_UPDATE`, `PRODUCTS_DELETE` → `shopify/webhook/products-*` | The subscriptions *Install Webhooks* registers, as `['topic' => …, 'route' => […]]` |
 
-The credential properties the module also declares are read by nothing; configure the component or the params
-below.
-
 ### Component and params
 
 `components.shopify` is `Components\ShopifyComponent`. Every credential falls back to the `params` key of the

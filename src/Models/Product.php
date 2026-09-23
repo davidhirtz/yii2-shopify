@@ -63,7 +63,6 @@ class Product extends ActiveRecord implements
     use TranslationTrait;
     use ModuleTrait;
     use DraftStatusAttributeTrait;
-    use I18nAttributesTrait;
     use UpdatedByUserTrait;
     use TrailModelTrait {
         TrailModelTrait::formatTrailAttributeValue as parentFormatTrailAttributeValue;
