@@ -1,50 +1,20 @@
 ## 3.0.0 (in development)
 
-
-- **`Components\ComponentTrait::getShopify()` replaces `Yii::$app->get('shopify')`** at all nineteen call sites
-  and throws when the id holds something else — which a project's own `components.shopify` entry produces
-  whenever it omits `class`, since `Application` validates the definitions before `Bootstrap` can supply one
-
-- `Models\Product::$contentType` is gone — it was always `html` and read by nothing but the model's own rule.
-  `$htmlValidator` is nullable now and disables the validation when set to `null`
-
-- `Components\ShopifyPrice` rounds to the cent instead of truncating the product of a float: `(int)(19.99 * 100)`
-  is 1998, so a variant priced `19.99`, `0.29` or `1.15` was stored one cent short
-- `Components\ShopifyId` reads the last path segment without `strrchr()`, which returns `false` — and so is a
-  `TypeError` under `substr()` — for the bare numeric id a webhook payload carries
-- `Module` extends `Skeleton\Base\Module`, so its `controllerNamespace` is `Hirtz\Shopify\Controllers` rather
-  than Yii's lowercase default, which PSR-4 never resolves on a case-sensitive filesystem. The public
-  `shopify/webhook/*` endpoints only ever answered on a case-insensitive one
-- `Models\Webhook` reads the API version off the `shopify` component rather than the module, which defaulted to a
-  different one than `Components\Admin\AdminApi` calls the API with. The module's own credential properties are
-  read by nothing — **configure `params`, not `modules.shopify`**
-- `Bootstrap` maps the console controller for a console *application* rather than for the CLI SAPI, which a web
-  application under PHPUnit also reports, hiding the `shopify` module's own routes behind it
-- `Modules\Admin\Controllers\WebhookController::actionCreate()` reports only the errors each topic's own call
-  added. `WebhookSubscriptionMutation` accumulates them, so one address already taken silenced the success of
-  every topic after it
-- `Modules\Admin\Controllers\ProductController::actionUpdate()` no longer calls `delete()` on `null` for a
-  product that is in neither Shopify nor the database
-- `Components\GraphqlParser` marks a fragment before following it, so two fragments spreading each other
-  terminate, and reports a document that is not there instead of passing `false` to `preg_match_all()`
-- `Models\Webhook` uses `Base\Traits\ModelTrait`, as `WebhookSubscription` already did
-- **One permission per admin-managed model.** `Models\Product::AUTH_SHOPIFY_PRODUCT` (`shopifyProduct`) replaces
-  `AUTH_PRODUCT_UPDATE` and `Models\Webhook::AUTH_SHOPIFY_WEBHOOK` (`shopifyWebhook`) replaces
-  `AUTH_WEBHOOK_UPDATE`, so the constant and its value agree on the prefix again;
-  `Models\WebhookSubscription`'s duplicate of the webhook constant is gone. Their descriptions are
-  `AUTH_SHOPIFY_PRODUCT_DESCRIPTION` and `AUTH_SHOPIFY_WEBHOOK_DESCRIPTION`.
-  `Migrations\M260914160000AuthItems` grants each new item to every parent and assignee of the old one
-- `Models\Product`, `Models\ProductImage` and `Models\ProductVariant` implement the skeleton's
-  `Models\Interfaces\AdminModelInterface` in place of `AdminRouteInterface`: `getTrailModelName()` and
-  `getTrailModelType()` are `getAdminName()` and `getAdminType()`, and the boilerplate name is
-  `Models\Traits\AdminModelTrait`'s
-- `Models\Product`, `Models\ProductImage` and `Models\ProductVariant` implement the skeleton
-  `Models\Interfaces\AdminRouteInterface` and dropped their `getTrailModelAdminRoute()`
-- Translated attributes of `Product`, `ProductImage` and `ProductVariant` moved from their `_xx` columns into
-  the skeleton's `translation` table (`M260910150000Translations`); `ProductQuery` extends `I18nActiveQuery`
-- Changed the webhook URL rule to a `Route` registered via `Application::addRoutes()`
-- Fixed `ProductVariant::$inventory_tracked` missing on a fresh install: `M250717124737ShopifyGraphql` only added
-  the column when the v2 `inventory_management` column was present
+- Renamed the namespace from `davidhirtz\yii2\shopify\` to `Hirtz\Shopify\` and every directory to StudlyCase (`models\queries` is `Models\Queries`); the views moved to `resources/views/admin/`, the messages to `messages/` and the GraphQL documents to `resources/graphql/`
+- Moved the admin controllers into the `admin/shopify` submodule: `admin/product/*` is `admin/shopify/product/*` and `admin/shopify-webhook/*` is `admin/shopify/webhook/*`
+- Renamed the permissions `shopifyProductUpdate` to `shopifyProduct` (`Models\Product::AUTH_SHOPIFY_PRODUCT`) and `shopifyWebhookUpdate` to `shopifyWebhook` (`Models\Webhook::AUTH_SHOPIFY_WEBHOOK`); removed `Models\WebhookSubscription::AUTH_WEBHOOK_UPDATE`
+- Replaced `getTrailModelName()`, `getTrailModelType()` and `getTrailModelAdminRoute()` on `Product`, `ProductImage` and `ProductVariant` with the skeleton's `AdminModelInterface` (`getAdminName()`, `getAdminType()`, `getAdminRoute()`, `getPermissionName()`)
+- Moved the translated attributes of `Product`, `ProductImage` and `ProductVariant` from their `_xx` columns into the skeleton's `translation` table; all three implement `TranslationInterface`, `Models\Queries\ProductQuery` extends `I18nActiveQuery` and `ProductImage::find()` / `ProductVariant::find()` return one
+- Removed `Product::$contentType`; `Product::$htmlValidator` is nullable and `null` disables the validation
+- Replaced `ShopifyControllerTrait` and `Yii::$app->get('shopify')` with `Components\ComponentTrait::getShopify()`, which throws unless the component is a `ShopifyComponent`, so a project's own `components.shopify` entry must name its `class`
+- Replaced `ShopifySubmenu`, `WebhookGridView` and the admin module's `$name`, `getDashboardPanels()` and `getNavBarItems()` with `Modules\Admin\Widgets\Navs\ShopifyNavItem`, `ProductHeader`, `WebhookHeader`, `ProductActionDropdown`, `WebhookActionDropdown` and `Grids\WebhookSubscriptionGridView`; `ProductGridView` extends the skeleton's `Widgets\Grids\GridView`
+- Changed every message key to `UPPER_SNAKE_CASE` (`PRODUCT_NAME_LABEL`, `WEBHOOK_SUCCESS_CREATED`, `AUTH_SHOPIFY_PRODUCT_DESCRIPTION`)
+- Changed `Models\Webhook` to read the API version from the `shopify` component; the credential properties on `Module` are read by nothing, configure `components.shopify` or `params` instead
+- Changed `Module` to extend `Hirtz\Skeleton\Base\Module`, so the `shopify/webhook/*` endpoints resolve on a case-sensitive filesystem
+- Changed `Product::getShopifyAdminUrl()` to link the variant of a product that has more than one
+- Replaced the historical migrations with `Migrations\M260101000200ShopifyBaseline`; the v2 to v3 migrations live in `davidhirtz/yii2-upgrade`
+- Fixed `Components\ShopifyPrice` storing a price one cent short, `Components\ShopifyId` failing on a bare numeric id and `Components\GraphqlParser` looping on two fragments spreading each other
+- Added `Models\Webhook` with `getTopics()` and `getFormattedTopic()`
 
 ## 2.2.1 (Nov 13, 2025)
 
