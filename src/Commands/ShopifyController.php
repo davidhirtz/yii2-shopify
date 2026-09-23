@@ -22,6 +22,9 @@ use yii\console\Controller;
 use yii\db\AfterSaveEvent;
 use yii\helpers\Console;
 
+/**
+ * Synchronizes products and webhooks with Shopify.
+ */
 class ShopifyController extends Controller
 {
     use ComponentTrait;
