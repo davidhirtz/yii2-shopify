@@ -6,9 +6,10 @@ namespace Hirtz\Shopify\Components\Admin;
 
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\TransferStats;
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\helpers\Json;
 
 class AdminApi
@@ -70,22 +71,50 @@ class AdminApi
     protected function request(string $uri, array $options = []): ?array
     {
         try {
-            $request = (new Client())->post($uri, $options);
+            $request = $this->createClient()->post($uri, $options);
             return Json::decode($request->getBody()->getContents());
         } catch (Exception $exception) {
             // Return error to user as this could be a missing scope or invalid API key which could be fixed without
             // consulting the error log ...
-            if ($exception instanceof ClientException) {
-                // Todo handle strings
-                $contents = Json::decode($exception->getResponse()->getBody()->getContents());
-                $errors = $contents['errors'] ?? $exception->getMessage() ?: 'Unknown API Error';
-                $this->errors = array_values(array_map(strval(...), (array)$errors));
+            if ($exception instanceof BadResponseException) {
+                $this->errors = $this->getResponseErrors($exception);
             }
 
             Yii::error($exception->getMessage());
         }
 
         return null;
+    }
+
+    protected function createClient(): Client
+    {
+        return new Client();
+    }
+
+    /**
+     * Shopify answers an error in JSON, but whatever stands in front of it may not: an HTML page from a proxy, a
+     * plain-text 429, an empty 503. Those fall back to the exception's message, which quotes the body.
+     *
+     * @return list<string>
+     */
+    private function getResponseErrors(BadResponseException $exception): array
+    {
+        try {
+            $contents = Json::decode((string)$exception->getResponse()->getBody());
+        } catch (InvalidArgumentException) {
+            $contents = null;
+        }
+
+        $errors = is_array($contents) ? ($contents['errors'] ?? null) : null;
+
+        if (!$errors) {
+            return [$exception->getMessage() ?: 'Unknown API Error'];
+        }
+
+        return array_values(array_map(
+            fn (mixed $error): string => is_array($error) ? ($error['message'] ?? Json::encode($error)) : (string)$error,
+            (array)$errors
+        ));
     }
 
     /**
