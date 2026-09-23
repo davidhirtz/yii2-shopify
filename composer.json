@@ -13,6 +13,7 @@
   "require": {
     "php": "^8.3",
     "davidhirtz/yii2-skeleton": "main-dev",
+    "guzzlehttp/guzzle": "^7.9",
     "moneyphp/money": "^4.7"
   },
   "require-dev": {
