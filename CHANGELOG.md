@@ -1,4 +1,4 @@
-## 3.0.0 (in development)
+## 3.0.0 (September 23, 2026)
 
 - Renamed the namespace from `davidhirtz\yii2\shopify\` to `Hirtz\Shopify\` and every directory to StudlyCase (`models\queries` is `Models\Queries`); the views moved to `resources/views/admin/`, the messages to `messages/` and the GraphQL documents to `resources/graphql/`
 - Moved the admin controllers into the `admin/shopify` submodule: `admin/product/*` is `admin/shopify/product/*` and `admin/shopify-webhook/*` is `admin/shopify/webhook/*`
