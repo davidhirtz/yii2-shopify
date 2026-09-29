@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Models;
 
-use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\datetime\DateTimeBehavior;
+use Hirtz\Skeleton\Db\DateTime;
 use Hirtz\Shopify\Models\Traits\ProductRelationTrait;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
@@ -47,7 +46,6 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
     {
         return [
             ...parent::behaviors(),
-            'DateTimeBehavior' => DateTimeBehavior::class,
             'TimestampBehavior' => TimestampBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];

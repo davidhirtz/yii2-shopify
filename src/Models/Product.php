@@ -24,8 +24,7 @@ use Hirtz\Skeleton\Validators\HtmlValidator;
 use Hirtz\Skeleton\Validators\UniqueValidator;
 use Override;
 use Yii;
-use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\datetime\DateTimeBehavior;
+use Hirtz\Skeleton\Db\DateTime;
 use yii\db\ActiveQuery;
 
 /**
@@ -80,7 +79,6 @@ class Product extends ActiveRecord implements
     {
         return [
             ...parent::behaviors(),
-            'DateTimeBehavior' => DateTimeBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }

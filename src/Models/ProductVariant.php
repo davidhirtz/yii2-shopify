@@ -19,8 +19,7 @@ use Hirtz\Skeleton\Models\Traits\TranslationTrait;
 use Hirtz\Skeleton\Validators\RelationValidator;
 use Override;
 use Yii;
-use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\datetime\DateTimeBehavior;
+use Hirtz\Skeleton\Db\DateTime;
 use yii\db\ActiveQuery;
 
 /**
@@ -67,7 +66,6 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
     {
         return [
             ...parent::behaviors(),
-            'DateTimeBehavior' => DateTimeBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }

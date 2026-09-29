@@ -1,3 +1,7 @@
+## Unreleased
+
+- Requires `davidhirtz/yii2-skeleton` `^3.7`, whose `AttributeTypecastBehavior` makes date columns dates: the models no longer attach `DateTimeBehavior`
+
 ## 3.0.0 (September 23, 2026)
 
 - Renamed the namespace from `davidhirtz\yii2\shopify\` to `Hirtz\Shopify\` and every directory to StudlyCase (`models\queries` is `Models\Queries`); the views moved to `resources/views/admin/`, the messages to `messages/` and the GraphQL documents to `resources/graphql/`

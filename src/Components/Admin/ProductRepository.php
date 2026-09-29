@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Components\Admin;
 
-use davidhirtz\yii2\datetime\DateTime;
+use Hirtz\Skeleton\Db\DateTime;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Components;
 
 use DateTimeZone;
-use davidhirtz\yii2\datetime\DateTime;
+use Hirtz\Skeleton\Db\DateTime;
 use Yii;
 
 readonly class ShopifyDateTime
