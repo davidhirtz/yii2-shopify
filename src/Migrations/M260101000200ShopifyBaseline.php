@@ -40,7 +40,7 @@ class M260101000200ShopifyBaseline extends Migration
               KEY `name` (`name`),
               KEY `product_image_id_ibfk` (`image_id`),
               KEY `product_variant_id_ibfk` (`variant_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             SQL
         );
 
@@ -73,7 +73,7 @@ class M260101000200ShopifyBaseline extends Migration
               PRIMARY KEY (`id`),
               KEY `product_id` (`product_id`,`position`),
               KEY `product_variant_image_id_ibfk` (`image_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             SQL
         );
 
@@ -91,7 +91,7 @@ class M260101000200ShopifyBaseline extends Migration
               `created_at` datetime NOT NULL,
               PRIMARY KEY (`id`,`product_id`),
               KEY `product_id` (`product_id`,`position`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             SQL
         );
 
