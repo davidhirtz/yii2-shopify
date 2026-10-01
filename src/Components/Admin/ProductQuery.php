@@ -6,7 +6,6 @@ namespace Hirtz\Shopify\Components\Admin;
 
 use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Components\GraphqlParser;
-use Yii;
 
 readonly class ProductQuery
 {

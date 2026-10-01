@@ -10,7 +10,6 @@ use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Html\Div;
 use Hirtz\Skeleton\Html\Td;
-use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\DeleteGridButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;

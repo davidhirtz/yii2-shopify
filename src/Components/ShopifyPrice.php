@@ -6,7 +6,6 @@ namespace Hirtz\Shopify\Components;
 
 use Money\Currency;
 use Money\Money;
-use Yii;
 
 readonly class ShopifyPrice
 {

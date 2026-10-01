@@ -6,7 +6,6 @@ namespace Hirtz\Shopify\Components\Admin;
 
 use Hirtz\Shopify\Components\ComponentTrait;
 use Iterator;
-use Yii;
 
 /**
  * @implements Iterator<int, array<string, mixed>|null>
