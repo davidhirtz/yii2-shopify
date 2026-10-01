@@ -18,7 +18,6 @@ use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\TranslationTrait;
-use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
 use Hirtz\Skeleton\Validators\HtmlValidator;
 use Hirtz\Skeleton\Validators\UniqueValidator;
@@ -62,7 +61,6 @@ class Product extends ActiveRecord implements
     use TranslationTrait;
     use ModuleTrait;
     use DraftStatusAttributeTrait;
-    use UpdatedByUserTrait;
     use TrailModelTrait {
         TrailModelTrait::formatTrailAttributeValue as parentFormatTrailAttributeValue;
     }

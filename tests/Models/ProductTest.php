@@ -35,4 +35,12 @@ class ProductTest extends TestCase
             ]),
         );
     }
+
+    /**
+     * The `product` table has no `updated_by_user_id`: a form footer asking for the `updated` relation finds none.
+     */
+    public function testAProductHasNoUpdatedByUserRelation(): void
+    {
+        self::assertNull((new Product())->getRelation('updated', false));
+    }
 }
