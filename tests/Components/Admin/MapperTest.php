@@ -176,7 +176,7 @@ class MapperTest extends TestCase
         $subscription = (new WebhookSubscriptionMapper([
             'id' => 'gid://shopify/WebhookSubscription/99',
             'apiVersion' => ['handle' => '2026-01'],
-            'endpoint' => ['callbackUrl' => 'https://www.domain.localhost/shopify/webhook/products-update'],
+            'uri' => 'https://www.domain.localhost/shopify/webhook/products-update',
             'topic' => 'PRODUCTS_UPDATE',
             'updatedAt' => '2026-09-13T10:00:00Z',
             'createdAt' => '2026-09-12T10:00:00Z',

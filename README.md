@@ -41,7 +41,7 @@ same name, which is where a project normally keeps them:
 | `shopifyShopDomain`             | `NAME.myshopify.com` | Custom shop domain, used for the links into the Shopify admin                |
 | `shopifyApiKey`                 | —                  | Client id, exchanged with the secret for a token when `shopifyAccessToken` is unset |
 | `shopifyStorefrontAccessToken`  | —                  | Stored for the project's frontend (Storefront API), not read by the bundle     |
-| `shopifyApiVersion`             | `2025-07`          | Admin API version the requests and the webhook subscriptions name              |
+| `shopifyApiVersion`             | `2026-07`          | Admin API version the requests and the webhook subscriptions name; `2025-10` at the earliest |
 | `defaultCurrency`               | `EUR`              | Currency `ProductVariant::getFormattedPrice()` formats with                    |
 
 A project that declares `components.shopify` itself must name the class, or the application refuses the
@@ -51,7 +51,7 @@ definition before the bootstrap can supply it:
 'components' => [
     'shopify' => [
         'class' => \Hirtz\Shopify\Components\ShopifyComponent::class,
-        'shopifyApiVersion' => '2025-10',
+        'shopifyApiVersion' => '2026-04',
     ],
 ],
 'params' => [

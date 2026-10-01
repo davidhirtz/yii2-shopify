@@ -4,6 +4,9 @@
   `ShopifyComponent::getAdminApi()` exchanges `shopifyApiKey` and `shopifyApiSecret` for a token through the client
   credentials grant, as an app created in the Shopify Dev Dashboard requires, and caches it until shortly before it
   expires
+- Changed the default `shopifyApiVersion` from `2025-07`, which Shopify no longer supports, to `2026-07`; a project
+  pinning a version needs `2025-10` or later, since webhook subscriptions are read and created through `uri`
+  instead of the deprecated `endpoint` and `callbackUrl`
 
 ## 3.2.0 (September 30, 2026)
 

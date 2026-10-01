@@ -12,8 +12,8 @@ composer require davidhirtz/yii2-shopify:^3.0
 ```
 
 3.0 branches off 2.2.1. Of the two 2.3.x releases, the automatic access token is carried over (unreleased, see
-the changelog); the `shopify/storefront-access-token` command and API version `2026-04` are not, see
-[Removed](#removed).
+the changelog) and the default API version is newer than 2.3's `2026-04`; the `shopify/storefront-access-token`
+command is not, see [Removed](#removed).
 
 ## Renames
 
@@ -359,5 +359,6 @@ Lost: an empty translation (`''`) is not carried into the `translation` table; i
 - Not carried over from 2.3.0: the `shopify/storefront-access-token` command
   (`components\admin\StorefrontAccessTokenCreate`). The automatic access token (`components\ShopifyAccessToken`)
   is `Components\ShopifyAccessToken` again from the release after 3.2.0; on 3.2.0 and before,
-  `ShopifyComponent::getAdminApi()` requires `shopifyAccessToken`. The default API version is `2025-07`; set
-  `components.shopify.shopifyApiVersion` to keep `2026-04`.
+  `ShopifyComponent::getAdminApi()` requires `shopifyAccessToken`. The default API version is `2025-07` up to
+  3.2.0 and `2026-07` after it; a project setting `components.shopify.shopifyApiVersion` names `2025-10` or later,
+  where webhook subscriptions have `uri`.

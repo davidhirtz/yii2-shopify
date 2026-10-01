@@ -27,7 +27,7 @@ class WebhookSubscriptionMutation
         $data = $this->query('WebhookSubscriptionCreate', [
             'topic' => $topic,
             'webhookSubscription' => [
-                'callbackUrl' => $callbackUrl,
+                'uri' => $callbackUrl,
                 'format' => 'JSON',
             ],
         ]);

@@ -6,14 +6,10 @@ query($limit: Int! $cursor: String) {
                     handle
                 }
                 createdAt
-                endpoint {
-                    ... on WebhookHttpEndpoint {
-                        callbackUrl
-                    }
-                }
                 id
                 topic
                 updatedAt
+                uri
             }
         }
     }

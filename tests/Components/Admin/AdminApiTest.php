@@ -74,7 +74,7 @@ class TestAdminApi extends AdminApi
 {
     public function __construct(private readonly MockHandler $handler)
     {
-        parent::__construct('shop-name', 'access-token', '2025-07');
+        parent::__construct('shop-name', 'access-token', '2026-07');
     }
 
     #[Override]
