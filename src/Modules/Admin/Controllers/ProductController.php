@@ -23,9 +23,6 @@ use yii\web\Response;
 /**
  * @extends Controller<Module>
  */
-/**
- * @extends Controller<Module>
- */
 class ProductController extends Controller
 {
     use ComponentTrait;
@@ -70,6 +67,11 @@ class ProductController extends Controller
 
     public function actionUpdate(int $id): Response|string
     {
+        if (!static::getShopify()->isAdminApiConfigured()) {
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            return $this->redirect(['index']);
+        }
+
         $data = (new ProductQuery($id))();
 
         if (!$data) {
@@ -96,6 +98,11 @@ class ProductController extends Controller
 
     public function actionUpdateAll(): Response
     {
+        if (!static::getShopify()->isAdminApiConfigured()) {
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            return $this->redirect(['index']);
+        }
+
         $repository = new ProductBatchRepository();
         $repository->save();
 

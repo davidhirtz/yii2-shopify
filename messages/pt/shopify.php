@@ -53,6 +53,7 @@ return [
     'PRODUCT_VARIANT_WEIGHT_LABEL' => 'Peso',
     'PRODUCT_VARIANT_WEIGHT_UNIT_LABEL' => 'Unidade de peso',
     'PRODUCT_VENDOR_LABEL' => 'Fornecedor',
+    'SHOPIFY_ADMIN_API_NOT_CONFIGURED' => 'O nome da loja Shopify e um token de acesso à API Admin, ou a chave e o segredo da API, têm de estar definidos.',
     'WEBHOOK_ACTION_DROPDOWN_INSTALL_WEBHOOKS' => 'Instalar webhooks',
     'WEBHOOK_ACTION_DROPDOWN_RELOAD_WEBHOOKS' => 'Recarregar webhooks',
     'WEBHOOK_ACTION_DROPDOWN_VIEW_WEBHOOKS' => 'Ver webhooks',

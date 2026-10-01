@@ -21,9 +21,6 @@ use yii\web\Response;
 /**
  * @extends Controller<Module>
  */
-/**
- * @extends Controller<Module>
- */
 class WebhookController extends Controller
 {
     use ComponentTrait;
@@ -69,11 +66,16 @@ class WebhookController extends Controller
 
     public function actionIndex(): Response|string
     {
-        if (!$this->shopify->shopifyApiSecret) {
+        $isConfigured = $this->shopify->isAdminApiConfigured();
+
+        if (!$isConfigured) {
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+        } elseif (!$this->shopify->shopifyApiSecret) {
             $this->error(Yii::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API'));
         }
 
         $provider = new WebhookSubscriptionArrayDataProvider([
+            'allModels' => $isConfigured ? null : [],
             'sort' => [
                 'attributes' => ['topic', 'api_version', 'updated_at'],
                 'defaultOrder' => ['updated_at' => SORT_DESC],
@@ -87,6 +89,11 @@ class WebhookController extends Controller
 
     public function actionCreate(): Response|string
     {
+        if (!$this->shopify->isAdminApiConfigured()) {
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            return $this->redirect(['index']);
+        }
+
         $request = new WebhookSubscriptionMutation();
         $urlManager = Yii::$app->getUrlManager();
 
@@ -112,6 +119,11 @@ class WebhookController extends Controller
 
     public function actionDelete(int $id): Response|string
     {
+        if (!$this->shopify->isAdminApiConfigured()) {
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            return $this->redirect(['index']);
+        }
+
         $request = new WebhookSubscriptionMutation();
 
         if ($request->delete($id)) {

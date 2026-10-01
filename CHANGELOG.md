@@ -10,6 +10,8 @@
 - Added `shopify/storefront-access-token`, carried over from 2.3: it creates a Storefront API access token through
   `Components\Admin\StorefrontAccessTokenMutation` and saves it as `shopifyStorefrontAccessToken` in `params.php`
 - Changed `ShopifyComponent::getAdminApi()` to build `AdminApi` through the container
+- Added `ShopifyComponent::isAdminApiConfigured()`: the admin's webhook page and the product and webhook actions
+  show a message instead of failing when neither an access token nor the API key and secret are set
 - Fixed `Product::formatTrailAttributeValue()` failing on options stored in the REST API's shape, keyed by name
 
 ## 3.2.0 (September 30, 2026)

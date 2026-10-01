@@ -11,16 +11,14 @@ use Override;
 use yii\data\ArrayDataProvider;
 
 /**
- * @property WebhookSubscription[] $allModels
+ * @property WebhookSubscription[]|null $allModels
  */
 class WebhookSubscriptionArrayDataProvider extends ArrayDataProvider
 {
     #[Override]
     public function init(): void
     {
-        if (!$this->allModels) {
-            $this->allModels = $this->getModelsFromApi();
-        }
+        $this->allModels ??= $this->getModelsFromApi();
 
         parent::init();
     }

@@ -90,6 +90,47 @@ class ShopifyAdminTest extends TestCase
         self::assertNotEmpty($this->getWebSession()->getFlash('danger'));
     }
 
+    /**
+     * Without a shop name, or without a token or the key and secret to exchange for one, the API cannot be asked:
+     * the page says so instead of failing.
+     */
+    public function testTheWebhookIndexSaysWhenTheApiIsNotConfigured(): void
+    {
+        $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
+        static::getShopify()->shopifyShopName = null;
+
+        $html = Yii::$app->runAction('admin/shopify/webhook/index');
+
+        self::assertIsString($html);
+        self::assertStringContainsString('must be set', (string)json_encode($this->getWebSession()->getFlash('danger')));
+    }
+
+    public function testTheApiActionsRedirectWhenTheApiIsNotConfigured(): void
+    {
+        $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
+        $this->login(Product::AUTH_SHOPIFY_PRODUCT);
+
+        $shopify = static::getShopify();
+        $shopify->shopifyShopName = 'shop-name';
+        $shopify->shopifyAccessToken = null;
+        $shopify->shopifyApiKey = null;
+
+        self::assertFalse($shopify->isAdminApiConfigured());
+
+        $this->getWebRequest()->enableCsrfValidation = false;
+        $method = $_SERVER['REQUEST_METHOD'] ?? null;
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        try {
+            foreach (['webhook/create' => [], 'webhook/delete' => ['id' => 1], 'product/update' => ['id' => 1], 'product/update-all' => []] as $route => $params) {
+                Yii::$app->runAction("admin/shopify/$route", $params);
+                self::assertStringContainsString('must be set', (string)json_encode($this->getWebSession()->getFlash('danger', delete: true)), $route);
+            }
+        } finally {
+            $_SERVER['REQUEST_METHOD'] = $method;
+        }
+    }
+
     private function login(string $permission): User
     {
         $user = $this->getUserFromFixture('admin');

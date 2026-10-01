@@ -54,6 +54,16 @@ class ShopifyComponent extends Component
         return hash_equals($hmacHeader, $calculatedHmac);
     }
 
+    /**
+     * Whether {@see getAdminApi()} has what it needs: the shop name and an access token, or the API key and secret
+     * to exchange for one.
+     */
+    public function isAdminApiConfigured(): bool
+    {
+        return $this->shopifyShopName
+            && ($this->shopifyAccessToken || ($this->shopifyApiKey && $this->shopifyApiSecret));
+    }
+
     public function getAdminApi(): AdminApi
     {
         if (!$this->shopifyShopName) {
