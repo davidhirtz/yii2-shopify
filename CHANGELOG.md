@@ -1,8 +1,6 @@
 ## Unreleased
 
-- Fixed the admin's webhook page failing with a `TypeError` once the Admin API answered: `WebhookSubscriptionGridView`
-  renders `Models\WebhookSubscription`, which gains `$format` and `getFormattedTopic()`, and its format column reads
-  the format rather than the API version
+- Fixed`WebhookSubscriptionGridView` throwing `TypeError` once the Admin API answered
 
 ## 3.3.0 (October 1, 2026)
 
