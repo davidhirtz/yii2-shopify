@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Fixed the baseline migration collation to `utf8mb4`
+- Removed `UpdatedByUserTrait` from `Product`, whose table has no `updated_by_user_id`
 
 ## 3.3.1 (October 1, 2026)
 
