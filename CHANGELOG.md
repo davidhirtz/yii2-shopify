@@ -1,4 +1,4 @@
-## Unreleased
+## 3.3.0 (October 1, 2026)
 
 - Added `Components\ShopifyAccessToken`, carried over from 2.3: without a `shopifyAccessToken`,
   `ShopifyComponent::getAdminApi()` exchanges `shopifyApiKey` and `shopifyApiSecret` for a token through the client
