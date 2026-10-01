@@ -1,4 +1,4 @@
-## Unreleased
+## 3.3.1 (October 1, 2026)
 
 - Fixed `WebhookSubscriptionGridView` throwing `TypeError` once the Admin API answered
 
