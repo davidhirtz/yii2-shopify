@@ -36,10 +36,10 @@ same name, which is where a project normally keeps them:
 | Property / param                | Default            | Meaning                                                                        |
 |---------------------------------|--------------------|--------------------------------------------------------------------------------|
 | `shopifyShopName`               | —                  | The `NAME` in `https://NAME.myshopify.com`; required for every API call        |
-| `shopifyAccessToken`            | —                  | Admin API access token; required for every API call                            |
+| `shopifyAccessToken`            | —                  | Admin API access token; without it, one is requested with the API key and secret |
 | `shopifyApiSecret`              | —                  | App secret; required to validate the HMAC of incoming webhooks                 |
 | `shopifyShopDomain`             | `NAME.myshopify.com` | Custom shop domain, used for the links into the Shopify admin                |
-| `shopifyApiKey`                 | —                  | Stored for the project's own use, not read by the bundle                       |
+| `shopifyApiKey`                 | —                  | Client id, exchanged with the secret for a token when `shopifyAccessToken` is unset |
 | `shopifyStorefrontAccessToken`  | —                  | Stored for the project's frontend (Storefront API), not read by the bundle     |
 | `shopifyApiVersion`             | `2025-07`          | Admin API version the requests and the webhook subscriptions name              |
 | `defaultCurrency`               | `EUR`              | Currency `ProductVariant::getFormattedPrice()` formats with                    |
@@ -96,6 +96,10 @@ by default); `null` disables it.
 Create a custom app in the Shopify admin under *Apps* › *Develop apps* and give it at least the Admin API access
 scopes `read_inventory` and `read_products`. Its *API credentials* page holds the shop name, the API key and
 secret, and the Admin API access token, which Shopify shows only once.
+
+An app created in the Shopify Dev Dashboard has no permanent token. Leave `shopifyAccessToken` unset and
+`Components\ShopifyAccessToken` exchanges the API key and secret for one through the client credentials grant,
+cached until shortly before it expires; it refuses a token lacking either scope.
 
 A project using the Storefront API from its own frontend also activates the Storefront API integration
 (`unauthenticated_read_product_listings`, `unauthenticated_read_product_inventory`, and the checkout and

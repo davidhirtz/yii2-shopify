@@ -1,3 +1,10 @@
+## Unreleased
+
+- Added `Components\ShopifyAccessToken`, carried over from 2.3: without a `shopifyAccessToken`,
+  `ShopifyComponent::getAdminApi()` exchanges `shopifyApiKey` and `shopifyApiSecret` for a token through the client
+  credentials grant, as an app created in the Shopify Dev Dashboard requires, and caches it until shortly before it
+  expires
+
 ## 3.2.0 (September 30, 2026)
 
 - Requires `davidhirtz/yii2-skeleton` `^3.8`: the bundle's defaults are `Bootstrap::getDefaultConfig()`, merged under the application's configuration, so a project's own configuration wins without the former "unless already set" guards

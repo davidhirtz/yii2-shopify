@@ -11,8 +11,9 @@
 composer require davidhirtz/yii2-shopify:^3.0
 ```
 
-3.0 branches off 2.2.1. The two 2.3.x releases (automatic `shopifyAccessToken` generation, the
-`shopify/storefront-access-token` command, API version `2026-04`) were not carried over, see [Removed](#removed).
+3.0 branches off 2.2.1. Of the two 2.3.x releases, the automatic access token is carried over (unreleased, see
+the changelog); the `shopify/storefront-access-token` command and API version `2026-04` are not, see
+[Removed](#removed).
 
 ## Renames
 
@@ -355,9 +356,8 @@ Lost: an empty translation (`''`) is not carried into the `translation` table; i
   views](#admin-widgets-and-views).
 - `ShopifyControllerTrait`; see [The `shopify` component](#the-shopify-component).
 - The skeleton `ModuleTrait` on `Module` (`enableI18nTables`, `getTableName()`).
-- Not carried over from 2.3.0: the automatic generation of `shopifyAccessToken` through the GraphQL API
-  (`components\ShopifyAccessToken`) and the `shopify/storefront-access-token` command
-  (`components\admin\StorefrontAccessTokenCreate`). `ShopifyComponent::getAdminApi()` requires
-  `shopifyShopName` and `shopifyAccessToken`, so a shop set up on 2.3.x without a stored access token creates
-  one in the Shopify admin and adds it to `params` before upgrading. The default API version is `2025-07`;
-  set `components.shopify.shopifyApiVersion` to keep `2026-04`.
+- Not carried over from 2.3.0: the `shopify/storefront-access-token` command
+  (`components\admin\StorefrontAccessTokenCreate`). The automatic access token (`components\ShopifyAccessToken`)
+  is `Components\ShopifyAccessToken` again from the release after 3.2.0; on 3.2.0 and before,
+  `ShopifyComponent::getAdminApi()` requires `shopifyAccessToken`. The default API version is `2025-07`; set
+  `components.shopify.shopifyApiVersion` to keep `2026-04`.

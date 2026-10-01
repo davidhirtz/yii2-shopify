@@ -56,15 +56,34 @@ class ShopifyComponent extends Component
 
     public function getAdminApi(): AdminApi
     {
-        if (!isset($this->shopifyShopName, $this->shopifyAccessToken)) {
-            throw new InvalidConfigException('Shopify shop name and access token must be set.');
+        if (!$this->shopifyShopName) {
+            throw new InvalidConfigException('Shopify shop name must be set.');
         }
 
         return $this->api ??= new AdminApi(
             $this->shopifyShopName,
-            $this->shopifyAccessToken,
+            $this->shopifyAccessToken ?: $this->getTemporaryAccessToken($this->shopifyShopName),
             $this->shopifyApiVersion
         );
+    }
+
+    /**
+     * Without a static token, an app created in the Shopify Dev Dashboard exchanges its API key and secret for one.
+     */
+    protected function getTemporaryAccessToken(string $shopifyShopName): string
+    {
+        if (!$this->shopifyApiKey || !$this->shopifyApiSecret) {
+            throw new InvalidConfigException('Shopify access token, or API key and secret, must be set.');
+        }
+
+        $accessToken = Yii::createObject(ShopifyAccessToken::class, [
+            $shopifyShopName,
+            $this->shopifyApiKey,
+            $this->shopifyApiSecret,
+            Yii::$app->getCache(),
+        ]);
+
+        return $accessToken();
     }
 
     public function getShopUrl(string $query = ''): string
