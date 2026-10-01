@@ -9,6 +9,7 @@ use Hirtz\Shopify\Components\Admin\ProductMediaMapper;
 use Hirtz\Shopify\Components\Admin\ProductVariantMapper;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMapper;
 use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Test\TestCase;
 use Hirtz\Shopify\Test\Traits\ShopifyFixtureTrait;
 
@@ -178,6 +179,7 @@ class MapperTest extends TestCase
             'apiVersion' => ['handle' => '2026-01'],
             'uri' => 'https://www.domain.localhost/shopify/webhook/products-update',
             'topic' => 'PRODUCTS_UPDATE',
+            'format' => 'JSON',
             'updatedAt' => '2026-09-13T10:00:00Z',
             'createdAt' => '2026-09-12T10:00:00Z',
         ]))();
@@ -185,6 +187,8 @@ class MapperTest extends TestCase
         self::assertSame(99, $subscription->id);
         self::assertSame('2026-01', $subscription->api_version);
         self::assertSame('PRODUCTS_UPDATE', $subscription->topic);
+        self::assertSame('JSON', $subscription->format);
+        self::assertSame(Webhook::getTopics()['products/update'], $subscription->getFormattedTopic());
         self::assertStringEndsWith('products-update', $subscription->callbackUrl);
     }
 

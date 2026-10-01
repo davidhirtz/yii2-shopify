@@ -18,8 +18,18 @@ class WebhookSubscription extends Model
     public string $api_version;
     public string $callbackUrl;
     public string $topic;
+    public string $format;
     public ?DateTime $updated_at = null;
     public ?DateTime $created_at = null;
+
+    /**
+     * The API answers the topic as an enum value (`PRODUCTS_UPDATE`), where `Webhook` names it as the REST path.
+     */
+    public function getFormattedTopic(): string
+    {
+        $topic = strtolower((string)preg_replace('/_/', '/', $this->topic, 1));
+        return Webhook::getTopics()[$topic] ?? ucfirst(str_replace('/', ' ', $topic));
+    }
 
     #[Override]
     public function attributeLabels(): array

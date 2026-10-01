@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Grids;
 
-use Hirtz\Shopify\Models\Webhook;
+use Hirtz\Shopify\Models\WebhookSubscription;
 use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
@@ -22,7 +22,7 @@ use Stringable;
 use Yii;
 
 /**
- * @extends GridView<Webhook>
+ * @extends GridView<WebhookSubscription>
  * @property WebhookSubscriptionArrayDataProvider $provider
  */
 class WebhookSubscriptionGridView extends GridView
@@ -50,7 +50,7 @@ class WebhookSubscriptionGridView extends GridView
             ->content($this->getTopicColumnContent(...));
     }
 
-    protected function getTopicColumnContent(Webhook $webhook): ?Stringable
+    protected function getTopicColumnContent(WebhookSubscription $webhook): ?Stringable
     {
         return Td::make()
             ->content(
@@ -58,7 +58,7 @@ class WebhookSubscriptionGridView extends GridView
                     ->content($webhook->getFormattedTopic())
                     ->class('strong'),
                 Div::make()
-                    ->content($webhook->address)
+                    ->content($webhook->callbackUrl)
                     ->class('small')
             );
     }
@@ -71,7 +71,7 @@ class WebhookSubscriptionGridView extends GridView
             ->hiddenForSmallDevices();
     }
 
-    protected function getApiVersionColumnContent(Webhook $webhook): ?Stringable
+    protected function getApiVersionColumnContent(WebhookSubscription $webhook): ?Stringable
     {
         return Td::make()
             ->content(strtoupper((string)$webhook->api_version))
@@ -81,12 +81,12 @@ class WebhookSubscriptionGridView extends GridView
     protected function getFormatColumn(): ?Column
     {
         return DataColumn::make()
-            ->property('api_version')
+            ->property('format')
             ->content($this->getFormatColumnContent(...))
             ->hiddenForMediumDevices();
     }
 
-    protected function getFormatColumnContent(Webhook $webhook): ?Stringable
+    protected function getFormatColumnContent(WebhookSubscription $webhook): ?Stringable
     {
         return Td::make()
             ->content(strtoupper((string)$webhook->format))
@@ -108,7 +108,7 @@ class WebhookSubscriptionGridView extends GridView
     /**
      * @return list<Stringable>
      */
-    protected function getButtonColumnContent(Webhook $webhook): array
+    protected function getButtonColumnContent(WebhookSubscription $webhook): array
     {
         return [
             $this->getUnlinkButton($webhook),
@@ -118,10 +118,11 @@ class WebhookSubscriptionGridView extends GridView
     /**
      * @see WebhookController::actionDelete()
      */
-    protected function getUnlinkButton(Webhook $model): ?Stringable
+    protected function getUnlinkButton(WebhookSubscription $model): ?Stringable
     {
         return DeleteGridButton::make()
             ->model($model)
+            ->url(['/admin/shopify/webhook/delete', 'id' => $model->id])
             ->label(Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_BUTTON_REMOVE'))
             ->title(Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE'));
     }

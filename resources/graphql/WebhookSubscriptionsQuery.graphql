@@ -6,6 +6,7 @@ query($limit: Int! $cursor: String) {
                     handle
                 }
                 createdAt
+                format
                 id
                 topic
                 updatedAt

@@ -27,6 +27,7 @@ readonly class WebhookSubscriptionMapper
         $this->webhook->api_version = $this->data['apiVersion']['handle'];
         $this->webhook->callbackUrl = $this->data['uri'];
         $this->webhook->topic = $this->data['topic'];
+        $this->webhook->format = $this->data['format'];
         $this->webhook->updated_at = (new ShopifyDateTime($this->data['updatedAt']))->toDateTime();
         $this->webhook->created_at = (new ShopifyDateTime($this->data['createdAt']))->toDateTime();
     }
