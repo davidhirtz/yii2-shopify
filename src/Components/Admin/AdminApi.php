@@ -91,7 +91,10 @@ class AdminApi
 
     protected function createClient(): Client
     {
-        return new Client();
+        return new Client([
+            'connect_timeout' => 10,
+            'timeout' => 30,
+        ]);
     }
 
     /**
