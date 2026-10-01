@@ -90,6 +90,7 @@ by default); `null` disables it.
 | `shopify/webhook`                              | Lists the active webhook subscriptions                           |
 | `shopify/webhook-create <topic> <callbackUrl>` | Creates a webhook subscription                                   |
 | `shopify/webhook-delete <id>`                  | Deletes a webhook subscription by its Shopify id                 |
+| `shopify/storefront-access-token`              | Creates a Storefront API access token, saved to `params.php`     |
 
 ## Shopify setup
 
@@ -103,8 +104,8 @@ cached until shortly before it expires; it refuses a token lacking either scope.
 
 A project using the Storefront API from its own frontend also activates the Storefront API integration
 (`unauthenticated_read_product_listings`, `unauthenticated_read_product_inventory`, and the checkout and
-customer scopes it needs) and keeps that token under `shopifyStorefrontAccessToken`; the bundle itself never
-calls the Storefront API.
+customer scopes it needs) and keeps that token under `shopifyStorefrontAccessToken`, which
+`shopify/storefront-access-token` creates and saves; the bundle itself never calls the Storefront API.
 
 ## Webhooks
 

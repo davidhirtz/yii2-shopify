@@ -43,7 +43,7 @@ use yii\db\ActiveQuery;
  * @property bool $inventory_tracked
  * @property string|null $inventory_policy
  * @property int|null $unit_price
- * @property int|null $unit_price_measurement
+ * @property string|null $unit_price_measurement
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  *

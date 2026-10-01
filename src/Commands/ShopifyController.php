@@ -9,11 +9,13 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Commands;
 
 use Hirtz\Shopify\Components\Admin\ProductBatchRepository;
+use Hirtz\Shopify\Components\Admin\StorefrontAccessTokenMutation;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionBatchQuery;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMapper;
 use Hirtz\Shopify\Components\Admin\WebhookSubscriptionMutation;
 use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Product;
+use Hirtz\Skeleton\Console\Controllers\Traits\ConfigTrait;
 use Hirtz\Skeleton\Console\Controllers\Traits\ControllerTrait;
 use Override;
 use Yii;
@@ -28,7 +30,13 @@ use yii\helpers\Console;
 class ShopifyController extends Controller
 {
     use ComponentTrait;
+    use ConfigTrait;
     use ControllerTrait;
+
+    /**
+     * @var string the file `storefront-access-token` writes the token to
+     */
+    public string $config = '@root/config/params.php';
 
     #[Override]
     public function afterAction($action, $result)
@@ -125,5 +133,39 @@ class ShopifyController extends Controller
         foreach ($request->getErrors() as $error) {
             $this->stderr("$error\n", Console::FG_RED);
         }
+    }
+
+    /**
+     * Creates a Storefront API access token and saves it as `shopifyStorefrontAccessToken` in `params.php`.
+     */
+    public function actionStorefrontAccessToken(): void
+    {
+        $shopify = static::getShopify();
+
+        if (
+            $shopify->shopifyStorefrontAccessToken
+            && !$this->confirm('Do you want to overwrite the existing storefront access token?')
+        ) {
+            return;
+        }
+
+        $request = new StorefrontAccessTokenMutation();
+        $token = $request->create(Yii::$app->name);
+
+        foreach ($request->getErrors() as $error) {
+            $this->stderr("$error\n", Console::FG_RED);
+        }
+
+        if ($token === null) {
+            $this->stderr("Failed to create storefront access token.\n", Console::FG_RED);
+            return;
+        }
+
+        $this->setConfig($this->config, [
+            ...$this->getConfig($this->config),
+            'shopifyStorefrontAccessToken' => $token,
+        ], 'Shopify storefront access token saved.');
+
+        $shopify->shopifyStorefrontAccessToken = $token;
     }
 }

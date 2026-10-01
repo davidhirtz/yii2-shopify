@@ -7,6 +7,10 @@
 - Changed the default `shopifyApiVersion` from `2025-07`, which Shopify no longer supports, to `2026-07`; a project
   pinning a version needs `2025-10` or later, since webhook subscriptions are read and created through `uri`
   instead of the deprecated `endpoint` and `callbackUrl`
+- Added `shopify/storefront-access-token`, carried over from 2.3: it creates a Storefront API access token through
+  `Components\Admin\StorefrontAccessTokenMutation` and saves it as `shopifyStorefrontAccessToken` in `params.php`
+- Changed `ShopifyComponent::getAdminApi()` to build `AdminApi` through the container
+- Fixed `Product::formatTrailAttributeValue()` failing on options stored in the REST API's shape, keyed by name
 
 ## 3.2.0 (September 30, 2026)
 
@@ -33,7 +37,7 @@
 - Replaced the historical migrations with `Migrations\M260101000200ShopifyBaseline`; the v2 to v3 migrations live in `davidhirtz/yii2-upgrade`
 - Fixed `Components\ShopifyPrice` storing a price one cent short, `Components\ShopifyId` failing on a bare numeric id and `Components\GraphqlParser` looping on two fragments spreading each other
 - Added `Models\Webhook` with `getTopics()` and `getFormattedTopic()`
-- 
+
 ## 2.3.1 (Jun 1, 2026)
 
 - Fixed `ShopifyPrice` rounding error
@@ -44,7 +48,7 @@
   the GraphQL API
 - Added automatic generation of `shopifyAccessToken` for new shops via the GraphQL API
 - Bumped API version to `2026-04`
-- 
+
 ## 2.2.1 (Nov 13, 2025)
 
 - Fixed `shopifyShopDomain` containing HTTP protocol

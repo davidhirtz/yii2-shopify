@@ -159,10 +159,7 @@ class Product extends ActiveRecord implements
     public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
     {
         if ($attribute === 'options' && is_array($value)) {
-            return array_map(
-                fn ($data) => "{$data['name']}: " . implode(', ', $data['values'] ?? []),
-                $value
-            );
+            return $this->formatTrailOptions($value);
         }
 
         if ($attribute === 'image_id' && $value) {
@@ -170,6 +167,28 @@ class Product extends ActiveRecord implements
         }
 
         return $this->parentFormatTrailAttributeValue($attribute, $value);
+    }
+
+    /**
+     * A trail may hold options in the REST API's shape, keyed by name, as products synchronised before 2.2 wrote them.
+     *
+     * @param array<array-key, mixed> $options
+     * @return list<string>
+     */
+    protected function formatTrailOptions(array $options): array
+    {
+        $formatted = [];
+
+        foreach ($options as $key => $data) {
+            $data = (array)$data;
+            $name = is_string($key) ? $key : ($data['name'] ?? 'Option ' . ((int)$key + 1));
+            $values = is_string($key) ? $data : ($data['values'] ?? []);
+            $values = implode(', ', array_filter((array)$values, is_scalar(...))) ?: '–';
+
+            $formatted[] = "$name: $values";
+        }
+
+        return $formatted;
     }
 
     /**

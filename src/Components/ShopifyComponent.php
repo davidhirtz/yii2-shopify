@@ -60,11 +60,11 @@ class ShopifyComponent extends Component
             throw new InvalidConfigException('Shopify shop name must be set.');
         }
 
-        return $this->api ??= new AdminApi(
+        return $this->api ??= Yii::$container->get(AdminApi::class, [
             $this->shopifyShopName,
             $this->shopifyAccessToken ?: $this->getTemporaryAccessToken($this->shopifyShopName),
-            $this->shopifyApiVersion
-        );
+            $this->shopifyApiVersion,
+        ]);
     }
 
     /**
