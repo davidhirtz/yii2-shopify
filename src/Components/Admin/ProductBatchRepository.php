@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Components\Admin;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Product;
 
 class ProductBatchRepository
 {
+    use ComponentTrait;
+
     /**
      * @var list<int>
      */
@@ -15,15 +18,19 @@ class ProductBatchRepository
 
     public function save(): void
     {
+        $api = static::getShopify()->getAdminApi();
+        $errorCount = count($api->getErrors());
+
         foreach ($this->getProducts() as $result) {
             $repository = new ProductRepository($result['node']);
-
-            if ($repository->save()) {
-                $this->productIds[] = $repository->product->id;
-            }
+            $repository->save();
+            $this->productIds[] = $repository->product->id;
         }
 
-        $this->deleteRemovedProducts();
+        // A failed request ends the batch as if the list were complete
+        if (count($api->getErrors()) === $errorCount) {
+            $this->deleteRemovedProducts();
+        }
     }
 
     protected function getProducts(): ProductBatchQuery

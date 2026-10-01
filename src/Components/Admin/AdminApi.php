@@ -76,9 +76,12 @@ class AdminApi
         } catch (Exception $exception) {
             // Return error to user as this could be a missing scope or invalid API key which could be fixed without
             // consulting the error log ...
-            if ($exception instanceof BadResponseException) {
-                $this->errors = $this->getResponseErrors($exception);
-            }
+            $this->errors = [
+                ...$this->errors,
+                ...($exception instanceof BadResponseException
+                    ? $this->getResponseErrors($exception)
+                    : [$exception->getMessage() ?: 'Unknown API Error']),
+            ];
 
             Yii::error($exception->getMessage());
         }

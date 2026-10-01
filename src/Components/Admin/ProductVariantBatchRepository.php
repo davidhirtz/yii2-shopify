@@ -4,15 +4,23 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Components\Admin;
 
+use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Product;
 use Hirtz\Skeleton\Log\ActiveRecordErrorLogger;
 
 class ProductVariantBatchRepository
 {
+    use ComponentTrait;
+
     /**
      * @var list<int>
      */
     private array $variantIds = [];
+
+    /**
+     * @var list<int>
+     */
+    private array $listedIds = [];
     private int $totalInventoryQuantity = 0;
 
     /**
@@ -30,19 +38,28 @@ class ProductVariantBatchRepository
             $this->saveProductVariantFromEdgeData($data);
         }
 
+        $isComplete = true;
+
         if (count($edges) < $this->data['variantsCount']['count']) {
+            $api = static::getShopify()->getAdminApi();
+            $errorCount = count($api->getErrors());
             $cursor = end($edges)['cursor'] ?? null;
 
             foreach (new ProductVariantBatchQuery($this->product->id, cursor: $cursor) as $data) {
                 $this->saveProductVariantFromEdgeData($data);
             }
+
+            // A failed request ends the batch as if the list were complete
+            $isComplete = count($api->getErrors()) === $errorCount;
         }
 
         $this->product->variant_id = $this->variantIds[0] ?? null;
         $this->product->total_inventory_quantity = $this->totalInventoryQuantity;
         $this->product->variant_count = $this->getTotalCount();
 
-        $this->deleteUnusedVariants();
+        if ($isComplete) {
+            $this->deleteUnusedVariants();
+        }
     }
 
     /**
@@ -51,6 +68,7 @@ class ProductVariantBatchRepository
     protected function saveProductVariantFromEdgeData(array $data): void
     {
         $variant = (new ProductVariantMapper($this->product, $data['node']))();
+        $this->listedIds[] = $variant->id;
         $variant->position = $this->getTotalCount() + 1;
 
         if ($variant->save()) {
@@ -66,7 +84,7 @@ class ProductVariantBatchRepository
     protected function deleteUnusedVariants(): void
     {
         $variants = $this->product->getVariants()
-            ->andWhere(['not in', 'id', $this->variantIds])
+            ->andWhere(['not in', 'id', $this->listedIds])
             ->all();
 
         foreach ($variants as $variant) {
