@@ -356,9 +356,9 @@ Lost: an empty translation (`''`) is not carried into the `translation` table; i
   views](#admin-widgets-and-views).
 - `ShopifyControllerTrait`; see [The `shopify` component](#the-shopify-component).
 - The skeleton `ModuleTrait` on `Module` (`enableI18nTables`, `getTableName()`).
-- Not carried over from 2.3.0: the `shopify/storefront-access-token` command
-  (`components\admin\StorefrontAccessTokenCreate`). The automatic access token (`components\ShopifyAccessToken`)
-  is `Components\ShopifyAccessToken` again from the release after 3.2.0; on 3.2.0 and before,
-  `ShopifyComponent::getAdminApi()` requires `shopifyAccessToken`. The default API version is `2025-07` up to
-  3.2.0 and `2026-07` after it; a project setting `components.shopify.shopifyApiVersion` names `2025-10` or later,
-  where webhook subscriptions have `uri`.
+- Not carried over from 2.3.0 up to 3.2.0: the `shopify/storefront-access-token` command
+  (`components\admin\StorefrontAccessTokenCreate`) and the automatic access token (`components\ShopifyAccessToken`).
+  3.3.0 brings both back, the command through `Components\Admin\StorefrontAccessTokenMutation` and the token as
+  `Components\ShopifyAccessToken`; on 3.2.0 and before, `ShopifyComponent::getAdminApi()` requires
+  `shopifyAccessToken`. The default API version is `2025-07` up to 3.2.0 and `2026-07` from 3.3.0; a project
+  setting `components.shopify.shopifyApiVersion` names `2025-10` or later, where webhook subscriptions have `uri`.

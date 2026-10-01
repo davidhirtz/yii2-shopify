@@ -30,8 +30,9 @@ to `admin` and `manager`.
 
 ### Component and params
 
-`components.shopify` is `Components\ShopifyComponent`. Every credential falls back to the `params` key of the
-same name, which is where a project normally keeps them:
+`components.shopify` is `Components\ShopifyComponent`. The shop name and domain and every credential fall back
+to the `params` key of the same name, which is where a project normally keeps them; `shopifyApiVersion` and
+`defaultCurrency` are component properties only:
 
 | Property / param                | Default            | Meaning                                                                        |
 |---------------------------------|--------------------|--------------------------------------------------------------------------------|
@@ -44,13 +45,12 @@ same name, which is where a project normally keeps them:
 | `shopifyApiVersion`             | `2026-07`          | Admin API version the requests and the webhook subscriptions name; `2025-10` at the earliest |
 | `defaultCurrency`               | `EUR`              | Currency `ProductVariant::getFormattedPrice()` formats with                    |
 
-A project that declares `components.shopify` itself must name the class, or the application refuses the
-definition before the bootstrap can supply it:
+The class comes from the bundle's defaults (`Bootstrap::getDefaultConfig()`), merged under the application's
+configuration, so a project's `components.shopify` names only what it changes:
 
 ```php
 'components' => [
     'shopify' => [
-        'class' => \Hirtz\Shopify\Components\ShopifyComponent::class,
         'shopifyApiVersion' => '2026-04',
     ],
 ],
@@ -91,6 +91,18 @@ by default); `null` disables it.
 | `shopify/webhook-create <topic> <callbackUrl>` | Creates a webhook subscription                                   |
 | `shopify/webhook-delete <id>`                  | Deletes a webhook subscription by its Shopify id                 |
 | `shopify/storefront-access-token`              | Creates a Storefront API access token, saved to `params.php`     |
+
+`shopify/storefront-access-token` writes to `Commands\ShopifyController::$config` (`@root/config/params.php`); a
+project keeping its params elsewhere points it there through `controllerMap`:
+
+```php
+'controllerMap' => [
+    'shopify' => [
+        'class' => \Hirtz\Shopify\Commands\ShopifyController::class,
+        'config' => '@root/config/shopify.php',
+    ],
+],
+```
 
 ## Shopify setup
 
