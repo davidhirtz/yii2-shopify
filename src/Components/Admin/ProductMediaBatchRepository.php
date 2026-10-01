@@ -44,7 +44,7 @@ class ProductMediaBatchRepository
             $errorCount = count($api->getErrors());
             $cursor = end($edges)['cursor'] ?? null;
 
-            foreach (new ProductMediaBatchQuery($this->product->id, cursor: $cursor) as $data) {
+            foreach (new ProductMediaBatchQuery((int)$this->product->id, cursor: $cursor) as $data) {
                 $this->saveProductImageFromEdgeData($data);
             }
 
@@ -66,11 +66,11 @@ class ProductMediaBatchRepository
     protected function saveProductImageFromEdgeData(array $data): void
     {
         $image = (new ProductMediaMapper($this->product, $data['node']))();
-        $this->listedIds[] = $image->id;
+        $this->listedIds[] = (int)$image->id;
         $image->position = $this->getTotalCount() + 1;
 
         if ($image->save()) {
-            $this->imageIds[] = $image->id;
+            $this->imageIds[] = (int)$image->id;
         }
 
         if ($image->hasErrors()) {

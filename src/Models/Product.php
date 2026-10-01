@@ -27,9 +27,9 @@ use Hirtz\Skeleton\Db\DateTime;
 use yii\db\ActiveQuery;
 
 /**
- * @property int $id
- * @property int|null $variant_id
- * @property int|null $image_id
+ * @property int|string $id
+ * @property int|string|null $variant_id
+ * @property int|string|null $image_id
  * @property string $name
  * @property string|null $content
  * @property string $slug

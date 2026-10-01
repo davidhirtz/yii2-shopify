@@ -23,9 +23,9 @@ use Hirtz\Skeleton\Db\DateTime;
 use yii\db\ActiveQuery;
 
 /**
- * @property int $id
- * @property int $product_id
- * @property int|null $image_id
+ * @property int|string $id
+ * @property int|string $product_id
+ * @property int|string|null $image_id
  * @property string $name
  * @property int $position
  * @property int $price
@@ -36,11 +36,11 @@ use yii\db\ActiveQuery;
  * @property string|null $option_3
  * @property string|null $barcode
  * @property string|null $sku
- * @property bool $is_taxable
- * @property int|null $weight
+ * @property bool|int $is_taxable
+ * @property string|null $weight
  * @property string|null $weight_unit
  * @property int|null $inventory_quantity
- * @property bool $inventory_tracked
+ * @property bool|int $inventory_tracked
  * @property string|null $inventory_policy
  * @property int|null $unit_price
  * @property string|null $unit_price_measurement

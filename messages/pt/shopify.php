@@ -22,7 +22,6 @@ return [
     'PRODUCT_IMAGE_POSITION_LABEL' => 'Posição',
     'PRODUCT_IMAGE_PRODUCT_ID_LABEL' => 'Produto',
     'PRODUCT_IMAGE_SRC_LABEL' => 'URL',
-    'PRODUCT_IMAGE_WEIGHT_LABEL' => 'Peso',
     'PRODUCT_LAST_IMPORT_AT_LABEL' => 'Última importação',
     'PRODUCT_NAME_LABEL' => 'Título',
     'PRODUCT_PRODUCT_TYPE_LABEL' => 'Tipo',

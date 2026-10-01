@@ -22,8 +22,8 @@ use Override;
 use Yii;
 
 /**
- * @property int $id
- * @property int $product_id
+ * @property int|string $id
+ * @property int|string $product_id
  * @property int $position
  * @property string|null $alt_text
  * @property int|null $width
@@ -137,7 +137,6 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
             'position' => Yii::t('shopify', 'PRODUCT_IMAGE_POSITION_LABEL'),
             'product_id' => Yii::t('shopify', 'PRODUCT_IMAGE_PRODUCT_ID_LABEL'),
             'alt_text' => Yii::t('shopify', 'PRODUCT_IMAGE_ALT_TEXT_LABEL'),
-            'weight' => Yii::t('shopify', 'PRODUCT_IMAGE_WEIGHT_LABEL'),
             'height' => Yii::t('shopify', 'PRODUCT_IMAGE_HEIGHT_LABEL'),
             'src' => Yii::t('shopify', 'PRODUCT_IMAGE_SRC_LABEL'),
         ];

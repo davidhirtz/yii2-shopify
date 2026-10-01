@@ -45,7 +45,7 @@ class ProductVariantBatchRepository
             $errorCount = count($api->getErrors());
             $cursor = end($edges)['cursor'] ?? null;
 
-            foreach (new ProductVariantBatchQuery($this->product->id, cursor: $cursor) as $data) {
+            foreach (new ProductVariantBatchQuery((int)$this->product->id, cursor: $cursor) as $data) {
                 $this->saveProductVariantFromEdgeData($data);
             }
 
@@ -68,12 +68,12 @@ class ProductVariantBatchRepository
     protected function saveProductVariantFromEdgeData(array $data): void
     {
         $variant = (new ProductVariantMapper($this->product, $data['node']))();
-        $this->listedIds[] = $variant->id;
+        $this->listedIds[] = (int)$variant->id;
         $variant->position = $this->getTotalCount() + 1;
 
         if ($variant->save()) {
             $this->totalInventoryQuantity += $variant->inventory_tracked ? (int)$variant->inventory_quantity : 0;
-            $this->variantIds[] = $variant->id;
+            $this->variantIds[] = (int)$variant->id;
         }
 
         if ($variant->hasErrors()) {

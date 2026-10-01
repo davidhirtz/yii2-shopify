@@ -24,7 +24,7 @@ class ProductBatchRepository
         foreach ($this->getProducts() as $result) {
             $repository = new ProductRepository($result['node']);
             $repository->save();
-            $this->productIds[] = $repository->product->id;
+            $this->productIds[] = (int)$repository->product->id;
         }
 
         // A failed request ends the batch as if the list were complete
