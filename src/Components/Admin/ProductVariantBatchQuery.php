@@ -8,7 +8,7 @@ use Hirtz\Shopify\Components\GraphqlParser;
 
 class ProductVariantBatchQuery extends BatchQuery
 {
-    public function __construct(private readonly int $productId, int $batchSize = 2000, ?string $cursor = null)
+    public function __construct(private readonly int $productId, int $batchSize = 250, ?string $cursor = null)
     {
         parent::__construct($batchSize, $cursor);
     }

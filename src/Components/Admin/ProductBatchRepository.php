@@ -35,7 +35,7 @@ class ProductBatchRepository
 
     protected function getProducts(): ProductBatchQuery
     {
-        return new ProductBatchQuery(20);
+        return new ProductBatchQuery(10);
     }
 
     protected function deleteRemovedProducts(): void

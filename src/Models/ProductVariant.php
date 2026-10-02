@@ -121,14 +121,14 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
 
     public function getFormattedUnitPrice(): string
     {
-        return $this->unit_price
+        return $this->unit_price !== null
             ? ($this->formatPrice($this->unit_price) . '/' . $this->unit_price_measurement)
             : '';
     }
 
     protected function formatPrice(?int $value): string
     {
-        return $value
+        return $value !== null
             ? Yii::$app->getFormatter()->asCurrency($value / 100, static::getShopify()->defaultCurrency)
             : '';
     }

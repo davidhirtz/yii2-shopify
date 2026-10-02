@@ -6,7 +6,7 @@ fragment ProductFields on Product {
     mediaCount {
         count
     }
-    media (first: 250) {
+    media (first: 20) {
         edges {
            cursor
             node {

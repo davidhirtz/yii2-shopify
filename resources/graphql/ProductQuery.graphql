@@ -1,7 +1,7 @@
 query($id: ID!) {
     product(id: $id) {
         ...ProductFields
-        variants(first: 2000) {
+        variants(first: 100) {
             edges {
                 cursor
                 node {
