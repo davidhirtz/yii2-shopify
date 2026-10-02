@@ -83,7 +83,12 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
                 RelationValidator::class
             ],
             [
-                ['weight', 'unit_price_measurement'],
+                ['name', 'option_1', 'option_2', 'option_3', 'barcode', 'sku', 'weight', 'inventory_policy'],
+                'string',
+                'max' => 255,
+            ],
+            [
+                ['unit_price_measurement'],
                 'string',
             ],
             [

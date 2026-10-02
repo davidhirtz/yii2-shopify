@@ -32,7 +32,10 @@ readonly class ProductMediaMapper
 
     protected function setAttributes(): void
     {
-        $this->image->alt_text = $this->data['preview']['image']['altText'];
+        $altText = $this->data['preview']['image']['altText'] ?? null;
+
+        // Shopify takes longer alt texts than the column
+        $this->image->alt_text = $altText ? mb_substr($altText, 0, 255) : null;
         $this->image->height = $this->data['preview']['image']['height'] ?? null;
         $this->image->width = $this->data['preview']['image']['width'] ?? null;
         $this->image->src = $this->data['preview']['image']['url'] ?? null;

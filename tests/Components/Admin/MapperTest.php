@@ -172,6 +172,46 @@ class MapperTest extends TestCase
         self::assertSame('https://cdn.shopify.com/a.jpg', $image->src);
     }
 
+    /**
+     * A preview is still missing while Shopify processes an upload, which is when a `products/update` arrives.
+     */
+    public function testAnImageWithoutAPreviewIsInvalidRatherThanFatal(): void
+    {
+        $product = $this->getProductFromFixture('product-1');
+
+        $image = (new ProductMediaMapper($product, [
+            'id' => 'gid://shopify/MediaImage/56',
+            'preview' => ['image' => null],
+        ]))();
+
+        self::assertFalse($image->validate());
+        self::assertTrue($image->hasErrors('src'));
+    }
+
+    public function testTextsLongerThanTheirColumnsAreCut(): void
+    {
+        $product = $this->getProductFromFixture('product-1');
+
+        $image = (new ProductMediaMapper($product, [
+            'id' => 'gid://shopify/MediaImage/57',
+            'preview' => [
+                'image' => [
+                    'altText' => str_repeat('Å', 300),
+                    'height' => 800,
+                    'width' => 600,
+                    'url' => 'https://cdn.shopify.com/a.jpg',
+                ],
+            ],
+        ]))();
+
+        $variant = (new ProductVariantMapper($product, $this->getVariantData([
+            'title' => str_repeat('東', 300),
+        ])))();
+
+        self::assertSame(255, mb_strlen((string)$image->alt_text));
+        self::assertSame(255, mb_strlen($variant->name));
+    }
+
     public function testAWebhookSubscriptionIsMapped(): void
     {
         $subscription = (new WebhookSubscriptionMapper([

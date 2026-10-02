@@ -95,6 +95,11 @@ class Product extends ActiveRecord implements
                 'required',
             ],
             [
+                ['name', 'slug', 'vendor', 'product_type'],
+                'string',
+                'max' => 255,
+            ],
+            [
                 ['slug'],
                 UniqueValidator::class,
             ],

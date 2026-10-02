@@ -68,6 +68,11 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
                 'number',
                 'integerOnly' => true,
             ],
+            [
+                ['alt_text', 'src'],
+                'string',
+                'max' => 255,
+            ],
         ]);
     }
 

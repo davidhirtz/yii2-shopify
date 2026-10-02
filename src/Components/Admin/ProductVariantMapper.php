@@ -39,7 +39,8 @@ readonly class ProductVariantMapper
             ? (new ShopifyPrice($this->data['compareAtPrice']))->toInt()
             : null;
 
-        $this->variant->name = $this->data['title'];
+        // The title joins up to three option values of 255 characters each
+        $this->variant->name = mb_substr($this->data['title'], 0, 255);
         $this->variant->sku = $this->data['sku'] ?: null;
         $this->variant->barcode = $this->data['barcode'] ?: null;
         $this->variant->inventory_policy = $this->data['inventoryPolicy'] ?? null;

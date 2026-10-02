@@ -7,7 +7,6 @@ namespace Hirtz\Shopify\Components\Admin;
 use Hirtz\Shopify\Components\ShopifyDateTime;
 use Hirtz\Shopify\Components\ShopifyId;
 use Hirtz\Shopify\Models\Product;
-use Yii;
 
 readonly class ProductMapper
 {
@@ -41,8 +40,6 @@ readonly class ProductMapper
         $this->product->tags = $this->data['tags'] ?: null;
         $this->product->vendor = $this->data['vendor'] ?: null;
 
-
-        Yii::debug($this->data['options'], 'options');
         $options = [];
 
         if (
