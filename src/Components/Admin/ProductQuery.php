@@ -15,15 +15,24 @@ readonly class ProductQuery
     }
 
     /**
-     * @return array<string, mixed>
+     * An empty array is a product Shopify no longer has, `null` a request that failed: only the first may be read
+     * as a deletion.
+     *
+     * @return array<string, mixed>|null
      */
-    public function __invoke(): array
+    public function __invoke(): ?array
     {
         $query = (new GraphqlParser())->load('ProductQuery');
+        $api = static::getShopify()->getAdminApi();
+        $errorCount = count($api->getErrors());
 
-        $data = static::getShopify()->getAdminApi()->query($query, [
+        $data = $api->query($query, [
             'id' => "gid://shopify/Product/$this->id",
         ]);
+
+        if (count($api->getErrors()) > $errorCount) {
+            return null;
+        }
 
         return $data['product'] ?? [];
     }

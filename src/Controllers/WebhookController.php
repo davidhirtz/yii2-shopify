@@ -14,11 +14,9 @@ use Hirtz\Skeleton\Web\Controller;
 use Override;
 use Yii;
 use yii\helpers\Json;
+use yii\web\HttpException;
 use yii\web\UnauthorizedHttpException;
 
-/**
- * @extends Controller<Module>
- */
 /**
  * @extends Controller<Module>
  */
@@ -59,13 +57,29 @@ class WebhookController extends Controller
 
     /**
      * Webhook endpoint for webhook topics "products/update".
+     *
+     * Shopify retries anything but a 2xx: a product it no longer has is a deletion, and only a failed request is
+     * answered with an error, so that it is retried.
      */
     public function actionProductsUpdate(): void
     {
         $id = $this->getProductId();
-        $data = (new ProductQuery($id))();
 
+        if ($id === null) {
+            return;
+        }
+
+        $data = (new ProductQuery($id))();
         $api = static::getShopify()->getAdminApi();
+
+        if ($data === null) {
+            throw new HttpException(503);
+        }
+
+        if (!$data) {
+            Product::findOne($id)?->delete();
+            return;
+        }
 
         $repository = new ProductRepository($data);
         $repository->save();
@@ -89,8 +103,9 @@ class WebhookController extends Controller
     {
         $body = $this->getRequestBody();
         $data = $body ? Json::decode($body) : [];
+        $id = is_array($data) ? ($data['id'] ?? null) : null;
 
-        return $data['id'] ?? null;
+        return is_numeric($id) ? (int)$id : null;
     }
 
     private function getRequestBody(): string

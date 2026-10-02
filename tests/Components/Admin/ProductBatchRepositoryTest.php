@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Tests\Components\Admin;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Hirtz\Shopify\Components\Admin\AdminApi;
 use Hirtz\Shopify\Components\Admin\ProductBatchRepository;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Test\MockAdminApi;
 use Hirtz\Skeleton\Test\TestCase;
 use Override;
 use Yii;
@@ -72,21 +70,7 @@ class ProductBatchRepositoryTest extends TestCase
 
     private function import(Response|ConnectException $response): void
     {
-        Yii::$container->set(AdminApi::class, new ProductBatchAdminApi(new MockHandler([$response])));
+        Yii::$container->set(AdminApi::class, new MockAdminApi($response));
         (new ProductBatchRepository())->save();
-    }
-}
-
-class ProductBatchAdminApi extends AdminApi
-{
-    public function __construct(private readonly MockHandler $handler)
-    {
-        parent::__construct('shop-name', 'access-token', '2026-07');
-    }
-
-    #[Override]
-    protected function createClient(): Client
-    {
-        return new Client(['handler' => HandlerStack::create($this->handler)]);
     }
 }

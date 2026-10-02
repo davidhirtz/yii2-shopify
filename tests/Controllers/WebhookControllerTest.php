@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Tests\Controllers;
 
+use GuzzleHttp\Psr7\Response;
+use Hirtz\Shopify\Components\Admin\AdminApi;
 use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Test\MockAdminApi;
 use Hirtz\Shopify\Test\TestCase;
 use Hirtz\Shopify\Test\Traits\ShopifyFixtureTrait;
+use Override;
 use Yii;
+use yii\web\HttpException;
 use yii\web\UnauthorizedHttpException;
 
 /**
@@ -19,6 +24,13 @@ class WebhookControllerTest extends TestCase
     use ShopifyFixtureTrait;
 
     private const string SECRET = 'api-secret';
+
+    #[Override]
+    protected function tearDown(): void
+    {
+        Yii::$container->clear(AdminApi::class);
+        parent::tearDown();
+    }
 
     public function testAProductIsDeleted(): void
     {
@@ -99,6 +111,46 @@ class WebhookControllerTest extends TestCase
         $this->request(['id' => 99999]);
 
         self::assertSame($countBefore, (int)Product::find()->count());
+    }
+
+    public function testAnUpdateForAProductShopifyNoLongerHasDeletesIt(): void
+    {
+        $product = $this->getProductFromFixture('product-1');
+        $this->mockAdminApi(new Response(200, [], '{"data":{"product":null}}'));
+
+        $this->request(['id' => $product->id], 'products-update');
+
+        self::assertNull(Product::findOne($product->id));
+    }
+
+    public function testAFailedUpdateIsAnswered503SoShopifyRetriesIt(): void
+    {
+        $product = $this->getProductFromFixture('product-1');
+        $this->mockAdminApi(new Response(200, [], '{"errors":[{"message":"Throttled","extensions":{"code":"THROTTLED"}}]}'));
+
+        try {
+            $this->request(['id' => $product->id], 'products-update');
+            self::fail('The request was answered with success.');
+        } catch (HttpException $exception) {
+            self::assertSame(503, $exception->statusCode);
+        }
+
+        self::assertNotNull(Product::findOne($product->id));
+    }
+
+    public function testAnUpdateWithoutAProductIdIsIgnored(): void
+    {
+        $countBefore = (int)Product::find()->count();
+
+        $this->mockAdminApi();
+        $this->request(['title' => 'No id'], 'products-update');
+
+        self::assertSame($countBefore, (int)Product::find()->count());
+    }
+
+    private function mockAdminApi(Response ...$responses): void
+    {
+        Yii::$container->set(AdminApi::class, new MockAdminApi(...$responses));
     }
 
     /**

@@ -73,6 +73,12 @@ class ProductController extends Controller
         }
 
         $data = (new ProductQuery($id))();
+        $api = static::getShopify()->getAdminApi();
+
+        if ($data === null) {
+            $this->error($api->getErrors());
+            return $this->redirect(['index']);
+        }
 
         if (!$data) {
             $product = Product::findOne($id);
@@ -84,8 +90,6 @@ class ProductController extends Controller
 
             throw new NotFoundHttpException();
         }
-
-        $api = static::getShopify()->getAdminApi();
 
         $repository = new ProductRepository($data);
         $repository->save();
