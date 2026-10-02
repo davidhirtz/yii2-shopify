@@ -78,7 +78,7 @@ class ProductControllerFunctionTest extends TestCase
         return $product;
     }
 
-    private function postUpdate(int $id, Response $response): void
+    private function postUpdate(int|string $id, Response $response): void
     {
         Yii::$container->set(AdminApi::class, new MockAdminApi($response));
 

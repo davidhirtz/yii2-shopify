@@ -21,7 +21,7 @@ class MockAdminApi extends AdminApi
 
     public function __construct(Response|ConnectException ...$responses)
     {
-        $this->handler = new MockHandler($responses);
+        $this->handler = new MockHandler(array_values($responses));
         parent::__construct('shop-name', 'access-token', '2026-07');
     }
 

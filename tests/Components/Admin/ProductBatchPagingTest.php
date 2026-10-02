@@ -91,11 +91,11 @@ class ProductBatchPagingTest extends TestCase
      */
     private function getVariantIds(): array
     {
-        return array_map(intval(...), ProductVariant::find()
+        return array_values(array_map(intval(...), ProductVariant::find()
             ->select('id')
             ->where(['product_id' => 1])
             ->orderBy(['id' => SORT_ASC])
-            ->column());
+            ->column()));
     }
 
     /**
@@ -103,11 +103,11 @@ class ProductBatchPagingTest extends TestCase
      */
     private function getImageIds(): array
     {
-        return array_map(intval(...), ProductImage::find()
+        return array_values(array_map(intval(...), ProductImage::find()
             ->select('id')
             ->where(['product_id' => 1])
             ->orderBy(['id' => SORT_ASC])
-            ->column());
+            ->column()));
     }
 
     /**
