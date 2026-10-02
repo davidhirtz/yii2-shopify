@@ -39,7 +39,7 @@ class WebhookSubscription extends Model
             'topic' => Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_TOPIC_LABEL'),
             'format' => Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_FORMAT_LABEL'),
             'api_version' => Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_API_VERSION_LABEL'),
-            'updated_at' => Yii::t('skeleton', 'WEBHOOK_SUBSCRIPTION_UPDATED_AT_LABEL'),
+            'updated_at' => Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_UPDATED_AT_LABEL'),
         ];
     }
 }

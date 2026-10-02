@@ -69,7 +69,9 @@ return [
     'WEBHOOK_SUBSCRIPTION_FORMAT_LABEL' => 'Formato',
     'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE' => 'Tem a certeza de que pretende remover este webhook?',
     'WEBHOOK_SUBSCRIPTION_TOPIC_LABEL' => 'Evento',
+    'WEBHOOK_SUBSCRIPTION_UPDATED_AT_LABEL' => 'Última atualização',
     'WEBHOOK_SUCCESS_CREATED' => 'O webhook "{topic}" foi criado.',
     'WEBHOOK_SUCCESS_DELETED' => 'O webhook foi eliminado.',
     'WEBHOOK_TOPIC_LABEL' => 'Evento',
+    'WEBHOOK_UPDATED_AT_LABEL' => 'Última atualização',
 ];
