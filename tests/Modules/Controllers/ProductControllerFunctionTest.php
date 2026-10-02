@@ -73,7 +73,7 @@ class ProductControllerFunctionTest extends TestCase
         $product->name = 'Product';
         $product->slug = 'product';
         $product->last_import_at = $product->created_at = new DateTime();
-        self::assertTrue($product->insert(false));
+        self::assertTrue($product->insert(false), print_r($product->getErrors(), true));
 
         return $product;
     }

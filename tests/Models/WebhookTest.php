@@ -36,7 +36,7 @@ class WebhookTest extends TestCase
         $webhook->address = 'https://www.example.com/hook';
         $webhook->api_version = '2020-01';
 
-        self::assertTrue($webhook->validate());
+        self::assertTrue($webhook->validate(), print_r($webhook->getErrors(), true));
         self::assertSame('https://www.example.com/hook', $webhook->address);
         self::assertSame('2020-01', $webhook->api_version);
     }
