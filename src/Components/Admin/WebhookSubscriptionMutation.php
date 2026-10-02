@@ -50,9 +50,13 @@ class WebhookSubscriptionMutation
     protected function query(string $name, array $data): array
     {
         $query = (new GraphqlParser())->load($name);
+        $errorCount = count($this->api->getErrors());
 
         $result = $this->api->query($query, $data);
         $data = $result[lcfirst($name)] ?? [];
+
+        // A missing scope, a throttled or a failed request never reaches `userErrors`
+        $this->errors = [...$this->errors, ...array_slice($this->api->getErrors(), $errorCount)];
 
         foreach ($data['userErrors'] ?? [] as $error) {
             $this->errors[] = $error['message'] ?? 'Unknown error';

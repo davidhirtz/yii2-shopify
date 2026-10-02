@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Hirtz\Shopify\Tests\Commands;
 
+use GuzzleHttp\Psr7\Response;
 use Hirtz\Shopify\Commands\ShopifyController;
 use Hirtz\Shopify\Components\Admin\AdminApi;
 use Hirtz\Shopify\Components\ShopifyComponent;
+use Hirtz\Shopify\Test\MockAdminApi;
 use Hirtz\Skeleton\Helpers\FileHelper;
 use Hirtz\Skeleton\Test\TestCase;
 use Hirtz\Skeleton\Test\Traits\StdOutBufferControllerTrait;
 use Override;
 use Yii;
+use yii\console\ExitCode;
 
 class ShopifyControllerTest extends TestCase
 {
@@ -37,6 +40,7 @@ class ShopifyControllerTest extends TestCase
     protected function tearDown(): void
     {
         FileHelper::removeDirectory($this->configPath);
+        Yii::$container->clear(AdminApi::class);
         parent::tearDown();
     }
 
@@ -90,6 +94,35 @@ class ShopifyControllerTest extends TestCase
         self::assertStringContainsString('Access denied', $output);
         self::assertStringContainsString('Failed to create storefront access token.', $output);
         self::assertFileDoesNotExist((string)Yii::getAlias("$this->configPath/params.php"));
+    }
+
+    /**
+     * The errors are only printed: without an exit code a failing cron job would never alert.
+     */
+    public function testAFailedImportExitsWithAnError(): void
+    {
+        $this->mockAdminApi(new Response(200, [], '{"errors":[{"message":"Throttled"}]}'));
+
+        $controller = $this->createController();
+        $controller->interactive = false;
+
+        self::assertSame(ExitCode::UNSPECIFIED_ERROR, $controller->runAction('import'));
+        self::assertStringContainsString('Throttled', $controller->flushStdOutBuffer());
+    }
+
+    public function testAFailedWebhookSubscriptionIsReported(): void
+    {
+        $this->mockAdminApi(new Response(200, [], '{"errors":[{"message":"Access denied for webhookSubscriptionCreate field."}]}'));
+
+        $controller = $this->createController();
+
+        self::assertSame(ExitCode::UNSPECIFIED_ERROR, $controller->actionWebhookCreate('PRODUCTS_UPDATE', 'https://www.test.localhost/'));
+        self::assertStringContainsString('Access denied', $controller->flushStdOutBuffer());
+    }
+
+    private function mockAdminApi(Response ...$responses): void
+    {
+        Yii::$container->set(AdminApi::class, new MockAdminApi(...$responses));
     }
 
     /**

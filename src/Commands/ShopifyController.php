@@ -21,6 +21,7 @@ use Override;
 use Yii;
 use yii\base\Event;
 use yii\console\Controller;
+use yii\console\ExitCode;
 use yii\db\AfterSaveEvent;
 use yii\helpers\Console;
 
@@ -51,7 +52,7 @@ class ShopifyController extends Controller
     /**
      * Updates all products in the store.
      */
-    public function actionImport(): void
+    public function actionImport(): int
     {
         $this->interactiveStartStdout("Importing products...");
 
@@ -90,55 +91,65 @@ class ShopifyController extends Controller
         }
 
         $this->stdout($text . PHP_EOL, Console::FG_GREEN);
+
+        return $this->getExitCode();
     }
 
     /**
      * Lists all active webhook subscriptions.
      */
-    public function actionWebhook(): void
+    public function actionWebhook(): int
     {
         foreach (new WebhookSubscriptionBatchQuery(250) as $data) {
             $webhook = (new WebhookSubscriptionMapper($data['node']))();
             $this->stdout(" > $webhook->id – $webhook->topic – $webhook->callbackUrl\n", Console::FG_YELLOW);
         }
+
+        return $this->getExitCode();
     }
 
     /**
      * Creates a webhook subscription for the given topic and callback URL.
      */
-    public function actionWebhookCreate(string $topic, string $callbackUrl): void
+    public function actionWebhookCreate(string $topic, string $callbackUrl): int
     {
         $request = new WebhookSubscriptionMutation();
 
         if ($request->create($topic, $callbackUrl)) {
             $this->stdout("Webhook subscription for topic '$topic' created successfully.\n", Console::FG_GREEN);
+            return ExitCode::OK;
         }
 
         foreach ($request->getErrors() as $error) {
             $this->stderr("$error\n", Console::FG_RED);
         }
+
+        return ExitCode::UNSPECIFIED_ERROR;
     }
 
     /**
      * Deletes a webhook subscription by its ID.
      */
-    public function actionWebhookDelete(int $id): void
+    public function actionWebhookDelete(int $id): int
     {
         $request = new WebhookSubscriptionMutation();
 
         if ($request->delete($id)) {
             $this->stdout("Webhook subscription with ID '$id' deleted successfully.\n", Console::FG_GREEN);
+            return ExitCode::OK;
         }
 
         foreach ($request->getErrors() as $error) {
             $this->stderr("$error\n", Console::FG_RED);
         }
+
+        return ExitCode::UNSPECIFIED_ERROR;
     }
 
     /**
      * Creates a Storefront API access token and saves it as `shopifyStorefrontAccessToken` in `params.php`.
      */
-    public function actionStorefrontAccessToken(): void
+    public function actionStorefrontAccessToken(): int
     {
         $shopify = static::getShopify();
 
@@ -146,7 +157,7 @@ class ShopifyController extends Controller
             $shopify->shopifyStorefrontAccessToken
             && !$this->confirm('Do you want to overwrite the existing storefront access token?')
         ) {
-            return;
+            return ExitCode::OK;
         }
 
         $request = new StorefrontAccessTokenMutation();
@@ -158,7 +169,7 @@ class ShopifyController extends Controller
 
         if ($token === null) {
             $this->stderr("Failed to create storefront access token.\n", Console::FG_RED);
-            return;
+            return ExitCode::UNSPECIFIED_ERROR;
         }
 
         $this->setConfig($this->config, [
@@ -167,5 +178,15 @@ class ShopifyController extends Controller
         ], 'Shopify storefront access token saved.');
 
         $shopify->shopifyStorefrontAccessToken = $token;
+
+        return ExitCode::OK;
+    }
+
+    /**
+     * The API's errors are printed in `afterAction()`; a run that met one must not look like a success to cron.
+     */
+    private function getExitCode(): int
+    {
+        return static::getShopify()->getAdminApi()->getErrors() ? ExitCode::UNSPECIFIED_ERROR : ExitCode::OK;
     }
 }
