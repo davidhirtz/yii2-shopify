@@ -47,6 +47,12 @@ class Bootstrap implements ConfigBootstrapInterface
                     'class' => Module::class,
                 ],
             ],
+            'sensitiveParams' => [
+                'shopifyAccessToken',
+                'shopifyApiKey',
+                'shopifyApiSecret',
+                'shopifyStorefrontAccessToken',
+            ],
         ];
     }
 
