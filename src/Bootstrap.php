@@ -8,7 +8,9 @@ use Hirtz\Shopify\Commands\ShopifyController;
 use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Controllers\WebhookController;
 use Hirtz\Skeleton\Base\ConfigBootstrapInterface;
+use Hirtz\Shopify\Models\Product;
 use Hirtz\Skeleton\Console\Application as ConsoleApplication;
+use Hirtz\Skeleton\Mcp\Resource;
 use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Web\Application;
 use Override;
@@ -22,6 +24,11 @@ class Bootstrap implements ConfigBootstrapInterface
     {
         return [
             'components' => [
+                'mcp' => [
+                    'resources' => [
+                        static fn (): Resource => Resource::make('product', Product::class)->readOnly(),
+                    ],
+                ],
                 'i18n' => [
                     'translations' => [
                         'shopify' => [
