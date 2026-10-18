@@ -1,4 +1,4 @@
-## Unreleased
+## 3.6.0 (October 18, 2026)
 
 - Changed the `davidhirtz/yii2-skeleton` requirement to `^3.19` (MCP resources)
 - Added the read-only MCP resource `product`
