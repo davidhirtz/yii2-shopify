@@ -104,6 +104,11 @@ project keeping its params elsewhere points it there through `controllerMap`:
 ],
 ```
 
+## MCP
+
+The bundle registers the [MCP](https://github.com/davidhirtz/yii2-skeleton#mcp-server) resource `product`, read-only: products are
+written by the sync.
+
 ## Shopify setup
 
 Create a custom app in the Shopify admin under *Apps* › *Develop apps* and give it at least the Admin API access

@@ -1,3 +1,8 @@
+## Unreleased
+
+- Changed the `davidhirtz/yii2-skeleton` requirement to `^3.19` (MCP resources)
+- Added the read-only MCP resource `product`
+
 ## 3.5.0 (October 15, 2026)
 
 - Added its secret params to the application's `sensitiveParams`
