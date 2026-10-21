@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Shopify\Modules\Admin\Widgets\Navs;
 
 use Hirtz\Shopify\Components\ComponentTrait;
+use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Navs\ActionDropdown;
@@ -44,7 +45,7 @@ class WebhookActionDropdown extends ActionDropdown
     }
 
     /**
-     * @see WebhookController::actionUpdateAll()
+     * @see WebhookController::actionCreate()
      */
     protected function getUpdateAllWebhooksButton(): ?Stringable
     {

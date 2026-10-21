@@ -105,6 +105,24 @@ class ShopifyAdminTest extends TestCase
         self::assertStringContainsString('must be set', (string)json_encode($this->getWebSession()->getFlash('danger')));
     }
 
+    public function testTheWebhookIndexLinksToTheProductsOnlyWithTheirPermission(): void
+    {
+        $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
+        static::getShopify()->shopifyShopName = null;
+
+        $html = Yii::$app->runAction('admin/shopify/webhook/index');
+
+        self::assertIsString($html);
+        self::assertStringNotContainsString('href="/admin/shopify/product/index"', $html);
+
+        $this->login(Product::AUTH_SHOPIFY_PRODUCT);
+
+        $html = Yii::$app->runAction('admin/shopify/webhook/index');
+
+        self::assertIsString($html);
+        self::assertStringContainsString('href="/admin/shopify/product/index"', $html);
+    }
+
     public function testTheApiActionsRedirectWhenTheApiIsNotConfigured(): void
     {
         $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
