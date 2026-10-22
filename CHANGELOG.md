@@ -1,3 +1,8 @@
+## Unreleased
+
+- Changed the `davidhirtz/yii2-skeleton` requirement to `^3.22` (canonical URL)
+- Changed the webhook address to the default tenant's, without a language prefix
+
 ## 3.6.0 (October 18, 2026)
 
 - Changed the `davidhirtz/yii2-skeleton` requirement to `^3.19` (MCP resources)
