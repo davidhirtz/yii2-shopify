@@ -37,7 +37,7 @@ return [
         'image_count' => 1,
         'variant_count' => 1,
         'total_inventory_quantity' => 0,
-        'last_import_at' => new Expression('UTC_TIMESTAMP()'),
+        'last_import_at' => new Expression('UTC_TIMESTAMP() - INTERVAL 1 HOUR'),
         'created_at' => new Expression('UTC_TIMESTAMP()'),
     ],
 ];
