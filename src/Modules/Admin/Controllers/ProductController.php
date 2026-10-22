@@ -69,7 +69,7 @@ class ProductController extends Controller
     {
         if (!static::getShopify()->isAdminApiConfigured()) {
             $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
-            return $this->redirect(['index']);
+            return $this->redirectToIndex();
         }
 
         $data = (new ProductQuery($id))();
@@ -77,7 +77,7 @@ class ProductController extends Controller
 
         if ($data === null) {
             $this->error($api->getErrors());
-            return $this->redirect(['index']);
+            return $this->redirectToIndex();
         }
 
         if (!$data) {
@@ -85,7 +85,7 @@ class ProductController extends Controller
 
             if ($product?->delete()) {
                 $this->success(Yii::t('shopify', 'PRODUCT_SUCCESS_DELETED'));
-                return $this->redirect(['index']);
+                return $this->redirectToIndex();
             }
 
             throw new NotFoundHttpException();
@@ -97,14 +97,14 @@ class ProductController extends Controller
         $this->error($api->getErrors());
         $this->errorOrSuccess($repository->product, Yii::t('shopify', 'PRODUCT_SUCCESS_UPDATED_SHOPIFY'));
 
-        return $this->redirect(['index']);
+        return $this->redirectToIndex();
     }
 
     public function actionUpdateAll(): Response
     {
         if (!static::getShopify()->isAdminApiConfigured()) {
             $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
-            return $this->redirect(['index']);
+            return $this->redirectToIndex();
         }
 
         $repository = new ProductBatchRepository();
@@ -113,6 +113,14 @@ class ProductController extends Controller
         $api = static::getShopify()->getAdminApi();
         $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'PRODUCT_SUCCESS_UPDATED_PRODUCTS'));
 
-        return $this->redirect(['index']);
+        return $this->redirectToIndex();
+    }
+
+    /**
+     * Back to the grid the sync was started from, its filter, search and page included.
+     */
+    protected function redirectToIndex(): Response
+    {
+        return $this->redirect($this->request->getReferrer() ?? ['index']);
     }
 }

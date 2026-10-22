@@ -167,6 +167,25 @@ class ShopifyAdminTest extends TestCase
         self::assertNull($this->getWebSession()->getFlash('success'));
     }
 
+    public function testASyncLeadsBackToTheFilteredGrid(): void
+    {
+        $this->login(Product::AUTH_SHOPIFY_PRODUCT);
+        static::getShopify()->shopifyAccessToken = null;
+        static::getShopify()->shopifyApiKey = null;
+
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $request = $this->getWebRequest();
+        $request->setBodyParams([$request->csrfParam => $request->getCsrfToken()]);
+        $request->getHeaders()->set('Referer', 'https://www.test.localhost/admin/shopify/product/index?status=3&q=Shirt&page=3');
+
+        foreach (['product/update' => ['id' => 1], 'product/update-all' => []] as $route => $params) {
+            $response = Yii::$app->runAction("admin/shopify/$route", $params);
+
+            self::assertInstanceOf(Response::class, $response);
+            self::assertStringEndsWith('/admin/shopify/product/index?status=3&q=Shirt&page=3', (string)$response->getHeaders()->get('location'), $route);
+        }
+    }
+
     public function testTheApiActionsRedirectWhenTheApiIsNotConfigured(): void
     {
         $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
