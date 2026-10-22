@@ -33,5 +33,9 @@ class WebhookSubscriptionGridViewTest extends TestCase
         self::assertStringContainsString('2026-07', $html);
         self::assertStringContainsString('JSON', $html);
         self::assertStringContainsString('id=99', $html);
+
+        // the column renders the cell, the content goes inside it
+        self::assertDoesNotMatchRegularExpression('#<td[^>]*><td#', $html);
+        self::assertStringContainsString('<td class="hidden md:table-cell text-nowrap">2026-07</td>', $html);
     }
 }

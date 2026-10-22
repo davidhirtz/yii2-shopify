@@ -9,7 +9,6 @@ use Hirtz\Shopify\Modules\Admin\Controllers\WebhookController;
 use Hirtz\Shopify\Modules\Admin\Data\WebhookSubscriptionArrayDataProvider;
 use Hirtz\Shopify\Modules\ModuleTrait;
 use Hirtz\Skeleton\Html\Div;
-use Hirtz\Skeleton\Html\Td;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\DeleteGridButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
@@ -49,17 +48,13 @@ class WebhookSubscriptionGridView extends GridView
             ->content($this->getTopicColumnContent(...));
     }
 
-    protected function getTopicColumnContent(WebhookSubscription $webhook): ?Stringable
+    /**
+     * The column renders the cell, so the content is what goes inside it.
+     */
+    protected function getTopicColumnContent(WebhookSubscription $webhook): string
     {
-        return Td::make()
-            ->content(
-                Div::make()
-                    ->content($webhook->getFormattedTopic())
-                    ->class('strong'),
-                Div::make()
-                    ->content($webhook->callbackUrl)
-                    ->class('small')
-            );
+        return Div::make()->content($webhook->getFormattedTopic())->class('strong')
+            . Div::make()->content($webhook->callbackUrl)->class('small');
     }
 
     protected function getApiVersionColumn(): ?Column
@@ -67,14 +62,13 @@ class WebhookSubscriptionGridView extends GridView
         return DataColumn::make()
             ->property('api_version')
             ->content($this->getApiVersionColumnContent(...))
-            ->hiddenForSmallDevices();
+            ->hiddenForSmallDevices()
+            ->nowrap();
     }
 
-    protected function getApiVersionColumnContent(WebhookSubscription $webhook): ?Stringable
+    protected function getApiVersionColumnContent(WebhookSubscription $webhook): string
     {
-        return Td::make()
-            ->content(strtoupper((string)$webhook->api_version))
-            ->class('text-nowrap');
+        return strtoupper((string)$webhook->api_version);
     }
 
     protected function getFormatColumn(): ?Column
@@ -82,14 +76,13 @@ class WebhookSubscriptionGridView extends GridView
         return DataColumn::make()
             ->property('format')
             ->content($this->getFormatColumnContent(...))
-            ->hiddenForMediumDevices();
+            ->hiddenForMediumDevices()
+            ->nowrap();
     }
 
-    protected function getFormatColumnContent(WebhookSubscription $webhook): ?Stringable
+    protected function getFormatColumnContent(WebhookSubscription $webhook): string
     {
-        return Td::make()
-            ->content(strtoupper((string)$webhook->format))
-            ->class('text-nowrap');
+        return strtoupper((string)$webhook->format);
     }
 
     protected function getUpdatedAtColumn(): ?Column
