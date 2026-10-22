@@ -11,6 +11,8 @@ use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Hirtz\Skeleton\Widgets\Navs\Nav;
 use Hirtz\Skeleton\Widgets\Panels\Dashboard;
 use Hirtz\Skeleton\Widgets\Panels\DashboardItem;
+use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Models\Webhook;
 use Override;
 use Yii;
 
@@ -36,6 +38,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
             ->label(Yii::t('shopify', 'MODULE_SHOPIFY_DASHBOARD'))
             ->link(fn (A $link) => $link->target('_blank'))
             ->order(60)
+            ->roles([Product::AUTH_SHOPIFY_PRODUCT, Webhook::AUTH_SHOPIFY_WEBHOOK])
             ->url(static::getShopify()->getShopUrl('admin')));
     }
 }

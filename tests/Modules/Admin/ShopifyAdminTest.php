@@ -11,6 +11,7 @@ use Hirtz\Shopify\Test\Fixtures\ProductFixture;
 use Hirtz\Shopify\Test\Fixtures\ProductImageFixture;
 use Hirtz\Shopify\Test\Fixtures\ProductVariantFixture;
 use Hirtz\Shopify\Test\TestCase;
+use Hirtz\Skeleton\Models\Redirect;
 use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Test\Fixtures\UserFixture;
 use Override;
@@ -67,6 +68,28 @@ class ShopifyAdminTest extends TestCase
 
         $this->expectException(ForbiddenHttpException::class);
         Yii::$app->runAction('admin/shopify/product/index');
+    }
+
+    public function testTheDashboardLinksToShopifyOnlyWithAShopifyPermission(): void
+    {
+        static::getShopify()->shopifyShopName = 'shop-name';
+        $this->login(Redirect::AUTH_REDIRECT);
+
+        $html = Yii::$app->runAction('admin/dashboard/index');
+
+        self::assertIsString($html);
+        self::assertStringNotContainsString('myshopify.com/admin', $html);
+    }
+
+    public function testAWebhookManagerReachesTheDashboard(): void
+    {
+        static::getShopify()->shopifyShopName = 'shop-name';
+        $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
+
+        $html = Yii::$app->runAction('admin/dashboard/index');
+
+        self::assertIsString($html);
+        self::assertStringContainsString('myshopify.com/admin', $html);
     }
 
     public function testTheWebhookIndexIsForbiddenWithoutThePermission(): void

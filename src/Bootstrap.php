@@ -9,8 +9,10 @@ use Hirtz\Shopify\Components\ShopifyComponent;
 use Hirtz\Shopify\Controllers\WebhookController;
 use Hirtz\Skeleton\Base\ConfigBootstrapInterface;
 use Hirtz\Shopify\Models\Product;
+use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Skeleton\Console\Application as ConsoleApplication;
 use Hirtz\Skeleton\Mcp\Resource;
+use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
 use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Web\Application;
 use Override;
@@ -82,6 +84,12 @@ class Bootstrap implements ConfigBootstrapInterface
          * @see WebhookController::actionProductsUpdate()
          */
         $app->addUrlManagerRules(['shopify/webhook/<action>' => 'shopify/webhook/<action>']);
+
+        DashboardController::addRoles(static fn (): array => [
+            Product::AUTH_SHOPIFY_PRODUCT,
+            Webhook::AUTH_SHOPIFY_WEBHOOK,
+        ]);
+
         $app->setMigrationNamespace('Hirtz\Shopify\Migrations');
     }
 }
