@@ -49,6 +49,10 @@ class WebhookActionDropdown extends ActionDropdown
      */
     protected function getUpdateAllWebhooksButton(): ?Stringable
     {
+        if (!static::getShopify()->shopifyApiSecret) {
+            return null;
+        }
+
         return Button::make()
             ->primary()
             ->content($this->provider->getModels()

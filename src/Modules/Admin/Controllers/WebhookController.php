@@ -94,6 +94,12 @@ class WebhookController extends Controller
             return $this->redirect(['index']);
         }
 
+        // Every webhook Shopify sends is verified with the secret, so without it each would answer an error.
+        if (!$this->shopify->shopifyApiSecret) {
+            $this->error(Yii::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API'));
+            return $this->redirect(['index']);
+        }
+
         $request = new WebhookSubscriptionMutation();
         $urlManager = Yii::$app->getUrlManager();
 

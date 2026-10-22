@@ -17,6 +17,7 @@ use Hirtz\Skeleton\Test\Fixtures\UserFixture;
 use Override;
 use Yii;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 
 /**
  * Only the pages that read the local records: everything else in this admin talks to the Shopify API.
@@ -144,6 +145,26 @@ class ShopifyAdminTest extends TestCase
 
         self::assertIsString($html);
         self::assertStringContainsString('href="/admin/shopify/product/index"', $html);
+    }
+
+    public function testTheWebhooksAreNotInstalledWithoutTheApiSecret(): void
+    {
+        $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
+
+        $shopify = static::getShopify();
+        $shopify->shopifyShopName = 'shop-name';
+        $shopify->shopifyAccessToken = 'token';
+        $shopify->shopifyApiSecret = null;
+
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $request = $this->getWebRequest();
+        $request->setBodyParams([$request->csrfParam => $request->getCsrfToken()]);
+
+        $response = Yii::$app->runAction('admin/shopify/webhook/create');
+
+        self::assertInstanceOf(Response::class, $response);
+        self::assertSame([Yii::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API')], $this->getWebSession()->getFlash('danger'));
+        self::assertNull($this->getWebSession()->getFlash('success'));
     }
 
     public function testTheApiActionsRedirectWhenTheApiIsNotConfigured(): void
