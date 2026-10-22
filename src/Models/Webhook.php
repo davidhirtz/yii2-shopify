@@ -72,7 +72,7 @@ class Webhook extends Model
     #[Override]
     public function beforeValidate(): bool
     {
-        $this->address = $this->address ?: Yii::$app->getUrlManager()->createAbsoluteUrl($this->route);
+        $this->address = $this->address ?: static::getModule()->getWebhookAddress($this->route);
         $this->api_version = $this->api_version ?: static::getShopify()->shopifyApiVersion;
 
         return parent::beforeValidate();

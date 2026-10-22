@@ -101,14 +101,14 @@ class WebhookController extends Controller
         }
 
         $request = new WebhookSubscriptionMutation();
-        $urlManager = Yii::$app->getUrlManager();
+        $module = static::getModule();
 
-        foreach (static::getModule()->webhooks as $attributes) {
+        foreach ($module->webhooks as $attributes) {
             // The mutation accumulates its errors, so only the ones this call added speak for this topic — the
             // whole list would report the first taken address against every topic after it.
             $previousCount = count($request->getErrors());
 
-            $request->create($attributes['topic'], $urlManager->createAbsoluteUrl($attributes['route']));
+            $request->create($attributes['topic'], $module->getWebhookAddress($attributes['route']));
             $errors = array_slice($request->getErrors(), $previousCount);
 
             if (in_array('Address for this topic has already been taken', $errors, true)) {
