@@ -67,7 +67,7 @@ return [
     'WEBHOOK_SUBSCRIPTION_API_VERSION_LABEL' => 'API-Version',
     'WEBHOOK_SUBSCRIPTION_BUTTON_REMOVE' => 'Webhook löschen',
     'WEBHOOK_SUBSCRIPTION_FORMAT_LABEL' => 'Format',
-    'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE' => 'Sind Sie sicher, dass Sie diesen Webhook löschen wollen?',
+    'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE' => 'Sind Sie sich sicher, dass Sie diesen Webhook löschen wollen?',
     'WEBHOOK_SUBSCRIPTION_TOPIC_LABEL' => 'Ereignis',
     'WEBHOOK_SUBSCRIPTION_UPDATED_AT_LABEL' => 'Letzte Änderung',
     'WEBHOOK_SUCCESS_CREATED' => 'Der Webhook "{topic}" wurde erstellt.',
