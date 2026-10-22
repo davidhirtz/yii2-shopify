@@ -34,6 +34,7 @@ class ShopifyControllerTest extends TestCase
         $shopify->shopifyShopName = 'shop-name';
         $shopify->shopifyAccessToken = 'access-token';
         $shopify->shopifyStorefrontAccessToken = 'storefront-access-token';
+        $shopify->shopifyApiSecret = 'api-secret';
     }
 
     #[Override]
@@ -118,6 +119,17 @@ class ShopifyControllerTest extends TestCase
 
         self::assertSame(ExitCode::UNSPECIFIED_ERROR, $controller->actionWebhookCreate('PRODUCTS_UPDATE', 'https://www.test.localhost/'));
         self::assertStringContainsString('Access denied', $controller->flushStdOutBuffer());
+    }
+
+    public function testAWebhookIsNotCreatedWithoutTheApiSecret(): void
+    {
+        $this->getShopify()->shopifyApiSecret = null;
+        $this->mockAdminApi();
+
+        $controller = $this->createController();
+
+        self::assertSame(ExitCode::CONFIG, $controller->actionWebhookCreate('PRODUCTS_UPDATE', 'https://www.test.localhost/'));
+        self::assertStringContainsString('shopifyApiSecret', $controller->flushStdOutBuffer());
     }
 
     private function mockAdminApi(Response ...$responses): void

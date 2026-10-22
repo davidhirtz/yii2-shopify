@@ -113,6 +113,12 @@ class ShopifyController extends Controller
      */
     public function actionWebhookCreate(string $topic, string $callbackUrl): int
     {
+        // Every webhook Shopify sends is verified with the secret, so without it each would answer an error.
+        if (!static::getShopify()->shopifyApiSecret) {
+            $this->stderr("Webhooks are verified with the shopifyApiSecret param, which is not set.\n", Console::FG_RED);
+            return ExitCode::CONFIG;
+        }
+
         $request = new WebhookSubscriptionMutation();
 
         if ($request->create($topic, $callbackUrl)) {
