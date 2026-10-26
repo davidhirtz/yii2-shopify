@@ -23,7 +23,8 @@ class ProductControllerFunctionTest extends TestCase
     public function testIndexAsGuest(): void
     {
         $this->open('/admin/shopify/product/index');
-        self::assertCurrentUrlEquals('https://www.test.localhost/admin/account/login');
+        self::assertCurrentUrlEquals('https://www.test.localhost/admin/account/login?returnUrl='
+            . urlencode('https://www.test.localhost/admin/shopify/product/index'));
     }
 
     public function testIndexWithoutPermission(): void
