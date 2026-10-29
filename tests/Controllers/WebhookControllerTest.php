@@ -16,8 +16,7 @@ use yii\web\HttpException;
 use yii\web\UnauthorizedHttpException;
 
 /**
- * The webhook routes are the bundle's only unauthenticated endpoints: the HMAC of the raw body is the whole of
- * their access control, and `products/delete` removes a record.
+ * The HMAC of the raw body is the whole access control of the bundle's only unauthenticated endpoints.
  */
 class WebhookControllerTest extends TestCase
 {

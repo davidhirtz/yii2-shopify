@@ -25,9 +25,6 @@ class WebhookController extends Controller
     use ComponentTrait;
     use ModuleTrait;
 
-    /**
-     * Disables CSRF validation for webhook endpoints
-     */
     #[\Override]
     public function init(): void
     {
@@ -47,19 +44,13 @@ class WebhookController extends Controller
         return parent::beforeAction($action);
     }
 
-    /**
-     * Webhook endpoint for webhook topics "products/create".
-     */
     public function actionProductsCreate(): void
     {
         $this->actionProductsUpdate();
     }
 
     /**
-     * Webhook endpoint for webhook topics "products/update".
-     *
-     * Shopify retries anything but a 2xx: a product it no longer has is a deletion, and only a failed request is
-     * answered with an error, so that it is retried.
+     * Shopify retries anything but a 2xx, so a product it no longer has is a deletion and only a failed request errs.
      */
     public function actionProductsUpdate(): void
     {
@@ -89,9 +80,6 @@ class WebhookController extends Controller
         }
     }
 
-    /**
-     * Webhook endpoint for webhook topic "products/delete".
-     */
     public function actionProductsDelete(): void
     {
         $id = $this->getProductId();

@@ -12,8 +12,7 @@ use yii\caching\CacheInterface;
 use yii\helpers\Json;
 
 /**
- * An app created in the Shopify Dev Dashboard has no permanent Admin API token: it exchanges its client id and
- * secret for one that expires, which is cached until shortly before it does.
+ * A Dev Dashboard app has no permanent Admin API token, so the expiring one it exchanges for is cached.
  *
  * @see https://shopify.dev/docs/apps/build/authentication-authorization/access-tokens/client-credentials-grant
  */

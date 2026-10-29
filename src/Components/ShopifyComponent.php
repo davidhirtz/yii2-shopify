@@ -54,10 +54,6 @@ class ShopifyComponent extends Component
         return hash_equals($hmacHeader, $calculatedHmac);
     }
 
-    /**
-     * Whether {@see getAdminApi()} has what it needs: the shop name and an access token, or the API key and secret
-     * to exchange for one.
-     */
     public function isAdminApiConfigured(): bool
     {
         return $this->shopifyShopName
@@ -77,9 +73,6 @@ class ShopifyComponent extends Component
         ]);
     }
 
-    /**
-     * Without a static token, an app created in the Shopify Dev Dashboard exchanges its API key and secret for one.
-     */
     protected function getTemporaryAccessToken(string $shopifyShopName): string
     {
         if (!$this->shopifyApiKey || !$this->shopifyApiSecret) {

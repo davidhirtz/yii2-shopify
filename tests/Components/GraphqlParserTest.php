@@ -8,10 +8,6 @@ use Hirtz\Shopify\Components\GraphqlParser;
 use Hirtz\Shopify\Test\TestCase;
 use yii\base\InvalidConfigException;
 
-/**
- * A query is assembled from the fragments it spreads, so every `...Fragment` has to end up in the document the
- * API is sent.
- */
 class GraphqlParserTest extends TestCase
 {
     public function testAQueryCarriesEveryFragmentItSpreads(): void

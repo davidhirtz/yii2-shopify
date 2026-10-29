@@ -40,8 +40,7 @@ class ShopifyValueTest extends TestCase
     }
 
     /**
-     * The price is stored in cents, and multiplying a float by 100 and truncating loses one on most of them:
-     * `(int)(19.99 * 100)` is 1998.
+     * The price is stored in cents, and truncating a float times 100 loses one: `(int)(19.99 * 100)` is 1998.
      */
     #[DataProvider('priceDataProvider')]
     public function testThePriceIsRoundedToTheCent(int|float|string $value, int $expected): void

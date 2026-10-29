@@ -8,7 +8,7 @@ use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Components\GraphqlParser;
 
 /**
- * Creates a Storefront API access token, which needs the app's `unauthenticated_*` access scopes.
+ * The app needs its `unauthenticated_*` access scopes for this.
  */
 class StorefrontAccessTokenMutation
 {

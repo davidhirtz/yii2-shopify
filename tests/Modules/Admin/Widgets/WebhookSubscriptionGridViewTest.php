@@ -11,8 +11,7 @@ use Hirtz\Shopify\Modules\Admin\Widgets\Grids\WebhookSubscriptionGridView;
 use Hirtz\Shopify\Test\TestCase;
 
 /**
- * The provider answers what the Admin API lists, so the grid renders `WebhookSubscription`, not the `Webhook` a
- * project declares.
+ * The grid renders the `WebhookSubscription` the Admin API lists, not the `Webhook` a project declares.
  */
 class WebhookSubscriptionGridViewTest extends TestCase
 {

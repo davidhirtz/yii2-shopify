@@ -98,8 +98,7 @@ class AdminApi
     }
 
     /**
-     * Shopify answers an error in JSON, but whatever stands in front of it may not: an HTML page from a proxy, a
-     * plain-text 429, an empty 503. Those fall back to the exception's message, which quotes the body.
+     * A proxy in front of Shopify may answer HTML, plain text or nothing, so those fall back to the exception message.
      *
      * @return list<string>
      */

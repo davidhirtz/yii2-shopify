@@ -12,9 +12,6 @@ use Hirtz\Shopify\Components\Admin\AdminApi;
 use Hirtz\Skeleton\Test\TestCase;
 use Override;
 
-/**
- * A failed request leaves its reason in `getErrors()`, whatever the body it came with.
- */
 class AdminApiTest extends TestCase
 {
     public function testTheDataOfASuccessfulQuery(): void

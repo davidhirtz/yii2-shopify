@@ -117,7 +117,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Back to the grid the sync was started from, its filter, search and page included.
+     * The referrer keeps the grid's filter, search and page.
      */
     protected function redirectToIndex(): Response
     {

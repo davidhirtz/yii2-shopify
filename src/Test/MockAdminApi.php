@@ -12,9 +12,6 @@ use GuzzleHttp\Psr7\Response;
 use Hirtz\Shopify\Components\Admin\AdminApi;
 use Override;
 
-/**
- * Answers every request with the next of the given responses, set through `Yii::$container->set(AdminApi::class, …)`.
- */
 class MockAdminApi extends AdminApi
 {
     private readonly MockHandler $handler;

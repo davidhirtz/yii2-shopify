@@ -8,10 +8,6 @@ use Hirtz\Shopify\Components\ComponentTrait;
 use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Test\TestCase;
 
-/**
- * The webhook is what is registered with Shopify, so its address and API version have to be the ones this
- * installation actually answers on.
- */
 class WebhookTest extends TestCase
 {
     use ComponentTrait;

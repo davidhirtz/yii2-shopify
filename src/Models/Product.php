@@ -68,7 +68,9 @@ class Product extends ActiveRecord implements
     public const string AUTH_SHOPIFY_PRODUCT = 'shopifyProduct';
 
     /**
-     * @var array<string, mixed>|string|null the validator for the product description, `null` disables the validation
+     * `null` disables the validation of the product description.
+     *
+     * @var array<string, mixed>|string|null
      */
     public array|string|null $htmlValidator = HtmlValidator::class;
 

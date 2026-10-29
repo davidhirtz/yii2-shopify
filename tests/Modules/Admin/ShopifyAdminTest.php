@@ -115,8 +115,7 @@ class ShopifyAdminTest extends TestCase
     }
 
     /**
-     * Without a shop name, or without a token or the key and secret to exchange for one, the API cannot be asked:
-     * the page says so instead of failing.
+     * Without a shop name, or a token or the key and secret to exchange for one, the page says so instead of failing.
      */
     public function testTheWebhookIndexSaysWhenTheApiIsNotConfigured(): void
     {

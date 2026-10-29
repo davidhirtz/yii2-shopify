@@ -18,8 +18,7 @@ use Yii;
 use yii\helpers\Json;
 
 /**
- * Variants and media beyond the product's first page are fetched page by page, and the local ones Shopify did not
- * list are deleted only after every page arrived: a failed page reads as the end of the list (#338).
+ * Unlisted variants and media are deleted only after every page arrived, since a failed page reads as the end (#338).
  */
 class ProductBatchPagingTest extends TestCase
 {

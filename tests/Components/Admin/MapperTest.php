@@ -13,9 +13,6 @@ use Hirtz\Shopify\Models\Webhook;
 use Hirtz\Shopify\Test\TestCase;
 use Hirtz\Shopify\Test\Traits\ShopifyFixtureTrait;
 
-/**
- * The mappers turn a GraphQL payload into the records the shop is stored as, so they decide what a sync writes.
- */
 class MapperTest extends TestCase
 {
     use ShopifyFixtureTrait;
@@ -54,8 +51,7 @@ class MapperTest extends TestCase
     }
 
     /**
-     * A shop that sells one variant per product carries Shopify's placeholder option, which is not an option the
-     * store should show.
+     * A product with one variant carries Shopify's placeholder option, which the store should not show.
      */
     public function testThePlaceholderOptionIsDropped(): void
     {
@@ -83,9 +79,6 @@ class MapperTest extends TestCase
         self::assertSame(['S', 'M'], $options[0]['values']);
     }
 
-    /**
-     * A payload for a product that is already stored updates it rather than inserting a second one.
-     */
     public function testAKnownProductIsUpdatedInPlace(): void
     {
         $product = $this->getProductFromFixture('product-1');
