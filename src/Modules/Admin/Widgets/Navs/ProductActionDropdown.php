@@ -33,7 +33,7 @@ class ProductActionDropdown extends ActionDropdown
             ->primary()
             ->url(static::getShopify()->getShopUrl('admin/products/new'))
             ->icon('external-link')
-            ->text(Yii::t('shopify', 'PRODUCT_ACTION_DROPDOWN_NEW_PRODUCT'))
+            ->text(Yii::t('shopify', 'PRODUCT_CREATE_BUTTON'))
             ->target('_blank');
     }
 
@@ -45,7 +45,7 @@ class ProductActionDropdown extends ActionDropdown
         return Button::make()
             ->primary()
             ->icon('sync')
-            ->text(Yii::t('shopify', 'PRODUCT_ACTION_DROPDOWN_RELOAD_PRODUCTS'))
+            ->text(Yii::t('shopify', 'PRODUCT_RELOAD_BUTTON'))
             ->post(['/admin/shopify/product/update-all']);
     }
 }

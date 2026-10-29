@@ -24,10 +24,10 @@ class WebhookHeader extends Header
     protected function configure(): void
     {
         $this->breadcrumbs ??= $this->webuser->can(Product::AUTH_SHOPIFY_PRODUCT)
-            ? [new Breadcrumb(Yii::t('shopify', 'COMMON_PRODUCTS'), ['/admin/shopify/product/index'])]
+            ? [new Breadcrumb(Yii::t('shopify', 'PRODUCT_PLURAL'), ['/admin/shopify/product/index'])]
             : [];
 
-        $this->title ??= Yii::t('shopify', 'COMMON_WEBHOOKS');
+        $this->title ??= Yii::t('shopify', 'WEBHOOK_PLURAL');
 
         $this->addContent($this->getWebhookActionDropdown());
 

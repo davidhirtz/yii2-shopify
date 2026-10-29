@@ -115,7 +115,7 @@ class WebhookSubscriptionGridView extends GridView
         return DeleteGridButton::make()
             ->model($model)
             ->url(['/admin/shopify/webhook/delete', 'id' => $model->id])
-            ->label(Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_BUTTON_REMOVE'))
-            ->title(Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_REMOVE_TITLE'));
+            ->label(Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_DELETE_BUTTON'))
+            ->title(Yii::t('shopify', 'WEBHOOK_SUBSCRIPTION_DELETE_CONFIRM'));
     }
 }

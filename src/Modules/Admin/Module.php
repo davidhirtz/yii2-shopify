@@ -35,7 +35,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     {
         return $dashboard->addItem(DashboardItem::make()
             ->icon('brand:shopify')
-            ->label(Yii::t('shopify', 'MODULE_SHOPIFY_DASHBOARD'))
+            ->label(Yii::t('shopify', 'SHOPIFY_DASHBOARD_BUTTON'))
             ->link(fn (A $link) => $link->target('_blank'))
             ->order(60)
             ->roles([Product::AUTH_SHOPIFY_PRODUCT, Webhook::AUTH_SHOPIFY_WEBHOOK])

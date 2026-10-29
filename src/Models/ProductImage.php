@@ -121,7 +121,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
 
     public function getAdminType(): string
     {
-        return Yii::t('shopify', 'COMMON_IMAGE');
+        return Yii::t('shopify', 'PRODUCT_IMAGE_SINGULAR');
     }
 
     public function getAdminRoute(): array|false

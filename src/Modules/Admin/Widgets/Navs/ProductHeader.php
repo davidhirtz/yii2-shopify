@@ -21,7 +21,7 @@ class ProductHeader extends Header
     #[Override]
     protected function configure(): void
     {
-        $this->title ??= Yii::t('shopify', 'COMMON_PRODUCTS');
+        $this->title ??= Yii::t('shopify', 'PRODUCT_PLURAL');
         $this->subtitle ??= $this->getPaginationSubtitle($this->provider);
 
         $this->addContent($this->getProductActionDropdown());

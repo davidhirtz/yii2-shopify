@@ -89,9 +89,9 @@ class Webhook extends Model
     public static function getTopics(): array
     {
         return [
-            'products/create' => Yii::t('shopify', 'WEBHOOK_PRODUCT_CREATED'),
-            'products/update' => Yii::t('shopify', 'WEBHOOK_PRODUCT_UPDATED'),
-            'products/delete' => Yii::t('shopify', 'WEBHOOK_PRODUCT_DELETED'),
+            'products/create' => Yii::t('shopify', 'WEBHOOK_TOPIC_PRODUCT_CREATE_NAME'),
+            'products/update' => Yii::t('shopify', 'WEBHOOK_TOPIC_PRODUCT_UPDATE_NAME'),
+            'products/delete' => Yii::t('shopify', 'WEBHOOK_TOPIC_PRODUCT_DELETE_NAME'),
         ];
     }
 

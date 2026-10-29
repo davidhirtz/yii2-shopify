@@ -69,9 +69,9 @@ class WebhookController extends Controller
         $isConfigured = $this->shopify->isAdminApiConfigured();
 
         if (!$isConfigured) {
-            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_ERROR'));
         } elseif (!$this->shopify->shopifyApiSecret) {
-            $this->error(Yii::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API'));
+            $this->error(Yii::t('shopify', 'WEBHOOK_SECRET_ERROR'));
         }
 
         $provider = new WebhookSubscriptionArrayDataProvider([
@@ -90,13 +90,13 @@ class WebhookController extends Controller
     public function actionCreate(): Response|string
     {
         if (!$this->shopify->isAdminApiConfigured()) {
-            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_ERROR'));
             return $this->redirect(['index']);
         }
 
         // Every webhook Shopify sends is verified with the secret, so without it each would answer an error.
         if (!$this->shopify->shopifyApiSecret) {
-            $this->error(Yii::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API'));
+            $this->error(Yii::t('shopify', 'WEBHOOK_SECRET_ERROR'));
             return $this->redirect(['index']);
         }
 
@@ -115,7 +115,7 @@ class WebhookController extends Controller
                 continue;
             }
 
-            $this->errorOrSuccess($errors, Yii::t('shopify', 'WEBHOOK_SUCCESS_CREATED', [
+            $this->errorOrSuccess($errors, Yii::t('shopify', 'WEBHOOK_CREATE_SUCCESS', [
                 'topic' => $attributes['topic'],
             ]));
         }
@@ -126,14 +126,14 @@ class WebhookController extends Controller
     public function actionDelete(int $id): Response|string
     {
         if (!$this->shopify->isAdminApiConfigured()) {
-            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_ERROR'));
             return $this->redirect(['index']);
         }
 
         $request = new WebhookSubscriptionMutation();
 
         if ($request->delete($id)) {
-            $this->success(Yii::t('shopify', 'WEBHOOK_SUCCESS_DELETED'));
+            $this->success(Yii::t('shopify', 'WEBHOOK_DELETE_SUCCESS'));
         }
 
         $this->error($request->getErrors());

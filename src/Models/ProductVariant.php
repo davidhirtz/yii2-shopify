@@ -157,7 +157,7 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
 
     public function getAdminType(): string
     {
-        return Yii::t('shopify', 'COMMON_VARIANT');
+        return Yii::t('shopify', 'PRODUCT_VARIANT_SINGULAR');
     }
 
     public function getAdminRoute(): array|false

@@ -68,7 +68,7 @@ class ProductController extends Controller
     public function actionUpdate(int $id): Response|string
     {
         if (!static::getShopify()->isAdminApiConfigured()) {
-            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_ERROR'));
             return $this->redirectToIndex();
         }
 
@@ -84,7 +84,7 @@ class ProductController extends Controller
             $product = Product::findOne($id);
 
             if ($product?->delete()) {
-                $this->success(Yii::t('shopify', 'PRODUCT_SUCCESS_DELETED'));
+                $this->success(Yii::t('shopify', 'PRODUCT_DELETE_SUCCESS'));
                 return $this->redirectToIndex();
             }
 
@@ -95,7 +95,7 @@ class ProductController extends Controller
         $repository->save();
 
         $this->error($api->getErrors());
-        $this->errorOrSuccess($repository->product, Yii::t('shopify', 'PRODUCT_SUCCESS_UPDATED_SHOPIFY'));
+        $this->errorOrSuccess($repository->product, Yii::t('shopify', 'PRODUCT_UPDATE_SUCCESS'));
 
         return $this->redirectToIndex();
     }
@@ -103,7 +103,7 @@ class ProductController extends Controller
     public function actionUpdateAll(): Response
     {
         if (!static::getShopify()->isAdminApiConfigured()) {
-            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_NOT_CONFIGURED'));
+            $this->error(Yii::t('shopify', 'SHOPIFY_ADMIN_API_ERROR'));
             return $this->redirectToIndex();
         }
 
@@ -111,7 +111,7 @@ class ProductController extends Controller
         $repository->save();
 
         $api = static::getShopify()->getAdminApi();
-        $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'PRODUCT_SUCCESS_UPDATED_PRODUCTS'));
+        $this->errorOrSuccess($api->getErrors(), Yii::t('shopify', 'PRODUCT_RELOAD_SUCCESS'));
 
         return $this->redirectToIndex();
     }

@@ -163,7 +163,7 @@ class ShopifyAdminTest extends TestCase
         $response = Yii::$app->runAction('admin/shopify/webhook/create');
 
         self::assertInstanceOf(Response::class, $response);
-        self::assertSame([Yii::t('shopify', 'WEBHOOK_SHOPIFY_ADMIN_API')], $this->getWebSession()->getFlash('danger'));
+        self::assertSame([Yii::t('shopify', 'WEBHOOK_SECRET_ERROR')], $this->getWebSession()->getFlash('danger'));
         self::assertNull($this->getWebSession()->getFlash('success'));
     }
 

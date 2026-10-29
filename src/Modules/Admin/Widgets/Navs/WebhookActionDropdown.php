@@ -40,7 +40,7 @@ class WebhookActionDropdown extends ActionDropdown
             ->primary()
             ->url(static::getShopify()->getShopUrl('admin/settings/notifications/webhooks'))
             ->icon('external-link')
-            ->text(Yii::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_VIEW_WEBHOOKS'))
+            ->text(Yii::t('shopify', 'WEBHOOK_INDEX_BUTTON'))
             ->target('_blank');
     }
 
@@ -56,8 +56,8 @@ class WebhookActionDropdown extends ActionDropdown
         return Button::make()
             ->primary()
             ->content($this->provider->getModels()
-                ? Yii::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_RELOAD_WEBHOOKS')
-                : Yii::t('shopify', 'WEBHOOK_ACTION_DROPDOWN_INSTALL_WEBHOOKS'))
+                ? Yii::t('shopify', 'WEBHOOK_RELOAD_BUTTON')
+                : Yii::t('shopify', 'WEBHOOK_INSTALL_BUTTON'))
             ->icon('sync')
             ->post(['/admin/shopify/webhook/create']);
     }

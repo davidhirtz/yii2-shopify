@@ -211,7 +211,7 @@ class Product extends ActiveRecord implements
 
     public function getAdminType(): string
     {
-        return Yii::t('shopify', 'COMMON_PRODUCT');
+        return Yii::t('shopify', 'PRODUCT_SINGULAR');
     }
 
     public function getAdminRoute(): array|false

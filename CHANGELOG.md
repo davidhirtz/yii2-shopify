@@ -1,3 +1,7 @@
+## Unreleased
+
+- Changed every message key to the `{DOMAIN}_{SUBJECT}_{KIND}` scheme
+
 ## 3.7.0 (October 22, 2026)
 
 - Changed the `davidhirtz/yii2-skeleton` requirement to `^3.22` (canonical URL)

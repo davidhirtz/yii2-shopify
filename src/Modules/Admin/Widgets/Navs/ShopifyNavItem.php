@@ -17,7 +17,7 @@ class ShopifyNavItem extends NavItem
      */
     public function __construct(array $config = [])
     {
-        $this->label ??= Yii::t('shopify', 'COMMON_PRODUCTS');
+        $this->label ??= Yii::t('shopify', 'PRODUCT_PLURAL');
         $this->icon ??= 'shopping-cart';
         $this->order ??= 50;
         $this->roles ??= [Product::AUTH_SHOPIFY_PRODUCT];
@@ -43,7 +43,7 @@ class ShopifyNavItem extends NavItem
     protected function getWebhooksItem(): NavItem
     {
         return NavItem::make()
-            ->label(Yii::t('shopify', 'COMMON_WEBHOOKS'))
+            ->label(Yii::t('shopify', 'WEBHOOK_PLURAL'))
             //->icon('satellite-dish')
             ->url(['/admin/shopify/webhook/index'])
             ->order(20)
