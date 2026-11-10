@@ -46,6 +46,9 @@ class Bootstrap implements ConfigBootstrapInterface
             ],
             'modules' => [
                 'admin' => [
+                    'dashboardTrailModels' => [
+                        Product::class,
+                    ],
                     'modules' => [
                         'shopify' => [
                             'class' => Modules\Admin\Module::class,

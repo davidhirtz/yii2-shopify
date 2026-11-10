@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Added products to the dashboard's "recently edited" panel
+- Changed the `davidhirtz/yii2-skeleton` requirement to `^3.27`
 - Added `Widgets\StructuredData\Product`, a product node with an offer per variant
 
 ## 3.8.0 (October 31, 2026)
