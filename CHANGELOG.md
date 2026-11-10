@@ -1,3 +1,7 @@
+## Unreleased
+
+- Added `Widgets\StructuredData\Product`, a product node with an offer per variant
+
 ## 3.8.0 (October 31, 2026)
 
 - Changed every message key to the `{DOMAIN}_{SUBJECT}_{KIND}` scheme
