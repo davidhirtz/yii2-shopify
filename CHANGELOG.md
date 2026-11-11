@@ -1,4 +1,4 @@
-## Unreleased
+## 3.9.0 (November 11, 2026)
 
 - Added products to the dashboard's "recently edited" panel
 - Changed the `davidhirtz/yii2-skeleton` requirement to `^3.27`
