@@ -51,7 +51,7 @@ return [
     'PRODUCT_VARIANT_WEIGHT_UNIT_LABEL' => 'Weight unit',
     'PRODUCT_VENDOR_LABEL' => 'Vendor',
     'SHOPIFY_ADMIN_API_ERROR' => 'The Shopify shop name and an Admin API access token, or the API key and secret, must be set.',
-    'SHOPIFY_DASHBOARD_BUTTON' => 'Shopify Dashboard',
+    'SHOPIFY_DASHBOARD_BUTTON' => 'Open Shopify Dashboard',
     'WEBHOOK_ADDRESS_LABEL' => 'URL',
     'WEBHOOK_API_VERSION_LABEL' => 'API Version',
     'WEBHOOK_CREATE_SUCCESS' => 'The webhook "{topic}" was created.',
