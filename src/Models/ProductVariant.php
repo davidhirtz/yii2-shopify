@@ -133,6 +133,7 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
             : '';
     }
 
+    #[Override]
     public function formatTrailAttributeValue(string $attribute, mixed $value): mixed
     {
         if ($attribute === 'image_id' && $value) {
@@ -145,6 +146,7 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
     /**
      * @return list<string>
      */
+    #[Override]
     public function getTrailAttributes(): array
     {
         return array_values(array_diff($this->attributes(), [
@@ -155,16 +157,19 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
         ]));
     }
 
+    #[Override]
     public function getAdminType(): string
     {
         return Yii::t('shopify', 'PRODUCT_VARIANT_SINGULAR');
     }
 
+    #[Override]
     public function getAdminRoute(): array|false
     {
         return false;
     }
 
+    #[Override]
     public function getPermissionName(): string
     {
         return Product::AUTH_SHOPIFY_PRODUCT;
@@ -212,6 +217,7 @@ class ProductVariant extends ActiveRecord implements TrailModelInterface, Transl
         return Yii::createObject(I18nActiveQuery::class, [static::class]);
     }
 
+    #[Override]
     public function getTranslationModelClass(): string
     {
         return self::class;

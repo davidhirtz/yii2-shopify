@@ -76,7 +76,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
         ]);
     }
 
-    #[\Override]
+    #[Override]
     public function beforeDelete(): bool
     {
         $product = $this->getProduct()
@@ -111,6 +111,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
     /**
      * @return list<string>
      */
+    #[Override]
     public function getTrailAttributes(): array
     {
         return array_values(array_diff($this->attributes(), [
@@ -119,16 +120,19 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
         ]));
     }
 
+    #[Override]
     public function getAdminType(): string
     {
         return Yii::t('shopify', 'PRODUCT_IMAGE_SINGULAR');
     }
 
+    #[Override]
     public function getAdminRoute(): array|false
     {
         return false;
     }
 
+    #[Override]
     public function getPermissionName(): string
     {
         return Product::AUTH_SHOPIFY_PRODUCT;
@@ -162,6 +166,7 @@ class ProductImage extends ActiveRecord implements TrailModelInterface, Translat
         return Yii::createObject(I18nActiveQuery::class, [static::class]);
     }
 
+    #[Override]
     public function getTranslationModelClass(): string
     {
         return self::class;

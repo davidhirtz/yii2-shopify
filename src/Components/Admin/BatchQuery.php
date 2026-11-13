@@ -6,6 +6,7 @@ namespace Hirtz\Shopify\Components\Admin;
 
 use Hirtz\Shopify\Components\ComponentTrait;
 use Iterator;
+use Override;
 
 /**
  * @implements Iterator<int, array<string, mixed>|null>
@@ -31,16 +32,19 @@ abstract class BatchQuery implements Iterator
     /**
      * @return array<string, mixed>|null
      */
+    #[Override]
     public function current(): ?array
     {
         return $this->data[$this->position] ?? null;
     }
 
+    #[Override]
     public function next(): void
     {
         $this->position++;
     }
 
+    #[Override]
     public function valid(): bool
     {
         if ($this->position === $this->batchSize && $this->currentCursor) {
@@ -51,11 +55,13 @@ abstract class BatchQuery implements Iterator
         return isset($this->data[$this->position]);
     }
 
+    #[Override]
     public function key(): int
     {
         return $this->position;
     }
 
+    #[Override]
     public function rewind(): void
     {
         $this->currentCursor = $this->cursor;
