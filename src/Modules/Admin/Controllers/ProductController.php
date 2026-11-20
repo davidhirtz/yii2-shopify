@@ -121,6 +121,7 @@ class ProductController extends Controller
      */
     protected function redirectToIndex(): Response
     {
-        return $this->redirect($this->request->getReferrer() ?? ['index']);
+        $referrer = $this->request->getReferrer();
+        return $this->redirect($referrer !== null && $this->webuser->isReturnUrl($referrer) ? $referrer : ['index']);
     }
 }

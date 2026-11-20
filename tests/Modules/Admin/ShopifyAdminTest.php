@@ -185,6 +185,24 @@ class ShopifyAdminTest extends TestCase
         }
     }
 
+    public function testASyncLeadsNowhereElseThanTheOwnHost(): void
+    {
+        $this->login(Product::AUTH_SHOPIFY_PRODUCT);
+        static::getShopify()->shopifyAccessToken = null;
+        static::getShopify()->shopifyApiKey = null;
+
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $request = $this->getWebRequest();
+        $request->setBodyParams([$request->csrfParam => $request->getCsrfToken()]);
+        $request->getHeaders()->set('Referer', 'https://evil.example.com/admin/shopify/product/index');
+
+        $response = Yii::$app->runAction('admin/shopify/product/update-all');
+
+        self::assertInstanceOf(Response::class, $response);
+        self::assertStringStartsNotWith('https://evil.example.com', (string)$response->getHeaders()->get('location'));
+        self::assertStringEndsWith('/admin/shopify/product/index', (string)$response->getHeaders()->get('location'));
+    }
+
     public function testTheApiActionsRedirectWhenTheApiIsNotConfigured(): void
     {
         $this->login(Webhook::AUTH_SHOPIFY_WEBHOOK);
